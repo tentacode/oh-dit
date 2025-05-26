@@ -1,4 +1,9 @@
+'use client';
+
+import { useTranslation } from 'react-i18next';
+
 export default function Landing() {
+  const { t } = useTranslation('landing');
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
       <div className="text-center space-y-8 px-4">
@@ -13,27 +18,27 @@ export default function Landing() {
           </div>
           
           <h1 className="text-8xl font-bold bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 bg-clip-text text-transparent tracking-tight">
-            OhDit
+            {t('title')}
           </h1>
           <p className="text-3xl text-slate-700 font-medium">
-            Web Accessibility Audit Tool
+            {t('subtitle')}
           </p>
         </div>
         
         <div className="space-y-6">
           <h2 className="text-4xl text-indigo-800 font-semibold">
-            Come back soon
+            {t('comeBackSoon')}
           </h2>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            We're building something amazing for accessibility professionals.<br />
-            <span className="text-indigo-600 font-semibold">RGAA 4.1</span> compliance made simple.
+            {t('description')}<br />
+            <span className="text-indigo-600 font-semibold">RGAA 4.1</span> {t('rgaaCompliance')}
           </p>
         </div>
         
         <div className="pt-6">
           <div className="inline-flex items-center space-x-3 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full border border-indigo-200">
             <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
-            <span className="text-indigo-700 font-medium">In development</span>
+            <span className="text-indigo-700 font-medium">{t('inDevelopment')}</span>
           </div>
         </div>
       </div>
