@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslation } from 'react-i18next';
+import Link from 'next/link';
 
 export default function Landing() {
   const { t } = useTranslation('landing');
@@ -26,9 +27,11 @@ export default function Landing() {
         </div>
         
         <div className="space-y-6">
-          <h2 className="text-4xl text-indigo-800 font-semibold">
-            {t('comeBackSoon')}
-          </h2>
+          <Link href="/project/my-project/criterion/1.2?page=456">
+            <h2 className="text-4xl text-indigo-800 font-semibold hover:text-indigo-900 cursor-pointer transition-colors">
+              {t('comeBackSoon')}
+            </h2>
+          </Link>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
             {t('description')}<br />
             <span className="text-indigo-600 font-semibold">RGAA 4.1</span> {t('rgaaCompliance')}
