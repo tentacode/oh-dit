@@ -1,0 +1,111 @@
+{
+  "formatOnSave": true,
+  "defaultFormatter": "prettier",
+  "organizeImportsOnSave": true,
+  "rules": {
+    "backend/**/*.php": {
+      "formatter": "php-cs-fixer",
+      "formatOnSave": true,
+      "organizeImportsOnSave": true,
+      "phpCsFixer": {
+        "rules": {
+          "@PSR2": true,
+          "array_syntax": {
+            "syntax": "short"
+          },
+          "ordered_imports": true,
+          "no_unused_imports": true,
+          "single_quote": true,
+          "no_empty_comment": true,
+          "no_extra_blank_lines": true,
+          "phpdoc_no_empty_return": true,
+          "phpdoc_order": true,
+          "phpdoc_separation": true,
+          "phpdoc_types_order": {
+            "null_adjustment": "always_last",
+            "sort_algorithm": "none"
+          },
+          "yoda_style": false
+        }
+      }
+    },
+    "frontend/**/*.{ts,tsx}": {
+      "formatter": "prettier",
+      "formatOnSave": true,
+      "organizeImportsOnSave": true,
+      "prettier": {
+        "semi": true,
+        "singleQuote": true,
+        "trailingComma": "es5",
+        "printWidth": 100,
+        "tabWidth": 2
+      },
+      "typescript": {
+        "compilerOptions": {
+          "strict": true,
+          "target": "ES2020",
+          "module": "ESNext",
+          "moduleResolution": "node",
+          "jsx": "preserve",
+          "esModuleInterop": true,
+          "skipLibCheck": true,
+          "forceConsistentCasingInFileNames": true
+        }
+      }
+    },
+    "frontend/**/*.{css,scss}": {
+      "formatter": "prettier",
+      "formatOnSave": true
+    },
+    "infrastructure/**/*.{yml,yaml}": {
+      "formatter": "prettier",
+      "formatOnSave": true,
+      "prettier": {
+        "parser": "yaml"
+      }
+    }
+  },
+  "folderStructure": {
+    "backend": {
+      "src": {
+        "AuditResult": {
+          "Controller": {},
+          "Entity": {},
+          "Repository": {},
+          "Service": {},
+          "Tests": {}
+        }
+      },
+      "config": {},
+      "templates": {},
+      "tests": {}
+    },
+    "frontend": {
+      "src": {
+        "components": {},
+        "features": {
+          "audit": {}
+        },
+        "hooks": {},
+        "store": {},
+        "types": {},
+        "utils": {}
+      }
+    },
+    "infrastructure": {
+      "docker": {},
+      "ansible": {}
+    }
+  },
+  "search": {
+    "exclude": [
+      "**/node_modules/**",
+      "**/vendor/**",
+      "**/var/**",
+      "**/.git/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/.next/**"
+    ]
+  }
+} 
