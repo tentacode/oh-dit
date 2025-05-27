@@ -1,4 +1,4 @@
-.PHONY: help install up down restart ps shell-php shell-node db-shell logs clean
+.PHONY: help install up down restart ps shell-frontend db-shell logs clean
 
 # Colors
 CYAN = \033[0;36m
@@ -8,26 +8,21 @@ NC = \033[0m # No Color
 
 help:
 	@echo "$(CYAN)OhDit Development Commands:$(NC)"
-	@echo "$(GREEN)make install$(NC)      - First time setup (build containers and install dependencies)"
+	@echo "$(GREEN)make install$(NC)      - First time setup (copy env and build containers)"
 	@echo "$(GREEN)make up$(NC)           - Start all containers"
 	@echo "$(GREEN)make down$(NC)         - Stop all containers"
 	@echo "$(GREEN)make restart$(NC)      - Restart all containers"
 	@echo "$(GREEN)make ps$(NC)           - Show container status"
-	@echo "$(GREEN)make shell-php$(NC)    - Open PHP container shell"
-	@echo "$(GREEN)make shell-node$(NC)   - Open Node.js container shell"
+	@echo "$(GREEN)make shell-frontend$(NC) - Open frontend container shell"
 	@echo "$(GREEN)make db-shell$(NC)     - Open PostgreSQL shell"
 	@echo "$(GREEN)make logs$(NC)         - View container logs"
 	@echo "$(GREEN)make clean$(NC)        - Remove all containers and volumes"
 
 install:
+	@echo "$(YELLOW)Setting up environment...$(NC)"
+	cp .env.dist .env
 	@echo "$(YELLOW)Building containers...$(NC)"
 	docker compose build
-	@echo "$(YELLOW)Installing backend dependencies...$(NC)"
-	docker compose run --rm php composer install
-	@echo "$(YELLOW)Installing frontend dependencies...$(NC)"
-	docker compose run --rm node npm install
-	@echo "$(YELLOW)Setting up database...$(NC)"
-	docker compose run --rm php bin/console doctrine:migrations:migrate --no-interaction
 	@echo "$(GREEN)Installation complete!$(NC)"
 
 up:
@@ -42,14 +37,11 @@ restart:
 ps:
 	docker compose ps
 
-shell-php:
-	docker compose exec php bash
+shell-frontend:
+	docker compose exec frontend sh
 
-shell-node:
-	docker compose exec node bash
-
-shell-postgres:
-	docker compose exec postgres psql -U postgres ohdit
+db-shell:
+	docker compose exec database psql -U ohdit ohdit_dev
 
 logs:
 	docker compose logs -f
