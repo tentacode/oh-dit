@@ -319,13 +319,11 @@ export default function CriterionValidation({
   };
 
   const ValidationToggle = () => (
-    <div className="inline-flex bg-slate-100 rounded-lg p-1">
+    <div className="join">
       <button
         onClick={() => handleValidationChange('valid')}
-        className={`flex items-center gap-2 px-4 py-2 rounded-md font-medium transition-all duration-200 ${
-          validationStatus === 'valid'
-            ? 'bg-white text-green-700 shadow-sm'
-            : 'text-slate-600 hover:text-green-600'
+        className={`btn join-item ${
+          validationStatus === 'valid' ? 'btn-success' : 'btn-outline'
         }`}
       >
         <CheckIcon className="w-4 h-4" />
@@ -334,10 +332,8 @@ export default function CriterionValidation({
       
       <button
         onClick={() => handleValidationChange('invalid')}
-        className={`flex items-center gap-2 px-4 py-2 rounded-md font-medium transition-all duration-200 ${
-          validationStatus === 'invalid'
-            ? 'bg-white text-red-700 shadow-sm'
-            : 'text-slate-600 hover:text-red-600'
+        className={`btn join-item ${
+          validationStatus === 'invalid' ? 'btn-error' : 'btn-outline'
         }`}
       >
         <XMarkIcon className="w-4 h-4" />
@@ -346,10 +342,8 @@ export default function CriterionValidation({
       
       <button
         onClick={() => handleValidationChange('not-applicable')}
-        className={`flex items-center gap-2 px-4 py-2 rounded-md font-medium transition-all duration-200 ${
-          validationStatus === 'not-applicable'
-            ? 'bg-white text-slate-700 shadow-sm'
-            : 'text-slate-600 hover:text-slate-700'
+        className={`btn join-item ${
+          validationStatus === 'not-applicable' ? 'btn-neutral' : 'btn-outline'
         }`}
       >
         <MinusIcon className="w-4 h-4" />
@@ -359,71 +353,66 @@ export default function CriterionValidation({
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 relative">
+    <div className="min-h-screen bg-base-200 relative">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-20 left-20 w-32 h-32 bg-blue-100 rounded-full blur-xl"></div>
-        <div className="absolute top-40 right-32 w-24 h-24 bg-purple-100 rounded-full blur-xl"></div>
-        <div className="absolute bottom-32 left-1/3 w-28 h-28 bg-indigo-100 rounded-full blur-xl"></div>
+        <div className="absolute top-20 left-20 w-32 h-32 bg-primary/20 rounded-full blur-xl"></div>
+        <div className="absolute top-40 right-32 w-24 h-24 bg-secondary/20 rounded-full blur-xl"></div>
+        <div className="absolute bottom-32 left-1/3 w-28 h-28 bg-accent/20 rounded-full blur-xl"></div>
       </div>
 
       {/* Top Navigation Bar */}
-      <div className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-4">
-                <Link href="/" className="group flex items-center gap-3">
-                  <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-200 group-hover:scale-105">
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                  </div>
-                  <span className="text-lg font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">OhDit</span>
-                </Link>
-                <div className="w-px h-6 bg-slate-300"></div>
-                <h1 className="text-lg font-medium text-slate-700">{projectName}</h1>
+      <div className="navbar bg-base-100 border-b border-base-300 sticky top-0 z-50 shadow-sm">
+        <div className="navbar-start">
+          <div className="flex items-center gap-4">
+            <Link href="/" className="btn btn-ghost gap-3">
+              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-primary-content" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
               </div>
-              
-              {/* Page Selector */}
-              <div className="relative">
-                <select 
-                  className="appearance-none bg-white border border-slate-300 rounded-lg px-4 py-2 pr-10 text-slate-700 font-medium hover:border-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all min-w-[200px]"
-                  value={currentPage.id}
-                  onChange={(e) => handlePageChange(e.target.value)}
-                >
-                  {pages.map(page => (
-                    <option key={page.id} value={page.id}>{page.name}</option>
-                  ))}
-                </select>
-                <ChevronDownIcon className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-slate-500 bg-slate-100 px-3 py-1 rounded-full">Critère {criterionId}</span>
-              {validationStatus && (
-                <div className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  validationStatus === 'valid' ? 'bg-green-100 text-green-700' :
-                  validationStatus === 'invalid' ? 'bg-red-100 text-red-700' :
-                  'bg-slate-100 text-slate-700'
-                }`}>
-                  {validationStatus === 'valid' ? '✓ Valide' :
-                   validationStatus === 'invalid' ? '✗ Invalide' : '— Non applicable'}
-                </div>
-              )}
-            </div>
+              <span className="text-lg font-semibold">OhDit</span>
+            </Link>
+            <div className="divider divider-horizontal"></div>
+            <h1 className="text-lg font-medium text-base-content/70">{projectName}</h1>
           </div>
+          
+          {/* Page Selector */}
+          <div className="ml-6">
+            <select 
+              className="select select-bordered w-full max-w-xs"
+              value={currentPage.id}
+              onChange={(e) => handlePageChange(e.target.value)}
+            >
+              {pages.map(page => (
+                <option key={page.id} value={page.id}>{page.name}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+        
+        <div className="navbar-end gap-4">
+          <div className="badge badge-neutral">Critère {criterionId}</div>
+          {validationStatus && (
+            <div className={`badge ${
+              validationStatus === 'valid' ? 'badge-success' :
+              validationStatus === 'invalid' ? 'badge-error' :
+              'badge-neutral'
+            }`}>
+              {validationStatus === 'valid' ? '✓ Valide' :
+               validationStatus === 'invalid' ? '✗ Invalide' : '— Non applicable'}
+            </div>
+          )}
         </div>
       </div>
 
       <div className="flex relative z-10">
         {/* Left Sidebar - Criteria List */}
-        <div className="w-80 bg-white border-r border-slate-200 h-screen sticky top-0 overflow-y-auto">
+        <div className="w-80 bg-base-100 border-r border-base-300 h-screen sticky top-0 overflow-y-auto">
           <div className="p-6">
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-slate-900 mb-2">Critères RGAA 4.1</h2>
-              <p className="text-sm text-slate-600">Évaluez chaque critère d'accessibilité</p>
+              <h2 className="text-lg font-semibold mb-2">Critères RGAA 4.1</h2>
+              <p className="text-sm text-base-content/60">Évaluez chaque critère d'accessibilité</p>
             </div>
             
             <div className="space-y-4">
@@ -431,7 +420,7 @@ export default function CriterionValidation({
                 <div key={topic.num}>
                   {/* Topic Header */}
                   <div className="mb-3">
-                    <h3 className="text-sm font-semibold text-slate-900 px-3 py-2 bg-slate-100 rounded-lg">
+                    <h3 className="text-sm font-semibold px-3 py-2 bg-base-200 rounded-lg">
                       {topic.num}. {topic.name}
                     </h3>
                   </div>
@@ -446,27 +435,25 @@ export default function CriterionValidation({
                         <div key={criterion.id} className="relative">
                           {/* Status Bar */}
                           <div className={`absolute left-0 top-0 bottom-0 w-1 rounded-r ${
-                            status === 'valid' ? 'bg-green-500' :
-                            status === 'invalid' ? 'bg-red-500' :
-                            'bg-slate-300'
+                            status === 'valid' ? 'bg-success' :
+                            status === 'invalid' ? 'bg-error' :
+                            'bg-base-300'
                           }`} />
                           
                           <button
                             onClick={() => handleCriterionChange(criterion.id)}
-                            className={`w-full text-left p-3 pl-6 rounded-lg transition-all duration-200 group ${
-                              isActive 
-                                ? 'bg-blue-50 border border-blue-200 shadow-sm' 
-                                : 'hover:bg-slate-50 border border-transparent hover:border-slate-200'
+                            className={`btn btn-ghost w-full text-left p-3 pl-6 rounded-lg justify-start h-auto min-h-0 ${
+                              isActive ? 'bg-primary/10 border-primary/20' : ''
                             }`}
                           >
-                            <div className="flex items-start gap-3">
+                            <div className="flex items-start gap-3 w-full">
                               <span className={`text-sm font-medium flex-shrink-0 ${
-                                isActive ? 'text-blue-900' : 'text-slate-900'
+                                isActive ? 'text-primary' : ''
                               }`}>
                                 {criterion.id}
                               </span>
                               <p className={`text-xs leading-relaxed truncate ${
-                                isActive ? 'text-blue-700' : 'text-slate-600'
+                                isActive ? 'text-primary/80' : 'text-base-content/60'
                               }`}>
                                 {criterion.name}
                               </p>
@@ -489,41 +476,42 @@ export default function CriterionValidation({
               {/* Main Content - 3/5 width */}
               <div className="flex-1 w-3/5">
             {/* Main Criterion Section */}
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8 mb-6">
-              {/* Topic Badge */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
-                  </svg>
+            <div className="card bg-base-100 shadow-sm border border-base-300 mb-6">
+              <div className="card-body">
+                {/* Topic Badge */}
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center">
+                    <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                    </svg>
+                  </div>
+                  <div className="badge badge-primary badge-outline">Images</div>
                 </div>
-                <span className="text-blue-700 font-medium bg-blue-50 px-3 py-1 rounded-full text-sm">Images</span>
-              </div>
-              
-              {/* Criterion Header */}
-              <div className="mb-8">
-                <h1 className="text-3xl font-bold text-slate-900 mb-3">
-                  Critère {criterionId}
-                </h1>
-                <p className="text-lg text-slate-700 leading-relaxed mb-6">
-                  Les images décoratives ne doivent pas avoir un texte de remplacement
-                </p>
                 
-                {/* Validation Toggle */}
-                <div className="flex items-center gap-4">
-                  <span className="text-sm font-medium text-slate-700">Statut de validation :</span>
-                  <ValidationToggle />
+                {/* Criterion Header */}
+                <div className="mb-8">
+                  <h1 className="text-3xl font-bold mb-3">
+                    Critère {criterionId}
+                  </h1>
+                  <p className="text-lg leading-relaxed mb-6 text-base-content/80">
+                    Les images décoratives ne doivent pas avoir un texte de remplacement
+                  </p>
+                  
+                  {/* Validation Toggle */}
+                  <div className="flex items-center gap-4">
+                    <span className="text-sm font-medium">Statut de validation :</span>
+                    <ValidationToggle />
+                  </div>
                 </div>
-              </div>
 
-              {/* Criticality Selector */}
-              <div className="border-t border-slate-200 pt-6">
-                <label className="block text-sm font-medium text-slate-700 mb-3">
-                  Niveau de criticité
-                </label>
-                <div className="relative max-w-xs">
+                {/* Criticality Selector */}
+                <div className="divider"></div>
+                <div>
+                  <label className="label">
+                    <span className="label-text font-medium">Niveau de criticité</span>
+                  </label>
                   <select 
-                    className="appearance-none bg-white border border-slate-300 rounded-lg px-4 py-2.5 pr-10 text-slate-700 hover:border-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all w-full"
+                    className="select select-bordered w-full max-w-xs"
                     value={criticality}
                     onChange={(e) => handleCriticalityChange(e.target.value)}
                   >
@@ -532,195 +520,189 @@ export default function CriterionValidation({
                     <option value="annoying">⚠️ Gênant</option>
                     <option value="good-practice">💡 Bonne pratique</option>
                   </select>
-                  <ChevronDownIcon className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
             </div>
 
             {/* Comments Section */}
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <ChatBubbleLeftIcon className="w-5 h-5 text-blue-600" />
+            <div className="card bg-base-100 shadow-sm border border-base-300">
+              <div className="card-body">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
+                    <ChatBubbleLeftIcon className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold">
+                      Discussion
+                    </h3>
+                    <p className="text-sm text-base-content/60">{comments.length} commentaire{comments.length > 1 ? 's' : ''}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-slate-900">
-                    Discussion
-                  </h3>
-                  <p className="text-sm text-slate-500">{comments.length} commentaire{comments.length > 1 ? 's' : ''}</p>
-                </div>
-              </div>
           
           {/* Comment List */}
           <div className="space-y-4 mb-8">
             {comments.map(comment => (
-              <div key={comment.id} className={`p-6 rounded-lg border transition-all duration-200 ${
-                comment.isOwn 
-                  ? 'bg-blue-50 border-blue-200' 
-                  : 'bg-slate-50 border-slate-200'
-              }`}>
-                <div className="flex items-start gap-4">
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white font-medium ${
-                    comment.isOwn ? 'bg-blue-600' : 'bg-slate-500'
-                  }`}>
+              <div key={comment.id} className={`chat ${comment.isOwn ? 'chat-end' : 'chat-start'}`}>
+                <div className="chat-image avatar">
+                  <div className={`w-10 rounded-full ${comment.isOwn ? 'bg-primary' : 'bg-neutral'} flex items-center justify-center text-white font-medium`}>
                     {comment.author.charAt(0)}
                   </div>
+                </div>
+                <div className="chat-header">
+                  {comment.author}
+                  <time className="text-xs opacity-50 ml-2">{comment.date}</time>
+                </div>
+                <div className={`chat-bubble ${comment.isOwn ? 'chat-bubble-primary' : ''} max-w-none`}>
+                  <div 
+                    className="prose prose-sm max-w-none leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: renderMarkdown(comment.content) }}
+                  />
                   
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="font-medium text-slate-900">
-                        {comment.author}
-                      </span>
-                      <span className="text-sm text-slate-500">{comment.date}</span>
+                  {comment.attachments && (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {comment.attachments.map(attachment => (
+                        <div key={attachment} className="badge badge-outline gap-2 cursor-pointer">
+                          <PaperClipIcon className="w-3 h-3" />
+                          {attachment}
+                        </div>
+                      ))}
                     </div>
-                    
-                    <div 
-                      className="text-slate-700 prose prose-sm max-w-none leading-relaxed"
-                      dangerouslySetInnerHTML={{ __html: renderMarkdown(comment.content) }}
-                    />
-                    
-                    {comment.attachments && (
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {comment.attachments.map(attachment => (
-                          <div key={attachment} className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border border-slate-200 hover:border-slate-300 cursor-pointer transition-colors text-sm">
-                            <PaperClipIcon className="w-4 h-4 text-slate-500" />
-                            <span className="text-slate-700">{attachment}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                  )}
                 </div>
               </div>
             ))}
           </div>
 
           {/* Add Comment */}
-          <div className="border-t border-slate-200 pt-6">
-            <div className="flex gap-4">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-medium">
+          <div className="divider"></div>
+          <div className="flex gap-4">
+            <div className="avatar">
+              <div className="w-10 rounded-full bg-primary flex items-center justify-center text-white font-medium">
                 V
               </div>
-              <div className="flex-1">
-                <textarea
-                  className="w-full border border-slate-300 rounded-lg px-4 py-3 text-slate-700 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none"
-                  rows={3}
-                  placeholder="Partagez vos observations, suggestions ou questions..."
-                  value={newComment}
-                  onChange={(e) => setNewComment(e.target.value)}
-                />
-                <div className="flex justify-between items-center mt-3">
-                  <button className="flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors px-3 py-2 rounded-lg hover:bg-slate-50">
-                    <PaperClipIcon className="w-4 h-4" />
-                    <span className="text-sm">Joindre un fichier</span>
-                  </button>
-                  <button 
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                    onClick={handleSubmitComment}
-                    disabled={!newComment.trim()}
-                  >
-                    Publier
-                  </button>
-                </div>
+            </div>
+            <div className="flex-1">
+              <textarea
+                className="textarea textarea-bordered w-full resize-none"
+                rows={3}
+                placeholder="Partagez vos observations, suggestions ou questions..."
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+              />
+              <div className="flex justify-between items-center mt-3">
+                <button className="btn btn-ghost btn-sm gap-2">
+                  <PaperClipIcon className="w-4 h-4" />
+                  Joindre un fichier
+                </button>
+                <button 
+                  className="btn btn-primary"
+                  onClick={handleSubmitComment}
+                  disabled={!newComment.trim()}
+                >
+                  Publier
+                </button>
               </div>
             </div>
           </div>
             </div>
 
-            {/* Validation Info */}
-            <div className="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200">
+                        {/* Validation Info */}
+            <div className="mt-6 p-4 bg-base-200 rounded-lg border border-base-300">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                  <CheckIcon className="w-4 h-4 text-green-600" />
+                <div className="w-8 h-8 bg-success/20 rounded-lg flex items-center justify-center">
+                  <CheckIcon className="w-4 h-4 text-success" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-slate-900">
+                  <p className="text-sm font-medium">
                     Dernière validation par Marie Dupont
                   </p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-base-content/60">
                     15 janvier 2024 à 14:30
                   </p>
                 </div>
               </div>
             </div>
-          </div>
+              </div>
+            </div>
 
           {/* Description Sidebar - 2/5 width */}
           <div className="w-2/5">
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sticky top-24">
-              <h3 className="text-lg font-semibold text-slate-900 mb-6">
-                Guide du critère
-              </h3>
-              
-              <div className="space-y-6">
-                {/* Description */}
-                <div>
-                  <h4 className="font-medium text-slate-900 mb-3 flex items-center gap-2">
-                    <div className="w-5 h-5 bg-blue-100 rounded flex items-center justify-center">
-                      <span className="text-blue-600 text-xs">📋</span>
-                    </div>
-                    Description
-                  </h4>
-                  <p className="text-slate-700 text-sm mb-3">
-                    Chaque image de décoration doit vérifier une de ces conditions :
-                  </p>
-                  <ul className="space-y-2 text-sm text-slate-700">
-                    <li className="flex items-start gap-2">
-                      <span className="text-blue-500 mt-1">•</span>
-                      <span>L'image de décoration est dépourvue d'alternative textuelle</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-blue-500 mt-1">•</span>
-                      <span>L'image de décoration possède un attribut alt vide (alt="")</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-blue-500 mt-1">•</span>
-                      <span>L'image de décoration possède un attribut role="presentation"</span>
-                    </li>
-                  </ul>
-                </div>
+            <div className="card bg-base-100 shadow-sm border border-base-300 sticky top-24">
+              <div className="card-body">
+                <h3 className="card-title mb-6">
+                  Guide du critère
+                </h3>
+                
+                <div className="space-y-6">
+                  {/* Description */}
+                  <div>
+                    <h4 className="font-medium mb-3 flex items-center gap-2">
+                      <div className="w-5 h-5 bg-primary/20 rounded flex items-center justify-center">
+                        <span className="text-primary text-xs">📋</span>
+                      </div>
+                      Description
+                    </h4>
+                    <p className="text-sm mb-3 text-base-content/80">
+                      Chaque image de décoration doit vérifier une de ces conditions :
+                    </p>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start gap-2">
+                        <span className="text-primary mt-1">•</span>
+                        <span>L'image de décoration est dépourvue d'alternative textuelle</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-primary mt-1">•</span>
+                        <span>L'image de décoration possède un attribut alt vide (alt="")</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-primary mt-1">•</span>
+                        <span>L'image de décoration possède un attribut role="presentation"</span>
+                      </li>
+                    </ul>
+                  </div>
 
-                {/* Why it matters */}
-                <div>
-                  <h4 className="font-medium text-slate-900 mb-3 flex items-center gap-2">
-                    <div className="w-5 h-5 bg-amber-100 rounded flex items-center justify-center">
-                      <span className="text-amber-600 text-xs">💡</span>
-                    </div>
-                    Impact utilisateur
-                  </h4>
-                  <p className="text-slate-700 text-sm">
-                    Les images décoratives avec des textes alternatifs créent de la confusion pour les utilisateurs de lecteurs d'écran. 
-                    Ces utilisateurs entendent des descriptions d'images qui n'apportent aucune information utile, ce qui rend la navigation 
-                    plus difficile et moins efficace.
-                  </p>
-                </div>
+                  {/* Why it matters */}
+                  <div>
+                    <h4 className="font-medium mb-3 flex items-center gap-2">
+                      <div className="w-5 h-5 bg-warning/20 rounded flex items-center justify-center">
+                        <span className="text-warning text-xs">💡</span>
+                      </div>
+                      Impact utilisateur
+                    </h4>
+                    <p className="text-sm text-base-content/80">
+                      Les images décoratives avec des textes alternatifs créent de la confusion pour les utilisateurs de lecteurs d'écran. 
+                      Ces utilisateurs entendent des descriptions d'images qui n'apportent aucune information utile, ce qui rend la navigation 
+                      plus difficile et moins efficace.
+                    </p>
+                  </div>
 
-                {/* Examples */}
-                <div>
-                  <h4 className="font-medium text-slate-900 mb-3 flex items-center gap-2">
-                    <div className="w-5 h-5 bg-green-100 rounded flex items-center justify-center">
-                      <span className="text-green-600 text-xs">✓</span>
-                    </div>
-                    Exemples
-                  </h4>
-                  
-                  <div className="space-y-3">
-                    <div className="border border-red-200 bg-red-50 p-3 rounded-lg">
-                      <h5 className="font-medium text-red-700 mb-2 text-sm">❌ Incorrect</h5>
-                      <code className="bg-red-100 text-red-800 p-2 rounded text-xs font-mono block">
-                        &lt;img src="decoration.jpg" alt="Belle image décorative"&gt;
-                      </code>
-                    </div>
+                  {/* Examples */}
+                  <div>
+                    <h4 className="font-medium mb-3 flex items-center gap-2">
+                      <div className="w-5 h-5 bg-success/20 rounded flex items-center justify-center">
+                        <span className="text-success text-xs">✓</span>
+                      </div>
+                      Exemples
+                    </h4>
                     
-                    <div className="border border-green-200 bg-green-50 p-3 rounded-lg">
-                      <h5 className="font-medium text-green-700 mb-2 text-sm">✅ Correct</h5>
-                      <code className="bg-green-100 text-green-800 p-2 rounded text-xs font-mono block mb-2">
-                        &lt;img src="decoration.jpg" alt=""&gt;
-                      </code>
-                      <p className="text-xs text-green-600 mb-1">ou</p>
-                      <code className="bg-green-100 text-green-800 p-2 rounded text-xs font-mono block">
-                        &lt;img src="decoration.jpg" alt="" role="presentation"&gt;
-                      </code>
+                    <div className="space-y-3">
+                      <div className="bg-error/10 border border-error/20 rounded-lg p-3">
+                        <h5 className="font-medium text-sm mb-2 text-error">❌ Incorrect</h5>
+                        <code className="bg-slate-800 text-slate-100 p-2 rounded text-xs font-mono block">
+                          &lt;img src="decoration.jpg" alt="Belle image décorative"&gt;
+                        </code>
+                      </div>
+                      
+                      <div className="bg-success/10 border border-success/20 rounded-lg p-3">
+                        <h5 className="font-medium text-sm mb-2 text-success">✅ Correct</h5>
+                        <code className="bg-slate-800 text-slate-100 p-2 rounded text-xs font-mono block mb-2">
+                          &lt;img src="decoration.jpg" alt=""&gt;
+                        </code>
+                        <p className="text-xs text-base-content/60 mb-1">ou</p>
+                        <code className="bg-slate-800 text-slate-100 p-2 rounded text-xs font-mono block">
+                          &lt;img src="decoration.jpg" alt="" role="presentation"&gt;
+                        </code>
+                      </div>
                     </div>
                   </div>
                 </div>
