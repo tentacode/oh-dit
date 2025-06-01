@@ -4,44 +4,53 @@ import { useEffect, useState } from 'react';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-const resources = {
-  en: {
-    landing: {
-      title: "OhDit",
-      subtitle: "Web Accessibility Audit Tool",
-      comeBackSoon: "Come back soon",
-      description: "We're building something amazing for accessibility professionals.",
-      rgaaCompliance: "RGAA 4.1 compliance made simple.",
-      inDevelopment: "In development"
-    },
-  },
-  fr: {
-    landing: {
-      title: "OhDit",
-      subtitle: "Outil d'Audit d'Accessibilité Web",
-      comeBackSoon: "Revenez bientôt",
-      description: "Nous construisons quelque chose d'extraordinaire pour les professionnels de l'accessibilité.",
-      rgaaCompliance: "La conformité RGAA 4.1 simplifiée.",
-      inDevelopment: "En développement"
-    },
-  },
-};
+// Import translations from feature directories
+import landingFr from '../features/landing/translations/fr';
+import landingEn from '../features/landing/translations/en';
+import criterionFr from '../features/criterion/translations/fr';
+import criterionEn from '../features/criterion/translations/en';
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
+    // Create resources object inside useEffect to be reactive to changes
+    const resources = {
+      en: {
+        landing: landingEn,
+        criterion: criterionEn,
+      },
+      fr: {
+        landing: landingFr,
+        criterion: criterionFr,
+      },
+    };
+
     // Detect browser language
     const browserLang = navigator.language.split('-')[0]; // Get 'fr' from 'fr-FR'
     const supportedLang = ['fr', 'en'].includes(browserLang) ? browserLang : 'fr';
 
-    if (!i18n.isInitialized) {
+    // In development, always reinitialize to support hot reload
+    const shouldInitialize = !i18n.isInitialized || process.env.NODE_ENV === 'development';
+
+    if (shouldInitialize) {
+      // If already initialized in dev, remove existing resources
+      if (i18n.isInitialized && process.env.NODE_ENV === 'development') {
+        Object.keys(i18n.store.data).forEach(lng => {
+          Object.keys(i18n.store.data[lng] || {}).forEach(ns => {
+            i18n.removeResourceBundle(lng, ns);
+          });
+        });
+      }
+
       i18n
         .use(initReactI18next)
         .init({
           resources,
           lng: supportedLang,
           fallbackLng: 'en',
+          debug: process.env.NODE_ENV === 'development',
+          
           interpolation: {
             escapeValue: false,
           },
@@ -54,7 +63,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     } else {
       setIsInitialized(true);
     }
-  }, []);
+  }, [landingFr, landingEn, criterionFr, criterionEn]); // Add translations to dependency array
 
   if (!isInitialized) {
     return <div>Loading...</div>;

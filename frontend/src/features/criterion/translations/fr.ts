@@ -1,4 +1,4 @@
-{
+export default {
   "validation": {
     "valid": "Valide",
     "invalid": "Invalide",
@@ -33,4 +33,4 @@
   "navigation": {
     "criterion": "Critère"
   }
-} 
+} as const; 
