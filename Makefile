@@ -38,10 +38,10 @@ ps:
 	docker compose ps
 
 shell-frontend:
-	docker compose exec frontend sh
+	docker compose exec frontend zsh
 
 shell-backend:
-	docker compose exec backend sh
+	docker compose exec backend zsh
 
 shell-db:
 	docker compose exec database psql -U ohdit ohdit_dev

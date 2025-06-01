@@ -1,6 +1,6 @@
 FROM php:8.4-fpm
 
-# Install system dependencies
+# Install system dependencies including zsh
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -9,7 +9,17 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     libpq-dev \
     zip \
-    unzip
+    unzip \
+    zsh
+
+# Install oh-my-zsh for better shell experience
+RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+# Set zsh as default shell via environment variable
+ENV SHELL=/bin/zsh
+
+# Configure zsh with useful plugins for PHP development
+RUN sed -i 's/plugins=(git)/plugins=(git composer symfony docker docker-compose)/' ~/.zshrc
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
