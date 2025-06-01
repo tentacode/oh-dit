@@ -70,7 +70,7 @@ export default function Landing() {
                   <h3 className="card-title text-lg">Notre mission</h3>
                 </div>
                 <p className="text-base-content/80 leading-relaxed">
-                  {t('description')} Nous croyons que l'accessibilité numérique est un droit fondamental, pas un luxe.
+                  {t('description')}
                 </p>
               </div>
             </div>

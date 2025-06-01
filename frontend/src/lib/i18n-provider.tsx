@@ -59,7 +59,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     } else {
       setIsInitialized(true);
     }
-  }, [landingFr, landingEn]); // Remove criterion translations from dependency array
+  }, []); // Remove criterion translations from dependency array
 
   if (!isInitialized) {
     return <div>Loading...</div>;
