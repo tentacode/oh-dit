@@ -13,6 +13,8 @@ final class HealthcheckController extends AbstractController
     #[Route('/', name: 'healthcheck', methods: ['GET'])]
     public function __invoke(): JsonResponse
     {
-        return $this->json(['healthcheck' => true]);
+        return $this->json([
+            'healthcheck' => true,
+        ]);
     }
-} 
+}
