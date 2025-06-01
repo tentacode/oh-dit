@@ -40,7 +40,10 @@ ps:
 shell-frontend:
 	docker compose exec frontend sh
 
-db-shell:
+shell-backend:
+	docker compose exec backend sh
+
+shell-db:
 	docker compose exec database psql -U ohdit ohdit_dev
 
 logs:

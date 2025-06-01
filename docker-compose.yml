@@ -18,6 +18,24 @@ services:
     depends_on:
       - database
 
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/var/www/html
+    environment:
+      - APP_ENV=dev
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=database
+      - POSTGRES_PORT=5432
+    depends_on:
+      - database
+
   database:
     image: postgres:17.5-alpine
     environment:
