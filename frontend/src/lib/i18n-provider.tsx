@@ -7,8 +7,6 @@ import { initReactI18next } from 'react-i18next';
 // Import translations from feature directories
 import landingFr from '../features/landing/translations/fr';
 import landingEn from '../features/landing/translations/en';
-import criterionFr from '../features/criterion/translations/fr';
-import criterionEn from '../features/criterion/translations/en';
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [isInitialized, setIsInitialized] = useState(false);
@@ -18,11 +16,9 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     const resources = {
       en: {
         landing: landingEn,
-        criterion: criterionEn,
       },
       fr: {
         landing: landingFr,
-        criterion: criterionFr,
       },
     };
 
@@ -63,7 +59,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     } else {
       setIsInitialized(true);
     }
-  }, [landingFr, landingEn, criterionFr, criterionEn]); // Add translations to dependency array
+  }, [landingFr, landingEn]); // Remove criterion translations from dependency array
 
   if (!isInitialized) {
     return <div>Loading...</div>;

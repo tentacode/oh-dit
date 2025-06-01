@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 import { marked } from 'marked';
 import hljs from 'highlight.js/lib/core';
@@ -11,8 +10,6 @@ import {
   CheckIcon, 
   XMarkIcon, 
   MinusIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
   PaperClipIcon,
   ChatBubbleLeftIcon
 } from '@heroicons/react/24/outline';
@@ -37,18 +34,10 @@ interface Criterion {
   name: string;
 }
 
-interface Topic {
-  num: number;
-  name: string;
-  criteria: Criterion[];
-}
-
 export default function CriterionValidation({ 
-  projectSlug, 
   criterionId, 
   pageId 
-}: CriterionValidationProps) {
-  const { t } = useTranslation('criterion');
+}: Omit<CriterionValidationProps, 'projectSlug'>) {
   
   // Mock data - replace with real data later
   const projectName = "My Project";
@@ -210,7 +199,7 @@ export default function CriterionValidation({
       id: '1',
       author: 'Marie Dupont',
       date: '15 jan. 14:30',
-      content: 'J\'ai trouvé **3 images décoratives** avec des attributs `alt` non vides sur la page d\'accueil :\n\n• Logo décoratif en header : `alt="Belle décoration"`\n• Séparateur visuel : `alt="ligne de séparation"`\n• Image de fond : `alt="arrière-plan coloré"`\n\n**Correction suggérée** :\n\n```html\n<!-- ❌ Problématique -->\n<img src="logo-decoratif.svg" alt="Belle décoration" class="header-logo">\n<div class="separator">\n  <img src="line.png" alt="ligne de séparation">\n</div>\n\n<!-- ✅ Corrigé -->\n<img src="logo-decoratif.svg" alt="" role="presentation" class="header-logo">\n<div class="separator" aria-hidden="true">\n  <img src="line.png" alt="">\n</div>\n```\n\nCes images devraient avoir `alt=""` ou `role="presentation"` car elles sont purement décoratives.',
+      content: 'J&rsquo;ai trouvé **3 images décoratives** avec des attributs `alt` non vides sur la page d&rsquo;accueil :\n\n• Logo décoratif en header : `alt=&quot;Belle décoration&quot;`\n• Séparateur visuel : `alt=&quot;ligne de séparation&quot;`\n• Image de fond : `alt=&quot;arrière-plan coloré&quot;`\n\n**Correction suggérée** :\n\n```html\n<!-- ❌ Problématique -->\n<img src=&quot;logo-decoratif.svg&quot; alt=&quot;Belle décoration&quot; class=&quot;header-logo&quot;>\n<div class=&quot;separator&quot;>\n  <img src=&quot;line.png&quot; alt=&quot;ligne de séparation&quot;>\n</div>\n\n<!-- ✅ Corrigé -->\n<img src=&quot;logo-decoratif.svg&quot; alt=&quot;&quot; role=&quot;presentation&quot; class=&quot;header-logo&quot;>\n<div class=&quot;separator&quot; aria-hidden=&quot;true&quot;>\n  <img src=&quot;line.png&quot; alt=&quot;&quot;>\n</div>\n```\n\nCes images devraient avoir `alt=&quot;&quot;` ou `role=&quot;presentation&quot;` car elles sont purement décoratives.',
       attachments: ['screenshot-header.png', 'separator-issue.png'],
       isOwn: false
     },
@@ -218,14 +207,14 @@ export default function CriterionValidation({
       id: '2',
       author: 'Vous',
       date: '14 jan. 16:45',
-      content: '**Suggestion de correction** :\n\n```html\n<!-- ❌ Incorrect -->\n<img src="decoration.jpg" alt="Belle image décorative">\n\n<!-- ✅ Correct -->\n<img src="decoration.jpg" alt="" role="presentation">\n```\n\nOu mieux encore, utiliser CSS `background-image` pour les images purement décoratives.',
+      content: '**Suggestion de correction** :\n\n```html\n<!-- ❌ Incorrect -->\n<img src=&quot;decoration.jpg&quot; alt=&quot;Belle image décorative&quot;>\n\n<!-- ✅ Correct -->\n<img src=&quot;decoration.jpg&quot; alt=&quot;&quot; role=&quot;presentation&quot;>\n```\n\nOu mieux encore, utiliser CSS `background-image` pour les images purement décoratives.',
       isOwn: true
     },
     {
       id: '3',
       author: 'Sophie Leroy',
       date: '13 jan. 09:15',
-      content: 'Test avec **NVDA** : les images décoratives avec texte alternatif perturbent la navigation. L\'utilisateur entend "Belle décoration image" sans contexte utile.\n\n> Impact : **Gênant** pour la navigation au clavier et lecteur d\'écran.',
+      content: 'Test avec **NVDA** : les images décoratives avec texte alternatif perturbent la navigation. L&rsquo;utilisateur entend &quot;Belle décoration image&quot; sans contexte utile.\n\n> Impact : **Gênant** pour la navigation au clavier et lecteur d&rsquo;écran.',
       attachments: ['nvda-test.mp3'],
       isOwn: false
     }
@@ -238,7 +227,7 @@ export default function CriterionValidation({
   };
 
   const handleCriticalityChange = (value: string) => {
-    setCriticality(value as any);
+    setCriticality(value as 'blocking' | 'annoying' | 'good-practice' | '');
     console.log('Auto-saving criticality:', value);
   };
 
@@ -273,7 +262,7 @@ export default function CriterionValidation({
   const renderMarkdown = (content: string) => {
     try {
       // Pre-process content to handle code blocks more safely
-      let processedContent = content
+      const processedContent = content
         // Handle code blocks with proper escaping
         .replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
           const language = lang || 'html';
@@ -289,7 +278,7 @@ export default function CriterionValidation({
             if (hljs.getLanguage(language)) {
               highlightedCode = hljs.highlight(escapedCode, { language }).value;
             }
-          } catch (e) {
+          } catch {
             console.warn('Highlighting failed, using plain text');
           }
           
@@ -412,7 +401,7 @@ export default function CriterionValidation({
           <div className="p-6">
             <div className="mb-6">
               <h2 className="text-lg font-semibold mb-2">Critères RGAA 4.1</h2>
-              <p className="text-sm text-base-content/60">Évaluez chaque critère d'accessibilité</p>
+              <p className="text-sm text-base-content/60">Évaluez chaque critère d&rsquo;accessibilité</p>
             </div>
             
             <div className="space-y-4">
@@ -648,15 +637,15 @@ export default function CriterionValidation({
                     <ul className="space-y-2 text-sm">
                       <li className="flex items-start gap-2">
                         <span className="text-primary mt-1">•</span>
-                        <span>L'image de décoration est dépourvue d'alternative textuelle</span>
+                        <span>L&rsquo;image de décoration est dépourvue d&rsquo;alternative textuelle</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-primary mt-1">•</span>
-                        <span>L'image de décoration possède un attribut alt vide (alt="")</span>
+                        <span>L&rsquo;image de décoration possède un attribut alt vide (alt=&quot;&quot;)</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-primary mt-1">•</span>
-                        <span>L'image de décoration possède un attribut role="presentation"</span>
+                        <span>L&rsquo;image de décoration possède un attribut role=&quot;presentation&quot;</span>
                       </li>
                     </ul>
                   </div>
@@ -670,8 +659,8 @@ export default function CriterionValidation({
                       Impact utilisateur
                     </h4>
                     <p className="text-sm text-base-content/80">
-                      Les images décoratives avec des textes alternatifs créent de la confusion pour les utilisateurs de lecteurs d'écran. 
-                      Ces utilisateurs entendent des descriptions d'images qui n'apportent aucune information utile, ce qui rend la navigation 
+                      Les images décoratives avec des textes alternatifs créent de la confusion pour les utilisateurs de lecteurs d&rsquo;écran. 
+                      Ces utilisateurs entendent des descriptions d&rsquo;images qui n&rsquo;apportent aucune information utile, ce qui rend la navigation 
                       plus difficile et moins efficace.
                     </p>
                   </div>
@@ -689,18 +678,18 @@ export default function CriterionValidation({
                       <div className="bg-error/10 border border-error/20 rounded-lg p-3">
                         <h5 className="font-medium text-sm mb-2 text-error">❌ Incorrect</h5>
                         <code className="bg-slate-800 text-slate-100 p-2 rounded text-xs font-mono block">
-                          &lt;img src="decoration.jpg" alt="Belle image décorative"&gt;
+                          &lt;img src=&quot;decoration.jpg&quot; alt=&quot;Belle image décorative&quot;&gt;
                         </code>
                       </div>
                       
                       <div className="bg-success/10 border border-success/20 rounded-lg p-3">
                         <h5 className="font-medium text-sm mb-2 text-success">✅ Correct</h5>
                         <code className="bg-slate-800 text-slate-100 p-2 rounded text-xs font-mono block mb-2">
-                          &lt;img src="decoration.jpg" alt=""&gt;
+                          &lt;img src=&quot;decoration.jpg&quot; alt=&quot;&quot;&gt;
                         </code>
                         <p className="text-xs text-base-content/60 mb-1">ou</p>
                         <code className="bg-slate-800 text-slate-100 p-2 rounded text-xs font-mono block">
-                          &lt;img src="decoration.jpg" alt="" role="presentation"&gt;
+                          &lt;img src=&quot;decoration.jpg&quot; alt=&quot;&quot; role=&quot;presentation&quot;&gt;
                         </code>
                       </div>
                     </div>
