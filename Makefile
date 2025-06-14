@@ -1,4 +1,4 @@
-.PHONY: help install up down restart ps shell-frontend db-shell logs clean
+.PHONY: help install up down restart ps shell-frontend shell-backend shell-db logs clean
 
 # Colors
 CYAN = \033[0;36m
@@ -6,50 +6,41 @@ GREEN = \033[0;32m
 YELLOW = \033[0;33m
 NC = \033[0m # No Color
 
-help:
-	@echo "$(CYAN)OhDit Development Commands:$(NC)"
-	@echo "$(GREEN)make install$(NC)      - First time setup (copy env and build containers)"
-	@echo "$(GREEN)make up$(NC)           - Start all containers"
-	@echo "$(GREEN)make down$(NC)         - Stop all containers"
-	@echo "$(GREEN)make restart$(NC)      - Restart all containers"
-	@echo "$(GREEN)make ps$(NC)           - Show container status"
-	@echo "$(GREEN)make shell-frontend$(NC) - Open frontend container shell"
-	@echo "$(GREEN)make db-shell$(NC)     - Open PostgreSQL shell"
-	@echo "$(GREEN)make logs$(NC)         - View container logs"
-	@echo "$(GREEN)make clean$(NC)        - Remove all containers and volumes"
+help: ## Display this help message
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-install:
+install: ## First time setup (copy env and build containers)
 	@echo "$(YELLOW)Setting up environment...$(NC)"
 	cp .env.dist .env
 	@echo "$(YELLOW)Building containers...$(NC)"
 	docker compose build
 	@echo "$(GREEN)Installation complete!$(NC)"
 
-up:
+up: ## Start all containers
 	docker compose up -d
 
-down:
+down: ## Stop all containers
 	docker compose down
 
-restart:
+restart: ## Restart all containers
 	docker compose restart
 
-ps:
+ps: ## Show container status
 	docker compose ps
 
-shell-frontend:
+shell-frontend: ## Open frontend container shell
 	docker compose exec frontend zsh
 
-shell-backend:
+shell-backend: ## Open backend container shell
 	docker compose exec backend zsh
 
-shell-db:
+shell-db: ## Open PostgreSQL shell
 	docker compose exec database psql -U ohdit ohdit_dev
 
-logs:
+logs: ## View container logs
 	docker compose logs -f
 
-clean:
+clean: ## Remove all containers and volumes
 	@echo "$(YELLOW)Removing all containers and volumes...$(NC)"
 	docker compose down -v --remove-orphans
 	@echo "$(GREEN)Cleanup complete!$(NC)" 
