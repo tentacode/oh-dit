@@ -11,16 +11,17 @@
          cacheDirectory=".phpunit.cache"
 >
     <php>
+        <env name="APP_ENV" value="test" force="true"/>
         <ini name="display_errors" value="1" />
         <ini name="error_reporting" value="-1" />
-        <server name="APP_ENV" value="test" force="true" />
+        <server name="APP_ENV" value="test" />
         <server name="SHELL_VERBOSITY" value="-1" />
         <server name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=0&amp;max[direct]=0&amp;quiet[]=indirect&amp;quiet[]=other" />
     </php>
 
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+            <directory>src/Features/*/tests</directory>
         </testsuite>
     </testsuites>
 

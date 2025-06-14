@@ -1,4 +1,4 @@
-.PHONY: help install up down restart ps shell-frontend shell-backend shell-db logs clean
+.PHONY: help install up down restart ps shell-frontend shell-backend shell-db logs clean test
 
 # Colors
 CYAN = \033[0;36m
@@ -39,6 +39,13 @@ shell-db: ## Open PostgreSQL shell
 
 logs: ## View container logs
 	docker compose logs -f
+
+cc: ## Clear cache
+	docker compose exec backend bin/console cache:clear
+	docker compose exec backend bin/console cache:clear --env=test
+
+test: ## Run PHPUnit tests
+	docker compose exec backend bin/phpunit
 
 clean: ## Remove all containers and volumes
 	@echo "$(YELLOW)Removing all containers and volumes...$(NC)"

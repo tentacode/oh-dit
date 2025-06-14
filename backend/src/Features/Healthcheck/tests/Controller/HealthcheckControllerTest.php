@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Features\Healthcheck\Controller;
+namespace App\Features\Healthcheck\tests\Controller;
 
 use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -31,4 +31,4 @@ final class HealthcheckControllerTest extends WebTestCase
             'healthcheck' => true,
         ], $responseData);
     }
-}
+} 
