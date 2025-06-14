@@ -35,7 +35,7 @@ The initial version focuses on core audit functionality without user authenticat
 ### Backend
 - **PHP 8.4**: Latest PHP version with modern features
 - **Symfony**: Robust framework for API development
-- **API Platform**: GraphQL API with automatic documentation
+- **REST API**: Simple and efficient API endpoints
 - **PostgreSQL 17**: Advanced relational database
 - **Docker**: Containerized development and deployment
 
@@ -52,6 +52,7 @@ The initial version focuses on core audit functionality without user authenticat
 - **CQS pattern**: Command Query Separation for clear data flow
 - **Accessibility-first**: RGAA 4.1 compliance in our own interface
 - **Monorepo structure**: Unified development experience
+- **REST API**: Simple, pragmatic REST endpoints following our needs
 
 ## Project Structure
 
