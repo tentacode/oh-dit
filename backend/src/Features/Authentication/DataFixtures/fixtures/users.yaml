@@ -1,0 +1,12 @@
+App\Features\Authentication\Entity\User:
+    user-vader:
+        __construct: ['darth.vader@empire.com', 'Darth', 'Vader']
+
+    user-tarkin:
+        __construct: ['wilhuff.tarkin@empire.com', 'Wilhuff', 'Tarkin']
+
+    user-leia:
+        __construct: ['leia.organa@rebellion.com', 'Leia', 'Organa']
+
+    user-luke:
+        __construct: ['luke.skywalker@rebellion.com', 'Luke', 'Skywalker'] 

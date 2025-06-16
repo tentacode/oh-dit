@@ -37,6 +37,15 @@ shell-backend: ## Open backend container shell
 shell-db: ## Open PostgreSQL shell
 	docker compose exec database psql -U ohdit ohdit_dev
 
+reset: ## Reset database
+	docker compose exec backend bin/console doctrine:database:drop --force --if-exists
+	docker compose exec backend bin/console doctrine:database:create
+	docker compose exec backend bin/console doctrine:migrations:migrate --no-interaction
+	docker compose exec backend bin/console doctrine:fixtures:load --no-interaction
+
+migration-diff: ## Generate a migration file from the current database state
+	docker compose exec backend bin/console doctrine:migrations:diff
+
 logs: ## View container logs
 	docker compose logs -f
 
