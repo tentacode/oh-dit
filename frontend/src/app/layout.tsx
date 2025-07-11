@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "OhDit - Web Accessibility Audit Tool",
   description: "Professional accessibility audit tool for RGAA 4.1 compliance",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
