@@ -11,8 +11,8 @@ export default function Landing() {
     <>
       <Header />
       <Hero />
-      <Features />
-      <Newsletter />
+      {/* <Features /> */}
+      {/* <Newsletter /> */}
     </>
   );
 }

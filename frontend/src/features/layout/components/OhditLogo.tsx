@@ -4,6 +4,9 @@ export default function OhditLogo() {
   const mainColor = colorRoles.light;
   const backgroundColor = colorRoles.dark;
   const alternateColor = colorRoles.accent;
+  const fontFamily = "Lexend Deca, Lexend Deca Fallback, Arial, sans-serif";
+  const fontSize = "32";
+  const fontWeight = "700";
 
   return (
     <svg
@@ -56,19 +59,19 @@ export default function OhditLogo() {
       <text
         x="33"
         y="40"
-        fontFamily="Arial, sans-serif"
-        fontSize="32"
-        fontWeight="800"
+        fontFamily={fontFamily}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
         fill={ mainColor }
       >
         h
       </text>
       <text
-        x="53"
+        x="54"
         y="40"
-        fontFamily="Arial, sans-serif"
-        fontSize="36"
-        fontWeight="800"
+        fontFamily={fontFamily}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
         fill={alternateColor}
       >
         !
@@ -76,19 +79,19 @@ export default function OhditLogo() {
       <text
         x="65"
         y="40"
-        fontFamily="Arial, sans-serif"
-        fontSize="36"
-        fontWeight="800"
+        fontFamily={fontFamily}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
         fill={ mainColor }
       >
         Dit
       </text>
       <text
-        x="114"
+        x="115"
         y="40"
-        fontFamily="Arial, sans-serif"
-        fontSize="36"
-        fontWeight="800"
+        fontFamily={fontFamily}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
         fill={alternateColor}
       >
         &apos;

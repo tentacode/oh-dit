@@ -8,10 +8,7 @@ export default function Hero() {
 
   const accentTextStyle = {
     color: colorRoles.accent,
-    textUnderlineOffset: "10px",
-    textDecoration: "underline",
-    textDecorationThickness: "5px",
-    textDecorationColor: colorRoles.light,
+    position: "relative" as const,
   }
 
   return (
@@ -20,7 +17,29 @@ export default function Hero() {
       <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h1 className='text-6xl font-semibold tracking-tight text-balance text-white'>
-            L&apos;audit d&apos;accessibilité numérique, <span style={accentTextStyle}>facilement</span>.
+            L&apos;audit d&apos;accessibilité numérique, <span style={accentTextStyle}>facilement
+              <svg 
+                style={{
+                  position: "absolute",
+                  bottom: "-8px",
+                  left: "0",
+                  width: "100%",
+                  height: "9px",
+                  overflow: "visible"
+                }}
+                viewBox="0 0 100 7"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M0,4 Q15,-2 30,4 Q50,8 70,4 Q85,0 100,4"
+                  stroke={colorRoles.light}
+                  strokeWidth="4"
+                  fill="none"
+                  strokeLinecap="round"
+                  opacity="0.9"
+                />
+              </svg>
+            </span>.
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-2xl text-pretty text-gray-300">
             OhDit vous offre tout les outils pour auditer vos sites web et applications mobiles en toute sérénité.
