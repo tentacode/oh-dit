@@ -1,14 +1,29 @@
+import { colorRoles } from "@/config/colors";
+
 export default function Hero() {
+
+
+  const accentClipPath = "polygon(0 0, 100% 0, 100% 86%, 0 98%)";
+  const clipPath = "polygon(0 0, 100% 0, 100% 86%, 0 98%)";
+
+  const accentTextStyle = {
+    color: colorRoles.accent,
+    textUnderlineOffset: "10px",
+    textDecoration: "underline",
+    textDecorationThickness: "5px",
+    textDecorationColor: colorRoles.light,
+  }
+
   return (
-    <div className="relative isolate overflow-hidden bg-gray-900">
+    <div style={{paddingBottom: "20px", marginBottom: "40px", backgroundColor: colorRoles.accent, clipPath: accentClipPath}}>
+    <div className="relative isolate overflow-hidden bg-gray-900" style={{backgroundColor: colorRoles.dark, color: colorRoles.light, clipPath: clipPath}} >
       <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-6xl font-semibold tracking-tight text-balance text-white">
-            L&apos;audit d&apos;accessibilité numérique, <span style={{color: '#FCC2DA'}}>facilement</span>
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-gray-300">
-            Incididunt sint fugiat pariatur cupidatat consectetur sit cillum
-            anim id veniam aliqua proident excepteur commodo do ea.
+          <h1 className='text-6xl font-semibold tracking-tight text-balance text-white'>
+            L&apos;audit d&apos;accessibilité numérique, <span style={accentTextStyle}>facilement</span>.
+          </h1>
+          <p className="mx-auto mt-6 max-w-xl text-2xl text-pretty text-gray-300">
+            OhDit vous offre tout les outils pour auditer vos sites web et applications mobiles en toute sérénité.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <a
@@ -26,7 +41,8 @@ export default function Hero() {
           </div>
         </div>
       </div>
-      <svg
+      </div>
+      {/* <svg
         viewBox="0 0 1024 1024"
         aria-hidden="true"
         className="absolute top-1/2 left-1/2 -z-10 size-256 -translate-x-1/2 mask-[radial-gradient(closest-side,white,transparent)]"
@@ -44,7 +60,7 @@ export default function Hero() {
             <stop offset={1} stopColor="#EC4899" />
           </radialGradient>
         </defs>
-      </svg>
+      </svg> */}
     </div>
   );
 }

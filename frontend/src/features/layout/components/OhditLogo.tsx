@@ -1,4 +1,10 @@
+import { colorRoles } from "@/config/colors";
+
 export default function OhditLogo() {
+  const mainColor = colorRoles.light;
+  const backgroundColor = colorRoles.dark;
+  const alternateColor = colorRoles.accent;
+
   return (
     <svg
       viewBox="0 0 150 60"
@@ -13,15 +19,15 @@ export default function OhditLogo() {
           cy="28"
           rx="11"
           ry="11"
-          fill="#FFFFFF"
-          stroke="#FFFFFF"
+          fill={ mainColor }
+          stroke={ mainColor }
           strokeWidth="3.5"
         />
         {/* Left eye: > */}
         <polyline
           points="12,23 15,25 12,27"
           fill="none"
-          stroke="#000"
+          stroke={backgroundColor}
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -30,7 +36,7 @@ export default function OhditLogo() {
         <polyline
           points="24,23 21,25 24,27"
           fill="none"
-          stroke="#000"
+          stroke={backgroundColor}
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -40,8 +46,8 @@ export default function OhditLogo() {
           d="M13 31
      a5 8 0 1 0 10 0
      Z"
-          fill="#000"
-          stroke="#000"
+          fill={backgroundColor}
+          stroke={backgroundColor}
           strokeWidth="0"
         />
       </g>
@@ -53,7 +59,7 @@ export default function OhditLogo() {
         fontFamily="Arial, sans-serif"
         fontSize="32"
         fontWeight="800"
-        fill="#FFFFFF"
+        fill={ mainColor }
       >
         h
       </text>
@@ -63,7 +69,7 @@ export default function OhditLogo() {
         fontFamily="Arial, sans-serif"
         fontSize="36"
         fontWeight="800"
-        fill="#FCC2DA"
+        fill={alternateColor}
       >
         !
       </text>
@@ -73,7 +79,7 @@ export default function OhditLogo() {
         fontFamily="Arial, sans-serif"
         fontSize="36"
         fontWeight="800"
-        fill="#FFFFFF"
+        fill={ mainColor }
       >
         Dit
       </text>
@@ -83,7 +89,7 @@ export default function OhditLogo() {
         fontFamily="Arial, sans-serif"
         fontSize="36"
         fontWeight="800"
-        fill="#FCC2DA"
+        fill={alternateColor}
       >
         &apos;
       </text>

@@ -1,17 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from '@/lib/i18n-provider';
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { headingFont } from "@/config/fonts";
 
 export const metadata: Metadata = {
   title: "OhDit - Web Accessibility Audit Tool",
@@ -29,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${headingFont.variable} antialiased`}
       >
         <I18nProvider>
           {children}
