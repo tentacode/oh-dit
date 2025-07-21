@@ -7,7 +7,7 @@ import { colorRoles } from "@/config/colors";
 
 const navigation = [
     { name: "Fonctionnalités", href: "#" },
-    { name: "Je veux tester !", href: "#" },
+    { name: "Je teste Ohdit !", href: "#" },
     { name: "Notre blog accessibilité", href: "#" },
   ];
 

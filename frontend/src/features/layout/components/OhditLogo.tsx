@@ -84,7 +84,7 @@ export default function OhditLogo() {
         fontWeight={fontWeight}
         fill={ mainColor }
       >
-        Dit
+        dit
       </text>
       <text
         x="115"
