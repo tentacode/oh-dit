@@ -1,5 +1,4 @@
 import { colorRoles } from "@/config/colors";
-import { ClipboardDocumentCheckIcon } from "@heroicons/react/24/outline";
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 
 
@@ -34,7 +33,7 @@ export default function Button({
       href={href}
       style={style}
     >
-        <ClipboardDocumentCheckIcon className="w-8 h-8" />
+        <CheckCircleIcon className="w-8 h-8" style={{color: colorRoles.light}} />
       {children}
     </a>
   );

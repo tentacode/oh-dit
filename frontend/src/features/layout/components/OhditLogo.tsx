@@ -87,7 +87,7 @@ export default function OhditLogo() {
         dit
       </text>
       <text
-        x="115"
+        x="111"
         y="40"
         fontFamily={fontFamily}
         fontSize={fontSize}
