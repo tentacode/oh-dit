@@ -31,4 +31,4 @@ final class HealthcheckControllerTest extends WebTestCase
             'healthcheck' => true,
         ], $responseData);
     }
-} 
+}
