@@ -1,17 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from '@/lib/i18n-provider';
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { headingFont } from "@/config/fonts";
+import { colorRoles } from "@/config/colors";
 
 export const metadata: Metadata = {
   title: "OhDit - Web Accessibility Audit Tool",
@@ -27,9 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
+    <html lang="fr" style={{
+      backgroundColor: colorRoles.light,
+      color: colorRoles.dark,
+    }}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${headingFont.variable} antialiased`}
+        
       >
         <I18nProvider>
           {children}

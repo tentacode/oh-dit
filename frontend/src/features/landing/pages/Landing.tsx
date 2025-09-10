@@ -1,9 +1,9 @@
 "use client";
 
 import Header from "@/features/layout/components/Header";
-import Hero from "../components/Hero";
-import Newsletter from "../components/Newsletter";
-import Features from "../components/Features";
+import Hero from "../components/Hero/Hero";
+// import Newsletter from "../components/Newsletter";
+// import Features from "../components/Features";
 
 export default function Landing() {
 
@@ -11,8 +11,8 @@ export default function Landing() {
     <>
       <Header />
       <Hero />
-      <Features />
-      <Newsletter />
+      {/* <Features /> */}
+      {/* <Newsletter /> */}
     </>
   );
 }

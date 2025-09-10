@@ -28,13 +28,13 @@ restart: ## Restart all containers
 ps: ## Show container status
 	docker compose ps
 
-shell-frontend: ## Open frontend container shell
+front.connect: ## Open frontend container shell
 	docker compose exec frontend zsh
 
-shell-backend: ## Open backend container shell
+back.connect: ## Open backend container shell
 	docker compose exec backend zsh
 
-shell-db: ## Open PostgreSQL shell
+db.connect: ## Open PostgreSQL shell
 	docker compose exec database psql -U ohdit ohdit_dev
 
 reset: ## Reset database

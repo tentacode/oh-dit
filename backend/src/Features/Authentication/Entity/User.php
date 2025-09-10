@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Features\Authentication\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity]
 #[ORM\Table(name: '"user"')]
@@ -89,4 +89,4 @@ class User
     {
         return $this->updatedAt;
     }
-} 
+}

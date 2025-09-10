@@ -2,11 +2,12 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import Image from "next/image";
 import OhditLogo from "./OhditLogo";
+import { colorRoles } from "@/config/colors";
 
 
 const navigation = [
     { name: "Fonctionnalités", href: "#" },
-    { name: "Je veux tester !", href: "#" },
+    { name: "Je teste Ohdit !", href: "#" },
     { name: "Notre blog accessibilité", href: "#" },
   ];
 
@@ -14,7 +15,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-gray-900">
+    <header style={{backgroundColor: colorRoles.dark, color: colorRoles.light}}>
       <nav
         aria-label="Global"
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
@@ -29,7 +30,7 @@ export default function Header() {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-lg font-semibold text-white hover:text-gray-300"
+                className="text-xl font-semibold text-white hover:text-gray-300"
               >
                 {item.name}
               </a>
@@ -49,7 +50,7 @@ export default function Header() {
         <div className="hidden lg:flex">
           <a
             href="#"
-            className="text-lg font-semibold text-white hover:text-gray-300"
+            className="text-xl font-semibold text-white hover:text-gray-300"
           >
             Me connecter <span aria-hidden="true">&rarr;</span>
           </a>

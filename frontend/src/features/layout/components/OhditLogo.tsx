@@ -1,4 +1,13 @@
+import { colorRoles } from "@/config/colors";
+
 export default function OhditLogo() {
+  const mainColor = colorRoles.light;
+  const backgroundColor = colorRoles.dark;
+  const alternateColor = colorRoles.accent;
+  const fontFamily = "Lexend Deca, Lexend Deca Fallback, Arial, sans-serif";
+  const fontSize = "32";
+  const fontWeight = "700";
+
   return (
     <svg
       viewBox="0 0 150 60"
@@ -13,15 +22,15 @@ export default function OhditLogo() {
           cy="28"
           rx="11"
           ry="11"
-          fill="#FFFFFF"
-          stroke="#FFFFFF"
+          fill={ mainColor }
+          stroke={ mainColor }
           strokeWidth="3.5"
         />
         {/* Left eye: > */}
         <polyline
           points="12,23 15,25 12,27"
           fill="none"
-          stroke="#000"
+          stroke={backgroundColor}
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -30,7 +39,7 @@ export default function OhditLogo() {
         <polyline
           points="24,23 21,25 24,27"
           fill="none"
-          stroke="#000"
+          stroke={backgroundColor}
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -40,8 +49,8 @@ export default function OhditLogo() {
           d="M13 31
      a5 8 0 1 0 10 0
      Z"
-          fill="#000"
-          stroke="#000"
+          fill={backgroundColor}
+          stroke={backgroundColor}
           strokeWidth="0"
         />
       </g>
@@ -50,40 +59,40 @@ export default function OhditLogo() {
       <text
         x="33"
         y="40"
-        fontFamily="Arial, sans-serif"
-        fontSize="32"
-        fontWeight="800"
-        fill="#FFFFFF"
+        fontFamily={fontFamily}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
+        fill={ mainColor }
       >
         h
       </text>
       <text
-        x="53"
+        x="54"
         y="40"
-        fontFamily="Arial, sans-serif"
-        fontSize="36"
-        fontWeight="800"
-        fill="#FCC2DA"
+        fontFamily={fontFamily}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
+        fill={alternateColor}
       >
         !
       </text>
       <text
         x="65"
         y="40"
-        fontFamily="Arial, sans-serif"
-        fontSize="36"
-        fontWeight="800"
-        fill="#FFFFFF"
+        fontFamily={fontFamily}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
+        fill={ mainColor }
       >
-        Dit
+        dit
       </text>
       <text
-        x="114"
+        x="111"
         y="40"
-        fontFamily="Arial, sans-serif"
-        fontSize="36"
-        fontWeight="800"
-        fill="#FCC2DA"
+        fontFamily={fontFamily}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
+        fill={alternateColor}
       >
         &apos;
       </text>
