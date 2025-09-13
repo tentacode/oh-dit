@@ -1,0 +1,9 @@
+App\Features\Project\Entity\Project:
+    death-star:
+        __construct: ['Death Star']
+
+App\Features\Project\Entity\Screen:
+    home-page:
+        __construct: ['@death-star', 'Home page']
+    contact-us:
+        __construct: ['@death-star', 'Contact us']
