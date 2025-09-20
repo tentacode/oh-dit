@@ -9,12 +9,12 @@ export const colors = {
   green: "#56C07C",
   red: "#BA0303",
   pink: "#E2026A",
-}
+};
 
 export const colorRoles = {
-    dark: colors.black,
-    light: colors.beige,
-    background: colors.beige,
-    primary: colors.black,
-    accent: colors.purple,
-}
+  dark: colors.black,
+  light: colors.beige,
+  background: colors.beige,
+  primary: colors.black,
+  accent: colors.purple,
+};

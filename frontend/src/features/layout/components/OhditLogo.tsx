@@ -22,8 +22,8 @@ export default function OhditLogo() {
           cy="28"
           rx="11"
           ry="11"
-          fill={ mainColor }
-          stroke={ mainColor }
+          fill={mainColor}
+          stroke={mainColor}
           strokeWidth="3.5"
         />
         {/* Left eye: > */}
@@ -62,7 +62,7 @@ export default function OhditLogo() {
         fontFamily={fontFamily}
         fontSize={fontSize}
         fontWeight={fontWeight}
-        fill={ mainColor }
+        fill={mainColor}
       >
         h
       </text>
@@ -82,7 +82,7 @@ export default function OhditLogo() {
         fontFamily={fontFamily}
         fontSize={fontSize}
         fontWeight={fontWeight}
-        fill={ mainColor }
+        fill={mainColor}
       >
         dit
       </text>

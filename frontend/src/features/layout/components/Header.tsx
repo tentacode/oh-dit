@@ -4,18 +4,19 @@ import Image from "next/image";
 import OhditLogo from "./OhditLogo";
 import { colorRoles } from "@/config/colors";
 
-
 const navigation = [
-    { name: "Fonctionnalités", href: "#" },
-    { name: "Je teste Ohdit !", href: "#" },
-    { name: "Notre blog accessibilité", href: "#" },
-  ];
+  { name: "Fonctionnalités", href: "#" },
+  { name: "Je teste Ohdit !", href: "#" },
+  { name: "Notre blog accessibilité", href: "#" },
+];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header style={{backgroundColor: colorRoles.dark, color: colorRoles.light}}>
+    <header
+      style={{ backgroundColor: colorRoles.dark, color: colorRoles.light }}
+    >
       <nav
         aria-label="Global"
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"

@@ -22,19 +22,13 @@ up: ## Start all containers
 down: ## Stop all containers
 	docker compose down
 
-restart: ## Restart all containers
-	docker compose restart
-
-ps: ## Show container status
-	docker compose ps
-
-front.connect: ## Open frontend container shell
+frontend.connect: ## Open frontend container shell
 	docker compose exec frontend zsh
 
-back.connect: ## Open backend container shell
+backend.connect: ## Open backend container shell
 	docker compose exec backend zsh
 
-db.connect: ## Open PostgreSQL shell
+database.connect: ## Open PostgreSQL shell
 	docker compose exec database psql -U ohdit ohdit_dev
 
 reset: ## Reset database
@@ -43,20 +37,7 @@ reset: ## Reset database
 	docker compose exec backend bin/console doctrine:migrations:migrate --no-interaction
 	docker compose exec backend bin/console doctrine:fixtures:load --no-interaction
 
-migration-diff: ## Generate a migration file from the current database state
-	docker compose exec backend bin/console doctrine:migrations:diff
-
-logs: ## View container logs
-	docker compose logs -f
-
-cc: ## Clear cache
-	docker compose exec backend bin/console cache:clear
-	docker compose exec backend bin/console cache:clear --env=test
-
-test: ## Run PHPUnit tests
-	docker compose exec backend bin/phpunit
-
-clean: ## Remove all containers and volumes
+destroy-docker: ## Remove all containers and volumes
 	@echo "$(YELLOW)Removing all containers and volumes...$(NC)"
 	docker compose down -v --remove-orphans
 	@echo "$(GREEN)Cleanup complete!$(NC)" 
