@@ -41,7 +41,7 @@ conventions/
 docker-compose.override.yml
 
 # Environment files
-.env
+/.env
 .env.local
 .env.*.local
 

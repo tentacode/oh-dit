@@ -1,6 +1,6 @@
 /bin
 !/bin/console
-
+!/bin/format-on-save.sh
 
 ###> symfony/framework-bundle ###
 /.env.local

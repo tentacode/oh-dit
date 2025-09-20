@@ -1,4 +1,4 @@
-    const tabs = [
+const tabs = [
   { name: "Open", href: "#", current: true },
   { name: "Closed", href: "#", current: false },
 ];
@@ -16,11 +16,9 @@ export default function FeaturesMenu() {
                 href={tab.href}
                 aria-current={tab.current ? "page" : undefined}
                 className={
-                  (
-                    tab.current
+                  (tab.current
                     ? "border-indigo-500 text-indigo-600"
-                    : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                  ) +
+                    : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700") +
                   "border-b-2 px-1 pb-4 text-sm font-medium whitespace-nowrap"
                 }
               >

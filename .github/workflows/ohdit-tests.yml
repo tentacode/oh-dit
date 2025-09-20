@@ -1,0 +1,149 @@
+name: Ohdit Tests
+
+on: [push]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: raphaello
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v4
+
+      # Setup
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
+          coverage: none
+
+      - name: Preparing .env file for github
+        working-directory: ./backend
+        run: cp .env.github .env.test.local
+
+      - name: Install composer dependencies
+        working-directory: ./backend
+        run: composer install -n --prefer-dist --optimize-autoloader
+
+      - name: Setup node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Install node dependencies
+        working-directory: ./frontend
+        run: npm install
+
+      # Audit and fix
+      - name: Composer audit fix
+        working-directory: ./backend
+        run: composer audit --fix
+        continue-on-error: true
+      
+      - name: Npm audit fix
+        working-directory: ./frontend
+        run: npm audit fix --force
+        continue-on-error: true
+
+      - name: Auto commit audit fixes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: ":robot::lock: Autofix audit issues"
+
+      # Tests backend
+      - name: Phpstan
+        working-directory: ./backend
+        run: bin/phpstan --memory-limit=1G
+
+      - name: Automatic code sniffer fixing
+        working-directory: ./backend
+        run: bin/ecs --fix
+        continue-on-error: true
+
+      - name: Automatic rector fixing
+        working-directory: ./backend
+        run: bin/rector process src
+        continue-on-error: true
+
+      - name: Database setup
+        working-directory: ./backend
+        run: |
+          php bin/console doctrine:database:create --env=test
+          php bin/console doctrine:migrations:migrate --no-interaction --env=test
+          php bin/console doctrine:fixtures:load --no-interaction --env=test
+
+      - name: Unit and integration tests
+        working-directory: ./backend
+        run: bin/phpunit --testdox --fail-on-warning --fail-on-risky --fail-on-incomplete --fail-on-skipped
+
+      - name: Composer audit
+        working-directory: ./backend
+        run: composer audit
+      
+      # Tests frontend
+      - name: Linting fixes
+        working-directory: ./frontend
+        run: npm run lint --fix
+      
+      - name: Prettier fixes
+        working-directory: ./frontend
+        run: npx prettier --write src
+
+      - name: Npm audit
+        working-directory: ./frontend
+        run: npm audit --audit-level=moderate
+
+      # Autocommit
+      - name: Auto commit fixes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          #file_pattern: '**/*.{js,jsx,ts,tsx,json,css,scss,md,php}'
+          commit_message: ":robot::art: Autofix CS and Rector"
+
+      # Check after Autocommit
+      - name: Checking code sniffer after fixes
+        working-directory: ./backend
+        run: bin/ecs
+
+      - name: Checking rector after fixes
+        working-directory: ./backend
+        run: bin/rector
+        
+      - name: Checking lint fixes
+        working-directory: ./frontend
+        run: npm run lint
+      
+      - name: Checking prettier fixes
+        working-directory: ./frontend
+        run: npx prettier --check src
+
+      # Slack notification on failure      
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        if: ${{ failure() }}
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: '#ci'
+          SLACK_COLOR: '#FF5555'
+          SLACK_USERNAME: 'Ohdit'
+          SLACK_ICON_EMOJI: ':scream:'
+          SLACK_TITLE: Last commit
+          SLACK_FOOTER: "“Try not. Do or do not. There is no try.” — Yoda"

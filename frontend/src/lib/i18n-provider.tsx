@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import { useEffect, useState } from "react";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
 
 // Import translations from feature directories
-import landingFr from '../features/landing/translations/fr';
-import landingEn from '../features/landing/translations/en';
+import landingFr from "../features/landing/translations/fr";
+import landingEn from "../features/landing/translations/en";
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [isInitialized, setIsInitialized] = useState(false);
@@ -23,17 +23,20 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     };
 
     // Detect browser language
-    const browserLang = navigator.language.split('-')[0]; // Get 'fr' from 'fr-FR'
-    const supportedLang = ['fr', 'en'].includes(browserLang) ? browserLang : 'fr';
+    const browserLang = navigator.language.split("-")[0]; // Get 'fr' from 'fr-FR'
+    const supportedLang = ["fr", "en"].includes(browserLang)
+      ? browserLang
+      : "fr";
 
     // In development, always reinitialize to support hot reload
-    const shouldInitialize = !i18n.isInitialized || process.env.NODE_ENV === 'development';
+    const shouldInitialize =
+      !i18n.isInitialized || process.env.NODE_ENV === "development";
 
     if (shouldInitialize) {
       // If already initialized in dev, remove existing resources
-      if (i18n.isInitialized && process.env.NODE_ENV === 'development') {
-        Object.keys(i18n.store.data).forEach(lng => {
-          Object.keys(i18n.store.data[lng] || {}).forEach(ns => {
+      if (i18n.isInitialized && process.env.NODE_ENV === "development") {
+        Object.keys(i18n.store.data).forEach((lng) => {
+          Object.keys(i18n.store.data[lng] || {}).forEach((ns) => {
             i18n.removeResourceBundle(lng, ns);
           });
         });
@@ -44,9 +47,9 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
         .init({
           resources,
           lng: supportedLang,
-          fallbackLng: 'en',
-          debug: process.env.NODE_ENV === 'development',
-          
+          fallbackLng: "en",
+          debug: process.env.NODE_ENV === "development",
+
           interpolation: {
             escapeValue: false,
           },
@@ -66,4 +69,4 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   }
 
   return <>{children}</>;
-} 
+}

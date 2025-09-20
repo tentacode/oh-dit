@@ -16,20 +16,20 @@ export default function PenStroke({ children }: { children: React.ReactNode }) {
 
   return (
     <span style={wrapperStyle}>
-        {children}
-        <svg
+      {children}
+      <svg
         style={penStrokeStyle}
         viewBox="0 0 100 10"
         preserveAspectRatio="none"
-        >
+      >
         <path
-            d="M0,5 Q25,2 50,5 T100,5"
-            stroke={colorRoles.light}
-            strokeWidth="6"
-            fill="none"
-            strokeLinecap="round"
+          d="M0,5 Q25,2 50,5 T100,5"
+          stroke={colorRoles.light}
+          strokeWidth="6"
+          fill="none"
+          strokeLinecap="round"
         />
-        </svg>
+      </svg>
     </span>
   );
 }

@@ -2,24 +2,29 @@
 
 declare(strict_types=1);
 
-namespace App\Features\Authentication\DataFixtures;
+namespace App\Features\Project\DataFixtures;
 
-use App\Features\Authentication\Entity\User;
+use App\Features\Project\Entity\Project;
+use App\Features\Project\Entity\Screen;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Nelmio\Alice\Loader\NativeLoader;
 
-class UserFixtures extends Fixture
+class ProjectFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
         $nativeLoader = new NativeLoader();
-        $objectSet = $nativeLoader->loadFile(__DIR__ . '/fixtures/users.yaml');
+        $objectSet = $nativeLoader->loadFile(__DIR__ . '/fixtures/projects.yaml');
 
         foreach ($objectSet->getObjects() as $id => $object) {
-            if ($object instanceof User) {
+            if ($object instanceof Project) {
                 $manager->persist($object);
                 $this->addReference($id, $object);
+            }
+
+            if ($object instanceof Screen) {
+                $manager->persist($object);
             }
         }
 
