@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Features\Project\Controller;
 
 use function Safe\json_decode;
+use App\Features\Project\Command\CreateProjectCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +14,12 @@ use Webmozart\Assert\Assert;
 
 final class CreateProjectController extends AbstractController
 {
+    public function __construct(
+        private CreateProjectCommand $createProjectCommand,
+        // private NormalizerInterface $normalizer
+    ) {
+    }
+
     #[Route('/projects', name: 'create_project', methods: ['POST'])]
     public function __invoke(Request $request): JsonResponse
     {
@@ -22,13 +29,9 @@ final class CreateProjectController extends AbstractController
         $projectName = $payload['name'] ?? null;
         Assert::stringNotEmpty($projectName, 'The project name is required.');
 
-        $projectData = [
-            'id' => '1234',
-            'name' => $projectName,
-            'created_at' => '2025-06-12 13:37:42',
-            'updated_at' => '2025-06-12 13:37:42',
-        ];
+        $project = ($this->createProjectCommand)($projectName);
 
-        return $this->json($projectData);
+        return $this->json($project, JsonResponse::HTTP_CREATED);
+        // return $this->json($this->normalizer->normalize($project), JsonResponse::HTTP_CREATED);
     }
 }
