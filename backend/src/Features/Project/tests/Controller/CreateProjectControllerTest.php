@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace App\Features\Project\tests\Controller;
 
-use function Safe\json_decode;
 use function Safe\json_encode;
+use App\Infrastructure\PHPUnit\ResponseAssertions;
 use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Webmozart\Assert\Assert;
 
 final class CreateProjectControllerTest extends WebTestCase
 {
+    use ResponseAssertions;
+
     #[TestDox('It can add a project')]
     public function test_it_can_add_a_project(): void
     {
@@ -24,26 +25,18 @@ final class CreateProjectControllerTest extends WebTestCase
             uri: '/projects',
             content: json_encode([
                 'name' => 'Mon nouveau projet',
-            ]) // @TODO safe ?
+            ])
         );
 
         /** @var Response $response */
         $response = $client->getResponse();
 
-        self::assertResponseIsSuccessful();
-        $this->assertSame('application/json', $response->headers->get('content-type'));
-
-        // @TODO phpmatcher
-
-        Assert::string($response->getContent());
-        $responseData = json_decode($response->getContent(), true);
-
-        $this->assertSame([
-            'id' => '1234',
+        $this->assertJsonResponseMatches([
+            'id' => '@uuid@',
             'name' => 'Mon nouveau projet',
-            'created_at' => '2025-06-12 13:37:42',
-            'updated_at' => '2025-06-12 13:37:42',
-        ], $responseData);
+            'createdAt' => '@datetime@.after("today")',
+            'updatedAt' => '@datetime@.after("today")',
+        ], $response, Response::HTTP_CREATED);
     }
 
     // public function test_it_cant_add_a_project_if_not_logged_in()
