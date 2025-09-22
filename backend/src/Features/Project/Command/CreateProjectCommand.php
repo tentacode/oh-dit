@@ -5,22 +5,22 @@ declare(strict_types=1);
 namespace App\Features\Project\Command;
 
 use App\Features\Project\Entity\Project;
+use App\Infrastructure\Symfony\ErrorHandling\Command\ValidateOrThrowApiErrorCommand;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class CreateProjectCommand
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private ValidatorInterface $validator
+        private ValidateOrThrowApiErrorCommand $validateOrThrow
     ) {
     }
 
-    public function __invoke(string $name): Project
+    public function __invoke(CreateProjectRequest $createProjectRequest): Project
     {
-        $project = new Project($name);
+        $project = new Project($createProjectRequest->name);
 
-        $this->validator->validate($project);
+        ($this->validateOrThrow)($project);
 
         $this->entityManager->persist($project);
         $this->entityManager->flush();

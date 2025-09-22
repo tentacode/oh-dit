@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
 use Rector\Config\RectorConfig;
 use Rector\Naming\Rector\Assign\RenameVariableToMatchMethodCallReturnTypeRector;
+use Rector\Naming\Rector\Class_\RenamePropertyToMatchTypeRector;
+use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -38,6 +41,9 @@ return RectorConfig::configure()
     ->withImportNames(removeUnusedImports: true)
     ->withAttributesSets()
     ->withSkip([
+        CatchExceptionNameMatchingTypeRector::class,
+        RenameParamToMatchTypeRector::class,
+        RenamePropertyToMatchTypeRector::class,
         RenameVariableToMatchMethodCallReturnTypeRector::class,
     ])
 ;

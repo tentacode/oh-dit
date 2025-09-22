@@ -43,6 +43,10 @@ jobs:
         working-directory: ./backend
         run: composer install -n --prefer-dist --optimize-autoloader
 
+      - name: Setup JWT secret
+        working-directory: ./backend
+        run: bin/console lexik:jwt:generate-keypair --overwrite --no-interaction
+
       - name: Setup node
         uses: actions/setup-node@v5
         with:
