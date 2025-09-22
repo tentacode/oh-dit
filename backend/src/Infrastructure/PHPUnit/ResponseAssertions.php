@@ -13,7 +13,7 @@ trait ResponseAssertions
 {
     use PHPMatcherAssertions;
 
-    public function assertJsonResponseMatches(
+    protected function assertJsonResponseMatches(
         mixed $expectedPattern,
         Response $response,
         int $expectedStatusCode = 200
@@ -25,5 +25,19 @@ trait ResponseAssertions
         $responseData = json_decode($response->getContent(), true);
 
         $this->assertMatchesPattern($expectedPattern, $responseData);
+    }
+
+    protected function assertJsonResponseEquals(
+        mixed $expectedPattern,
+        Response $response,
+        int $expectedStatusCode = 200
+    ): void {
+        $this->assertSame($expectedStatusCode, $response->getStatusCode());
+        $this->assertSame('application/json', $response->headers->get('content-type'));
+
+        Assert::string($response->getContent());
+        $responseData = json_decode($response->getContent(), true);
+
+        $this->assertEquals($expectedPattern, $responseData);
     }
 }

@@ -3,3 +3,6 @@ features:
         path: ../src/Features/
         namespace: App\Features
     type: attribute
+
+api_login_check:
+    path: /api/login_check

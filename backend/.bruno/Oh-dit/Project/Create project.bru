@@ -1,0 +1,26 @@
+meta {
+  name: Create project
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/api/projects
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "name": "C'est notre projeeeeeeet"
+  }
+}
+
+settings {
+  encodeUrl: false
+}
