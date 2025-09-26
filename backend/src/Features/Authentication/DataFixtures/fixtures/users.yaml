@@ -1,3 +1,9 @@
 App\Features\Authentication\Entity\User:
     user-vader:
         __construct: ['darth.vader@empire.com', 'darth_vader_64', 'Darth Vader']
+
+App\Features\Authentication\Entity\Team:
+    team-empire:
+        __construct: ['The Empire']
+        __calls:
+            - addUser: ['@user-vader']

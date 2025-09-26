@@ -1,6 +1,6 @@
 App\Features\Project\Entity\Project:
     death-star:
-        __construct: ['Death Star']
+        __construct: ['@team-empire', 'Death Star']
 
 App\Features\Project\Entity\Screen:
     home-page:

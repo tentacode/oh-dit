@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Features\Authentication\DataFixtures;
 
+use App\Features\Authentication\Entity\Team;
 use App\Features\Authentication\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -22,14 +23,19 @@ class UserFixtures extends Fixture
         $nativeLoader = new NativeLoader();
         $objectSet = $nativeLoader->loadFile(__DIR__ . '/fixtures/users.yaml');
 
-        foreach ($objectSet->getObjects() as $id => $user) {
-            if ($user instanceof User) {
-                $user->setHashedPassword(
-                    $this->userPasswordHasher->hashPassword($user, $user->getPassword())
+        foreach ($objectSet->getObjects() as $id => $object) {
+            if ($object instanceof User) {
+                $object->setHashedPassword(
+                    $this->userPasswordHasher->hashPassword($object, $object->getPassword())
                 );
 
-                $manager->persist($user);
-                $this->addReference($id, $user);
+                $manager->persist($object);
+                $this->addReference($id, $object);
+            }
+
+            if ($object instanceof Team) {
+                $manager->persist($object);
+                $this->addReference($id, $object);
             }
         }
 

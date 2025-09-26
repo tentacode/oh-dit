@@ -6,8 +6,11 @@ namespace App\Features\Authentication\Entity;
 
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -48,6 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
 
+    #[ManyToMany(targetEntity: Team::class, mappedBy: 'users')]
+    private Collection $teams;
+
     public function __construct(
         string $email,
         string $plainPassword,
@@ -59,11 +65,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $plainPassword;
         $this->createdAt = CarbonImmutable::now();
         $this->updatedAt = CarbonImmutable::now();
+
+        $this->teams = new ArrayCollection();
     }
 
-    public function getId(): Uuid
+    public function getUuid(): Uuid
     {
         return $this->uuid;
+    }
+
+    /**
+     * @return Collection<int, Team>
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
     }
 
     public function getEmail(): string
