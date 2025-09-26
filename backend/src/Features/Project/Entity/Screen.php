@@ -32,7 +32,7 @@ class Screen
     private DateTimeImmutable $updatedAt;
 
     #[ManyToOne(targetEntity: Project::class)]
-    #[JoinColumn(name: 'project_id', referencedColumnName: 'uuid')]
+    #[JoinColumn(name: 'project_uuid', referencedColumnName: 'uuid')]
     private Project $project;
 
     public function __construct(
@@ -46,7 +46,7 @@ class Screen
         $this->updatedAt = CarbonImmutable::now();
     }
 
-    public function getId(): Uuid
+    public function getUuid(): Uuid
     {
         return $this->uuid;
     }

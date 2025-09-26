@@ -2,27 +2,29 @@
 
 declare(strict_types=1);
 
-namespace App\Features\Project\Entity;
+namespace App\Features\Authentication\Entity;
 
-use App\Features\Authentication\Entity\Team;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'project')]
-class Project
+#[ORM\Table(name: 'team')]
+#[UniqueEntity(fields: ['name'], message: 'There is already a team with this name')]
+class Team
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
     private readonly Uuid $uuid;
 
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank]
     private string $name;
 
@@ -32,19 +34,23 @@ class Project
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
 
-    #[ManyToOne(targetEntity: Team::class)]
-    #[JoinColumn(name: 'team_uuid', referencedColumnName: 'uuid')]
-    private Team $team;
+    #[ManyToMany(targetEntity: User::class)]
+    #[ORM\JoinTable(
+        name: 'team_user',
+        joinColumns: [new ORM\JoinColumn(name: 'team_uuid', referencedColumnName: 'uuid')],
+        inverseJoinColumns: [new ORM\JoinColumn(name: 'user_uuid', referencedColumnName: 'uuid')]
+    )]
+    private Collection $users;
 
     public function __construct(
-        Team $team,
-        string $name
+        string $name,
     ) {
         $this->uuid = Uuid::v4();
-        $this->team = $team;
         $this->name = $name;
         $this->createdAt = CarbonImmutable::now();
         $this->updatedAt = CarbonImmutable::now();
+
+        $this->users = new ArrayCollection();
     }
 
     public function getUuid(): Uuid
@@ -52,9 +58,19 @@ class Project
         return $this->uuid;
     }
 
-    public function getTeam(): Team
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
     {
-        return $this->team;
+        return $this->users;
+    }
+
+    public function addUser(User $user): void
+    {
+        if (! $this->users->contains($user)) {
+            $this->users->add($user);
+        }
     }
 
     public function getName(): string
