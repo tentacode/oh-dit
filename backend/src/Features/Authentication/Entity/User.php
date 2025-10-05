@@ -51,7 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
 
-    /** @var Collection<int, Team> */
+    /**
+     * @var Collection<int, Team>
+     */
     #[ManyToMany(targetEntity: Team::class, mappedBy: 'users')]
     private Collection $teams;
 
