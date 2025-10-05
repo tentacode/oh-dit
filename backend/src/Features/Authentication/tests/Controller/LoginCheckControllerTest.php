@@ -29,8 +29,8 @@ final class LoginCheckControllerTest extends WebTestCase
             uri: '/api/login_check',
             method: Request::METHOD_POST,
             payload: [
-                'email' => 'darth.vader@empire.com',
-                'password' => 'darth_vader_64',
+                'email' => 'darth_vader@empire.com',
+                'password' => 'vader_64',
             ],
         );
 
@@ -51,7 +51,7 @@ final class LoginCheckControllerTest extends WebTestCase
 
         $this->assertNotEmpty($payload);
         $this->assertArrayHasKey('email', $payload);
-        $this->assertEquals('darth.vader@empire.com', $payload['email']);
+        $this->assertEquals('darth_vader@empire.com', $payload['email']);
         $this->assertArrayHasKey('exp', $payload);
         $this->assertGreaterThan(Carbon::now()->getTimestamp(), $payload['exp']);
     }
@@ -79,7 +79,7 @@ final class LoginCheckControllerTest extends WebTestCase
     {
         yield 'wrong password' => [
             [
-                'email' => 'darth.vader@empire.com',
+                'email' => 'darth_vader@empire.com',
                 'password' => 'wrong_password',
             ],
             [
@@ -92,7 +92,7 @@ final class LoginCheckControllerTest extends WebTestCase
         yield 'wrong email' => [
             [
                 'email' => 'darth.vader@empire.de',
-                'password' => 'darth_vader_64',
+                'password' => 'vader_64',
             ],
             [
                 'code' => 401,
@@ -103,11 +103,11 @@ final class LoginCheckControllerTest extends WebTestCase
 
         yield 'invalid payload' => [
             [
-                'username' => 'darth.vader@empire.com',
-                'password' => 'darth_vader_64',
+                'username' => 'darth_vader@empire.com',
+                'password' => 'vader_64',
             ],
             [
-                'code' => 400,
+                'code' => 'bad_request',
                 'message' => 'The key "email" must be provided.',
             ],
             Response::HTTP_BAD_REQUEST,

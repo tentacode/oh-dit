@@ -51,15 +51,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
 
+    /** @var Collection<int, Team> */
     #[ManyToMany(targetEntity: Team::class, mappedBy: 'users')]
     private Collection $teams;
 
     public function __construct(
         string $email,
         string $plainPassword,
-        string $username
+        string $username,
+        ?string $uuid = null
     ) {
-        $this->uuid = Uuid::v4();
+        $this->uuid = $uuid ? Uuid::fromString($uuid) : Uuid::v4();
         $this->email = $email;
         $this->username = $username;
         $this->password = $plainPassword;

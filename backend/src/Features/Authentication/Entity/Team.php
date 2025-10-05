@@ -34,6 +34,7 @@ class Team
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
 
+    /** @var Collection<int, User> */
     #[ManyToMany(targetEntity: User::class)]
     #[ORM\JoinTable(
         name: 'team_user',
@@ -44,8 +45,9 @@ class Team
 
     public function __construct(
         string $name,
+        ?string $uuid = null
     ) {
-        $this->uuid = Uuid::v4();
+        $this->uuid = $uuid ? Uuid::fromString($uuid) : Uuid::v4();
         $this->name = $name;
         $this->createdAt = CarbonImmutable::now();
         $this->updatedAt = CarbonImmutable::now();
