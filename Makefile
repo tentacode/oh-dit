@@ -37,7 +37,7 @@ reset: ## Reset database (env=dev|test)
 	docker compose exec backend bin/console doctrine:database:drop --force --if-exists --env=$(env)
 	docker compose exec backend bin/console doctrine:database:create --env=$(env)
 	docker compose exec backend bin/console doctrine:migrations:migrate --no-interaction --env=$(env)
-	docker compose exec backend bin/console doctrine:fixtures:load --no-interaction --env=$(env)
+	docker compose exec backend bin/console foundry:load-fixtures all -n --env=$(env)
 
 destroy-docker: ## Remove all containers and volumes
 	@echo "$(YELLOW)Removing all containers and volumes...$(NC)"

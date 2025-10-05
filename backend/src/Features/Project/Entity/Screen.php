@@ -37,9 +37,10 @@ class Screen
 
     public function __construct(
         Project $project,
-        string $name
+        string $name,
+        ?string $uuid = null
     ) {
-        $this->uuid = Uuid::v4();
+        $this->uuid = $uuid ? Uuid::fromString($uuid) : Uuid::v4();
         $this->project = $project;
         $this->name = $name;
         $this->createdAt = CarbonImmutable::now();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Features\Project\tests\Controller;
 
+use App\Features\Authentication\Fixture\Story\TeamUsersStory;
 use App\Infrastructure\PHPUnit\ApiRequest;
 use App\Infrastructure\PHPUnit\LoginRequest;
 use App\Infrastructure\PHPUnit\ResponseAssertions;
@@ -22,19 +23,19 @@ final class CreateProjectControllerTest extends WebTestCase
     public function test_it_can_add_a_project(): void
     {
         $response = $this->request(
-            uri: '/api/projects',
+            uri: '/api/projects/' . TeamUsersStory::TEAM_THE_EMPIRE_UUID,
             method: Request::METHOD_POST,
             payload: [
                 'name' => 'Mon nouveau projet',
             ],
             authenticationToken: $this->getAuthenticationToken(
-                email: 'darth.vader@empire.com',
-                password: 'darth_vader_64',
+                email: 'darth_vader@empire.com',
+                password: 'vader_64',
             ),
         );
 
         $this->assertJsonResponseMatches([
-            'id' => '@uuid@',
+            'uuid' => '@uuid@',
             'name' => 'Mon nouveau projet',
             'createdAt' => '@datetime@.after("today")',
             'updatedAt' => '@datetime@.after("today")',
@@ -44,7 +45,7 @@ final class CreateProjectControllerTest extends WebTestCase
     public function test_it_cant_add_a_project_if_not_logged_in(): void
     {
         $response = $this->request(
-            uri: '/api/projects',
+            uri: '/api/projects/' . TeamUsersStory::TEAM_THE_EMPIRE_UUID,
             method: Request::METHOD_POST,
             payload: [
                 'name' => 'Mon nouveau projet',
@@ -57,7 +58,7 @@ final class CreateProjectControllerTest extends WebTestCase
         ], $response, Response::HTTP_UNAUTHORIZED);
 
         $response = $this->request(
-            uri: '/api/projects',
+            uri: '/api/projects/' . TeamUsersStory::TEAM_THE_EMPIRE_UUID,
             method: Request::METHOD_POST,
             payload: [
                 'name' => 'Mon nouveau projet',
@@ -71,6 +72,46 @@ final class CreateProjectControllerTest extends WebTestCase
         ], $response, Response::HTTP_UNAUTHORIZED);
     }
 
+    public function test_it_cant_add_a_project_to_another_team(): void
+    {
+        $response = $this->request(
+            uri: '/api/projects/' . TeamUsersStory::TEAM_THE_REBELLION_UUID,
+            method: Request::METHOD_POST,
+            payload: [
+                'name' => 'Mon nouveau projet',
+            ],
+            authenticationToken: $this->getAuthenticationToken(
+                email: 'darth_vader@empire.com',
+                password: 'vader_64',
+            ),
+        );
+
+        $this->assertJsonResponseMatches([
+            'code' => 'not_found',
+            'message' => 'Resource not found.',
+        ], $response, Response::HTTP_NOT_FOUND);
+    }
+
+    public function test_it_cant_add_a_project_to_a_non_existing_team(): void
+    {
+        $response = $this->request(
+            uri: '/api/projects/00000000-0000-0000-0000-000000000999',
+            method: Request::METHOD_POST,
+            payload: [
+                'name' => 'Mon nouveau projet',
+            ],
+            authenticationToken: $this->getAuthenticationToken(
+                email: 'darth_vader@empire.com',
+                password: 'vader_64',
+            ),
+        );
+
+        $this->assertJsonResponseMatches([
+            'code' => 'not_found',
+            'message' => 'Resource not found.',
+        ], $response, Response::HTTP_NOT_FOUND);
+    }
+
     /**
      * @param array<mixed> $payload
      * @param array<mixed> $expectedResponse
@@ -81,12 +122,12 @@ final class CreateProjectControllerTest extends WebTestCase
         array $expectedResponse
     ): void {
         $response = $this->request(
-            uri: '/api/projects',
+            uri: '/api/projects/' . TeamUsersStory::TEAM_THE_EMPIRE_UUID,
             method: Request::METHOD_POST,
             payload: $payload,
             authenticationToken: $this->getAuthenticationToken(
-                email: 'darth.vader@empire.com',
-                password: 'darth_vader_64',
+                email: 'darth_vader@empire.com',
+                password: 'vader_64',
             ),
         );
 

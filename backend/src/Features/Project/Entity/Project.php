@@ -11,6 +11,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -34,13 +35,16 @@ class Project
 
     #[ManyToOne(targetEntity: Team::class)]
     #[JoinColumn(name: 'team_uuid', referencedColumnName: 'uuid')]
+    #[Ignore]
+    #[Assert\NotBlank]
     private Team $team;
 
     public function __construct(
         Team $team,
-        string $name
+        string $name,
+        ?string $uuid = null
     ) {
-        $this->uuid = Uuid::v4();
+        $this->uuid = $uuid ? Uuid::fromString($uuid) : Uuid::v4();
         $this->team = $team;
         $this->name = $name;
         $this->createdAt = CarbonImmutable::now();

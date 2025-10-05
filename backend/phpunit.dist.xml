@@ -11,6 +11,7 @@
     bootstrap="tests/bootstrap.php"
     cacheDirectory=".phpunit.cache"
     testdox="true"
+    beStrictAboutChangesToGlobalState="false"
 >
     <php>
         <env name="APP_ENV" value="test" force="true"/>
@@ -44,6 +45,7 @@
     </source>
 
     <extensions>
+        <bootstrap class="Zenstruck\Foundry\PHPUnit\FoundryExtension" />
         <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
         <bootstrap class="Symfony\Bridge\PhpUnit\SymfonyExtension">
             <parameter name="clock-mock-namespaces" value="App" />

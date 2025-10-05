@@ -7,6 +7,7 @@ use Rector\Config\RectorConfig;
 use Rector\Naming\Rector\Assign\RenameVariableToMatchMethodCallReturnTypeRector;
 use Rector\Naming\Rector\Class_\RenamePropertyToMatchTypeRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
+use Rector\Strict\Rector\Ternary\BooleanInTernaryOperatorRuleFixerRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -45,5 +46,6 @@ return RectorConfig::configure()
         RenameParamToMatchTypeRector::class,
         RenamePropertyToMatchTypeRector::class,
         RenameVariableToMatchMethodCallReturnTypeRector::class,
+        BooleanInTernaryOperatorRuleFixerRector::class,
     ])
 ;
