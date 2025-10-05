@@ -34,7 +34,9 @@ class Team
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
 
-    /** @var Collection<int, User> */
+    /**
+     * @var Collection<int, User>
+     */
     #[ManyToMany(targetEntity: User::class)]
     #[ORM\JoinTable(
         name: 'team_user',
