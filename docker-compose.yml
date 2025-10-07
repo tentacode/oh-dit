@@ -6,11 +6,11 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "1337:3000"
+      - "1337:4321"
     volumes:
       - ./frontend:/app
       - /app/node_modules
-      - /app/.next
+      - /app/.astro
     environment:
       - NODE_ENV=development
       - WATCHPACK_POLLING=true
@@ -48,4 +48,4 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  postgres_data: 
+  postgres_data:
