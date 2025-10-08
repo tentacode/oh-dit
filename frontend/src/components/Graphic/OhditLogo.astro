@@ -1,49 +1,39 @@
 ---
-import { colorRoles } from "../../config/colors";
+import { colorRoles, colors } from "../../config/colors";
 
 const mainColor = colorRoles.light;
 const backgroundColor = colorRoles.dark;
-const alternateColor = colorRoles.accent;
+const alternateColor = colors.green;
 const fontFamily = "Lexend Deca, Lexend Deca Fallback, Arial, sans-serif";
 const fontSize = "32";
 const fontWeight = "700";
+const { width } = Astro.props;
 ---
 
-<svg viewBox="0 0 150 60" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto">
+<style define:vars={{ width: width || "auto" }}>
+	svg {
+		width: var(--width);
+		height: auto;
+	}
+</style>
+
+<svg viewBox="0 10 117 35" xmlns="http://www.w3.org/2000/svg">
 	<!-- Main O with surprised face -->
 	<g>
-		<!-- Face background -->
-		<ellipse cx="18" cy="28" rx="11" ry="11" fill={mainColor} stroke={mainColor} stroke-width="3.5"
+		<ellipse cx="18" cy="28" rx="10" ry="10" fill={'transparent'} stroke={mainColor} stroke-width="4"
 		></ellipse>
-		<!-- Left eye: > -->
-		<polyline
-			points="12,23 15,25 12,27"
-			fill="none"
-			stroke={backgroundColor}
-			stroke-width="2.5"
-			stroke-linecap="round"
-			stroke-linejoin="round"></polyline>
-		<!-- Right eye: < -->
-		<polyline
-			points="24,23 21,25 24,27"
-			fill="none"
-			stroke={backgroundColor}
-			stroke-width="2.5"
-			stroke-linecap="round"
-			stroke-linejoin="round"></polyline>
-		<!-- Mouth -->
+		
+		<!-- Checkmark inside the O - styled like the reference -->
 		<path
-			d="M13 31
-     a5 8 0 1 0 10 0
-     Z"
-			fill={backgroundColor}
-			stroke={backgroundColor}
-			stroke-width="0"></path>
+			fill={mainColor}
+			d="M 16.5 33.5 c -1.4 0.32 -4 9.84 -5.2 9.9 c -3.1 0.12 -6.86 -6.16 -7.94 -0.06 c -0.25 1.2 7.43 6.1 9.58 6.1 c 2.16 0 8.04 -13 7.42 -14.16 c -0.41 -0.63 -0.99 -1.13 -1.67 -1.45 c -0.68 -0.31 -1.44 -0.43 -2.19 -0.33 Z"
+			transform="translate(10, 1) scale(0.65)"
+		></path>
 	</g>
 
 	<!-- Text: h!Dit -->
 	<text
-		x="33"
+		x="31"
 		y="40"
 		font-family={fontFamily}
 		font-size={fontSize}
@@ -53,7 +43,7 @@ const fontWeight = "700";
 		h
 	</text>
 	<text
-		x="54"
+		x="51"
 		y="40"
 		font-family={fontFamily}
 		font-size={fontSize}
@@ -63,7 +53,7 @@ const fontWeight = "700";
 		!
 	</text>
 	<text
-		x="65"
+		x="61"
 		y="40"
 		font-family={fontFamily}
 		font-size={fontSize}
@@ -73,7 +63,7 @@ const fontWeight = "700";
 		dit
 	</text>
 	<text
-		x="111"
+		x="105"
 		y="40"
 		font-family={fontFamily}
 		font-size={fontSize}
