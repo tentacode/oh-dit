@@ -1,6 +1,6 @@
 FROM node:24-alpine
 
-RUN apk add --no-cache zsh git curl ssh
+RUN apk add --no-cache zsh git curl
 
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
@@ -12,10 +12,16 @@ WORKDIR /app
 
 COPY package*.json ./
 
+# Install dependencies during build
+RUN npm ci
+
 ENV HOST=0.0.0.0
 ENV PORT=4321
 ENV PATH="/app/node_modules/.bin:$PATH"
 
 EXPOSE 4321
 
-CMD ["sh", "-c", "npm ci && npm run dev"]
+# Copy the rest of the app
+COPY . .
+
+CMD ["npm", "run", "dev"]
