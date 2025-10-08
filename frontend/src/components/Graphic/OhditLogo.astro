@@ -9,91 +9,77 @@ const fontSize = "32";
 const fontWeight = "700";
 ---
 
-<svg
-  viewBox="0 0 150 60"
-  xmlns="http://www.w3.org/2000/svg"
-  class="h-16 w-auto"
->
-  <!-- Main O with surprised face -->
-  <g>
-    <!-- Face background -->
-    <ellipse
-      cx="18"
-      cy="28"
-      rx="11"
-      ry="11"
-      fill={mainColor}
-      stroke={mainColor}
-      stroke-width="3.5"
-    />
-    <!-- Left eye: > -->
-    <polyline
-      points="12,23 15,25 12,27"
-      fill="none"
-      stroke={backgroundColor}
-      stroke-width="2.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-    <!-- Right eye: < -->
-    <polyline
-      points="24,23 21,25 24,27"
-      fill="none"
-      stroke={backgroundColor}
-      stroke-width="2.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-    <!-- Mouth -->
-    <path
-      d="M13 31
+<svg viewBox="0 0 150 60" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto">
+	<!-- Main O with surprised face -->
+	<g>
+		<!-- Face background -->
+		<ellipse cx="18" cy="28" rx="11" ry="11" fill={mainColor} stroke={mainColor} stroke-width="3.5"
+		></ellipse>
+		<!-- Left eye: > -->
+		<polyline
+			points="12,23 15,25 12,27"
+			fill="none"
+			stroke={backgroundColor}
+			stroke-width="2.5"
+			stroke-linecap="round"
+			stroke-linejoin="round"></polyline>
+		<!-- Right eye: < -->
+		<polyline
+			points="24,23 21,25 24,27"
+			fill="none"
+			stroke={backgroundColor}
+			stroke-width="2.5"
+			stroke-linecap="round"
+			stroke-linejoin="round"></polyline>
+		<!-- Mouth -->
+		<path
+			d="M13 31
      a5 8 0 1 0 10 0
      Z"
-      fill={backgroundColor}
-      stroke={backgroundColor}
-      stroke-width="0"
-    />
-  </g>
+			fill={backgroundColor}
+			stroke={backgroundColor}
+			stroke-width="0"></path>
+	</g>
 
-  <!-- Text: h!Dit -->
-  <text
-    x="33"
-    y="40"
-    font-family={fontFamily}
-    font-size={fontSize}
-    font-weight={fontWeight}
-    fill={mainColor}
-  >
-    h
-  </text>
-  <text
-    x="54"
-    y="40"
-    font-family={fontFamily}
-    font-size={fontSize}
-    font-weight={fontWeight}
-    fill={alternateColor}
-  >
-    !
-  </text>
-  <text
-    x="65"
-    y="40"
-    font-family={fontFamily}
-    font-size={fontSize}
-    font-weight={fontWeight}
-    fill={mainColor}
-  >
-    dit
-  </text>
-  <text
-    x="111"
-    y="40"
-    font-family={fontFamily}
-    font-size={fontSize}
-    font-weight={fontWeight}
-    fill={alternateColor}
-  >
-    '
-  </text>
+	<!-- Text: h!Dit -->
+	<text
+		x="33"
+		y="40"
+		font-family={fontFamily}
+		font-size={fontSize}
+		font-weight={fontWeight}
+		fill={mainColor}
+	>
+		h
+	</text>
+	<text
+		x="54"
+		y="40"
+		font-family={fontFamily}
+		font-size={fontSize}
+		font-weight={fontWeight}
+		fill={alternateColor}
+	>
+		!
+	</text>
+	<text
+		x="65"
+		y="40"
+		font-family={fontFamily}
+		font-size={fontSize}
+		font-weight={fontWeight}
+		fill={mainColor}
+	>
+		dit
+	</text>
+	<text
+		x="111"
+		y="40"
+		font-family={fontFamily}
+		font-size={fontSize}
+		font-weight={fontWeight}
+		fill={alternateColor}
+	>
+		'
+	</text>
 </svg>

@@ -1,36 +1,40 @@
 ---
-import CheckCircleIcon from 'astro-heroicons/solid/CheckCircle.astro';
-import { colorRoles, colors } from '../../config/colors';
+import CheckCircleIcon from "astro-heroicons/solid/CheckCircle.astro";
+import { colorRoles } from "../../config/colors";
 
 const { href = "#", borderColor = colorRoles.light } = Astro.props;
 ---
+
 <a href={href}>
-    <CheckCircleIcon
-        class="w-8 h-8"
-        style={{ color: colorRoles.light }}
-    />
-    <slot />
+	<CheckCircleIcon class="h-8 w-8" style={{ color: colorRoles.light }} />
+	<slot />
 </a>
 
-<style define:vars={{
-    borderColor: borderColor,
-    backgroundColor: colorRoles.dark,
-    textColor: colorRoles.light
-}}>
-    a {
-        border-color: var(--borderColor);
-        border-width: 4px;
-        border-style: solid;
-        border-radius: 15px;
-        padding: 10px 15px;
-        background-color: var(--backgroundColor);
-        color: var(--textColor);
-        text-decoration: none;
-        font-size: 1.5rem;
-        font-weight: 500;
-        font-family: Lexend Deca, Lexend Deca Fallback, Arial, sans-serif;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
+<style
+	define:vars={{
+		borderColor: borderColor,
+		backgroundColor: colorRoles.dark,
+		textColor: colorRoles.light,
+	}}
+>
+	a {
+		border-color: var(--borderColor);
+		border-width: 4px;
+		border-style: solid;
+		border-radius: 15px;
+		padding: 10px 15px;
+		background-color: var(--backgroundColor);
+		color: var(--textColor);
+		text-decoration: none;
+		font-size: 1.5rem;
+		font-weight: 500;
+		font-family:
+			Lexend Deca,
+			Lexend Deca Fallback,
+			Arial,
+			sans-serif;
+		display: flex;
+		align-items: center;
+		gap: 15px;
+	}
 </style>
