@@ -7,28 +7,28 @@ const textColor = colorRoles.light;
 ---
 
 <div
-    style={{
-    paddingBottom: "20px",
-    marginBottom: "40px",
-    backgroundColor: colorRoles.accent,
-    clipPath: clipPath,
-    }}
+	style={{
+		paddingBottom: "20px",
+		marginBottom: "40px",
+		backgroundColor: colorRoles.accent,
+		clipPath: clipPath,
+	}}
 >
-    <div
-    style={{
-        paddingBottom: "5px",
-        backgroundColor: colors.green,
-        clipPath: clipPath,
-    }}
-    >
-    <div
-        style={{
-        backgroundColor: backgroundColor,
-        color: textColor,
-        clipPath: clipPath,
-        }}
-    >
-        <slot />
-    </div>
-    </div>
+	<div
+		style={{
+			paddingBottom: "5px",
+			backgroundColor: colors.green,
+			clipPath: clipPath,
+		}}
+	>
+		<div
+			style={{
+				backgroundColor: backgroundColor,
+				color: textColor,
+				clipPath: clipPath,
+			}}
+		>
+			<slot />
+		</div>
+	</div>
 </div>
