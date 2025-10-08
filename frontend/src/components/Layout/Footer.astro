@@ -1,0 +1,30 @@
+---
+import { colorRoles } from "../../config/colors";
+import LinkedIn from "../Icon/LinkedIn.astro";
+
+const underlineColor = colorRoles.accent
+---
+
+<footer class="bg-white">
+  <div class="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
+    <div class="flex justify-center gap-x-6 md:order-2">
+      <a href="https://www.linkedin.com/in/gabrielpillet/" class="text-gray-600 hover:text-gray-800 flex gap-x-2 items-center" target="_blank" rel="noopener noreferrer">
+        <span>Suivez nous sur Linkedin</span>
+        <LinkedIn />
+      </a>
+    </div>
+        <a href="https://tentacode.dev">&copy; {new Date().getFullYear()} réalisé par tentacode.dev</a>
+        <a href="/declaration-accessibilite">Accessibilité : totalement conforme</a>
+  </div>
+</footer>
+
+<style define:vars={{ underlineColor: underlineColor }}>
+  a {
+    font-size: 1.2rem;
+    font-weight: 400;
+    text-decoration: underline;
+    text-decoration-color: var(--underlineColor);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 5px;
+  }
+</style>

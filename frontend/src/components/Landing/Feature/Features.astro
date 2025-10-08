@@ -1,0 +1,71 @@
+---
+import Feature from "./Feature.astro";
+import { colors } from "../../../config/colors";
+import FeaturesIllustration from "../../Graphic/FeaturesIllustration.astro";
+import SparklesIcon from "astro-heroicons/outline/Sparkles.astro";
+import BookOpenIcon from "astro-heroicons/outline/BookOpen.astro";
+import ChatBubbleBottomCenterTextIcon from "astro-heroicons/outline/ChatBubbleBottomCenterText.astro";
+import ClipboardDocumentCheckIcon from "astro-heroicons/outline/ClipboardDocumentCheck.astro";
+import RectangleStackIcon from "astro-heroicons/outline/RectangleStack.astro";
+
+import SadRobot from "../../Icon/SadRobot.astro";
+---
+
+<style>
+  .featureContainer {
+    padding-top: 1rem;
+    padding-bottom: 4rem;
+  }
+</style>
+
+<div class="featureContainer">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto grid max-w-2xl grid-cols-1 gap-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-5">
+        <div class="col-span-2 flex flex-col items-start gap-y-6">
+            <FeaturesIllustration />
+        </div>  
+
+        <dl class="col-span-3 grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2">
+            <Feature Icon={SparklesIcon}>
+                <h2>Adieu les fichiers Excel</h2>
+                <p>Une interface de saisie sur mesure et intuitive vous permet de gagner un temps précieux. Navigez rapidement d'une page ou d'un critère à l'autre.</p>
+            </Feature>
+            <Feature Icon={RectangleStackIcon}>
+                <h2>Tout vos projets sont ici</h2>
+                <p>Centralisez vos projets et vos clients pour un meilleur suivi. Configurez chaque projet pour détailler les écrans et composants des applications à auditer.</p>
+            </Feature>
+            <Feature Icon={ChatBubbleBottomCenterTextIcon}>
+                <h2>Collaborons ensemble</h2>
+                <p>Échangez simplement dans votre équipe et fournissez des recommandations pertinentes à vos clients.</p>
+            </Feature>
+            <Feature Icon={BookOpenIcon}>
+                <h2>Une vraie documentation</h2>
+                <p>Ohdit éclaircit la réglementation (<abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>, <abbr title="Référentiel d'Évaluation de l'Accessibilité des Applications Mobiles">RAAM</abbr>) pour que les auditeurs, développeurs et clients parlent le même langage.</p>
+            </Feature>
+            <Feature Icon={ClipboardDocumentCheckIcon}>
+                <h2>Des rapports clairs</h2>
+                <p>Votre client mérite des rapports clairs lui permettant de visualiser facilement le résultat de l'audit et les actions à entreprendre.</p>
+            </Feature>
+            <Feature Icon={SadRobot} iconColor={colors.pink}>
+                <h2>Garanti sans robot !</h2>
+                <p>Ohdit n'est pas une solution magique qui réalise les audits à votre place (désolé !). Vous gardez le contrôle et réalisez votre audit dans des conditions optimales.</p>
+            </Feature>
+        </dl>
+    </div>
+  </div>
+</div>
+
+
+<style>
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    p {
+        margin-top: 0.5rem;
+        font-size: 1.2rem;
+        line-height: 1.5;
+    }
+</style>

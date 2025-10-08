@@ -1,0 +1,18 @@
+---
+import { colorRoles } from "../../../config/colors"
+
+const {Icon, iconColor = colorRoles.accent} = Astro.props;
+---
+
+<div>
+    <div class="iconContainer mb-4 flex size-16 items-center justify-center rounded-lg">
+       <Icon class="h-10 w-10 text-white" />
+    </div>
+    <slot />
+</div>
+
+<style define:vars={{ iconColor: iconColor }}>
+    .iconContainer {
+        background-color: var(--iconColor);
+    }
+</style>
