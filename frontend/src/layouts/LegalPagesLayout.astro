@@ -1,0 +1,33 @@
+---
+import Layout from "./Layout.astro";
+import "../styles/legal.css";
+import OhditLogo from "../components/Graphic/OhditLogo.astro";
+import { colorRoles } from "../config/colors";
+
+const { lastUpdatedAt } = Astro.props;
+---
+
+<Layout>
+	<div class="legal-container">
+		<a class="backToLanding" href="/">
+			<OhditLogo mainColor={colorRoles.dark} secondaryColor={colorRoles.accent} width="250px" />
+			Retourner à la page d'accueil
+		</a>
+		<p class="last-updated">Dernière mise à jour : {lastUpdatedAt}</p>
+		<article>
+			<slot />
+		</article>
+	</div>
+</Layout>
+
+<style>
+	.backToLanding {
+		display: flex;
+		flex-direction: column;
+		/* align-items: center; */
+		gap: 10px;
+		margin-bottom: 20px;
+		font-size: 1.2rem;
+		font-weight: 600;
+	}
+</style>

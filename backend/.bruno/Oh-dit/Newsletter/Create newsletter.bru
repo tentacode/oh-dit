@@ -1,0 +1,28 @@
+meta {
+  name: Create newsletter
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/api/newsletters
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "test@example.com",
+    "consentNewsletter": false,
+    "consentBlog": true,
+    "consentBeta": false
+  }
+}
+
+settings {
+  encodeUrl: false
+}

@@ -1,23 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
-use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
-use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
-use Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle;
-use DAMA\DoctrineTestBundle\DAMADoctrineTestBundle;
-use Symfony\Bundle\SecurityBundle\SecurityBundle;
-use Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle;
-use Sentry\SentryBundle\SentryBundle;
-use Zenstruck\Foundry\ZenstruckFoundryBundle;
-
 return [
-    FrameworkBundle::class => ['all' => true],
-    DoctrineBundle::class => ['all' => true],
-    DoctrineMigrationsBundle::class => ['all' => true],
-    DAMADoctrineTestBundle::class => ['test' => true],
-    SecurityBundle::class => ['all' => true],
-    LexikJWTAuthenticationBundle::class => ['all' => true],
-    SentryBundle::class => ['prod' => true, 'dev' => true],
-    ZenstruckFoundryBundle::class => ['dev' => true, 'test' => true],
+    Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
+    Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
+    Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class => ['all' => true],
+    DAMA\DoctrineTestBundle\DAMADoctrineTestBundle::class => ['test' => true],
+    Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
+    Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
+    Sentry\SentryBundle\SentryBundle::class => ['prod' => true, 'dev' => true],
+    Zenstruck\Foundry\ZenstruckFoundryBundle::class => ['dev' => true, 'test' => true],
+    Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
 ];

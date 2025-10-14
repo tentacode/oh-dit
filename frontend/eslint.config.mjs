@@ -58,6 +58,6 @@ export default defineConfig([
 
 	// Ignore patterns
 	{
-		ignores: ["dist/**", "**/*.d.ts", ".github/"],
+		ignores: ["dist/**", "**/*.d.ts", ".github/", "node_modules/"],
 	},
 ]);
