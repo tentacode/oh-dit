@@ -1,0 +1,128 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Features\Newsletter\tests\Controller;
+
+use App\Infrastructure\PHPUnit\ApiRequest;
+use App\Infrastructure\PHPUnit\LoginRequest;
+use App\Infrastructure\PHPUnit\ResponseAssertions;
+use Iterator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+final class CreateNewsletterControllerTest extends WebTestCase
+{
+    use ApiRequest;
+    use LoginRequest;
+    use ResponseAssertions;
+
+    public function test_it_can_add_a_newsletter(): void
+    {
+        $response = $this->request(
+            uri: '/api/newsletters',
+            method: Request::METHOD_POST,
+            payload: [
+                'email' => 'toto@example.com',
+                'consentNewsletter' => true,
+                'consentBlog' => false,
+                'consentBeta' => true,
+            ],
+        );
+
+        $this->assertJsonResponseMatches([
+            'uuid' => '@uuid@',
+            'email' => 'toto@example.com',
+            'consentNewsletter' => true,
+            'consentBlog' => false,
+            'consentBeta' => true,
+            'createdAt' => '@datetime@.after("today")',
+            'updatedAt' => '@datetime@.after("today")',
+        ], $response, Response::HTTP_CREATED);
+    }
+
+    public function test_it_cant_add_a_newsletter_on_an_existing_email(): void
+    {
+        $response = $this->request(
+            uri: '/api/newsletters',
+            method: Request::METHOD_POST,
+            payload: [
+                'email' => 'darth_maul@empire.com',
+                'consentNewsletter' => true,
+                'consentBlog' => false,
+                'consentBeta' => true,
+            ],
+        );
+
+        $this->assertJsonResponseMatches([
+            'code' => 'unprocessable_entity',
+            'message' => 'Validation Failed',
+            'errors' => [
+                [
+                    'code' => '23bd9dbf-6b9b-41cd-a99e-4844bcf3077f',
+                    'propertyPath' => 'email',
+                    'message' => 'There is already a newsletter with this email',
+                ],
+            ],
+        ], $response, Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+     * @param array<mixed> $payload
+     * @param array<mixed> $expectedResponse
+     */
+    #[DataProvider('invalidNewsletterPayloadProvider')]
+    public function test_it_cant_add_a_newsletter_with_invalid_payload(
+        array $payload,
+        array $expectedResponse
+    ): void {
+        $response = $this->request(
+            uri: '/api/newsletters',
+            method: Request::METHOD_POST,
+            payload: $payload,
+            authenticationToken: $this->getAuthenticationToken(
+                email: 'darth_vader@empire.com',
+                password: 'vader_64',
+            ),
+        );
+
+        $this->assertJsonResponseEquals($expectedResponse, $response, Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    public static function invalidNewsletterPayloadProvider(): Iterator
+    {
+        yield 'empty payload' => [
+            [
+            ],
+            [
+                'code' => 'unprocessable_entity',
+                'message' => 'Validation Failed',
+                'errors' => [
+                    [
+                        'code' => null,
+                        'propertyPath' => 'email',
+                        'message' => 'This value should be of type string.',
+                    ],
+                    [
+                        'code' => null,
+                        'propertyPath' => 'consentNewsletter',
+                        'message' => 'This value should be of type bool.',
+                    ],
+                    [
+                        'code' => null,
+                        'propertyPath' => 'consentBlog',
+                        'message' => 'This value should be of type bool.',
+                    ],
+                    [
+                        'code' => null,
+                        'propertyPath' => 'consentBeta',
+                        'message' => 'This value should be of type bool.',
+                    ],
+
+                ],
+            ],
+        ];
+    }
+}

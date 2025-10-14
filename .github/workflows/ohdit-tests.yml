@@ -101,7 +101,7 @@ jobs:
       # Tests frontend
       - name: Linting fixes
         working-directory: ./frontend
-        run: npx eslint . --fix
+        run: npm run lint-fix
       
       - name: Prettier fixes
         working-directory: ./frontend

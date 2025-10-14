@@ -1,0 +1,72 @@
+---
+import NewsletterIllustration from "../../Graphic/NewsletterIllustration.astro";
+import ThankYouIllustration from "../../Graphic/ThankYouIllustration.astro";
+import NewsletterForm from "./NewsletterForm.astro";
+import NewsletterConfirmation from "./NewsletterConfirmation.astro";
+---
+
+<div class="relative isolate overflow-hidden py-20">
+	<div class="mx-auto max-w-7xl px-6 lg:px-8">
+		<div class="newsletterContainer">
+			<div class="newsletterFormContainer">
+				<h2>Ohdit est en développement !</h2>
+				<p>
+					Si notre projet vous intéresse, n'hésitez pas à vous inscrire à notre newsletter pour être
+					tenu au courant des avancées et être les premièr(e)s à tester Ohdit.
+				</p>
+				<div id="newsletterForm"><NewsletterForm /></div>
+				<div id="newsletterConfirmation" style="display:none;"><NewsletterConfirmation /></div>
+			</div>
+			<div class="illustration">
+				<div id="newsletterFormIllustration"><NewsletterIllustration /></div>
+				<div id="newsletterConfirmationIllustration" style="display:none;">
+					<ThankYouIllustration />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	h2 {
+		font-size: 3rem;
+		font-weight: 700;
+		margin-bottom: 20px;
+	}
+
+	p {
+		font-size: 1.3em;
+	}
+
+	.newsletterContainer {
+		display: flex;
+		flex-direction: row;
+		gap: 50px;
+		margin-bottom: 50px;
+	}
+
+	.newsletterFormContainer {
+		flex: 3;
+	}
+
+	.illustration {
+		flex: 1.5;
+	}
+</style>
+
+<script>
+	const { successfullySubscribed } = await import("./store.js");
+	successfullySubscribed.subscribe((sub) => {
+		if (sub) {
+			document.getElementById("newsletterForm").style.display = "none";
+			document.getElementById("newsletterFormIllustration").style.display = "none";
+			document.getElementById("newsletterConfirmation").style.display = "block";
+			document.getElementById("newsletterConfirmationIllustration").style.display = "block";
+		} else {
+			document.getElementById("newsletterForm").style.display = "block";
+			document.getElementById("newsletterFormIllustration").style.display = "block";
+			document.getElementById("newsletterConfirmation").style.display = "none";
+			document.getElementById("newsletterConfirmationIllustration").style.display = "none";
+		}
+	});
+</script>

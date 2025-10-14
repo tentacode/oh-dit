@@ -2,29 +2,54 @@
 import { colorRoles } from "../../config/colors";
 import LinkedIn from "../Icon/LinkedIn.astro";
 
-const underlineColor = colorRoles.accent
+const underlineColor = colorRoles.accent;
+const textColor = colorRoles.dark;
 ---
 
 <footer class="bg-white">
-  <div class="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
-    <div class="flex justify-center gap-x-6 md:order-2">
-      <a href="https://www.linkedin.com/in/gabrielpillet/" class="text-gray-600 hover:text-gray-800 flex gap-x-2 items-center" target="_blank" rel="noopener noreferrer">
-        <span>Suivez nous sur Linkedin</span>
-        <LinkedIn />
-      </a>
-    </div>
-        <a href="https://tentacode.dev">&copy; {new Date().getFullYear()} réalisé par tentacode.dev</a>
-        <a href="/declaration-accessibilite">Accessibilité : totalement conforme</a>
-  </div>
+	<nav>
+		<ul>
+			<li><a href="/mentions-legales">Mentions légales</a></li>
+			<li><a href="/politique-de-confidentialite">Politique de confidentialité</a></li>
+			<li><a href="/conditions-generales-d-utilisation">Conditions générales d'utilisation</a></li>
+			<li>
+				<a href="/declaration-d-accessibilite">Déclaration d'accessibilité : totalement conforme</a>
+			</li>
+		</ul>
+		<ul>
+			<li>
+				<a
+					href="https://www.linkedin.com/in/gabrielpillet/"
+					class="flex items-center gap-x-2"
+					rel="noopener noreferrer"
+				>
+					<span>Suivez nous sur Linkedin</span>
+					<LinkedIn />
+				</a>
+			</li>
+			<li>
+				<a href="https://tentacode.dev">&copy; {new Date().getFullYear()} — réalisé par tentacode.dev</a>
+			</li>
+		</ul>
+	</nav>
 </footer>
 
-<style define:vars={{ underlineColor: underlineColor }}>
-  a {
-    font-size: 1.2rem;
-    font-weight: 400;
-    text-decoration: underline;
-    text-decoration-color: var(--underlineColor);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 5px;
-  }
+<style define:vars={{ underlineColor: underlineColor, textColor: textColor }}>
+	nav {
+		display: flex;
+		justify-content: space-between;
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 40px 0px 60px 0px;
+	}
+
+	a {
+		font-size: 1.2rem;
+		font-weight: 400;
+		text-decoration: underline;
+		text-decoration-color: var(--underlineColor);
+		text-decoration-thickness: 2px;
+		text-underline-offset: 5px;
+		color: --var(--textColor);
+	}
 </style>
