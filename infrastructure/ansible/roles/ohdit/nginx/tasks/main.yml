@@ -1,0 +1,14 @@
+---
+- name: Copying backend server nginx configuration
+  template:
+    src: "ohdit-backend.nginx.conf.j2"
+    dest: /etc/nginx/sites-enabled/ohdit-backend.conf
+  notify: restart web services
+  become: yes
+
+- name: Copying server nginx configuration
+  template:
+    src: "ohdit-frontend.nginx.conf.j2"
+    dest: /etc/nginx/sites-enabled/ohdit-frontend.conf
+  notify: restart web services
+  become: yes

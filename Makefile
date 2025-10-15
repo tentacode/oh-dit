@@ -43,3 +43,9 @@ destroy-docker: ## Remove all containers and volumes
 	@echo "$(YELLOW)Removing all containers and volumes...$(NC)"
 	docker compose down -v --remove-orphans
 	@echo "$(GREEN)Cleanup complete!$(NC)" 
+
+provision-server: ## Provision server
+	ansible-playbook -i infrastructure/ansible/hosts infrastructure/ansible/provision-server.yml --extra-vars="@infrastructure/ansible/ohdit-vars.yml"
+
+deploy: ## Deploy main to server
+	ansible-playbook -i infrastructure/ansible/hosts infrastructure/ansible/deploy.yml --extra-vars="@infrastructure/ansible/ohdit-vars.yml"

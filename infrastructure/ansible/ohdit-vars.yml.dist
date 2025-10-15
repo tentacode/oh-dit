@@ -1,0 +1,52 @@
+server:
+  timezone: Europe/Paris
+
+user:
+  name: gabriel
+  group: gabriel
+  home_directory: /home/gabriel
+  workspace_directory: /home/gabriel
+  prompt: '{ohdit}'
+
+git:
+  name: tentacode
+  email: CHANGE_ME
+  ssh_private_key: /Users/gabriel/.ssh/ssh_github
+  ssh_public_key: /Users/gabriel/.ssh/ssh_github.pub
+
+node:
+  version: 24
+
+php:
+  max_upload_size_mb: 10
+  version: 8.4
+  extensions:
+      - curl
+      - intl
+      - mbstring
+      - pgsql
+      - simplexml
+      - zip
+
+smtp:
+    host: CHANGE_ME
+    port: 587
+    username: CHANGE_ME
+    password: CHANGE_ME
+    from_address: CHANGE_ME
+
+postgresql:
+  version: 16
+  host: CHANGE_ME
+  port: CHANGE_ME
+  user: ohdit
+  password: CHANGE_ME
+  database_name: ohdit
+  extensions: []
+
+letsencrypt:
+  domain: CHANGE_ME
+  email: CHANGE_ME
+
+ohdit:
+  secret: CHANGE_ME

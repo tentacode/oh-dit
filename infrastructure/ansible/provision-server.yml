@@ -1,0 +1,21 @@
+---
+- hosts: all
+
+  roles:
+    - ubuntu
+
+    # needs to be setup first to use npm / nvm later
+    - web-server/node
+
+    - cli/bash
+    - cli/git
+    - cli/make
+    - cli/python
+
+    - web-server/nginx
+    - web-server/php-fpm
+
+    - ohdit/deploy
+    - ohdit/nginx
+
+    - web-server/letsencrypt

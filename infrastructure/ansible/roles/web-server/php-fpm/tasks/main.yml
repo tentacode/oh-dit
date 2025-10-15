@@ -1,0 +1,93 @@
+---
+- name: Add sury's apt key
+  apt_key:
+    url: https://packages.sury.org/php/apt.gpg
+    state: present
+  become: yes
+
+- name: Add sury's repository
+  apt_repository:
+    repo: ppa:ondrej/php
+    state: present
+  become: yes
+
+- name: Install php-fpm
+  apt: name=php{{ php.version }}-fpm state=present
+  become: yes
+  notify: restart web services
+
+- name: Install php extensions
+  apt: name=php{{ php.version }}-{{ item }} state=present
+  become: yes
+  notify: restart web services
+  with_items: "{{ php.extensions }}"
+  register: php_extensions
+
+- name: Disable default pool
+  command: mv /etc/php/{{ php.version }}/fpm/pool.d/www.conf /etc/php/{{ php.version }}/fpm/pool.d/www.disabled creates=/etc/php/{{ php.version }}/fpm/pool.d/www.disabled
+  notify: restart web services
+  become: yes
+
+- name: Copy php-fpm configuration
+  template: src=php-fpm.conf.j2 dest=/etc/php/{{ php.version }}/fpm/pool.d/www.conf
+  notify: restart web services
+  become: yes
+
+- name: Setting proper upload_max_filesize in php.ini (cli)
+  lineinfile:
+    dest: /etc/php/{{ php.version }}/cli/php.ini
+    regexp: "upload_max_filesize ="
+    line: "upload_max_filesize = {{ php.max_upload_size_mb }}M"
+  become: yes
+
+- name: Setting proper upload_max_filesize in php.ini (fpm)
+  lineinfile:
+    dest: /etc/php/{{ php.version }}/fpm/php.ini
+    regexp: "upload_max_filesize ="
+    line: "upload_max_filesize = {{ php.max_upload_size_mb }}M"
+  become: yes
+
+- name: Setting proper post_max_size in php.ini (cli)
+  lineinfile:
+    dest: /etc/php/{{ php.version }}/cli/php.ini
+    regexp: "post_max_size ="
+    line: "post_max_size = {{ php.max_upload_size_mb }}M"
+  become: yes
+
+- name: Setting proper post_max_size in php.ini (fpm)
+  lineinfile:
+    dest: /etc/php/{{ php.version }}/fpm/php.ini
+    regexp: "post_max_size ="
+    line: "post_max_size = {{ php.max_upload_size_mb }}M"
+  become: yes
+
+- name: Forcing start on php-fpm the first time
+  service: name=php{{ php.version }}-fpm state=started enabled=yes
+  become: yes
+  when: php_extensions.changed
+
+- name: Check if composer is installed.
+  stat: "path=/usr/local/bin/composer"
+  register: composer_bin
+
+- name: Get Composer installer signature.
+  uri:
+    url: https://composer.github.io/installer.sig
+    return_content: yes
+  register: composer_installer_signature
+  when: not composer_bin.stat.exists
+
+- name: Download Composer installer.
+  get_url:
+    url: https://getcomposer.org/installer
+    dest: /tmp/composer-installer.php
+    mode: 0755
+    checksum: "sha384:{{ composer_installer_signature.content }}"
+  when: not composer_bin.stat.exists
+
+- name: Run Composer installer
+  command: >
+    php composer-installer.php --filename=composer --install-dir=/usr/local/bin
+    chdir=/tmp
+  when: not composer_bin.stat.exists
+  become: yes

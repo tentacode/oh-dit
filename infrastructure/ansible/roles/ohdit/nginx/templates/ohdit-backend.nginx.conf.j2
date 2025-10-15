@@ -1,0 +1,56 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name api.ohdit.com;
+
+    root {{ user.workspace_directory }}/oh-dit/backend/public;
+    index index.php;
+
+    access_log /var/log/nginx/ohdit_backend.log;
+    error_log /var/log/nginx/ohdit_backend_error.log;
+
+    # Allow certbot to verify domain
+    location ^~ /.well-known/acme-challenge/ {
+        allow all;
+        default_type "text/plain";
+    }
+
+    # Deny access to hidden files
+    location ~ /\. {
+        deny all;
+    }
+
+    # Static files with caching
+    location ~* \.(jpg|jpeg|gif|png|css|js|ico|xml|svg|woff|woff2|ttf|eot)$ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+    }
+
+    # Main location block - pass everything to Symfony
+    location / {
+        try_files $uri /index.php$is_args$args;
+    }
+
+    # PHP-FPM configuration
+    location ~ ^/index\.php(/|$) {
+        fastcgi_buffer_size 128k;
+        fastcgi_buffers 4 256k;
+        fastcgi_busy_buffers_size 256k;
+
+        fastcgi_pass unix:/var/run/php/php{{ php.version }}-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+        fastcgi_param SYMFONY_ENV prod;
+        
+        internal;
+    }
+
+    # Return 404 for all other php files (security)
+    location ~ \.php$ {
+        return 404;
+    }
+}

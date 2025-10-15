@@ -1,0 +1,46 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ohdit.com www.ohdit.com;
+
+    root {{ user.workspace_directory }}/oh-dit/frontend/dist;
+    index index.html;
+
+    access_log /var/log/nginx/ohdit_frontend.log;
+    error_log /var/log/nginx/ohdit_frontend_error.log;
+
+    # Allow certbot to verify domain
+    location ^~ /.well-known/acme-challenge/ {
+        allow all;
+        default_type "text/plain";
+    }
+
+    # Deny access to hidden files
+    location ~ /\. {
+        deny all;
+    }
+
+    # Static assets with aggressive caching
+    location ~* \.(jpg|jpeg|gif|png|webp|avif|ico|svg)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+    }
+
+    location ~* \.(css|js|woff|woff2|ttf|eot|otf)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+    }
+
+    # HTML files - no cache (or short cache)
+    location ~* \.(html)$ {
+        expires -1;
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+    }
+
+    # Main location - try files then fallback to index.html for SPA routing
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}

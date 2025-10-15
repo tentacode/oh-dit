@@ -1,0 +1,62 @@
+---
+- name: Getting current local git branch
+  local_action:
+    module: shell
+    cmd: git rev-parse --abbrev-ref HEAD
+  register: current_git_branch
+
+- name: Cloning ohdit
+  git:
+    repo: git@github.com:tentacode/oh-dit.git
+    update: yes
+    force: yes
+    version: "{{ current_git_branch.stdout | trim }}"
+    dest: "{{ user.workspace_directory }}/oh-dit"
+    accept_hostkey: yes
+
+- name: Copying env file
+  template:
+    src: ".env.j2"
+    dest: "{{ user.workspace_directory }}/oh-dit/backend/.env.local"
+
+- name: Checking that the .env.local file does not contain any "CHANGE_ME" values
+  shell: grep -q CHANGE_ME {{ user.workspace_directory }}/oh-dit/backend/.env.local
+  register: env_file_contains_change_me
+  ignore_errors: yes
+
+- name: Fail if the .env.local file contains "CHANGE_ME" values
+  fail:
+    msg: "The .env.local file contains 'CHANGE_ME' values. Please fill in the required values."
+  when: env_file_contains_change_me.rc == 0
+
+- name: Installing composer dependencies
+  shell: composer install --no-interaction
+  args:
+    chdir: "{{ user.workspace_directory }}/oh-dit/backend"
+
+- name: Creating database
+  shell: php bin/console doctrine:database:create --if-not-exists
+  args:
+    chdir: "{{ user.workspace_directory }}/oh-dit/backend"
+
+- name: Run migrations
+  shell: php bin/console doctrine:migrations:migrate --no-interaction
+  args:
+    chdir: "{{ user.workspace_directory }}/oh-dit/backend"
+
+- name: Clearing cache
+  shell: php bin/console cache:clear
+  args:
+    chdir: "{{ user.workspace_directory }}/oh-dit/backend"
+
+- name: Installing frontend dependencies
+  shell: source ~/.nvm/nvm.sh && npm install
+  args:
+    chdir: "{{ user.workspace_directory }}/oh-dit/frontend"
+    executable: /bin/bash
+
+- name: Building frontend
+  shell: source ~/.nvm/nvm.sh && npm run build
+  args:
+    chdir: "{{ user.workspace_directory }}/oh-dit/frontend"
+    executable: /bin/bash
