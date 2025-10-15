@@ -1,0 +1,11 @@
+---
+- name: Install Matomo Analytics
+  hosts: all
+  become: yes
+  vars:
+    matomo_directory: "{{ user.workspace_directory }}/matomo"
+    matomo_version: "latest"
+  roles:
+    - web-server/nginx
+    - matomo
+    - web-server/letsencrypt

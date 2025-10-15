@@ -1,0 +1,98 @@
+---
+- name: Download Matomo
+  get_url:
+    url: "https://builds.matomo.org/matomo-{{ matomo_version }}.zip"
+    dest: "/tmp/matomo.zip"
+    mode: '0644'
+
+- name: Install unzip if not present
+  apt:
+    name: unzip
+    state: present
+
+- name: Extract Matomo archive
+  unarchive:
+    src: "/tmp/matomo.zip"
+    dest: "{{ user.workspace_directory }}/"
+    remote_src: yes
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    creates: "{{ matomo_directory }}"
+
+- name: Set proper permissions on Matomo directory
+  file:
+    path: "{{ matomo_directory }}"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0755'
+    recurse: yes
+
+- name: Set write permissions for specific directories
+  file:
+    path: "{{ matomo_directory }}/{{ item }}"
+    state: directory
+    mode: '0775'
+    recurse: yes
+  loop:
+    - tmp
+    - config
+
+- name: Copying matomo nginx configuration
+  template:
+    src: "matomo.nginx.conf.j2"
+    dest: /etc/nginx/sites-enabled/matomo.conf
+  notify: restart web services
+  become: yes
+
+- name: Test nginx configuration
+  command: nginx -t
+  changed_when: false
+
+- name: Clean up temporary files
+  file:
+    path: "/tmp/matomo.zip"
+    state: absent
+
+- name: Install Python MySQL library
+  apt:
+    name: python3-pymysql
+    state: present
+
+- name: Install MariaDB
+  apt:
+    name:
+      - mariadb-server
+      - mariadb-client
+    state: present
+
+- name: Start and enable MariaDB
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+
+- name: Create Matomo database
+  mysql_db:
+    name: matomo
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+- name: Create Matomo database user
+  mysql_user:
+    name: matomo
+    password: "{{ matomo_db_password }}"
+    priv: 'matomo.*:ALL'
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    
+- name: Set up Matomo archiving cron  
+  cron:
+    name: "Matomo archive reports"
+    minute: "5"
+    job: "/usr/bin/php{{ php.version }} {{ user.workspace_directory }}/matomo/console core:archive --url=https://analytics.ohdit.com > /dev/null 2>&1"
+    user: "{{ user.name }}"

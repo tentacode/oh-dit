@@ -27,6 +27,9 @@ php:
       - pgsql
       - simplexml
       - zip
+      - pdo
+      - mysql
+      - gd
 
 smtp:
     host: CHANGE_ME
@@ -50,3 +53,5 @@ letsencrypt:
 
 ohdit:
   secret: CHANGE_ME
+
+matomo_db_password: change_me

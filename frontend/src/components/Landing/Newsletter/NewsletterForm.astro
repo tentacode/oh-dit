@@ -47,7 +47,6 @@ const errorColor = colors.red;
 		href="https://www.brevo.com">Brevo</a
 	> pour gérer notre newsletter, vous pouvez consulter leur <a
 		href="https://www.brevo.com/fr/legal/privacypolicy/"
-		target="_blank"
 		rel="noopener">politique de confidentialité</a
 	>.
 </p>
@@ -105,6 +104,9 @@ const errorColor = colors.red;
 				},
 				body: JSON.stringify(formData),
 			});
+			
+			window._paq.push(['trackEvent', 'Newsletter', 'Signup', 'Landing Page']);
+
 		} catch (error) {
 			// Ignore errors as requested
 			console.error("Error submitting newsletter form:", error);
