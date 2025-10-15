@@ -56,18 +56,6 @@ jobs:
         working-directory: ./frontend
         run: npm install
 
-      # Audit and fix
-      
-      - name: Npm audit fix
-        working-directory: ./frontend
-        run: npm audit fix --force
-        continue-on-error: true
-
-      - name: Auto commit audit fixes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: ":robot::lock: Autofix audit issues"
-
       # Tests backend
       - name: Phpstan
         working-directory: ./backend
@@ -107,16 +95,18 @@ jobs:
         working-directory: ./frontend
         run: npx prettier --write src
 
-      - name: Npm audit
+      # Audit fix
+      - name: Npm audit fix
         working-directory: ./frontend
-        run: npm audit --audit-level=moderate
+        run: npm audit fix --force
+        continue-on-error: true
 
       # Autocommit
       - name: Auto commit fixes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           #file_pattern: '**/*.{js,jsx,ts,tsx,json,css,scss,md,php}'
-          commit_message: ":robot::art: Autofix CS and Rector"
+          commit_message: ":robot::art: Autofix"
 
       # Check after Autocommit
       - name: Checking code sniffer after fixes
@@ -126,6 +116,10 @@ jobs:
       - name: Checking rector after fixes
         working-directory: ./backend
         run: bin/rector
+
+      - name: Npm audit
+        working-directory: ./frontend
+        run: npm audit --audit-level=moderate
         
       - name: Checking lint fixes
         working-directory: ./frontend

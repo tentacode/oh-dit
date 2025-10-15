@@ -1,0 +1,24 @@
+---
+- name: Install certbot
+  apt:
+    name: certbot
+    state: present
+  become: yes
+
+- name: Install certbot nginx plugin
+  apt:
+    name: python3-certbot-nginx
+    state: present
+  become: yes
+
+- name: Execute certbot
+  command: certbot --nginx --non-interactive --agree-tos --email {{ letsencrypt.email }} -d {{ letsencrypt.domain }} -d api.{{ letsencrypt.domain }} 
+  become: yes
+  notify: restart web services
+
+- name: Add cron job to renew certificates
+  cron:
+    name: "Renew letsencrypt certificates"
+    minute: "0"
+    hour: "12"
+    job: "certbot renew --quiet"
