@@ -47,5 +47,8 @@ destroy-docker: ## Remove all containers and volumes
 provision-server: ## Provision server
 	ansible-playbook -i infrastructure/ansible/hosts infrastructure/ansible/provision-server.yml --extra-vars="@infrastructure/ansible/ohdit-vars.yml"
 
+setup-matomo: ## Setup Matomo
+	ansible-playbook -i infrastructure/ansible/hosts infrastructure/ansible/setup-matomo.yml --extra-vars="@infrastructure/ansible/ohdit-vars.yml"
+
 deploy: ## Deploy main to server
 	ansible-playbook -i infrastructure/ansible/hosts infrastructure/ansible/deploy.yml --extra-vars="@infrastructure/ansible/ohdit-vars.yml"

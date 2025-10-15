@@ -1,0 +1,82 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name analytics.ohdit.com;
+
+    root {{ user.workspace_directory }}/matomo;
+    index index.php;
+
+    access_log /var/log/nginx/ohdit_matomo.log;
+    error_log /var/log/nginx/ohdit_matomo_error.log;
+
+    # Allow certbot to verify domain
+    location ^~ /.well-known/acme-challenge/ {
+        allow all;
+        default_type "text/plain";
+    }
+
+    # Deny access to hidden files
+    location ~ /\. {
+        deny all;
+    }
+
+    # Deny access to sensitive directories - ORDER MATTERS
+    location ~ ^/(config|tmp|core|lang|vendor)/ {
+        deny all;
+        return 403;
+    }
+
+    # Deny direct access to PHP files in sensitive directories
+    location ~ ^/(vendor|config|tmp|core|lang)/.*\.php$ {
+        deny all;
+        return 403;
+    }
+
+    # Deny access to specific file types (but NOT .js in root)
+    location ~* ^/.+\.(markdown|md|twig|yaml|yml|manifest|htaccess|sh|log|txt|sql|xml|ser)$ {
+        deny all;
+        return 403;
+    }
+
+    # Allow matomo.js and matomo.php explicitly
+    location = /matomo.js {
+        try_files $uri =404;
+    }
+
+    location = /matomo.php {
+        try_files $uri =404;
+        fastcgi_pass unix:/var/run/php/php{{ php.version }}-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        
+        fastcgi_buffer_size 128k;
+        fastcgi_buffers 4 256k;
+        fastcgi_busy_buffers_size 256k;
+    }
+
+    # Static assets
+    location ~* \.(gif|ico|jpg|jpeg|png|svg|js|css|htm|html|mp3|mp4|wav|ogg|avi|ttf|eot|woff|woff2)$ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+    }
+
+    # Main location
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # PHP processing
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_pass unix:/var/run/php/php{{ php.version }}-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        
+        fastcgi_buffer_size 128k;
+        fastcgi_buffers 4 256k;
+        fastcgi_busy_buffers_size 256k;
+    }
+}

@@ -12,7 +12,7 @@
   become: yes
 
 - name: Execute certbot
-  command: certbot --nginx --non-interactive --agree-tos --email {{ letsencrypt.email }} -d {{ letsencrypt.domain }} -d api.{{ letsencrypt.domain }} 
+  command: certbot --nginx --expand --non-interactive --agree-tos --email {{ letsencrypt.email }} -d {{ letsencrypt.domain }} -d api.{{ letsencrypt.domain }}  -d analytics.{{ letsencrypt.domain }} 
   become: yes
   notify: restart web services
 
