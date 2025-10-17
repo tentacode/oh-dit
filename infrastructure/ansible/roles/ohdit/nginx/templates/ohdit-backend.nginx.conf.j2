@@ -1,6 +1,6 @@
 server {
-    listen 80;
-    listen [::]:80;
+    listen 80 http2;
+    listen [::]:80 http2;
     server_name api.ohdit.com;
 
     root {{ user.workspace_directory }}/oh-dit/backend/public;

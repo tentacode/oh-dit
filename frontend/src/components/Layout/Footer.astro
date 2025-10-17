@@ -15,7 +15,7 @@ const textColor = colorRoles.dark;
 				<li><a href="/politique-de-confidentialite">Politique de confidentialité</a></li>
 				<li><a href="/conditions-genertypoales-d-utilisation">Conditions générales d'utilisation</a></li>
 				<li>
-					<a href="/declaration-d-accessibilite">Déclaration d'accessibilité : totalement conforme</a>
+					<a href="/declaration-d-accessibilite">Déclaration d'accessibilité : non conforme</a>
 				</li>
 			</ul>
 		</nav>
@@ -45,13 +45,17 @@ const textColor = colorRoles.dark;
 	.footerContainer {
 		display: flex;
 		justify-content: space-between;
-		padding: 40px 0px;
+		padding: 40px 40px;
 	}
 
 	a {
 		font-size: 1.2rem;
 		font-weight: 400;
 		text-underline-offset: 5px;
+	}
+
+	li {
+		margin-bottom: 5px;
 	}
 
 	@media (max-width: 768px) {

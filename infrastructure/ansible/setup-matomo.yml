@@ -5,6 +5,11 @@
   vars:
     matomo_directory: "{{ user.workspace_directory }}/matomo"
     matomo_version: "latest"
+  post_tasks:
+    - shell: say -v 'good news' matomo setup complete
+      delegate_to: localhost
+      args:
+        executable: /bin/bash
   roles:
     - web-server/nginx
     - matomo

@@ -4,16 +4,16 @@ import "../styles/legal.css";
 import OhditLogo from "../components/Graphic/OhditLogo.astro";
 import { colorRoles } from "../config/colors";
 
-const { lastUpdatedAt } = Astro.props;
+const { frontmatter } = Astro.props;
 ---
 
-<Layout>
+<Layout pageTitle={frontmatter.pageTitle} metaDescription={frontmatter.metaDescription}>
 	<div class="legal-container">
 		<a class="backToLanding" href="/">
 			<OhditLogo mainColor={colorRoles.dark} secondaryColor={colorRoles.accent} width="250px" />
 			Retourner à la page d'accueil
 		</a>
-		<p class="last-updated">Dernière mise à jour : {lastUpdatedAt}</p>
+		<p class="last-updated">Dernière mise à jour : {frontmatter.lastUpdatedAt}</p>
 		<article>
 			<slot />
 		</article>

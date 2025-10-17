@@ -1,6 +1,8 @@
 ---
 layout: ../layouts/LegalPagesLayout.astro
 lastUpdatedAt: "9 octobre 2025"
+pageTitle: Politique de confidentialité
+metaDescription: ""
 ---
 
 # Politique de confidentialité

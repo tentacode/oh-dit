@@ -1,6 +1,8 @@
 ---
 layout: ../layouts/LegalPagesLayout.astro
 lastUpdatedAt: "9 octobre 2025"
+pageTitle: Mentions légales
+metaDescription: ""
 ---
 
 # Mentions légales
