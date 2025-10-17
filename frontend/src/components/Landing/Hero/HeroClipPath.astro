@@ -1,34 +1,48 @@
 ---
 import { colorRoles, colors } from "../../../config/colors";
 
-const clipPath = "polygon(0 0, 100% 0, 100% 86%, 0 98%)";
 const backgroundColor = colorRoles.dark;
-const textColor = colorRoles.light;
+const accentColor = colorRoles.accent;
+const greenColor = colors.green;
+const clipPath = "polygon(0 0, 100% 0,100% calc(100% - 4.5vw), 0 100%);";
 ---
 
-<div
-	style={{
-		paddingBottom: "20px",
-		marginBottom: "40px",
-		backgroundColor: colorRoles.accent,
-		clipPath: clipPath,
-	}}
->
-	<div
-		style={{
-			paddingBottom: "10px",
-			backgroundColor: colors.green,
-			clipPath: clipPath,
-		}}
-	>
-		<div
-			style={{
-				backgroundColor: backgroundColor,
-				color: textColor,
-				clipPath: clipPath,
-			}}
-		>
+<div class="clipPathFirst">
+	<div class="clipPathSecond">
+		<div class="clipPathThird">
 			<slot />
 		</div>
 	</div>
 </div>
+
+<style define:vars={{
+	accentColor: accentColor,
+	greenColor: greenColor,
+	backgroundColor: backgroundColor,
+	clipPath: clipPath
+}}>
+	.clipPathFirst {
+		padding-bottom: 20px;
+		margin-bottom: 20px;
+		background-color: var(--accentColor);
+		clip-path: var(--clipPath);
+		overflow: hidden;
+		width: 100%;
+	}
+
+	.clipPathSecond {
+		clip-path: var(--clipPath);
+		padding-bottom: 10px;
+		background-color: var(--greenColor);
+		overflow: hidden;
+		width: 100%;
+	}
+
+	.clipPathThird {
+		clip-path: var(--clipPath);
+		background-color: var(--backgroundColor);
+		overflow: hidden;
+		width: 100%;
+		padding-bottom: 30px;
+	}
+</style>

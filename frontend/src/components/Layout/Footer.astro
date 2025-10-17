@@ -1,21 +1,24 @@
 ---
-import { colorRoles } from "../../config/colors";
+import { colorRoles, colors } from "../../config/colors";
 import LinkedIn from "../Icon/LinkedIn.astro";
 
 const underlineColor = colorRoles.accent;
+const underlineFocusColor = colors.pink;
 const textColor = colorRoles.dark;
 ---
 
-<footer class="bg-white">
-	<nav>
-		<ul>
-			<li><a href="/mentions-legales">Mentions légales</a></li>
-			<li><a href="/politique-de-confidentialite">Politique de confidentialité</a></li>
-			<li><a href="/conditions-generales-d-utilisation">Conditions générales d'utilisation</a></li>
-			<li>
-				<a href="/declaration-d-accessibilite">Déclaration d'accessibilité : totalement conforme</a>
-			</li>
-		</ul>
+<footer>
+	<div class="landingContainer footerContainer">
+		<nav role="navigation" aria-label="Pied de page">
+			<ul>
+				<li><a href="/mentions-legales">Mentions légales</a></li>
+				<li><a href="/politique-de-confidentialite">Politique de confidentialité</a></li>
+				<li><a href="/conditions-genertypoales-d-utilisation">Conditions générales d'utilisation</a></li>
+				<li>
+					<a href="/declaration-d-accessibilite">Déclaration d'accessibilité : totalement conforme</a>
+				</li>
+			</ul>
+		</nav>
 		<ul>
 			<li>
 				<a
@@ -31,25 +34,38 @@ const textColor = colorRoles.dark;
 				<a href="https://tentacode.dev">&copy; {new Date().getFullYear()} — réalisé par tentacode.dev</a>
 			</li>
 		</ul>
-	</nav>
+	</div>
 </footer>
 
-<style define:vars={{ underlineColor: underlineColor, textColor: textColor }}>
-	nav {
+<style define:vars={{ underlineColor: underlineColor, underlineFocusColor: underlineFocusColor, textColor: textColor }}>
+	footer {
+		background: white;
+	}
+
+	.footerContainer {
 		display: flex;
 		justify-content: space-between;
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 40px 0px 60px 0px;
+		padding: 40px 0px;
 	}
 
 	a {
 		font-size: 1.2rem;
 		font-weight: 400;
-		text-decoration: underline;
-		text-decoration-color: var(--underlineColor);
-		text-decoration-thickness: 2px;
 		text-underline-offset: 5px;
-		color: --var(--textColor);
+	}
+
+	@media (max-width: 768px) {
+		.footerContainer {
+			flex-direction: column;
+			gap: 30px;
+			align-items: left;
+			text-align: left;
+			padding: 40px 40px;
+		}
+	}
+	@media (max-width: 550px) {
+		a {
+			font-size: 1rem;
+		}
 	}
 </style>

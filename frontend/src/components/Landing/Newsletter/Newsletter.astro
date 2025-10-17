@@ -5,24 +5,20 @@ import NewsletterForm from "./NewsletterForm.astro";
 import NewsletterConfirmation from "./NewsletterConfirmation.astro";
 ---
 
-<div class="relative isolate overflow-hidden py-20">
-	<div class="mx-auto max-w-7xl px-6 lg:px-8">
-		<div class="newsletterContainer">
-			<div class="newsletterFormContainer">
-				<h2>Ohdit est en développement !</h2>
-				<p>
-					Si notre projet vous intéresse, n'hésitez pas à vous inscrire à notre newsletter pour être
-					tenu au courant des avancées et être les premièr(e)s à tester Ohdit.
-				</p>
-				<div id="newsletterForm"><NewsletterForm /></div>
-				<div id="newsletterConfirmation" style="display:none;"><NewsletterConfirmation /></div>
-			</div>
-			<div class="illustration">
-				<div id="newsletterFormIllustration"><NewsletterIllustration /></div>
-				<div id="newsletterConfirmationIllustration" style="display:none;">
-					<ThankYouIllustration />
-				</div>
-			</div>
+<div class="landingContainer newsletterContainer">
+	<div class="newsletterFormContainer">
+		<h2>Ohdit est en développement !</h2>
+		<p>
+			Si notre projet vous intéresse, n'hésitez pas à vous inscrire à notre newsletter pour être
+			tenu au courant des avancées et être les premièr(e)s à tester Ohdit.
+		</p>
+		<div id="newsletterForm"><NewsletterForm /></div>
+		<div id="newsletterConfirmation" style="display:none;"><NewsletterConfirmation /></div>
+	</div>
+	<div class="illustration">
+		<div id="newsletterFormIllustration"><NewsletterIllustration /></div>
+		<div id="newsletterConfirmationIllustration" style="display:none;">
+			<ThankYouIllustration />
 		</div>
 	</div>
 </div>
@@ -42,15 +38,42 @@ import NewsletterConfirmation from "./NewsletterConfirmation.astro";
 		display: flex;
 		flex-direction: row;
 		gap: 50px;
-		margin-bottom: 50px;
+		margin-bottom: 120px;
 	}
 
 	.newsletterFormContainer {
-		flex: 3;
+		flex: 2;
 	}
 
 	.illustration {
-		flex: 1.5;
+		flex: 1;
+	}
+
+	@media (max-width: 1350px) {
+		.illustration {
+			display: none;
+		}
+		.newsletterContainer {
+			padding: 0 40px;
+			align-items: center;
+		}
+	}
+
+	@media (max-width: 800px) {
+		.newsletterContainer {
+			max-width: 100%;
+		}
+		h2 {
+			max-width: 100%;
+			word-wrap: break-word;
+			font-size: 2.5rem;
+		}
+	}
+
+	@media (max-width: 420px) {
+		h2 {
+			font-size: 2rem;
+		}
 	}
 </style>
 

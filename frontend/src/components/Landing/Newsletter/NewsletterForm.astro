@@ -6,11 +6,12 @@ const accentColor = colorRoles.accent;
 const focusColor = colorRoles.accent;
 const mainColor = colorRoles.dark;
 const errorColor = colors.red;
+const pinkColor = colors.pink;
 ---
 
 <form id="newsletterForm">
 	<div class="inputRow">
-		<label for="email-address">Votre Email :</label>
+		<label for="email-address">Votre Email<span class="asterisk" aria-labelledby="requiredFields">*</span> :</label>
 		<input
 			type="email"
 			autocomplete="email"
@@ -19,28 +20,35 @@ const errorColor = colors.red;
 			required
 		/>
 	</div>
-	<div class="checkboxRow">
-		<input type="checkbox" id="consentBeta" name="consentBeta" />
-		<label for="consentBeta">Je suis intéressé(e) pour tester Ohdit en avant première.</label>
-	</div>
-	<div class="checkboxRow">
-		<input type="checkbox" id="consentNewsletter" name="consentNewsletter" />
-		<label for="consentNewsletter">J'accepte de recevoir la newsletter d'Ohdit.</label>
-	</div>
-	<div class="checkboxRow">
-		<input type="checkbox" id="consentBlog" name="consentBlog" />
-		<label for="consentBlog"
-			>J'accepte d'être notifié des articles du blog d'Ohdit sur l'accessibilité numérique (il
-			arrive très bientôt !).</label
-		>
-	</div>
-	<p class="errorMessage" id="checkbox-error" role="alert" aria-live="polite"></p>
+	<fieldset>
+		<legend>
+			Vos préférences de newsletters<span class="asterisk" aria-labelledby="requiredFields">*</span> :<br />
+			<span class="requiredCheckboxes">Vous devez choisir de vous abonner à au moins une de ces newsletters.</span>
+		</legend>
+		<div class="checkboxRow">
+			<input type="checkbox" id="consentBeta" name="consent" value="beta" />
+			<label for="consentBeta">Je suis intéressé(e) pour tester Ohdit en avant première.</label>
+		</div>
+		<div class="checkboxRow">
+			<input type="checkbox" id="consentNewsletter" name="consent" value="newsletter" />
+			<label for="consentNewsletter">J'accepte de recevoir la newsletter d'Ohdit.</label>
+		</div>
+		<div class="checkboxRow">
+			<input type="checkbox" id="consentBlog" name="consent" value="blog" />
+			<label for="consentBlog"
+				>J'accepte d'être notifié des articles du blog d'Ohdit sur l'accessibilité numérique (il
+				arrive très bientôt !).</label
+			>
+		</div>
+		<p class="errorMessage" id="checkbox-error" role="alert" aria-live="polite"></p>
+	</fieldset>
 	<button id="newsletterSubmitButton" type="submit">
 		<EnvelopeIcon width="27" />
 		S'inscrire
 	</button>
 </form>
 
+<p id="requiredFields"><span class="asterisk">*</span> Champs obligatoires.<p/>
 <p class="aboutSpam">
 	<strong>Pas de spam ici : </strong>
 	nous ne partagerons jamais votre adresse email avec des tiers. Nous utilisons <a
@@ -123,6 +131,7 @@ const errorColor = colors.red;
 		focusColor: focusColor,
 		mainColor: mainColor,
 		errorColor: errorColor,
+		pinkColor: pinkColor,
 	}}
 >
 	form {
@@ -136,9 +145,13 @@ const errorColor = colors.red;
 		margin-bottom: 20px;
 	}
 
-	label {
+	label, legend {
 		font-size: 1.2em;
 		font-weight: 600;
+	}
+
+	legend {
+		margin-bottom: 10px;
 	}
 
 	input[type="email"] {
@@ -182,6 +195,11 @@ const errorColor = colors.red;
 		flex: 1;
 	}
 
+	.requiredCheckboxes {
+		font-size: 16px;
+		font-weight: 400;
+	}
+
 	button {
 		margin-top: 20px;
 		border: 5px solid var(--mainColor);
@@ -210,9 +228,13 @@ const errorColor = colors.red;
 		cursor: not-allowed;
 	}
 
-	.aboutSpam {
+	p {
 		margin-top: 20px;
-		font-size: 1em;
+	}
+
+	span.asterisk {
+		color: var(--pinkColor);
+		font-weight: 600;
 	}
 
 	.errorMessage {
@@ -227,5 +249,12 @@ const errorColor = colors.red;
 
 	.errorMessage:empty {
 		display: none;
+	}
+
+	@media (max-width: 1350px) {
+		input[type="email"],
+		button {
+			width: 100%;
+		}
 	}
 </style>
