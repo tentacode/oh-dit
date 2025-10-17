@@ -4,15 +4,44 @@ import { colorRoles } from "../../../config/colors";
 const { Icon, iconColor = colorRoles.accent } = Astro.props;
 ---
 
-<div>
+<div class="featureItem">
 	<div class="iconContainer mb-4 flex size-16 items-center justify-center rounded-lg">
 		<Icon class="h-10 w-10 text-white" />
 	</div>
-	<slot />
+	<div class="featureContent">
+		<slot />
+	</div>	
 </div>
 
 <style define:vars={{ iconColor: iconColor }}>
 	.iconContainer {
 		background-color: var(--iconColor);
+	}
+
+	.featureItem {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.featureContent {
+		flex: 1;
+	}
+
+	@media (max-width: 768px) {
+		.featureItem {
+			flex-direction: row;
+			gap: 30px;
+		}
+
+		.iconContainer {
+			margin-top: 9px;
+		}
+	}
+
+	@media (max-width: 450px) {
+		.featureItem {
+			flex-direction: column;
+			gap: 5px;
+		}
 	}
 </style>

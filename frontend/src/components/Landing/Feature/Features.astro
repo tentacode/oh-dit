@@ -7,11 +7,10 @@ import BookOpenIcon from "astro-heroicons/outline/BookOpen.astro";
 import ChatBubbleBottomCenterTextIcon from "astro-heroicons/outline/ChatBubbleBottomCenterText.astro";
 import ClipboardDocumentCheckIcon from "astro-heroicons/outline/ClipboardDocumentCheck.astro";
 import RectangleStackIcon from "astro-heroicons/outline/RectangleStack.astro";
-
 import SadRobot from "../../Icon/SadRobot.astro";
 ---
 
-<div class="featuresContainer mx-auto max-w-7xl px-6 lg:px-8">
+<div class="landingContainer featuresContainer">
 	<div class="featuresLeft">
 		<FeaturesIllustration />
 	</div>
@@ -21,20 +20,17 @@ import SadRobot from "../../Icon/SadRobot.astro";
 		<div class="featuresGrid">
 			<Feature Icon={SparklesIcon}>
 				<h3>Adieu les fichiers Excel</h3>
-				<p>
-					Une interface de saisie sur mesure et intuitive vous permet de gagner un temps précieux.
-					Navigez rapidement d'une page ou d'un critère à l'autre.
-				</p>
+				<p>Choisissez comme vous préférez travailler : une vue grille familière et optimisée ou une vue détaillée par critère ou par écran.</p>
 			</Feature>
 			<Feature Icon={RectangleStackIcon}>
-				<h3>Tout vos projets sont ici</h3>
+				<h3>Tous vos projets sont ici</h3>
 				<p>
 					Centralisez vos projets et vos clients pour un meilleur suivi. Configurez chaque projet
 					pour détailler les écrans et composants des applications à auditer.
 				</p>
 			</Feature>
 			<Feature Icon={ChatBubbleBottomCenterTextIcon}>
-				<h3>Collaborons ensemble</h3>
+				<h3>Collaborons efficacement</h3>
 				<p>
 					Échangez simplement dans votre équipe et fournissez des recommandations pertinentes à vos
 					clients.
@@ -47,14 +43,14 @@ import SadRobot from "../../Icon/SadRobot.astro";
 						title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr
 					>, <abbr title="Référentiel d'Évaluation de l'Accessibilité des Applications Mobiles"
 						>RAAM</abbr
-					>) pour que les auditeurs, développeurs et clients parlent le même langage.
+					>) pour qu'auditeurs, développeurs et clients parlent le même langage.
 				</p>
 			</Feature>
 			<Feature Icon={ClipboardDocumentCheckIcon}>
 				<h3>Des rapports clairs</h3>
 				<p>
-					Votre client mérite des rapports clairs lui permettant de visualiser facilement le
-					résultat de l'audit et les actions à entreprendre.
+					Votre client appréciera des rapports clairs lui permettant de visualiser facilement le 
+    				résultat de l'audit et les actions à entreprendre.
 				</p>
 			</Feature>
 			<Feature Icon={SadRobot} iconColor={colors.pink}>
@@ -72,11 +68,12 @@ import SadRobot from "../../Icon/SadRobot.astro";
 	.featuresContainer {
 		display: flex;
 		gap: 60px;
+		margin-bottom: 100px;
 	}
 
 	.featuresLeft {
 		flex: 1;
-		margin-top: 50px;
+		margin-top: 100px;
 	}
 
 	.featuresRight {
@@ -91,22 +88,71 @@ import SadRobot from "../../Icon/SadRobot.astro";
 	}
 
 	h2 {
-		font-size: 3rem;
+		font-size: 3.5rem;
 		font-weight: 700;
 		margin-bottom: 2rem;
-		margin-left: -2px;
-		margin-top: -40px;
 	}
 
 	h3 {
 		font-size: 1.5rem;
 		font-weight: 600;
-		margin: 0;
 	}
 
 	p {
 		margin-top: 0.5rem;
 		font-size: 1.2rem;
 		line-height: 1.5;
+	}
+
+	@media (max-width: 1350px) {
+		h2 {
+			font-size: 3rem;
+		}
+		.featuresContainer {
+			padding: 0 40px;
+			align-items: center;
+		}
+
+		.featuresLeft {
+			display: none;
+		}
+
+		.featuresRight {
+			flex: 1;
+			max-width: 800px;
+			margin: auto;
+		}
+
+		.featuresGrid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-column-gap: 40px;
+			grid-row-gap: 65px;
+		}
+	}
+
+	@media (max-width: 768px) {
+		h2 {
+			max-width: 100%;
+			font-size: 2.5rem;
+		}
+
+		.featuresRight {
+			max-width: 100%;
+		}
+
+		.featuresGrid {
+			display: grid;
+			grid-template-columns: 1fr;
+			grid-column-gap: 40px;
+			grid-row-gap: 65px;
+		}
+	}
+	
+	@media (max-width: 360px) {
+		h2 {
+			font-size: 2rem;
+			word-wrap: break-word;
+		}
 	}
 </style>

@@ -5,18 +5,23 @@ import Penstroke from "../../UI/Penstroke.astro";
 import HeroClipPath from "./HeroClipPath.astro";
 // import { colorRoles } from "../../../config/colors";
 import OhditLogo from "../../Graphic/OhditLogo.astro";
+import { colorRoles } from "../../../config/colors";
+
+const textColor = colorRoles.light;
 ---
 
 <HeroClipPath>
-	<div class="heroContainer px-6">
-		<OhditLogo width="450px" />
-		<div class="mx-auto flex max-w-6xl text-center">
-			<div class="flex flex-6 flex-col justify-center">
-				<h1 class="text-6xl font-semibold tracking-tight text-balance">
+	<div class="landingContainer heroContainer">
+		<div class="logoIllustration">
+			<OhditLogo width="450px" />
+		</div>
+		<div class="heroContent">
+			<div class="heroText">
+				<h1>
 					L&apos;audit d&apos;accessibilité numérique,
 					<Penstroke>facilement</Penstroke>.
 				</h1>
-				<p class="mx-auto mt-6 max-w-xl text-2xl text-pretty">
+				<p>
 					Ohdit réunit tout les acteurs de vos audits d'accessibilité numérique dans une interface
 					intuitive.
 				</p>
@@ -24,14 +29,16 @@ import OhditLogo from "../../Graphic/OhditLogo.astro";
 					<Button href="#" borderColor={colorRoles.accent}>Je teste Ohdit !</Button>
 				</div> -->
 			</div>
-
-			<CheckListIllustration />
+			<div class="heroIllustration">
+				<CheckListIllustration />
+			</div>
 		</div>
 	</div>
 </HeroClipPath>
 
-<style>
+<style define:vars={{ textColor: textColor }}>
 	.heroContainer {
+		color: var(--textColor);
 		padding-top: 80px;
 		padding-bottom: 130px;
 		display: flex;
@@ -40,6 +47,113 @@ import OhditLogo from "../../Graphic/OhditLogo.astro";
 		justify-content: center;
 		align-items: center;
 		text-align: center;
-		gap: 40px;
+		gap: 20px;
+		max-width: 72rem;
+	}
+
+	h1 {
+		font-size: 4.2em;
+		font-weight: 600;
+		line-height: 1.1;
+		margin-top: 0;
+		margin-bottom: 30px;
+	}
+
+	p {
+		font-size: 1.75rem;
+		line-height: 1.4;
+	}
+
+	.heroContent {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		gap: 60px;
+		margin-top: 40px;
+	}
+
+	.heroText {
+		flex: 3;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+
+	.heroIllustration {
+		flex: 1;
+		max-width: 600px;
+		width: 100%;
+	}
+
+	@media (max-width: 1180px) {
+		.heroContent {
+			flex-direction: column;
+			text-align: center;
+		}
+
+		.heroContainer {
+			padding-left: 40px;
+			padding-left: 40px;
+			padding-bottom: 100px;
+		}
+
+		.heroText {
+			order: 2;
+		}
+
+		.heroIllustration {
+			order: 1;
+			max-width: 300px;
+		}
+
+		p {
+			max-width: 700px;
+		}
+	}
+
+	@media (max-width: 768px) {
+		h1 {
+			font-size: 3em;
+		}
+
+		p {
+			font-size: 1.6rem;
+		}
+
+		.logoIllustration {
+			max-width: 400px;
+		}
+
+		.heroIllustration {
+			order: 1;
+			max-width: 250px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.heroContent {
+			gap: 35px;
+		}
+
+		.logoIllustration {
+			max-width: 250px;
+		}
+
+		.heroIllustration {
+			order: 1;
+			max-width: 180px;
+		}
+		
+		h1 {
+			font-size: 2.5em;
+			margin-bottom: 50px;
+		}
+
+		p {
+			font-size: 1.6rem;
+		}
 	}
 </style>
+
