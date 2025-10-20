@@ -14,10 +14,10 @@ when@dev:
     nelmio_cors:
         paths:
             '^/api/':
-                allow_origin: ['http://localhost:1337']
+                allow_origin: ['http://localhost:1337', 'http://localhost:1339']
 
 when@prod:
     nelmio_cors:
         paths:
             '^/api/':
-                allow_origin: ['https://ohdit.com', 'https://www.ohdit.com']
+                allow_origin: ['https://ohdit.com', 'https://www.ohdit.com', 'https://app.ohdit.com']

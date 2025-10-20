@@ -7,29 +7,29 @@
 conventions/
 
 # Symfony (Backend)
-/backend/var/
-/backend/vendor/
-/backend/.env.local
-/backend/.env.*.local
-/backend/config/secrets/prod/prod.decrypt.private.php
-/backend/public/bundles/
-/backend/var/
-/backend/vendor/
+/api/var/
+/api/vendor/
+/api/.env.local
+/api/.env.*.local
+/api/config/secrets/prod/prod.decrypt.private.php
+/api/public/bundles/
+/api/var/
+/api/vendor/
 
-# Next.js (Frontend)
-/frontend/node_modules/
-/frontend/.next/
-/frontend/out/
-/frontend/.env.local
-/frontend/.env.*.local
-/frontend/.env
-/frontend/npm-debug.log*
-/frontend/yarn-debug.log*
-/frontend/yarn-error.log*
-/frontend/.pnpm-debug.log*
-/frontend/.vercel
-/frontend/coverage/
-/frontend/.nyc_output/
+# Astro (vitrine)
+/www/node_modules/
+/www/.next/
+/www/out/
+/www/.env.local
+/www/.env.*.local
+/www/.env
+/www/npm-debug.log*
+/www/yarn-debug.log*
+/www/yarn-error.log*
+/www/.pnpm-debug.log*
+/www/.vercel
+/www/coverage/
+/www/.nyc_output/
 
 # Infrastructure
 /infrastructure/.ansible/

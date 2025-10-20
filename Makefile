@@ -1,4 +1,4 @@
-.PHONY: help install up down restart ps shell-frontend shell-backend shell-db logs clean test
+.PHONY: help
 
 # Colors
 CYAN = \033[0;36m
@@ -7,7 +7,7 @@ YELLOW = \033[0;33m
 NC = \033[0m # No Color
 
 help: ## Display this help message
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z_-\.]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 install: ## First time setup (copy env and build containers)
 	@echo "$(YELLOW)Setting up environment...$(NC)"
@@ -22,35 +22,35 @@ up: ## Start all containers
 down: ## Stop all containers
 	docker compose down
 
-frontend.connect: ## Open frontend container shell
-	docker compose exec frontend zsh
+www.connect: ## Open www container shell
+	docker compose exec www zsh
 
-backend.connect: ## Open backend container shell
-	docker compose exec backend zsh
+api.connect: ## Open api container shell
+	docker compose exec api zsh
 
 database.connect: ## Open PostgreSQL shell
 	docker compose exec database psql -U ohdit ohdit_dev
 
 reset: env='dev'
 reset: ## Reset database (env=dev|test)
-	docker compose exec backend bin/console postgres:close-connections --env=$(env)
-	docker compose exec backend bin/console doctrine:database:drop --force --if-exists --env=$(env)
-	docker compose exec backend bin/console doctrine:database:create --env=$(env)
-	docker compose exec backend bin/console doctrine:migrations:migrate --no-interaction --env=$(env)
-	docker compose exec backend bin/console foundry:load-fixtures all -n --env=$(env)
+	docker compose exec api bin/console postgres:close-connections --env=$(env)
+	docker compose exec api bin/console doctrine:database:drop --force --if-exists --env=$(env)
+	docker compose exec api bin/console doctrine:database:create --env=$(env)
+	docker compose exec api bin/console doctrine:migrations:migrate --no-interaction --env=$(env)
+	docker compose exec api bin/console foundry:load-fixtures all -n --env=$(env)
 
 tests: ## Run all tests
-	docker compose exec frontend eslint . --fix && \
+	docker compose exec www eslint . --fix && \
 	echo "$(GREEN)eslint passed!$(NC)" && \
-	docker compose exec frontend npx prettier --write src && \
+	docker compose exec www npx prettier --write src && \
 	echo "$(GREEN)prettier passed!$(NC)" && \
-	docker compose exec backend bin/phpstan --memory-limit=1G && \
+	docker compose exec api bin/phpstan --memory-limit=1G && \
 	echo "$(GREEN)phpstan passed!$(NC)" && \
-	docker compose exec backend bin/ecs --fix && \
+	docker compose exec api bin/ecs --fix && \
 	echo "$(GREEN)ecs passed!$(NC)" && \
-	docker compose exec backend bin/rector process src && \
+	docker compose exec api bin/rector process src && \
 	echo "$(GREEN)rector passed!$(NC)" && \
-	docker compose exec backend bin/phpunit --testdox --fail-on-warning --fail-on-risky --fail-on-incomplete --fail-on-skipped && \
+	docker compose exec api bin/phpunit --testdox --fail-on-warning --fail-on-risky --fail-on-incomplete --fail-on-skipped && \
 	echo "$(GREEN)phpunit passed!$(NC)"
 
 destroy-docker: ## Remove all containers and volumes

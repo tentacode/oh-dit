@@ -1,14 +1,14 @@
 name: ohdit
 
 services:
-  frontend:
+  www:
     build:
-      context: ./frontend
+      context: ./www
       dockerfile: Dockerfile
     ports:
       - "1337:4321"
     volumes:
-      - ./frontend:/app
+      - ./www:/app
       - /app/node_modules
       - /app/.astro
     environment:
@@ -18,14 +18,14 @@ services:
     depends_on:
       - database
 
-  backend:
+  api:
     build:
-      context: ./backend
+      context: ./api
       dockerfile: Dockerfile
     ports:
       - "1338:8000"
     volumes:
-      - ./backend:/var/www/html
+      - ./api:/var/www/html
     environment:
       - APP_ENV=dev
       - POSTGRES_DB=${POSTGRES_DB}
