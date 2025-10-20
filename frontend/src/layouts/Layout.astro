@@ -68,9 +68,10 @@ const isProd = import.meta.env.PROD;
 		</script>
 	</head>
 	<body class="antialiased">
-		<slot />
+		<main>
+			<slot />
+		</main>
 		<Footer />
-
 		{isProd && <MatomoScript />}
 
 		<style

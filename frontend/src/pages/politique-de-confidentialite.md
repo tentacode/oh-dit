@@ -1,13 +1,11 @@
 ---
 layout: ../layouts/LegalPagesLayout.astro
-lastUpdatedAt: "9 octobre 2025"
+lastUpdatedAt: "20 octobre 2025"
 pageTitle: Politique de confidentialité
 metaDescription: ""
 ---
 
 # Politique de confidentialité
-
-**Dernière mise à jour : [Date]**
 
 ## Responsable du traitement
 
@@ -62,7 +60,7 @@ Nous utilisons Matomo en mode "sans cookies" pour mesurer l'audience du site.
 
 Vos données sont transmises à :
 
-- **Brevo** : plateforme d'envoi de newsletter (sous-traitant, hébergement UE)
+- **[Brevo](https://brevo.com/fr)** : plateforme d'envoi de newsletter (sous-traitant, hébergement UE)
 - Les données restent hébergées au sein de l'Union Européenne
 
 ## Vos droits
@@ -76,7 +74,7 @@ Conformément au RGPD, vous disposez des droits suivants :
 - **Portabilité** : récupérer vos données dans un format structuré
 - **Retrait du consentement** : vous désinscrire à tout moment (lien dans chaque email)
 
-Pour exercer ces droits, contactez-nous à : rgpd@tentacode.dev
+Pour exercer ces droits, contactez-nous à : <a href="mailto:rgpd@tentacode.dev">rgpd@tentacode.dev</a>
 
 Vous pouvez également déposer une réclamation auprès de la CNIL : [www.cnil.fr](https://www.cnil.fr)
 
