@@ -13,7 +13,7 @@ const { frontmatter } = Astro.props;
 			<OhditLogo mainColor={colorRoles.dark} secondaryColor={colorRoles.accent} width="250px" />
 			Retourner à la page d'accueil
 		</a>
-		<p class="last-updated">Dernière mise à jour : {frontmatter.lastUpdatedAt}</p>
+		<p class="last-updated">Dernière mise à jour : le {frontmatter.lastUpdatedAt}</p>
 		<article>
 			<slot />
 		</article>

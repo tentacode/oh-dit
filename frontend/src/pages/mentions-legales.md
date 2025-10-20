@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/LegalPagesLayout.astro
-lastUpdatedAt: "9 octobre 2025"
+lastUpdatedAt: "20 octobre 2025"
 pageTitle: Mentions légales
 metaDescription: ""
 ---
@@ -17,8 +17,8 @@ metaDescription: ""
 **RCS :** Lyon B 914821848  
 **Numéro de TVA intracommunautaire :** FR33914821848
 
-**Directeur de la publication :** Gabriel Pillet, Président  
-**Contact :** societe@tentacode.dev
+**Directeur de la publication :** Gabriel Pillet, Dirigeant  
+**Contact :** <a href="mailto:societe@tentacode.dev">societe@tentacode.dev</a>
 
 ## Hébergement
 

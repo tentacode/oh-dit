@@ -9,6 +9,16 @@ h6 {
 	font-family: "Lexend Deca", sans-serif;
 }
 
+body {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+main {
+	flex: 1;
+}
+
 .landingContainer {
 	max-width: 80rem;
 	margin: 0 auto;

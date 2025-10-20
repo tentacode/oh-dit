@@ -1,10 +1,10 @@
 ---
 layout: ../layouts/LegalPagesLayout.astro
-lastUpdatedAt: "9 octobre 2025"
+lastUpdatedAt: "20 octobre 2025"
 pageTitle: Déclaration d'accessibilité
-metaDescription: "Salut"
+metaDescription: ""
 ---
 
 # Déclaration d'accessibilité
 
-C'est OK TOTALEMENT CONFORME.
+Non conforme : audit en cours.
