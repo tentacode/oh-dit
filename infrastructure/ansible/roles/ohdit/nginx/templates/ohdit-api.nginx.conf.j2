@@ -3,11 +3,11 @@ server {
     listen [::]:80 http2;
     server_name api.ohdit.com;
 
-    root {{ user.workspace_directory }}/oh-dit/backend/public;
+    root {{ user.workspace_directory }}/oh-dit/api/public;
     index index.php;
 
-    access_log /var/log/nginx/ohdit_backend.log;
-    error_log /var/log/nginx/ohdit_backend_error.log;
+    access_log /var/log/nginx/ohdit_api.log;
+    error_log /var/log/nginx/ohdit_api_error.log;
 
     # Allow certbot to verify domain
     location ^~ /.well-known/acme-challenge/ {

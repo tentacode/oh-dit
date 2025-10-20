@@ -3,11 +3,11 @@ server {
     listen [::]:80 http2;
     server_name ohdit.com www.ohdit.com;
 
-    root {{ user.workspace_directory }}/oh-dit/frontend/dist;
+    root {{ user.workspace_directory }}/oh-dit/www/dist;
     index index.html;
 
-    access_log /var/log/nginx/ohdit_frontend.log;
-    error_log /var/log/nginx/ohdit_frontend_error.log;
+    access_log /var/log/nginx/ohdit_www.log;
+    error_log /var/log/nginx/ohdit_www_error.log;
 
     # Security headers
     add_header X-Content-Type-Options "nosniff" always;
