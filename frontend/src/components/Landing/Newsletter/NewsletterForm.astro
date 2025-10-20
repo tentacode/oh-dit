@@ -8,21 +8,20 @@ const mainColor = colorRoles.dark;
 const errorColor = colors.red;
 ---
 
-<form id="newsletterForm">
+<form id="newsletterForm" novalidate="novalidate">
 	<div class="inputRow">
-		<label for="email-address">Votre Email<span class="asterisk" aria-labelledby="requiredFields">*</span> :</label>
-		<input
-			type="email"
-			autocomplete="email"
-			id="email-address"
-			name="email"
-			required
-		/>
+		<label for="email-address"
+			>Votre Email<span class="asterisk" aria-labelledby="requiredFields">*</span> :</label
+		>
+		<input type="email" autocomplete="email" id="email-address" name="email" required />
 	</div>
 	<fieldset>
 		<legend>
-			Vos préférences de newsletters<span class="asterisk" aria-labelledby="requiredFields">*</span> :<br />
-			<span class="requiredCheckboxes">Vous devez choisir de vous abonner à au moins une de ces newsletters.</span>
+			Vos préférences de newsletters<span class="asterisk" aria-labelledby="requiredFields">*</span>
+			:<br />
+			<span class="requiredCheckboxes"
+				>Vous devez choisir de vous abonner à au moins une de ces newsletters.</span
+			>
 		</legend>
 		<div class="checkboxRow">
 			<input type="checkbox" id="consentBeta" name="consent" value="beta" />
@@ -47,212 +46,216 @@ const errorColor = colors.red;
 	</button>
 </form>
 
-<p id="requiredFields"><span class="asterisk">*</span> Champs obligatoires.<p/>
-<p class="aboutSpam">
-	<strong>Pas de spam ici : </strong>
-	nous ne partagerons jamais votre adresse email avec des tiers. Nous utilisons <a
-		href="https://www.brevo.com">Brevo</a
-	> pour gérer notre newsletter, vous pouvez consulter leur <a
-		href="https://www.brevo.com/fr/legal/privacypolicy/"
-		rel="noopener">politique de confidentialité</a
-	>.
-</p>
+<p id="requiredFields">
+	<span class="asterisk">*</span> Champs obligatoires.<p></p>
+	<p class="aboutSpam">
+		<strong>Pas de spam ici : </strong>
+		nous ne partagerons jamais votre adresse email avec des tiers. Nous utilisons <a
+			href="https://www.brevo.com">Brevo</a
+		> pour gérer notre newsletter, vous pouvez consulter leur <a
+			href="https://www.brevo.com/fr/legal/privacypolicy/"
+			rel="noopener">politique de confidentialité</a
+		>.
+	</p>
 
-<script>
-	const { successfullySubscribed } = await import("./store.js");
+	<script>
+		const { successfullySubscribed } = await import("./store.js");
 
-	const form = document.getElementById("newsletterForm");
-	const checkboxError = document.getElementById("checkbox-error");
-	const submitButton = document.getElementById("newsletterSubmitButton");
+		const form = document.getElementById("newsletterForm");
+		const checkboxError = document.getElementById("checkbox-error");
+		const submitButton = document.getElementById("newsletterSubmitButton");
 
-	const consentBeta = document.getElementById("consentBeta");
-	const consentNewsletter = document.getElementById("consentNewsletter");
-	const consentBlog = document.getElementById("consentBlog");
+		const consentBeta = document.getElementById("consentBeta");
+		const consentNewsletter = document.getElementById("consentNewsletter");
+		const consentBlog = document.getElementById("consentBlog");
 
-	// Clear errors when user checks any checkbox
-	[consentBeta, consentNewsletter, consentBlog].forEach((checkbox) => {
-		checkbox.addEventListener("change", () => {
-			checkboxError.textContent = "";
-		});
-	});
-
-	// Validate at least one checkbox is checked
-	function isAtLeastOneCheckboxChecked() {
-		return consentBeta.checked || consentNewsletter.checked || consentBlog.checked;
-	}
-
-	form.addEventListener("submit", async (e) => {
-		e.preventDefault();
-
-		if (!isAtLeastOneCheckboxChecked()) {
-			checkboxError.textContent =
-				"Choisissez au moins une des options de la newsletter pour que l'on puisse vous contacter.";
-			return false;
-		} else {
-			checkboxError.textContent = "";
-		}
-
-		submitButton.disabled = true;
-
-		// Prepare form data
-		const formData = {
-			email: document.getElementById("email-address").value,
-			consentBeta: consentBeta.checked,
-			consentNewsletter: consentNewsletter.checked,
-			consentBlog: consentBlog.checked,
-		};
-
-		// Call backend API
-		try {
-			await fetch(`${import.meta.env.PUBLIC_BACKEND_API_BASE_URL}/api/newsletters`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(formData),
+		// Clear errors when user checks any checkbox
+		[consentBeta, consentNewsletter, consentBlog].forEach((checkbox) => {
+			checkbox.addEventListener("change", () => {
+				checkboxError.textContent = "";
 			});
-			
-			window._paq.push(['trackEvent', 'Newsletter', 'Signup', 'Landing Page']);
+		});
 
-		} catch (error) {
-			// Ignore errors as requested
-			console.error("Error submitting newsletter form:", error);
+		// Validate at least one checkbox is checked
+		function isAtLeastOneCheckboxChecked() {
+			return consentBeta.checked || consentNewsletter.checked || consentBlog.checked;
 		}
 
-		// Always treat as success
-		successfullySubscribed.set(true);
-	});
-</script>
+		form.addEventListener("submit", async (e) => {
+			e.preventDefault();
 
-<style
-	define:vars={{
-		accentColor: accentColor,
-		focusColor: focusColor,
-		mainColor: mainColor,
-		errorColor: errorColor,
-	}}
->
-	form {
-		margin-top: 20px;
-	}
+			if (!isAtLeastOneCheckboxChecked()) {
+				checkboxError.textContent =
+					"Choisissez au moins une des options de la newsletter pour que l'on puisse vous contacter.";
+				return false;
+			} else {
+				checkboxError.textContent = "";
+			}
 
-	.inputRow {
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-		margin-bottom: 20px;
-	}
+			submitButton.disabled = true;
 
-	label, legend {
-		font-size: 1.2em;
-		font-weight: 600;
-	}
+			// Prepare form data
+			const formData = {
+				email: document.getElementById("email-address").value,
+				consentBeta: consentBeta.checked,
+				consentNewsletter: consentNewsletter.checked,
+				consentBlog: consentBlog.checked,
+			};
 
-	legend {
-		margin-bottom: 10px;
-	}
+			console.log("Submitting newsletter form data:", formData);
 
-	input[type="email"] {
-		border: 5px solid var(--mainColor);
-		font-size: 1.2em;
-		width: 70%;
-		border-radius: 15px;
-		height: 60px;
-		padding: 0 15px;
-		background-color: white;
-		transition: border-color 0.2s ease;
-	}
+			// Call backend API
+			try {
+				await fetch(`${import.meta.env.PUBLIC_BACKEND_API_BASE_URL}/api/newsletters`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(formData),
+				});
 
-	input[type="email"]:focus {
-		border: 5px solid var(--focusColor);
-		outline: none;
-	}
+				window._paq.push(["trackEvent", "Newsletter", "Signup", "Landing Page"]);
+			} catch (error) {
+				// Ignore errors as requested
+				console.error("Error submitting newsletter form:", error);
+			}
 
-	input[type="email"].error {
-		border: 5px solid var(--errorColor);
-	}
+			// Always treat as success
+			successfullySubscribed.set(true);
+		});
+	</script>
 
-	.checkboxRow {
-		display: flex;
-		align-items: flex-start;
-		gap: 15px;
-		margin-bottom: 15px;
-		font-size: 1.1em;
-	}
+	<style
+		define:vars={{
+			accentColor: accentColor,
+			focusColor: focusColor,
+			mainColor: mainColor,
+			errorColor: errorColor,
+		}}
+	>
+		form {
+			margin-top: 20px;
+		}
 
-	.checkboxRow input[type="checkbox"] {
-		margin-top: 0.5cap;
-		width: 20px;
-		height: 20px;
-		border: 3px solid var(--mainColor);
-		accent-color: var(--accentColor);
-	}
+		.inputRow {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			margin-bottom: 20px;
+		}
 
-	.checkboxRow label {
-		font-weight: 400;
-		flex: 1;
-	}
+		label,
+		legend {
+			font-size: 1.2em;
+			font-weight: 600;
+		}
 
-	.requiredCheckboxes {
-		font-size: 16px;
-		font-weight: 400;
-	}
+		legend {
+			margin-bottom: 10px;
+		}
 
-	button {
-		margin-top: 20px;
-		border: 5px solid var(--mainColor);
-		font-size: 1.2em;
-		font-weight: 600;
-		width: 70%;
-		border-radius: 15px;
-		height: 60px;
-		padding: 0 15px;
-		background-color: var(--accentColor);
-		color: var(--mainColor);
-		display: flex;
-		gap: 10px;
-		justify-content: center;
-		align-items: center;
-		transition: all 0.2s ease;
-	}
+		input[type="email"] {
+			border: 5px solid var(--mainColor);
+			font-size: 1.2em;
+			width: 70%;
+			border-radius: 15px;
+			height: 60px;
+			padding: 0 15px;
+			background-color: white;
+			transition: border-color 0.2s ease;
+		}
 
-	button:hover:not(:disabled) {
-		border: 5px solid var(--accentColor);
-		cursor: pointer;
-	}
+		input[type="email"]:focus {
+			border: 5px solid var(--focusColor);
+			outline: none;
+		}
 
-	button:disabled {
-		opacity: 0.6;
-		cursor: not-allowed;
-	}
+		input[type="email"].error {
+			border: 5px solid var(--errorColor);
+		}
 
-	p {
-		margin-top: 20px;
-	}
+		.checkboxRow {
+			display: flex;
+			align-items: flex-start;
+			gap: 15px;
+			margin-bottom: 15px;
+			font-size: 1.1em;
+		}
 
-	span.asterisk {
-		color: var(--errorColor);
-		font-weight: 600;
-	}
+		.checkboxRow input[type="checkbox"] {
+			margin-top: 0.5cap;
+			width: 20px;
+			height: 20px;
+			border: 3px solid var(--mainColor);
+			accent-color: var(--accentColor);
+		}
 
-	.errorMessage {
-		color: var(--errorColor);
-		font-weight: 600;
-		margin: 5px 0 0 0;
-		padding: 15px;
-		border-radius: 15px;
-		border: 5px solid var(--errorColor);
-		transition: opacity 0.3s ease;
-	}
+		.checkboxRow label {
+			font-weight: 400;
+			flex: 1;
+		}
 
-	.errorMessage:empty {
-		display: none;
-	}
+		.requiredCheckboxes {
+			font-size: 16px;
+			font-weight: 400;
+		}
 
-	@media (max-width: 1350px) {
-		input[type="email"],
 		button {
-			width: 100%;
+			margin-top: 20px;
+			border: 5px solid var(--mainColor);
+			font-size: 1.2em;
+			font-weight: 600;
+			width: 70%;
+			border-radius: 15px;
+			height: 60px;
+			padding: 0 15px;
+			background-color: var(--accentColor);
+			color: var(--mainColor);
+			display: flex;
+			gap: 10px;
+			justify-content: center;
+			align-items: center;
+			transition: all 0.2s ease;
 		}
-	}
-</style>
+
+		button:hover:not(:disabled) {
+			border: 5px solid var(--accentColor);
+			cursor: pointer;
+		}
+
+		button:disabled {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
+
+		p {
+			margin-top: 20px;
+		}
+
+		span.asterisk {
+			color: var(--errorColor);
+			font-weight: 600;
+		}
+
+		.errorMessage {
+			color: var(--errorColor);
+			font-weight: 600;
+			margin: 5px 0 0 0;
+			padding: 15px;
+			border-radius: 15px;
+			border: 5px solid var(--errorColor);
+			transition: opacity 0.3s ease;
+		}
+
+		.errorMessage:empty {
+			display: none;
+		}
+
+		@media (max-width: 1350px) {
+			input[type="email"],
+			button {
+				width: 100%;
+			}
+		}
+	</style>
+</p>

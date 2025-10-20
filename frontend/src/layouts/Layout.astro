@@ -3,8 +3,7 @@
 import "../styles/global.css";
 import { colorRoles, colors } from "../config/colors";
 import Footer from "../components/Layout/Footer.astro";
-
-const isProd = import.meta.env.PROD;
+import MatomoScript from "../components/Matomo/MatomoScript.astro";
 
 const lang = "fr";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -20,105 +19,102 @@ if (pageTitle === undefined || metaDescription === undefined) {
 }
 
 const title = `Ohdit - ${pageTitle}`;
-const metalLogo = Astro.site + '/meta-logo.png';
+const metalLogo = Astro.site + "/meta-logo.png";
+
+const isProd = import.meta.env.PROD;
 ---
 
 <!doctype html>
 <html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="canonical" href={canonicalURL.toString()} />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={metaDescription} />
 		<title>{title}</title>
-		
-		<link rel="preload" href="/fonts/LexendDeca-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin />
 
-		<meta property="og:title" content={title}>
-		<meta property="og:description" content={metaDescription}>
-		<meta property="og:image" content={metalLogo}>
-		<meta property="og:image:width" content="1200">
-		<meta property="og:image:height" content="1200">
-		<meta property="og:url" content={canonicalURL.toString()}>
-		<meta property="og:type" content="website">
-		<meta property="og:site_name" content="Ohdit">
+		<link
+			rel="preload"
+			href="/fonts/LexendDeca-VariableFont_wght.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
 
-		<meta name="twitter:card" content="summary">
-		<meta name="twitter:title" content={title}>
-		<meta name="twitter:description" content={metaDescription}>
-		<meta name="twitter:image" content={metalLogo}>
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={metaDescription} />
+		<meta property="og:image" content={metalLogo} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="1200" />
+		<meta property="og:url" content={canonicalURL.toString()} />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Ohdit" />
+
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={metaDescription} />
+		<meta name="twitter:image" content={metalLogo} />
 
 		<script type="application/ld+json">
-		{
-		"@context": "https://schema.org",
-		"@type": "Organization",
-		"name": "Ohdit",
-		"url": "https://ohdit.com",
-		"logo": "https://ohdit.com/meta-logo.png"
-		}
+			{
+				"@context": "https://schema.org",
+				"@type": "Organization",
+				"name": "Ohdit",
+				"url": "https://ohdit.com",
+				"logo": "https://ohdit.com/meta-logo.png"
+			}
 		</script>
 	</head>
 	<body class="antialiased">
 		<slot />
 		<Footer />
 
-		{isProd && <script is:inline>
-			var _paq = window._paq = window._paq || [];
-			_paq.push(['disableCookies']);
-			_paq.push(['trackPageView']);
-			_paq.push(['enableLinkTracking']);
-			(function() {
-			var u="//analytics.ohdit.com/";
-			_paq.push(['setTrackerUrl', u+'matomo.php']);
-			_paq.push(['setSiteId', '1']);
-			var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-			g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-			})();
-		</script>}
+		{isProd && <MatomoScript />}
+
+		<style
+			is:global
+			define:vars={{
+				backgroundColor: backgroundColor,
+				textColor: textColor,
+				linkColor: linkColor,
+				linkFocusColor: linkFocusColor,
+			}}
+		>
+			@font-face {
+				font-family: "Lexend Deca";
+				src: url("/fonts/LexendDeca-VariableFont_wght.woff2") format("woff2");
+				font-weight: normal;
+				font-style: normal;
+				font-display: swap;
+			}
+
+			body {
+				font-size: 1rem; /* minimum font size for WCAG AAA */
+				color: var(--textColor);
+				background-color: var(--backgroundColor);
+			}
+
+			a {
+				text-decoration: underline;
+				text-underline-offset: 2px;
+				text-decoration-thickness: 1.5px;
+				color: var(--textColor);
+				text-decoration-color: var(--linkColor);
+			}
+
+			a:hover,
+			a:focus {
+				color: var(--textColor);
+				text-decoration-color: var(--linkFocusColor);
+				text-decoration-style: wavy;
+			}
+
+			svg {
+				max-width: 100%;
+				height: auto;
+			}
+		</style>
 	</body>
 </html>
-
-<style
-	is:global
-	define:vars={{
-		backgroundColor: backgroundColor,
-		textColor: textColor,
-		linkColor: linkColor,
-		linkFocusColor: linkFocusColor,
-	}}
->
-	@font-face {
-		font-family: 'Lexend Deca';
-		src: url('/fonts/LexendDeca-VariableFont_wght.woff2') format('woff2');
-		font-weight: normal;
-		font-style: normal;
-		font-display: swap;
-	}
-
-	body {
-		font-size: 1rem; /* minimum font size for WCAG AAA */
-		color: var(--textColor);
-		background-color: var(--backgroundColor);
-	}
-
-	a {
-		text-decoration: underline;
-		text-underline-offset: 2px;
-		text-decoration-thickness: 1.5px;
-		color: var(--textColor);
-		text-decoration-color: var(--linkColor);
-	}
-
-	a:hover, a:focus {
-		color: var(--textColor);
-		text-decoration-color: var(--linkFocusColor);
-		text-decoration-style: wavy;
-	}
-
-	svg {
-		max-width: 100%;
-		height: auto;
-	}
-</style>
