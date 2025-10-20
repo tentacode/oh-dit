@@ -39,6 +39,20 @@ reset: ## Reset database (env=dev|test)
 	docker compose exec backend bin/console doctrine:migrations:migrate --no-interaction --env=$(env)
 	docker compose exec backend bin/console foundry:load-fixtures all -n --env=$(env)
 
+tests: ## Run all tests
+	docker compose exec frontend eslint . --fix && \
+	echo "$(GREEN)eslint passed!$(NC)" && \
+	docker compose exec frontend npx prettier --write src && \
+	echo "$(GREEN)prettier passed!$(NC)" && \
+	docker compose exec backend bin/phpstan --memory-limit=1G && \
+	echo "$(GREEN)phpstan passed!$(NC)" && \
+	docker compose exec backend bin/ecs --fix && \
+	echo "$(GREEN)ecs passed!$(NC)" && \
+	docker compose exec backend bin/rector process src && \
+	echo "$(GREEN)rector passed!$(NC)" && \
+	docker compose exec backend bin/phpunit --testdox --fail-on-warning --fail-on-risky --fail-on-incomplete --fail-on-skipped && \
+	echo "$(GREEN)phpunit passed!$(NC)"
+
 destroy-docker: ## Remove all containers and volumes
 	@echo "$(YELLOW)Removing all containers and volumes...$(NC)"
 	docker compose down -v --remove-orphans

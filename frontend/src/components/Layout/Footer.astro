@@ -1,10 +1,5 @@
 ---
-import { colorRoles, colors } from "../../config/colors";
 import LinkedIn from "../Icon/LinkedIn.astro";
-
-const underlineColor = colorRoles.accent;
-const underlineFocusColor = colors.pink;
-const textColor = colorRoles.dark;
 ---
 
 <footer>
@@ -13,7 +8,9 @@ const textColor = colorRoles.dark;
 			<ul>
 				<li><a href="/mentions-legales">Mentions légales</a></li>
 				<li><a href="/politique-de-confidentialite">Politique de confidentialité</a></li>
-				<li><a href="/conditions-genertypoales-d-utilisation">Conditions générales d'utilisation</a></li>
+				<li>
+					<a href="/conditions-genertypoales-d-utilisation">Conditions générales d'utilisation</a>
+				</li>
 				<li>
 					<a href="/declaration-d-accessibilite">Déclaration d'accessibilité : non conforme</a>
 				</li>
@@ -31,13 +28,15 @@ const textColor = colorRoles.dark;
 				</a>
 			</li>
 			<li>
-				<a href="https://tentacode.dev">&copy; {new Date().getFullYear()} — réalisé par tentacode.dev</a>
+				<a href="https://tentacode.dev"
+					>&copy; {new Date().getFullYear()} — réalisé par tentacode.dev</a
+				>
 			</li>
 		</ul>
 	</div>
 </footer>
 
-<style define:vars={{ underlineColor: underlineColor, underlineFocusColor: underlineFocusColor, textColor: textColor }}>
+<style>
 	footer {
 		background: white;
 	}

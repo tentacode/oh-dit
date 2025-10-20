@@ -1,5 +1,5 @@
 declare global {
-  var _paq: any[];
+	var _paq: any[];
 }
 
 export {};
