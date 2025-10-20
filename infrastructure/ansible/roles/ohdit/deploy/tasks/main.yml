@@ -60,3 +60,46 @@
   args:
     chdir: "{{ user.workspace_directory }}/oh-dit/www"
     executable: /bin/bash
+
+- name: Installing app dependencies
+  shell: source ~/.nvm/nvm.sh && npm install
+  args:
+    chdir: "{{ user.workspace_directory }}/oh-dit/app"
+    executable: /bin/bash
+
+- name: Building app
+  shell: source ~/.nvm/nvm.sh && npm run build
+  args:
+    chdir: "{{ user.workspace_directory }}/oh-dit/app"
+    executable: /bin/bash
+  environment:
+    NEXT_PUBLIC_API_URL: "https://api.ohdit.com"
+    
+- name: Get npm path
+  shell: source ~/.nvm/nvm.sh && which npm
+  args:
+    executable: /bin/bash
+  register: npm_path
+
+- name: Installing app systemd service
+  template:
+    src: "ohdit-app.service.j2"
+    dest: /etc/systemd/system/ohdit-app.service
+  vars:
+    npm_executable: "{{ npm_path.stdout }}"
+  become: yes
+
+- name: Enabling and starting app service
+  systemd:
+    name: ohdit-app
+    enabled: yes
+    state: started
+    daemon_reload: yes
+  become: yes
+
+- name: Create acme-challenge directory for app
+  file:
+    path: /var/www/html/.well-known/acme-challenge
+    state: directory
+    mode: '0755'
+  become: yes

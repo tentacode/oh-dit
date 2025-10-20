@@ -12,3 +12,10 @@
     dest: /etc/nginx/sites-enabled/ohdit-www.conf
   notify: restart web services
   become: yes
+
+- name: Copying app server nginx configuration
+  template:
+    src: "ohdit-app.nginx.conf.j2"
+    dest: /etc/nginx/sites-enabled/ohdit-app.conf
+  notify: restart web services
+  become: yes
