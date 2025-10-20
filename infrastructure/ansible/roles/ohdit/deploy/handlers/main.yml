@@ -1,0 +1,5 @@
+- name: restart app service
+  systemd:
+    name: ohdit-app
+    state: restarted
+  become: yes

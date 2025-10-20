@@ -12,7 +12,7 @@
   become: yes
 
 - name: Execute certbot
-  command: certbot --nginx --expand --non-interactive --agree-tos --email {{ letsencrypt.email }} -d {{ letsencrypt.domain }} -d api.{{ letsencrypt.domain }}  -d analytics.{{ letsencrypt.domain }} 
+  command: certbot --nginx --expand --non-interactive --agree-tos --email {{ letsencrypt.email }} -d {{ letsencrypt.domain }} -d api.{{ letsencrypt.domain }} -d app.{{ letsencrypt.domain }} 
   become: yes
   notify: restart web services
 
@@ -31,7 +31,7 @@
   loop:
     - ohdit-www.conf
     - ohdit-api.conf
-    - matomo.conf
+    - ohdit-app.conf
   notify: restart web services
   become: yes
 
@@ -43,6 +43,6 @@
   loop:
     - ohdit-www.conf
     - ohdit-api.conf
-    - matomo.conf
+    - ohdit-app.conf
   notify: restart web services
   become: yes
