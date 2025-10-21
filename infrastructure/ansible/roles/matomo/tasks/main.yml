@@ -45,10 +45,6 @@
   notify: restart web services
   become: yes
 
-- name: Test nginx configuration
-  command: nginx -t
-  changed_when: false
-
 - name: Clean up temporary files
   file:
     path: "/tmp/matomo.zip"
@@ -73,22 +69,10 @@
     enabled: yes
 
 - name: Create Matomo database
-  mysql_db:
-    name: matomo
-    state: present
-    login_unix_socket: /var/run/mysqld/mysqld.sock
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
-
-- name: Create Matomo database user
-  mysql_user:
-    name: matomo
-    password: "{{ matomo_db_password }}"
-    priv: 'matomo.*:ALL'
-    state: present
-    login_unix_socket: /var/run/mysqld/mysqld.sock
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
+  shell: mysql -u root -e "CREATE DATABASE IF NOT EXISTS matomo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+  become: yes
+  register: db_result
+  changed_when: false
     
 - name: Set up Matomo archiving cron  
   cron:
