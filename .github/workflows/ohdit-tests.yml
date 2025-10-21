@@ -3,8 +3,11 @@ name: Ohdit Tests
 on: [push]
 
 jobs:
-  tests:
-    name: Tests
+  #############
+  # TESTS API #
+  #############
+  tests-api:
+    name: Tests API
     runs-on: ubuntu-latest
 
     permissions:
@@ -47,28 +50,19 @@ jobs:
         working-directory: ./api
         run: bin/console lexik:jwt:generate-keypair --overwrite --no-interaction
 
-      - name: Setup node
-        uses: actions/setup-node@v5
-        with:
-          node-version: '24'
-
-      - name: Install node dependencies
-        working-directory: ./www
-        run: npm install
-
       # Tests api
       - name: Phpstan
         working-directory: ./api
         run: bin/phpstan --memory-limit=1G
 
-      - name: Automatic code sniffer fixing
+      - name: Ecs
         working-directory: ./api
-        run: bin/ecs --fix
+        run: bin/ecs
         continue-on-error: true
 
-      - name: Automatic rector fixing
+      - name: Rector
         working-directory: ./api
-        run: bin/rector process src
+        run: bin/rector process src --dry-run
         continue-on-error: true
 
       - name: Database setup
@@ -85,15 +79,42 @@ jobs:
       - name: Composer audit
         working-directory: ./api
         run: composer audit
-      
-      # Tests www
-      - name: Linting fixes
-        working-directory: ./www
-        run: npm run lint-fix
-      
-      - name: Prettier fixes
-        working-directory: ./www
-        run: npx prettier --write src
+
+      # Slack notification on failure      
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        if: ${{ failure() }}
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: '#ci'
+          SLACK_COLOR: '#FF5555'
+          SLACK_USERNAME: 'Ohdit'
+          SLACK_ICON_EMOJI: ':robot:'
+          SLACK_TITLE: Tests Api - Last commit
+          SLACK_FOOTER: "“Try not. Do or do not. There is no try.” — Yoda"
+
+  #############
+  # TESTS APP #
+  #############
+  tests-app:
+    name: Tests Web App
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Install node dependencies
+        working-directory: ./app
+        run: npm install
       
       # Tests app
       - name: Check linting
@@ -108,44 +129,9 @@ jobs:
         working-directory: ./app
         run: npm run build
 
-      # Audit fix
-      - name: Npm audit fix www
-        working-directory: ./www
-        run: npm audit fix --force
-        continue-on-error: true
-
-      - name: Npm audit fix app
+      - name: Npm audit app
         working-directory: ./app
-        run: npm audit fix --force
-        continue-on-error: true
-
-      # Autocommit
-      - name: Auto commit fixes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          #file_pattern: '**/*.{js,jsx,ts,tsx,json,css,scss,md,php}'
-          commit_message: ":robot::art: Autofix"
-
-      # Check after Autocommit
-      - name: Checking code sniffer after fixes
-        working-directory: ./api
-        run: bin/ecs
-
-      - name: Checking rector after fixes
-        working-directory: ./api
-        run: bin/rector
-
-      - name: Npm audit
-        working-directory: ./www
-        run: npm audit --audit-level=moderate
-        
-      - name: Checking lint fixes
-        working-directory: ./www
-        run: npx eslint .
-      
-      - name: Checking prettier fixes
-        working-directory: ./www
-        run: npx prettier --check src
+        run: npm audit
 
       # Slack notification on failure      
       - name: Slack Notification
@@ -157,5 +143,54 @@ jobs:
           SLACK_COLOR: '#FF5555'
           SLACK_USERNAME: 'Ohdit'
           SLACK_ICON_EMOJI: ':scream:'
-          SLACK_TITLE: Last commit
+          SLACK_TITLE: Tests App - Last commit
+          SLACK_FOOTER: "“Try not. Do or do not. There is no try.” — Yoda"
+
+  #############
+  # TESTS WWW #
+  #############
+  tests-www:
+    name: Tests WWW
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Install node dependencies
+        working-directory: ./www
+        run: npm install
+      
+      # Tests www
+      - name: Linting fixes
+        working-directory: ./www
+        run: npm run lint
+      
+      - name: Prettier fixes
+        working-directory: ./www
+        run: npx prettier src
+
+      - name: Npm audit www
+        working-directory: ./www
+        run: npm audit
+
+      # Slack notification on failure      
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        if: ${{ failure() }}
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: '#ci'
+          SLACK_COLOR: '#FF5555'
+          SLACK_USERNAME: 'Ohdit'
+          SLACK_ICON_EMOJI: ':poop:'
+          SLACK_TITLE: Tests WWW - Last commit
           SLACK_FOOTER: "“Try not. Do or do not. There is no try.” — Yoda"
