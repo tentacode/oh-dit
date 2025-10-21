@@ -22,6 +22,8 @@
     - web-server/nginx
     - web-server/php-fpm
 
+    - matomo
+
     - ohdit/deploy
     - ohdit/nginx
 
