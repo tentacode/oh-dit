@@ -1,9 +1,10 @@
 'use client'
 
+import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 
-export default function Login() {
+function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirect = searchParams.get('redirect') || '/'
@@ -37,7 +38,7 @@ export default function Login() {
       
       // Rediriger vers la page demandée
       router.push(redirect)
-    } catch (err) {
+    } catch {
       setError('Erreur de connexion')
     }
   }
@@ -46,7 +47,9 @@ export default function Login() {
     <div className="flex items-center justify-center">
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img
+          <Image
+            width="400"
+            height="400"
             alt="Your Company"
             src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
             className="mx-auto h-10 w-auto"
@@ -161,5 +164,13 @@ export default function Login() {
           </p> */}
         </div>
       </div></div>
+  )
+}
+
+export default function Login() {
+  return (
+    <Suspense fallback={<div>Chargement...</div>}>
+      <LoginForm />
+    </Suspense>
   )
 }

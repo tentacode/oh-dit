@@ -29,8 +29,6 @@ services:
       - ./app:/app
       - /app/node_modules
       - /app/.next
-    environment:
-      - NODE_ENV=development
     depends_on:
       - api
 

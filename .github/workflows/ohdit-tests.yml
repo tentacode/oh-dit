@@ -94,10 +94,28 @@ jobs:
       - name: Prettier fixes
         working-directory: ./www
         run: npx prettier --write src
+      
+      # Tests app
+      - name: Check linting
+        working-directory: ./app
+        run: npm run lint
+      
+      - name: Check Typescript
+        working-directory: ./app
+        run: npm run typescript
+      
+      - name: Check Build
+        working-directory: ./app
+        run: npm run build
 
       # Audit fix
-      - name: Npm audit fix
+      - name: Npm audit fix www
         working-directory: ./www
+        run: npm audit fix --force
+        continue-on-error: true
+
+      - name: Npm audit fix app
+        working-directory: ./app
         run: npm audit fix --force
         continue-on-error: true
 

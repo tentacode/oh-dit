@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Lexend_Deca } from "next/font/google";
 import "./globals.css";
-import TopBar from "../features/debug/TopBar";
 
 const lexendDeca = Lexend_Deca({
   subsets: ["latin"],
