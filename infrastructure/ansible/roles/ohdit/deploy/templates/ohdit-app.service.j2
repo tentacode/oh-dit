@@ -8,7 +8,6 @@ User={{ user.name }}
 WorkingDirectory={{ user.workspace_directory }}/oh-dit/app
 Environment="NODE_ENV=production"
 Environment="PORT=3000"
-Environment="NEXT_PUBLIC_API_URL=https://api.ohdit.com"
 ExecStart={npm_executable} start
 Restart=on-failure
 RestartSec=10

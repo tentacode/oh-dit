@@ -72,8 +72,6 @@
   args:
     chdir: "{{ user.workspace_directory }}/oh-dit/app"
     executable: /bin/bash
-  environment:
-    NEXT_PUBLIC_API_URL: "https://api.ohdit.com"
     
 - name: Get npm path
   shell: source ~/.nvm/nvm.sh && which npm
