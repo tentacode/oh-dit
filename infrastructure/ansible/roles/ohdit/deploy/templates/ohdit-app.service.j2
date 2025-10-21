@@ -6,9 +6,9 @@ After=network.target
 Type=simple
 User={{ user.name }}
 WorkingDirectory={{ user.workspace_directory }}/oh-dit/app
-Environment="NODE_ENV=production"
+Environment="PATH=/home/{{ user.name }}/.nvm/versions/node/v24.10.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 Environment="PORT=3000"
-ExecStart={npm_executable} start
+ExecStart=/home/{{ user.name }}/.nvm/versions/node/v24.10.0/bin/node {{ user.workspace_directory }}/oh-dit/app/node_modules/.bin/next start
 Restart=on-failure
 RestartSec=10
 

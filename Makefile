@@ -25,6 +25,9 @@ down: ## Stop all containers
 www.connect: ## Open www container shell
 	docker compose exec www zsh
 
+app.connect: ## Open app container shell
+	docker compose exec app sh
+
 api.connect: ## Open api container shell
 	docker compose exec api zsh
 
