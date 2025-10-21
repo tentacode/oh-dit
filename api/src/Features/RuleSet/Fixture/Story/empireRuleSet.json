@@ -1,0 +1,189 @@
+{
+    "ruleSet": {
+        "name": "IWSQA",
+        "description": "Imperial Weapon Systems Quality Assurance Standard",
+        "version": "1.3.3.7",
+        "ruleSetCategories": [
+            {
+                "prefix": "1",
+                "name": "Personnel & Training",
+                "rules": [
+                    {
+                        "prefix": "1.1",
+                        "description": "Les Stormtroopers doivent atteindre un taux de réussite minimal aux tests de tir.",
+                        "compliance": "N/C"
+                    },
+                    {
+                        "prefix": "1.2",
+                        "description": "Les officiers doivent suivre les formations en gestion de crise.",
+                        "compliance": "N/C"
+                    },
+                    {
+                        "prefix": "1.3",
+                        "description": "Le personnel technique doit être certifié sur les systèmes hyperspatiaux.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "1.4",
+                        "description": "Un ratio minimal d'officiers médicaux doit être maintenu.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "1.5",
+                        "description": "Les durées maximales de service continu doivent être respectées.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "1.6",
+                        "description": "Les pilotes de TIE Fighter doivent valider leur temps de vol réglementaire.",
+                        "compliance": "C"
+                    }
+                ]
+            },
+            {
+                "prefix": "2",
+                "name": "Security & Access Control",
+                "rules": [
+                    {
+                        "prefix": "2.1",
+                        "description": "Les accès aux secteurs critiques doivent avoir un verrouillage redondant.",
+                        "compliance": "N/C"
+                    },
+                    {
+                        "prefix": "2.2",
+                        "description": "Les codes d'accès aux systèmes de défense doivent être renouvelés périodiquement.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "2.3",
+                        "description": "Les conduits d'aération doivent être équipés de dispositifs de sécurité.",
+                        "compliance": "N/C"
+                    },
+                    {
+                        "prefix": "2.4",
+                        "description": "Les zones sensibles doivent être couvertes par des systèmes de détection.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "2.5",
+                        "description": "Les hangars doivent avoir des champs de confinement actifs.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "2.6",
+                        "description": "Le transport de prisonniers doit respecter les protocoles d'escorte.",
+                        "compliance": "N/C"
+                    }
+                ]
+            },
+            {
+                "prefix": "3",
+                "name": "Weapons Systems & Performance",
+                "rules": [
+                    {
+                        "prefix": "3.1",
+                        "description": "Le superlaser doit être opérationnel avec une précision optimale.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "3.2",
+                        "description": "Les batteries de turbolasers doivent avoir un temps de réponse acceptable.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "3.3",
+                        "description": "Les systèmes de ciblage doivent être testés régulièrement.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "3.4",
+                        "description": "Le temps de recharge du superlaser doit respecter les standards.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "3.5",
+                        "description": "Les chasseurs TIE doivent maintenir un taux de disponibilité satisfaisant.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "3.6",
+                        "description": "Les munitions doivent être stockées selon les protocoles de sécurité.",
+                        "compliance": "C"
+                    }
+                ]
+            },
+            {
+                "prefix": "4",
+                "name": "Engineering & Maintenance",
+                "rules": [
+                    {
+                        "prefix": "4.1",
+                        "description": "Les réacteurs principaux doivent être inspectés à intervalles réguliers.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "4.2",
+                        "description": "Les ports d'échappement thermiques doivent avoir un blindage suffisant.",
+                        "compliance": "N/C"
+                    },
+                    {
+                        "prefix": "4.3",
+                        "description": "Les systèmes de survie doivent avoir des redondances multiples.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "4.4",
+                        "description": "Les opérations de maintenance doivent être documentées et tracées.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "4.5",
+                        "description": "Les générateurs de bouclier doivent être testés périodiquement.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "4.6",
+                        "description": "Les stocks de pièces de rechange doivent couvrir une autonomie minimale.",
+                        "compliance": "N/C"
+                    }
+                ]
+            },
+            {
+                "prefix": "5",
+                "name": "Budget & Resource Management",
+                "rules": [
+                    {
+                        "prefix": "5.1",
+                        "description": "Les dépenses opérationnelles doivent respecter les budgets alloués.",
+                        "compliance": "N/C"
+                    },
+                    {
+                        "prefix": "5.2",
+                        "description": "Les réserves de carburant doivent assurer une autonomie suffisante.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "5.3",
+                        "description": "Les rapports financiers doivent être transmis au Conseil Impérial.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "5.4",
+                        "description": "Les coûts de construction doivent rester dans les limites approuvées.",
+                        "compliance": "N/C"
+                    },
+                    {
+                        "prefix": "5.5",
+                        "description": "Les contrats de sous-traitance doivent suivre le processus de validation.",
+                        "compliance": "C"
+                    },
+                    {
+                        "prefix": "5.6",
+                        "description": "Les audits externes doivent être réalisés selon le calendrier établi.",
+                        "compliance": "N/C"
+                    }
+                ]
+            }
+        ]
+    }
+}

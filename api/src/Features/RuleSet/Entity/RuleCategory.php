@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Features\Project\Entity;
+namespace App\Features\RuleSet\Entity;
 
-use App\Features\Authentication\Entity\Team;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,13 +12,12 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
-use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'project')]
-class Project
+#[ORM\Table(name: 'rule_category')]
+class RuleCategory
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
@@ -29,30 +27,34 @@ class Project
     #[Assert\NotBlank]
     private string $name;
 
+    #[ORM\Column(length: 180, nullable: true)]
+    private string $prefix;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private readonly DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
 
-    #[ManyToOne(targetEntity: Team::class)]
-    #[JoinColumn(name: 'team_uuid', referencedColumnName: 'uuid')]
-    #[Ignore]
+    #[ManyToOne(targetEntity: RuleSet::class)]
+    #[JoinColumn(name: 'rule_set_uuid', referencedColumnName: 'uuid')]
     #[Assert\NotBlank]
-    private Team $team;
+    private RuleSet $ruleSet;
 
-    #[ORM\OneToMany(targetEntity: Screen::class, mappedBy: 'project')]
-    private Collection $screens;
+    #[ORM\OneToMany(targetEntity: Rule::class, mappedBy: 'ruleCategory')]
+    private Collection $rules;
 
     public function __construct(
-        Team $team,
+        RuleSet $ruleSet,
         string $name,
+        ?string $prefix = null,
         ?string $uuid = null
     ) {
         $this->uuid = $uuid ? Uuid::fromString($uuid) : Uuid::v4();
-        $this->team = $team;
-        $this->screens = new ArrayCollection();
+        $this->ruleSet = $ruleSet;
         $this->name = $name;
+        $this->prefix = $prefix;
+        $this->rules = new ArrayCollection();
         $this->createdAt = CarbonImmutable::now();
         $this->updatedAt = CarbonImmutable::now();
     }
@@ -62,19 +64,24 @@ class Project
         return $this->uuid;
     }
 
-    public function getTeam(): Team
-    {
-        return $this->team;
-    }
-
-    public function getScreens(): Collection
-    {
-        return $this->screens;
-    }
-
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getPrefix(): ?string
+    {
+        return $this->prefix;
+    }
+
+    public function getRuleSet(): RuleSet
+    {
+        return $this->ruleSet;
+    }
+
+    public function getRules(): Collection
+    {
+        return $this->rules;
     }
 
     public function getCreatedAt(): DateTimeImmutable
