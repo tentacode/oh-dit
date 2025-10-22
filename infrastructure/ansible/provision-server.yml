@@ -20,6 +20,7 @@
     - cli/python
 
     - web-server/nginx
+    - web-server/redis
     - web-server/php-fpm
 
     - matomo

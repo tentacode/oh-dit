@@ -2,14 +2,14 @@ FROM php:8.4-fpm
 
 # Install system dependencies including zsh
 RUN apt-get update && apt-get install -y \
-    git \
     curl \
-    libpng-dev \
+    git \
     libonig-dev \
-    libxml2-dev \
+    libpng-dev \
     libpq-dev \
-    zip \
+    libxml2-dev \
     unzip \
+    zip \
     zsh
 
 # Install oh-my-zsh for better shell experience
@@ -26,6 +26,10 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd
+
+# PECL extensions (separate)
+RUN pecl install redis \
+    && docker-php-ext-enable redis
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
