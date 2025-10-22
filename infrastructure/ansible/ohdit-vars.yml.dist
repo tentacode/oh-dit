@@ -21,15 +21,17 @@ php:
   max_upload_size_mb: 10
   version: 8.4
   extensions:
+      - apcu
       - curl
+      - gd
       - intl
       - mbstring
+      - mysql
+      - pdo
       - pgsql
+      - redis
       - simplexml
       - zip
-      - pdo
-      - mysql
-      - gd
 
 smtp:
     host: CHANGE_ME

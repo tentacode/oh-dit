@@ -16,7 +16,7 @@ services:
       - WATCHPACK_POLLING=true
       - CHOKIDAR_USEPOLLING=true
     depends_on:
-      - database
+      - api
 
   app:
     build:
@@ -49,6 +49,7 @@ services:
       - POSTGRES_PORT=5432
     depends_on:
       - database
+      - redis
 
   database:
     image: postgres:17.5-alpine
@@ -60,6 +61,10 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
 
 volumes:
   postgres_data:

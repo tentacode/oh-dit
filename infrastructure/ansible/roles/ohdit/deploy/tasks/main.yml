@@ -14,6 +14,16 @@
     dest: "{{ user.workspace_directory }}/oh-dit"
     accept_hostkey: yes
 
+
+- name: Remove test files from production
+  shell: |
+    find ./src -type d -name "tests" -exec rm -rf {} + 2>/dev/null || true
+    find ./src -type d -name "Fixture" -exec rm -rf {} + 2>/dev/null || true
+    rm -rf ./src/Infrastructure/PHPUnit 2>/dev/null || true
+  become: yes
+  args:
+    chdir: "{{ user.workspace_directory }}/oh-dit/api"
+
 - name: Copying env file
   template:
     src: ".env.j2"
@@ -29,8 +39,24 @@
     msg: "The .env.local file contains 'CHANGE_ME' values. Please fill in the required values."
   when: env_file_contains_change_me.rc == 0
 
-- name: Installing composer dependencies
-  shell: composer install --no-interaction
+- name: Install Composer dependencies (optimized)
+  composer:
+    command: install
+    working_dir: "{{ user.workspace_directory }}/oh-dit/api"
+    no_dev: yes
+    optimize_autoloader: yes
+    classmap_authoritative: yes
+    apcu_autoloader: yes
+  environment:
+    APP_ENV: prod
+
+- name: Clear Symfony cache
+  command: php bin/console cache:clear --env=prod --no-debug
+  args:
+    chdir: "{{ user.workspace_directory }}/oh-dit/api"
+
+- name: Warmup Symfony cache
+  command: php bin/console cache:warmup --env=prod --no-debug
   args:
     chdir: "{{ user.workspace_directory }}/oh-dit/api"
 

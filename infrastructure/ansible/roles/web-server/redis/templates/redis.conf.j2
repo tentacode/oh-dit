@@ -1,0 +1,34 @@
+# roles/redis/templates/redis.conf.j2
+
+# Network - only accept local connections
+bind 127.0.0.1 ::1
+port 6379
+protected-mode yes
+
+# General
+daemonize no
+supervised systemd
+pidfile /run/redis/redis-server.pid
+loglevel notice
+logfile /var/log/redis/redis-server.log
+
+# No persistence (cache only)
+save ""
+appendonly no
+
+# Data directory (still needed even without persistence)
+dir /var/lib/redis
+
+# Memory management (optimized for cache)
+maxmemory 512mb
+maxmemory-policy allkeys-lru
+
+# Limits
+maxclients 10000
+timeout 0
+tcp-keepalive 300
+tcp-backlog 511
+
+# Slow log
+slowlog-log-slower-than 10000
+slowlog-max-len 128

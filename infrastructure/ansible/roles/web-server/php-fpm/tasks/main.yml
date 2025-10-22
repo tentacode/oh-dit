@@ -91,3 +91,17 @@
     chdir=/tmp
   when: not composer_bin.stat.exists
   become: yes
+
+- name: Configure OPcache for production
+  copy:
+    dest: /etc/php/{{ php.version }}/fpm/conf.d/99-opcache-prod.ini
+    content: |
+      opcache.enable=1
+      opcache.memory_consumption=256
+      opcache.interned_strings_buffer=16
+      opcache.max_accelerated_files=20000
+      opcache.validate_timestamps=0
+      opcache.save_comments=0
+      opcache.fast_shutdown=1
+  notify: restart php-fpm
+  become: yes
