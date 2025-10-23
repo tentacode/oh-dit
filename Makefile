@@ -31,6 +31,9 @@ app.connect: ## Open app container shell
 api.connect: ## Open api container shell
 	docker compose exec api zsh
 
+api.phpstan: ## Run PHPStan in api container
+	docker compose exec api bin/phpstan --memory-limit=1G
+
 database.connect: ## Open PostgreSQL shell
 	docker compose exec database psql -U ohdit ohdit_dev
 
