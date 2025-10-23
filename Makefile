@@ -44,9 +44,13 @@ reset: ## Reset database (env=dev|test)
 
 tests: ## Run all tests
 	docker compose exec www eslint . --fix && \
-	echo "$(GREEN)eslint passed!$(NC)" && \
+	echo "$(GREEN)www eslint passed!$(NC)" && \
 	docker compose exec www npx prettier --write src && \
-	echo "$(GREEN)prettier passed!$(NC)" && \
+	echo "$(GREEN)www prettier passed!$(NC)" && \
+	docker compose exec app npm run lint && \
+	echo "$(GREEN)app eslint passed!$(NC)" && \
+	docker compose exec app npm run typescript && \
+	echo "$(GREEN)app typescript passed!$(NC)" && \
 	docker compose exec api bin/phpstan --memory-limit=1G && \
 	echo "$(GREEN)phpstan passed!$(NC)" && \
 	docker compose exec api bin/ecs --fix && \

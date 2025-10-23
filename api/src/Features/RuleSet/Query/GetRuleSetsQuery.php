@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Features\RuleSet\Query;
 
 use App\Features\RuleSet\Entity\RuleSet;
@@ -17,11 +19,8 @@ class GetRuleSetsQuery
      */
     public function __invoke(): array
     {
-        $queryBuilder = $this->entityManager->createQueryBuilder();
-
-        $queryBuilder->select('ruleSet')
-            ->from(RuleSet::class, 'ruleSet');
-
-        return $queryBuilder->getQuery()->getResult();
+        return $this->entityManager
+            ->getRepository(RuleSet::class)
+            ->findAll();
     }
 }

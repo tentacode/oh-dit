@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Features\RuleSet\Entity;
 
+use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'rule_set')]
-class RuleSet
+class RuleSet implements HasUuidInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
@@ -39,6 +40,9 @@ class RuleSet
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
 
+    /**
+     * @var Collection<int, RuleCategory>
+     */
     #[ORM\OneToMany(targetEntity: RuleCategory::class, mappedBy: 'ruleSet')]
     private Collection $ruleCategories;
 
@@ -77,6 +81,9 @@ class RuleSet
         return $this->version;
     }
 
+    /**
+     * @return Collection<int, RuleCategory>
+     */
     public function getRuleCategories(): Collection
     {
         return $this->ruleCategories;

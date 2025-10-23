@@ -38,6 +38,7 @@
         "coduo/php-matcher": "^6.0",
         "dama/doctrine-test-bundle": "^8.3",
         "phpstan/phpstan": "^2.1.22",
+        "phpstan/phpstan-doctrine": "^2.0",
         "phpstan/phpstan-symfony": "^2.0.8",
         "phpstan/phpstan-webmozart-assert": "^2.0",
         "phpunit/phpunit": "^11.5.36",

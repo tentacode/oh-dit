@@ -6,9 +6,9 @@ namespace App\Features\RuleSet\Fixture\Story;
 
 use function Safe\file_get_contents;
 use function Safe\json_decode;
-use App\Features\RuleSet\Fixture\Factory\RuleSetFactory;
 use App\Features\RuleSet\Fixture\Factory\RuleCategoryFactory;
 use App\Features\RuleSet\Fixture\Factory\RuleFactory;
+use App\Features\RuleSet\Fixture\Factory\RuleSetFactory;
 use Zenstruck\Foundry\Attribute\AsFixture;
 use Zenstruck\Foundry\Story;
 
@@ -23,6 +23,17 @@ final class RuleSetsStory extends Story
 
     public function build(): void
     {
+        /**
+         * @var array{ruleSet: array{
+         *      name: string,
+         *      description: string,
+         *      version: string,
+         *      ruleSetCategories: array<array{
+         *          prefix: string,
+         *          name: string,
+         *          rules: array<array{prefix: string, description: string}
+         *      >}
+         * >}} $ruleSetData */
         $ruleSetData = json_decode(file_get_contents(__DIR__ . '/empireRuleSet.json'), true);
 
         $ruleSet = RuleSetFactory::createOne([
@@ -35,7 +46,7 @@ final class RuleSetsStory extends Story
         $categoryIndex = 1;
         foreach ($ruleSetData['ruleSet']['ruleSetCategories'] as $categoryData) {
             $ruleCategory = RuleCategoryFactory::createOne([
-                'uuid' => self::RULE_CATEGORY_BASE_UUID . str_pad((string)$categoryIndex, 12, '0', STR_PAD_LEFT),
+                'uuid' => self::RULE_CATEGORY_BASE_UUID . str_pad((string) $categoryIndex, 12, '0', STR_PAD_LEFT),
                 'prefix' => $categoryData['prefix'],
                 'name' => $categoryData['name'],
                 'ruleSet' => $ruleSet,
@@ -44,16 +55,16 @@ final class RuleSetsStory extends Story
             $ruleIndex = 1;
             foreach ($categoryData['rules'] as $ruleData) {
                 RuleFactory::createOne([
-                    'uuid' => self::RULE_BASE_UUID . str_pad((string)$categoryIndex, 4, '0', STR_PAD_LEFT) . '-' . str_pad((string)$ruleIndex, 12, '0', STR_PAD_LEFT),
+                    'uuid' => self::RULE_BASE_UUID . str_pad((string) $categoryIndex, 4, '0', STR_PAD_LEFT) . '-' . str_pad((string) $ruleIndex, 12, '0', STR_PAD_LEFT),
                     'prefix' => $ruleData['prefix'],
                     'shortDescription' => $ruleData['description'],
                     'ruleCategory' => $ruleCategory,
                 ]);
 
-                $ruleIndex++;
+                ++$ruleIndex;
             }
 
-            $categoryIndex++;
+            ++$categoryIndex;
         }
     }
 }

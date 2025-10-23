@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Features\RuleSet\Entity;
 
+use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'rule_category')]
-class RuleCategory
+class RuleCategory implements HasUuidInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
@@ -28,7 +29,7 @@ class RuleCategory
     private string $name;
 
     #[ORM\Column(length: 180, nullable: true)]
-    private string $prefix;
+    private ?string $prefix;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private readonly DateTimeImmutable $createdAt;
@@ -41,6 +42,9 @@ class RuleCategory
     #[Assert\NotBlank]
     private RuleSet $ruleSet;
 
+    /**
+     * @var Collection<int, Rule>
+     */
     #[ORM\OneToMany(targetEntity: Rule::class, mappedBy: 'ruleCategory')]
     private Collection $rules;
 
@@ -53,7 +57,7 @@ class RuleCategory
         $this->uuid = $uuid ? Uuid::fromString($uuid) : Uuid::v4();
         $this->ruleSet = $ruleSet;
         $this->name = $name;
-        $this->prefix = $prefix;
+        $this->prefix = $prefix === null || $prefix === '' || $prefix === '0' ? null : $prefix;
         $this->rules = new ArrayCollection();
         $this->createdAt = CarbonImmutable::now();
         $this->updatedAt = CarbonImmutable::now();
@@ -79,6 +83,9 @@ class RuleCategory
         return $this->ruleSet;
     }
 
+    /**
+     * @return Collection<int, Rule>
+     */
     public function getRules(): Collection
     {
         return $this->rules;

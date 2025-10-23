@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Features\Project\Entity;
 
+use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'project_screen')]
-class Screen
+class Screen implements HasUuidInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
