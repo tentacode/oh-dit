@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { authMiddleware } from './features/authentication/authMiddleware'
+import { authMiddleware } from './features/authentication/middlewares/authMiddleware'
 
 export function middleware(request: NextRequest) {
   const authResponse = authMiddleware(request)

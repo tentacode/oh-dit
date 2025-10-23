@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\PHPUnit;
 
-use JsonException;
 use function Safe\json_decode;
 use Coduo\PHPMatcher\PHPUnit\PHPMatcherAssertions;
+use JsonException;
 use Symfony\Component\HttpFoundation\Response;
 use Webmozart\Assert\Assert;
 
