@@ -18,11 +18,17 @@ trait ResponseAssertions
         Response $response,
         int $expectedStatusCode = 200
     ): void {
-        $this->assertSame('application/json', $response->headers->get('content-type'));
 
         Assert::string($response->getContent());
+        try {
+            json_decode($response->getContent(), true);
+        } catch (\JsonException $e) {
+            $this->fail('Response content is not valid JSON: ' . $response->getContent());
+        }
+
         $responseData = json_decode($response->getContent(), true);
 
+        $this->assertSame('application/json', $response->headers->get('content-type'));
         $this->assertMatchesPattern($expectedPattern, $responseData, 'The JSON response does not match the expected pattern. Response content: ' . $response->getContent());
         $this->assertSame($expectedStatusCode, $response->getStatusCode(), 'The response status code is not as expected. Response content: ' . $response->getContent());
     }

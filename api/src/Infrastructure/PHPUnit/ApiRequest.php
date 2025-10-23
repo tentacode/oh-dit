@@ -26,6 +26,8 @@ trait ApiRequest
             $client = self::createClient();
         }
 
+        $client->followRedirects(true);
+
         Assert::notNull($client);
 
         $server = [
