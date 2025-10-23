@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Features\RuleSet\Entity;
 
+use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'rule')]
-class Rule
+class Rule implements HasUuidInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
@@ -26,7 +27,7 @@ class Rule
     private string $shortDescription;
 
     #[ORM\Column(length: 180, nullable: true)]
-    private string $prefix;
+    private ?string $prefix;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private readonly DateTimeImmutable $createdAt;
@@ -48,7 +49,7 @@ class Rule
         $this->uuid = $uuid ? Uuid::fromString($uuid) : Uuid::v4();
         $this->ruleCategory = $ruleCategory;
         $this->shortDescription = $shortDescription;
-        $this->prefix = $prefix;
+        $this->prefix = $prefix === null || $prefix === '' || $prefix === '0' ? null : $prefix;
         $this->createdAt = CarbonImmutable::now();
         $this->updatedAt = CarbonImmutable::now();
     }

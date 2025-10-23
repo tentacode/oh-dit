@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Features\Newsletter\Entity;
 
+use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity]
 #[ORM\Table(name: 'newsletter')]
 #[UniqueEntity(fields: ['email'], message: 'There is already a newsletter with this email')]
-class Newsletter
+class Newsletter implements HasUuidInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]

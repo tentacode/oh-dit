@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Features\Authentication\Entity;
 
+use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity]
 #[ORM\Table(name: 'team')]
 #[UniqueEntity(fields: ['name'], message: 'There is already a team with this name')]
-class Team
+class Team implements HasUuidInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]

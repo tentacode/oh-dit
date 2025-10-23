@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Features\Project\Entity;
 
 use App\Features\Authentication\Entity\Team;
+use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -19,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'project')]
-class Project
+class Project implements HasUuidInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
@@ -41,6 +42,9 @@ class Project
     #[Assert\NotBlank]
     private Team $team;
 
+    /**
+     * @var ArrayCollection<int, Screen>
+     */
     #[ORM\OneToMany(targetEntity: Screen::class, mappedBy: 'project')]
     private Collection $screens;
 
@@ -67,6 +71,9 @@ class Project
         return $this->team;
     }
 
+    /**
+     * @return Collection<int, Screen>
+     */
     public function getScreens(): Collection
     {
         return $this->screens;
