@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Symfony\EventListener;
 
-use Symfony\Component\HttpKernel\Profiler\Profile;
 use Doctrine\Bundle\DoctrineBundle\DataCollector\DoctrineDataCollector;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
 
 #[AsEventListener(event: KernelEvents::RESPONSE, priority: -1024)]
@@ -31,7 +31,7 @@ class AddDatabaseQueryCountHeader
         }
 
         $profile = $this->profiler->collect($event->getRequest(), $event->getResponse());
-        if (!$profile instanceof Profile) {
+        if (! $profile instanceof Profile) {
             return;
         }
 

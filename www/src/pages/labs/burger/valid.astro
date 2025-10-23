@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Valid Burger Page</title>
+	</head>
+	<body>
+		<p>Le même menu mais corrigé pour être accessible.</p>
+
+		<nav role="navigation" aria-label="Menu principal">
+			<button id="burgerMenu" aria-label="Menu" aria-expanded="false">
+				<img src="/labs/img/burger-123.png" alt="" />
+			</button>
+			<ul id="mobileMenu" style="display: none;">
+				<li><a href="/">Accueil</a></li>
+				<li><a href="/profil">Mon profil</a></li>
+				<li><a href="/contact">Contactez-nous</a></li>
+			</ul>
+		</nav>
+
+		<script type="text/javascript">
+			let isOpened = false;
+
+			function toggleMenu() {
+				if (isOpened) {
+					document.getElementById("burgerMenu").ariaExpanded = "false"; // <--
+					document.getElementById("mobileMenu").style.display = "none";
+				} else {
+					document.getElementById("burgerMenu").ariaExpanded = "true"; // <--
+					document.getElementById("mobileMenu").style.display = "block";
+				}
+
+				isOpened = !isOpened;
+			}
+
+			// le "click" sur un <button> répond aussi à la touche "Espace" et "Entrée"
+			document.getElementById("burgerMenu").addEventListener("click", function () {
+				toggleMenu();
+			});
+
+			document.querySelectorAll("#burgerMenu, #mobileMenu a").forEach((link) => {
+				link.addEventListener("keydown", (e) => {
+					if (e.key === "Escape" && isOpened) {
+						toggleMenu();
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
+
+<style>
+	#burgerMenu {
+		width: 50px;
+		height: 50px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 2px solid grey;
+		border-radius: 10px;
+		background: #f3f4f6;
+	}
+
+	#burgerMenu img {
+		width: 40px;
+		height: 40px;
+	}
+
+	#mobileMenu {
+		list-style-type: none;
+		padding: 0;
+		margin-top: 10px;
+	}
+</style>

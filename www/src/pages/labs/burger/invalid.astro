@@ -1,0 +1,75 @@
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Invalid Burger Page</title>
+	</head>
+	<body>
+		<p>
+			Voici un exemple de "menu burger" qui fonctionne si on clique dessus avec une souris, mais est
+			impossible à utiliser avec la navigation au clavier.
+		</p>
+		<p>
+			De plus le lecteur d'écran ne peut pas le cibler, ni annoncer son utilité puisqu'il n'a pas
+			d'étiquette. Le menu en lui même n'a pas non plus la sémentique nécessaire pour le lire
+			correctement au lecteur d'écran, on ne sait pas qu'on est dans un menu de navigation, ni
+			combien d'éléments comporte ce menu.
+		</p>
+		<ul>
+			<li>On ne peut pas le "focus" au clavier.</li>
+			<li>On ne peut pas l'ouvrir avec le clavier.</li>
+			<li>On ne peut pas le fermer avec le clavier.</li>
+			<li>Il n'est pas annoncé par le lecteur d'écran.</li>
+			<li>Une fois ouvert, le menu n'a pas la sémentique pour annoncer que c'est un menu.</li>
+			<li>Le menu n'a pas de sémentique de liste.</li>
+		</ul>
+
+		<div id="burgerMenu">
+			<img src="/labs/img/burger-123.png" />
+		</div>
+		<div id="mobileMenu" style="display: none;">
+			<div><a href="/">Accueil</a></div>
+			<div><a href="/profil">Mon profil</a></div>
+			<div><a href="/contact">Contactez-nous</a></div>
+		</div>
+		<script type="text/javascript">
+			let isOpened = false;
+			function toggleMenu() {
+				if (isOpened) {
+					document.getElementById("mobileMenu").style.display = "none";
+				} else {
+					document.getElementById("mobileMenu").style.display = "block";
+				}
+				isOpened = !isOpened;
+			}
+
+			document.getElementById("burgerMenu").addEventListener("click", function (event) {
+				toggleMenu();
+			});
+		</script>
+	</body>
+</html>
+
+<style>
+	#burgerMenu {
+		width: 50px;
+		height: 50px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 2px solid grey;
+		border-radius: 10px;
+		background: #f3f4f6;
+	}
+
+	#burgerMenu img {
+		width: 40px;
+		height: 40px;
+	}
+
+	#mobileMenu {
+		list-style-type: none;
+		padding: 0;
+		margin-top: 10px;
+	}
+</style>
