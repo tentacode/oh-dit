@@ -53,6 +53,9 @@ final class TeamUsersStory extends Story
             'name' => 'The Rebellion',
         ]);
 
+        $this->addToPool('teams', $theRebellion);
+        $this->addState(self::TEAM_THE_REBELLION_UUID, $theRebellion, 'teams');
+
         $theRebellion->addUser($lukeSkywalker);
         save($theRebellion);
     }

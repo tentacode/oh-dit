@@ -25,7 +25,7 @@ final class ProjectsStory extends Story
 
         $theEmpireTeam = TeamUsersStory::get(TeamUsersStory::TEAM_THE_EMPIRE_UUID);
 
-        $deathStar = ProjectFactory::new()->withoutPersisting()->create([
+        $deathStarProject = ProjectFactory::new()->withoutPersisting()->create([
             'uuid' => self::PROJECT_DEATH_STAR_UUID,
             'name' => 'Death Star',
             'team' => $theEmpireTeam,
@@ -34,13 +34,25 @@ final class ProjectsStory extends Story
         ScreenFactory::createOne([
             'name' => 'Home Screen',
             'uuid' => self::SCREEN_HOME_UUID,
-            'project' => $deathStar,
+            'project' => $deathStarProject,
         ]);
 
         ScreenFactory::createOne([
             'name' => 'Contact Screen',
             'uuid' => self::SCREEN_CONTACT_UUID,
-            'project' => $deathStar,
+            'project' => $deathStarProject,
+        ]);
+
+        $theRebellionTeam = TeamUsersStory::get(TeamUsersStory::TEAM_THE_REBELLION_UUID);
+
+        $xWingProject = ProjectFactory::createOne([
+            'name' => 'X-Wing Project',
+            'team' => $theRebellionTeam,
+        ]);
+
+        ScreenFactory::createOne([
+            'name' => 'Landing Screen',
+            'project' => $xWingProject,
         ]);
     }
 }

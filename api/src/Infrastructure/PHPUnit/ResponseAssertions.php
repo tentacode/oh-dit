@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\PHPUnit;
 
+use JsonException;
 use function Safe\json_decode;
 use Coduo\PHPMatcher\PHPUnit\PHPMatcherAssertions;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ trait ResponseAssertions
         Assert::string($response->getContent());
         try {
             json_decode($response->getContent(), true);
-        } catch (\JsonException $e) {
+        } catch (JsonException $e) {
             $this->fail('Response content is not valid JSON: ' . $response->getContent());
         }
 
