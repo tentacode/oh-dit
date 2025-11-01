@@ -10,7 +10,9 @@ export default function Logout() {
     // Deleting the auth token cookie
     document.cookie = 'auth_token=; path=/; max-age=0; SameSite=Strict'
     
-    router.push('/login')
+    setTimeout(() =>
+      router.push('/login')
+    , 3000)
   }, [router])
 
   return (

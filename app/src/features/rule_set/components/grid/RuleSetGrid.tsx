@@ -21,13 +21,20 @@ export default function RuleSetGrid() {
 
   const ruleSet = ruleSets[0] as RuleSetInterface; // @TODO: handle multiple rule sets
 
+  let isOdd = true;
+
   return (
+    <div className={styles.gridContainer}>
         <table className={styles.tableGrid}>
             <tbody>
-                {ruleSet.ruleCategories.map((ruleCategory) => (
-                <RuleCategory ruleCategory={ruleCategory} key={ruleCategory.uuid} />
-                ))}
+                {ruleSet.ruleCategories.map((ruleCategory) => {
+                    isOdd = !isOdd;
+                    return (
+                        <RuleCategory isOdd={isOdd} ruleCategory={ruleCategory} key={ruleCategory.uuid} />
+                    );  
+                })}
             </tbody>
         </table>
+    </div>
   );
 }

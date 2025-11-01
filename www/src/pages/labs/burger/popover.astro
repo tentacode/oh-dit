@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Valid Burger Page</title>
+	</head>
+	<body>
+		<p>Le même menu mais corrigé pour être accessible, avec popover.</p>
+
+		<nav role="navigation" aria-label="Menu principal">
+			<button
+				id="burgerMenu"
+				aria-label="Menu"
+				popovertarget="mobileMenu"
+				popovertargetaction="toggle"
+			>
+				<img src="/labs/img/burger-123.png" alt="" />
+			</button>
+			<ul id="mobileMenu" popover>
+				<li><a href="/">Accueil</a></li>
+				<li><a href="/profil">Mon profil</a></li>
+				<li><a href="/contact">Contactez-nous</a></li>
+			</ul>
+		</nav>
+	</body>
+</html>
+
+<style>
+	#burgerMenu {
+		width: 50px;
+		height: 50px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 2px solid grey;
+		border-radius: 10px;
+		background: #f3f4f6;
+	}
+
+	#burgerMenu img {
+		width: 40px;
+		height: 40px;
+	}
+
+	#mobileMenu {
+		list-style-type: none;
+		padding: 0;
+		margin-top: 10px;
+	}
+
+	nav {
+		position: relative;
+	}
+
+	/* Popover Reset - Remove all default [popover] styles */
+
+	/* Popover Reset - Remove all default [popover] styles */
+
+	[popover] {
+		/* Reset positioning - use relative to keep in document flow */
+		position: relative;
+		inset: unset;
+		overlay: none !important;
+
+		/* Reset display */
+		display: block;
+
+		/* Reset margins */
+		margin: 0;
+
+		/* Reset padding */
+		padding: 0;
+
+		/* Reset borders */
+		border: none;
+		border-width: 0;
+
+		/* Reset colors */
+		background: none;
+		background-color: transparent;
+		color: inherit;
+
+		/* Reset sizing */
+		width: auto;
+		height: auto;
+		max-width: none;
+		max-height: none;
+		min-width: 0;
+		min-height: 0;
+
+		/* Reset overflow */
+		overflow: visible;
+
+		/* Reset box model */
+		box-sizing: border-box;
+
+		/* Reset transform and positioning context */
+		transform: none;
+
+		/* Reset pointer events */
+		pointer-events: auto;
+		top: 100px;
+		left: 20px;
+	}
+	[popover]::backdrop {
+		position: relative;
+		inset: unset;
+		background: none;
+		background-color: transparent;
+		pointer-events: none;
+	}
+
+	/* Reset the hidden state */
+	[popover]:not(:popover-open) {
+		display: none;
+	}
+</style>

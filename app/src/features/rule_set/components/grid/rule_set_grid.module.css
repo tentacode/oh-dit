@@ -1,14 +1,13 @@
-.tableGrid {
+.gridContainer {
   margin-top: 40px;
   width: 50%;
   background: white;
   font-size: 1.2em;
-  border-spacing: 10px;
-  border-collapse: separate;
+  padding: 20px;
 }
 
 @media (max-width: 1280px) {
-  .tableGrid {
+  .gridContainer {
     width: 100%;
     margin: 40px;
   }
@@ -17,45 +16,62 @@
 .tableGrid th {
   font-weight: normal;
   text-align: left;
-  padding: 10px 20px  ;
+  padding: 10px 20px 10px 20px;
+  font-family: Lexend Deca, sans-serif;
+  font-size: 1.2em;
+  font-weight: 300;
+}
+
+.tableGrid th[scope="rowgroup"] {
+  font-size: 1.3em;
+  font-weight: 600;
 }
 
 .tableGrid tr {
   height: 3rem;
 }
 
-.ruleCategoryRow th {
-  background-color: #f8f8f8;
+.odd {
+  background-color: #F5F5F5;
+}
+
+.first th, .first td {
+  padding-top: 20px;
+}
+
+.last th, .last td {
+  padding-bottom: 20px;
 }
 
 .complianceStatus {
   text-transform: capitalize;
-  width: 60px;
-  height: 60px;
   text-align: center;
+  width: 70px;
+  font-family: Lexend Deca, sans-serif;
 }
 
 .complianceStatus button {
   background: none;
-  width: 100%;
-  height: 100%;
+  width: 60px;
+  height: 60px;
+  margin: 5px;
   border: 2px solid #ccc;
-  border-radius: 15px;
+  border-radius: 20px;
   cursor: pointer;
   font-size: 1em;
 }
 
-.compliant {
-  color: green;
-  font-weight: bold;
+.compliant button {
+  border: 5px solid #56C07C;
+  font-weight: 600;
 }
 
-.nonCompliant {
-  color: red;
-  font-weight: bold;
+.notCompliant button {
+  border: 5px solid #E2026A;
+  font-weight: 600;
 }
 
-.notApplicable {
-  color: gray;
-  font-weight: bold;
+.notApplicable button {
+  border: 5px dashed #8579DC;
+  font-weight: 600;
 }
