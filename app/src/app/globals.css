@@ -9,6 +9,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-heading: var(--font-lexend-deca);
+  --color-accent: #8579DC;
+  --color-primary: #010101;
 }
 
 body {
