@@ -22,7 +22,7 @@ class Rule implements HasUuidInterface
     #[ORM\Column(type: 'uuid', unique: true)]
     private readonly Uuid $uuid;
 
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
     private string $shortDescription;
 

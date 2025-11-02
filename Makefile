@@ -44,6 +44,8 @@ reset: ## Reset database (env=dev|test)
 	docker compose exec api bin/console doctrine:database:create --env=$(env)
 	docker compose exec api bin/console doctrine:migrations:migrate --no-interaction --env=$(env)
 	docker compose exec api bin/console foundry:load-fixtures all -n --env=$(env)
+	docker compose exec api bin/console rgaa:import --env=$(env)
+	docker compose exec api bin/console cache:pool:clear --all --env=$(env)
 
 tests: ## Run all tests
 	docker compose exec www eslint . --fix && \
@@ -73,3 +75,6 @@ provision-server: ## Provision server
 
 deploy: ## Deploy main to server
 	ansible-playbook -i infrastructure/ansible/hosts infrastructure/ansible/deploy.yml --extra-vars="@infrastructure/ansible/ohdit-vars.yml"
+
+update-rgaa: ## Update RGAA from git repository
+	ansible-playbook infrastructure/ansible/update-rgaa.yml

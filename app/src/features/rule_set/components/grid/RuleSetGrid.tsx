@@ -19,7 +19,7 @@ export default function RuleSetGrid() {
     return <div>No rule sets available.</div>;
   }
 
-  const ruleSet = ruleSets[0] as RuleSetInterface; // @TODO: handle multiple rule sets
+  const ruleSet = ruleSets[1] as RuleSetInterface; // @TODO: handle multiple rule sets
 
   let isOdd = true;
 
