@@ -53,6 +53,9 @@ export default defineConfig([
 		rules: {
 			"no-undef": "off", // Disable "not defined" errors for specific Astro types that are globally available (ImageMetadata)
 			"@typescript-eslint/no-explicit-any": "off", // you may want this as it can get annoying
+			"astro/jsx-a11y/aria-role": ["error", {
+				"allowedInvalidRoles": ["text"],
+			}],
 		},
 	},
 

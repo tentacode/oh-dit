@@ -116,24 +116,24 @@ class ImportRgaaConsole extends Command
         /** @var array<mixed> $criteria */
         $criteria = $topic['criteria'];
 
-        foreach ($criteria as $criterium) {
-            Assert::isArray($criterium);
-            Assert::keyExists($criterium, 'criterium');
-            Assert::isArray($criterium['criterium']);
-            Assert::keyExists($criterium['criterium'], 'title');
-            Assert::keyExists($criterium['criterium'], 'number');
+        foreach ($criteria as $criterion) {
+            Assert::isArray($criterion);
+            Assert::keyExists($criterion, 'criterium');
+            Assert::isArray($criterion['criterium']);
+            Assert::keyExists($criterion['criterium'], 'title');
+            Assert::keyExists($criterion['criterium'], 'number');
 
-            Assert::string($criterium['criterium']['title']);
-            Assert::numeric($criterium['criterium']['number']);
+            Assert::string($criterion['criterium']['title']);
+            Assert::numeric($criterion['criterium']['number']);
             Assert::numeric($topic['number']);
 
             $rule = new Rule(
                 ruleCategory: $ruleCategory,
-                shortDescription: $this->removeMarkdown($criterium['criterium']['title']),
+                shortDescription: $this->removeMarkdown($criterion['criterium']['title']),
                 prefix: sprintf(
                     '%d.%d',
                     $topic['number'],
-                    $criterium['criterium']['number'],
+                    $criterion['criterium']['number'],
                 ),
             );
 

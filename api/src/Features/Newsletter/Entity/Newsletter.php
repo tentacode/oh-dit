@@ -23,18 +23,22 @@ class Newsletter implements HasUuidInterface
     private readonly Uuid $uuid;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\Email]
-    #[Assert\NotBlank]
+    #[Assert\Email(message: "L'adresse email {{ value }} n'est pas valide.")]
+    #[Assert\NotBlank(message: 'Vous devez renseigner une adresse email.')]
     private string $email;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Assert\Expression(
+        expression: 'this.getConsentNewsletter() or this.getConsentBlog() or this.getConsentBeta()',
+        message: "Choisissez au moins une des options de la newsletter pour que l'on puisse vous contacter.",
+    )]
+    private bool $consentBeta;
 
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $consentNewsletter;
 
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $consentBlog;
-
-    #[ORM\Column(type: Types::BOOLEAN)]
-    private bool $consentBeta;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private readonly DateTimeImmutable $createdAt;

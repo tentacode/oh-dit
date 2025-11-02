@@ -103,24 +103,64 @@ final class CreateNewsletterControllerTest extends WebTestCase
                     [
                         'code' => null,
                         'propertyPath' => 'email',
-                        'message' => 'This value should be of type string.',
+                        'message' => 'Cette valeur doit être de type string.',
                     ],
                     [
                         'code' => null,
                         'propertyPath' => 'consentNewsletter',
-                        'message' => 'This value should be of type bool.',
+                        'message' => 'Cette valeur doit être de type bool.',
                     ],
                     [
                         'code' => null,
                         'propertyPath' => 'consentBlog',
-                        'message' => 'This value should be of type bool.',
+                        'message' => 'Cette valeur doit être de type bool.',
                     ],
                     [
                         'code' => null,
                         'propertyPath' => 'consentBeta',
-                        'message' => 'This value should be of type bool.',
+                        'message' => 'Cette valeur doit être de type bool.',
                     ],
 
+                ],
+            ],
+        ];
+
+        yield 'invalid email' => [
+            [
+                'email' => 'not-an-email',
+                'consentNewsletter' => true,
+                'consentBlog' => false,
+                'consentBeta' => true,
+            ],
+            [
+                'code' => 'unprocessable_entity',
+                'message' => 'Validation Failed',
+                'errors' => [
+                    [
+                        'code' => 'bd79c0ab-ddba-46cc-a703-a7a4b08de310',
+                        'propertyPath' => 'email',
+                        'message' => 'L\'adresse email "not-an-email" n\'est pas valide.',
+                    ],
+                ],
+            ],
+        ];
+
+        yield 'no consent given' => [
+            [
+                'email' => 'salut@examle.com',
+                'consentNewsletter' => false,
+                'consentBlog' => false,
+                'consentBeta' => false,
+            ],
+            [
+                'code' => 'unprocessable_entity',
+                'message' => 'Validation Failed',
+                'errors' => [
+                    [
+                        'code' => '6b3befbc-2f01-4ddf-be21-b57898905284',
+                        'propertyPath' => 'consentBeta',
+                        'message' => "Choisissez au moins une des options de la newsletter pour que l'on puisse vous contacter.",
+                    ],
                 ],
             ],
         ];
