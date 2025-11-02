@@ -16,7 +16,12 @@ import { colorRoles } from "../../config/colors";
 	}
 </style>
 <span
-	><slot /><svg viewBox="0 0 100 10" preserveAspectRatio="none">
+	><slot /><svg
+		viewBox="0 0 100 10"
+		preserveAspectRatio="none"
+		aria-hidden="true"
+		focusable="false"
+	>
 		<path
 			d="M0,5 Q25,2 50,5 T100,5"
 			stroke={colorRoles.light}

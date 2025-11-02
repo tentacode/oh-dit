@@ -10,7 +10,7 @@ when@dev:
     nelmio_cors:
         paths:
             '^/api/':
-                allow_origin: ['http://localhost:1337', 'http://localhost:1339']
+                allow_origin: '*'
 
 when@prod:
     nelmio_cors:

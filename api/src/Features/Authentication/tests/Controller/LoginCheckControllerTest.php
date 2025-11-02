@@ -84,7 +84,7 @@ final class LoginCheckControllerTest extends WebTestCase
             ],
             [
                 'code' => 401,
-                'message' => 'Invalid credentials.',
+                'message' => 'Identifiants invalides.',
             ],
             Response::HTTP_UNAUTHORIZED,
         ];
@@ -96,7 +96,7 @@ final class LoginCheckControllerTest extends WebTestCase
             ],
             [
                 'code' => 401,
-                'message' => 'Invalid credentials.',
+                'message' => 'Identifiants invalides.',
             ],
             Response::HTTP_UNAUTHORIZED,
         ];

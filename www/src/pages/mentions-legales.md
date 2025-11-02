@@ -9,13 +9,13 @@ metaDescription: ""
 
 ## Éditeur du site
 
-**Raison sociale :** tentacode.dev
-**Forme juridique :** SASU (Société par Actions Simplifiée Unipersonnelle)  
-**Capital social :** 1337 €  
-**Siège social :** 66B Avenue Roger Salengro, 69100 Villeurbanne
-**SIRET :** 91482184800027
-**RCS :** Lyon B 914821848  
-**Numéro de TVA intracommunautaire :** FR33914821848
+- **Raison sociale :** tentacode.dev
+- **Forme juridique :** SASU (Société par Actions Simplifiée Unipersonnelle)
+- **Capital social :** 1337 €
+- **Siège social :** 66B Avenue Roger Salengro, 69100 Villeurbanne
+- **SIRET :** 91482184800027
+- **RCS :** Lyon B 914821848
+- **Numéro de TVA intracommunautaire :** FR33914821848
 
 **Directeur de la publication :** Gabriel Pillet, Dirigeant  
 **Contact :** <a href="mailto:societe@tentacode.dev">societe@tentacode.dev</a>

@@ -80,16 +80,26 @@ import NewsletterConfirmation from "./NewsletterConfirmation.astro";
 <script>
 	const { successfullySubscribed } = await import("./store.js");
 	successfullySubscribed.subscribe((sub) => {
+		const newsletterForm = document.getElementById("newsletterForm");
+		const newsletterFormIllustration = document.getElementById("newsletterFormIllustration");
+		const newsletterConfirmation = document.getElementById("newsletterConfirmation");
+		const newsletterConfirmationIllustration = document.getElementById(
+			"newsletterConfirmationIllustration",
+		);
+
 		if (sub) {
-			document.getElementById("newsletterForm").style.display = "none";
-			document.getElementById("newsletterFormIllustration").style.display = "none";
-			document.getElementById("newsletterConfirmation").style.display = "block";
-			document.getElementById("newsletterConfirmationIllustration").style.display = "block";
+			newsletterForm?.style.setProperty("display", "none");
+			newsletterFormIllustration?.style.setProperty("display", "none");
+			newsletterConfirmation?.style.setProperty("display", "block");
+			newsletterConfirmationIllustration?.style.setProperty("display", "block");
+
+			const offsetScroll = newsletterConfirmation.offsetTop - 20;
+			window.scrollIntoViewIfNeeded({ top: offsetScroll, behavior: "smooth" });
 		} else {
-			document.getElementById("newsletterForm").style.display = "block";
-			document.getElementById("newsletterFormIllustration").style.display = "block";
-			document.getElementById("newsletterConfirmation").style.display = "none";
-			document.getElementById("newsletterConfirmationIllustration").style.display = "none";
+			newsletterForm?.style.setProperty("display", "block");
+			newsletterFormIllustration?.style.setProperty("display", "block");
+			newsletterConfirmation?.style.setProperty("display", "none");
+			newsletterConfirmationIllustration?.style.setProperty("display", "none");
 		}
 	});
 </script>
