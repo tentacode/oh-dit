@@ -17,8 +17,11 @@ const errorColor = colors.red;
 		rel="noopener">politique de confidentialité</a
 	>.
 </p>
+<p class="requiredFields" aria-hidden="true">
+	Les champs suivis d'une <span class="asterisk">*</span> sont obligatoires.
+</p>
 
-<form id="newsletterForm" novalidate="novalidate">
+<form id="newsletter-form" novalidate="novalidate">
 	<div class="inputRow">
 		<label for="email-address"
 			>Votre Email<span class="asterisk" aria-hidden="true">*</span> :</label
@@ -76,281 +79,305 @@ const errorColor = colors.red;
 	</button>
 </form>
 
-<p class="requiredFields" aria-hidden="true">
-	<span class="asterisk">*</span> Champs obligatoires.
-	<p>
-		<script>
-			const { successfullySubscribed } = await import("./store.js");
+<script>
+	const { successfullySubscribed } = await import("./store.js");
 
-			const form = document.getElementById("newsletterForm");
-			const emailError = document.getElementById("email-error");
-			const consentError = document.getElementById("consent-error");
-			const submitButton = document.getElementById("newsletterSubmitButton");
+	const form = document.getElementById("newsletter-form");
+	const emailError = document.getElementById("email-error");
+	const consentError = document.getElementById("consent-error");
+	const submitButton = document.getElementById("newsletterSubmitButton");
 
-			const consentBeta = document.getElementById("consentBeta");
-			const consentNewsletter = document.getElementById("consentNewsletter");
-			const consentBlog = document.getElementById("consentBlog");
+	const consentBeta = document.getElementById("consentBeta");
+	const consentNewsletter = document.getElementById("consentNewsletter");
+	const consentBlog = document.getElementById("consentBlog");
 
-			const emailInput = document.getElementById("email-address");
+	const emailInput = document.getElementById("email-address");
 
-			// Clear errors when user checks any checkbox
-			[consentBeta, consentNewsletter, consentBlog].forEach((checkbox) => {
-				checkbox.addEventListener("change", () => {
-					consentError.textContent = "";
-				});
-			});
+	// Clear errors when user checks any checkbox
+	[consentBeta, consentNewsletter, consentBlog].forEach((checkbox) => {
+		checkbox.addEventListener("change", () => {
+			consentError.textContent = "";
+		});
+	});
 
-			// Clear email error when user types
-			emailInput.addEventListener("input", () => {
-				emailInput.classList.remove("error");
-				emailError.textContent = "";
-			});
+	// Clear email error when user types
+	emailInput.addEventListener("input", () => {
+		emailInput.classList.remove("error");
+		emailError.textContent = "";
+	});
 
-			form.addEventListener("submit", async (e) => {
-				e.preventDefault();
+	form.addEventListener("submit", async (e) => {
+		e.preventDefault();
 
-				submitButton.disabled = true;
+		submitButton.disabled = true;
 
-				const formData = {
-					email: emailInput.value,
-					consentBeta: consentBeta.checked,
-					consentNewsletter: consentNewsletter.checked,
-					consentBlog: consentBlog.checked,
-				};
+		const formData = {
+			email: emailInput.value,
+			consentBeta: consentBeta.checked,
+			consentNewsletter: consentNewsletter.checked,
+			consentBlog: consentBlog.checked,
+		};
 
-				try {
-					const newsletterResponse = await fetch(
-						`${import.meta.env.PUBLIC_BACKEND_API_BASE_URL}/api/newsletters`,
-						{
-							method: "POST",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify(formData),
-						},
-					);
+		try {
+			const newsletterResponse = await fetch(
+				`${import.meta.env.PUBLIC_BACKEND_API_BASE_URL}/api/newsletters`,
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(formData),
+				},
+			);
 
-					if (newsletterResponse.ok) {
-						handleSuccess(true);
-						return;
-					}
+			const responseJson = await newsletterResponse.json();
 
-					if (newsletterResponse.status === 422) {
-						handleErrors(newsletterResponse);
-						return;
-					}
+			if (newsletterResponse.ok) {
+				handleSuccess(true);
+				return;
+			}
 
-					// any other status code
-					handleSuccess(newsletterResponse.ok);
-				} catch (error) {
-					console.error("Error submitting newsletter form:", error);
-					handleSuccess(false);
+			if (onlyEmailError(responseJson) && emailAlreadyExists(responseJson)) {
+				handleSuccess(true);
+				return;
+			}
+
+			if (newsletterResponse.status === 422) {
+				handleErrors(responseJson);
+				return;
+			}
+
+			// any other status code
+			handleSuccess(newsletterResponse.ok);
+		} catch (error) {
+			console.error("Error submitting newsletter form:", error);
+			handleSuccess(false);
+		}
+	});
+
+	function onlyEmailError(responseJson) {
+		let onlyEmail = true;
+		if (responseJson.errors && Array.isArray(responseJson.errors)) {
+			responseJson.errors.forEach((error) => {
+				if (error.propertyPath !== "email") {
+					onlyEmail = false;
 				}
 			});
+		}
 
-			function handleSuccess(isOk: boolean) {
-				if (isOk) {
-					window._paq.push(["trackEvent", "Newsletter", "Signup", "Landing Page"]);
+		return onlyEmail;
+	}
+
+	function emailAlreadyExists(responseJson) {
+		let exists = false;
+		if (responseJson.errors && Array.isArray(responseJson.errors)) {
+			responseJson.errors.forEach((error) => {
+				if (error.code === "23bd9dbf-6b9b-41cd-a99e-4844bcf3077f") {
+					exists = true;
+				}
+			});
+		}
+
+		return exists;
+	}
+
+	function handleSuccess(isOk: boolean) {
+		if (isOk) {
+			window._paq.push(["trackEvent", "Newsletter", "Signup", "Landing Page"]);
+		}
+
+		successfullySubscribed.set(true);
+	}
+
+	function handleErrors(responseJson) {
+		submitButton.disabled = false;
+
+		let isEmailError = false;
+		let isConsentError = false;
+		const emailAlreadyExistsError = emailAlreadyExists(responseJson);
+
+		if (responseJson.errors && Array.isArray(responseJson.errors)) {
+			responseJson.errors.forEach((error) => {
+				if (error.propertyPath === "email" && !emailAlreadyExistsError) {
+					isEmailError = true;
 				}
 
-				successfullySubscribed.set(true);
-			}
-
-			function handleErrors(response) {
-				submitButton.disabled = false;
-
-				let isEmailError = false;
-				let isConsentError = false;
-
-				response.json().then((data) => {
-					if (data.errors && Array.isArray(data.errors)) {
-						data.errors.forEach((error) => {
-							if (error.propertyPath === "email") {
-								isEmailError = true;
-							}
-
-							if (error.propertyPath === "consentBeta") {
-								isConsentError = true;
-							}
-						});
-					}
-
-					if (isEmailError) {
-						emailInput.focus();
-						emailInput.classList.add("error");
-						emailInput.ariaInvalid = "true";
-						emailError.textContent = "L'adresse email renseignée n'est pas valide.";
-					} else {
-						emailInput.ariaInvalid = "false";
-						emailError.textContent = "";
-					}
-
-					if (isConsentError) {
-						if (!isEmailError) {
-							consentBeta.focus();
-						}
-						consentError.textContent =
-							"Choisissez au moins une des options de la newsletter pour que l'on puisse vous contacter.";
-					} else {
-						consentError.textContent = "";
-					}
-				});
-			}
-		</script>
-
-		<style
-			define:vars={{
-				accentColor: accentColor,
-				focusColor: focusColor,
-				mainColor: mainColor,
-				errorColor: errorColor,
-			}}
-		>
-			form {
-				margin-top: 20px;
-			}
-
-			.inputRow {
-				display: flex;
-				flex-direction: column;
-				gap: 10px;
-				margin-bottom: 20px;
-			}
-
-			label,
-			legend {
-				font-size: 1.2em;
-				font-weight: 600;
-			}
-
-			legend {
-				margin-bottom: 10px;
-			}
-
-			input[type="email"] {
-				border: 5px solid var(--mainColor);
-				font-size: 1.2em;
-				width: 70%;
-				border-radius: 15px;
-				height: 60px;
-				padding: 0 15px;
-				background-color: white;
-				transition: border-color 0.2s ease;
-			}
-
-			input[type="email"]:focus {
-				border: 5px solid var(--focusColor);
-				outline: none;
-			}
-
-			input[type="email"].error {
-				border: 5px solid var(--errorColor);
-			}
-
-			.checkboxRow {
-				display: flex;
-				align-items: flex-start;
-				gap: 15px;
-				margin-bottom: 15px;
-				font-size: 1.1em;
-			}
-
-			.checkboxRow input[type="checkbox"] {
-				margin-top: 0.5cap;
-				width: 20px;
-				height: 20px;
-				border: 3px solid var(--mainColor);
-				accent-color: var(--accentColor);
-			}
-
-			.checkboxRow label {
-				font-weight: 400;
-				flex: 1;
-			}
-
-			.requiredCheckboxes {
-				font-size: 16px;
-				font-weight: 400;
-			}
-
-			button {
-				margin-top: 20px;
-				border: 5px solid var(--mainColor);
-				font-size: 1.2em;
-				font-weight: 600;
-				width: 70%;
-				border-radius: 15px;
-				height: 60px;
-				padding: 0 15px;
-				background-color: var(--accentColor);
-				color: var(--mainColor);
-				display: flex;
-				gap: 10px;
-				justify-content: center;
-				align-items: center;
-				transition: all 0.2s ease;
-			}
-
-			button:hover:not(:disabled) {
-				border: 5px solid var(--accentColor);
-				cursor: pointer;
-			}
-
-			button:disabled {
-				opacity: 0.6;
-				cursor: not-allowed;
-			}
-
-			p {
-				margin-top: 20px;
-			}
-
-			span.asterisk {
-				color: var(--errorColor);
-				font-weight: 600;
-			}
-
-			.errorMessage {
-				color: var(--errorColor);
-				font-weight: 600;
-				margin: 5px 0 0 0;
-				transition: opacity 0.3s ease;
-			}
-
-			.errorMessageBox {
-				color: var(--errorColor);
-				font-weight: 600;
-				margin: 5px 0 0 0;
-				padding: 15px;
-				border-radius: 15px;
-				border: 5px solid var(--errorColor);
-				transition: opacity 0.3s ease;
-			}
-
-			.errorMessage:empty {
-				display: none;
-			}
-
-			.errorMessageBox:empty {
-				display: none;
-			}
-
-			@media (max-width: 1350px) {
-				input[type="email"],
-				button {
-					width: 100%;
+				if (error.propertyPath === "consentBeta") {
+					isConsentError = true;
 				}
-			}
+			});
+		}
 
-			.aboutSpam {
-				margin-top: 30px;
-				margin-bottom: 30px;
-				font-style: italic;
-			}
+		if (isEmailError) {
+			emailInput.focus();
+			emailInput.classList.add("error");
+			emailInput.ariaInvalid = "true";
+			emailError.textContent = "L'adresse email renseignée n'est pas valide.";
+		} else {
+			emailInput.ariaInvalid = "false";
+			emailError.textContent = "";
+		}
 
-			.requiredFields {
-				font-style: italic;
+		if (isConsentError) {
+			if (!isEmailError) {
+				consentBeta.focus();
 			}
-		</style>
-	</p>
-</p>
+			consentError.textContent =
+				"Choisissez au moins une des options de la newsletter pour que l'on puisse vous contacter.";
+		} else {
+			consentError.textContent = "";
+		}
+	}
+</script>
+
+<style
+	define:vars={{
+		accentColor: accentColor,
+		focusColor: focusColor,
+		mainColor: mainColor,
+		errorColor: errorColor,
+	}}
+>
+	form {
+		margin-top: 20px;
+	}
+
+	.inputRow {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		margin-bottom: 20px;
+	}
+
+	label,
+	legend {
+		font-size: 1.2em;
+		font-weight: 600;
+	}
+
+	legend {
+		margin-bottom: 10px;
+	}
+
+	input[type="email"] {
+		border: 5px solid var(--mainColor);
+		font-size: 1.2em;
+		width: 70%;
+		border-radius: 15px;
+		height: 60px;
+		padding: 0 15px;
+		background-color: white;
+		transition: border-color 0.2s ease;
+	}
+
+	input[type="email"]:focus {
+		border: 5px solid var(--focusColor);
+		outline: none;
+	}
+
+	input[type="email"].error {
+		border: 5px solid var(--errorColor);
+	}
+
+	.checkboxRow {
+		display: flex;
+		align-items: flex-start;
+		gap: 15px;
+		margin-bottom: 15px;
+		font-size: 1.1em;
+	}
+
+	.checkboxRow input[type="checkbox"] {
+		margin-top: 0.5cap;
+		width: 20px;
+		height: 20px;
+		border: 3px solid var(--mainColor);
+		accent-color: var(--accentColor);
+	}
+
+	.checkboxRow label {
+		font-weight: 400;
+		flex: 1;
+	}
+
+	.requiredCheckboxes {
+		font-size: 16px;
+		font-weight: 400;
+	}
+
+	button {
+		margin-top: 20px;
+		border: 5px solid var(--mainColor);
+		font-size: 1.2em;
+		font-weight: 600;
+		width: 70%;
+		border-radius: 15px;
+		height: 60px;
+		padding: 0 15px;
+		background-color: var(--accentColor);
+		color: var(--mainColor);
+		display: flex;
+		gap: 10px;
+		justify-content: center;
+		align-items: center;
+		transition: all 0.2s ease;
+	}
+
+	button:hover:not(:disabled) {
+		border: 5px solid var(--accentColor);
+		cursor: pointer;
+	}
+
+	button:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+
+	p {
+		margin-top: 20px;
+	}
+
+	span.asterisk {
+		color: var(--errorColor);
+		font-weight: 600;
+	}
+
+	.errorMessage {
+		color: var(--errorColor);
+		font-weight: 600;
+		margin: 5px 0 0 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.errorMessageBox {
+		color: var(--errorColor);
+		font-weight: 600;
+		margin: 5px 0 0 0;
+		padding: 15px;
+		border-radius: 15px;
+		border: 5px solid var(--errorColor);
+		transition: opacity 0.3s ease;
+	}
+
+	.errorMessage:empty {
+		display: none;
+	}
+
+	.errorMessageBox:empty {
+		display: none;
+	}
+
+	@media (max-width: 1350px) {
+		input[type="email"],
+		button {
+			width: 100%;
+		}
+	}
+
+	.aboutSpam,
+	.requiredFields {
+		margin-top: 30px;
+		margin-bottom: 30px;
+		font-style: italic;
+	}
+</style>

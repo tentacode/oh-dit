@@ -14,7 +14,6 @@
     dest: "{{ user.workspace_directory }}/oh-dit"
     accept_hostkey: yes
 
-
 - name: Remove test files from production
   shell: |
     find ./src -type d -name "tests" -exec rm -rf {} + 2>/dev/null || true
@@ -126,4 +125,8 @@
     path: /var/www/html/.well-known/acme-challenge
     state: directory
     mode: '0755'
+  become: yes
+
+- name: Restart php-fpm after deployment
+  service: name=php{{ php.version }}-fpm state=restarted
   become: yes

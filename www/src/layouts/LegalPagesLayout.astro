@@ -11,6 +11,7 @@ const { frontmatter } = Astro.props;
 	<div class="legal-container">
 		<a class="backToLanding" href="/">
 			<OhditLogo mainColor={colorRoles.dark} secondaryColor={colorRoles.accent} width="250px" />
+			<span class="sr-only">Ohdit</span>
 			Retourner à la page d'accueil
 		</a>
 		<p class="last-updated">Dernière mise à jour : le {frontmatter.lastUpdatedAt}</p>

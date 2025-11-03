@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/LegalPagesLayout.astro
-lastUpdatedAt: "20 octobre 2025"
-pageTitle: Politique de confidentialité
+lastUpdatedAt: "2 novembre 2025"
+pageTitle: Politique de confidentialité - Ohdit
 metaDescription: ""
 ---
 

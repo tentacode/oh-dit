@@ -94,7 +94,7 @@ import NewsletterConfirmation from "./NewsletterConfirmation.astro";
 			newsletterConfirmationIllustration?.style.setProperty("display", "block");
 
 			const offsetScroll = newsletterConfirmation.offsetTop - 20;
-			window.scrollIntoViewIfNeeded({ top: offsetScroll, behavior: "smooth" });
+			window.scrollTo({ top: offsetScroll, behavior: "smooth" });
 		} else {
 			newsletterForm?.style.setProperty("display", "block");
 			newsletterFormIllustration?.style.setProperty("display", "block");

@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/LegalPagesLayout.astro
-lastUpdatedAt: "20 octobre 2025"
-pageTitle: Mentions légales
+lastUpdatedAt: "2 novembre 2025"
+pageTitle: Mentions légales - Ohdit
 metaDescription: ""
 ---
 
