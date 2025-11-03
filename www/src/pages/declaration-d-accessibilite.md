@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/LegalPagesLayout.astro
 lastUpdatedAt: "2 novembre 2025"
-pageTitle: Déclaration d'accessibilité
+pageTitle: Déclaration d'accessibilité - Ohdit
 metaDescription: ""
 ---
 
@@ -12,7 +12,7 @@ metaDescription: ""
 [Ohdit.com](/) est totalement conforme avec le référentiel général d'amélioration de l'accessibilité (RGAA) version 4.1.2.
 
 <p class="cartouche">
-Merci de noter que l'audit RGAA a été réalisé avec tout les moyens à notre disposition, mais il  est toujours possible qu'un oubli ou une erreur soit passée sous notre vigilance. Si vous notez le moindre problème d'accessibilité, n'hésitez pas à nous le signaler à <a href="mailto:rgaa@tentacode.dev">rgaa@tentacode.dev</a>.
+Merci de noter que l'audit RGAA a été réalisé avec tous les moyens à notre disposition, mais il  est toujours possible qu'un oubli ou une erreur soit passé sous notre vigilance. Si vous notez le moindre problème d'accessibilité, n'hésitez pas à nous le signaler à <a href="mailto:rgaa@tentacode.dev">rgaa@tentacode.dev</a>.
 </p>
 
 ## Résultats des tests
@@ -42,9 +42,10 @@ Les vérifications de restitution de contenus ont été réalisées sur la base 
 
 ### Pages du site ayant fait l'objet de la vérification de conformité
 
-1. Page d'accueil : [https//ohdit.com/](/)
-2. Mentions légales : [https//ohdit.com/mentions-legales](/mentions-legales)
-3. Politique de confidentialité : [https//ohdit.com/politique-de-confidentialite](/politique-de-confidentialite)
+1. Page d'accueil : [https://ohdit.com/](/)
+2. Mentions légales : [https://ohdit.com/mentions-legales](/mentions-legales)
+3. Politique de confidentialité : [https://ohdit.com/politique-de-confidentialite](/politique-de-confidentialite)
+4. Déclaration d'accessibilité : [https://ohdit.com/declaration-d-accessibilite](/declaration-d-accessibilite)
 
 ## Retour d'information et contact
 

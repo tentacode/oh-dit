@@ -18,8 +18,7 @@ if (pageTitle === undefined || metaDescription === undefined) {
 	throw new Error("Layout.astro requires a pageTitle and a metaDescription prop.");
 }
 
-const title = `Ohdit - ${pageTitle}`;
-const metalLogo = Astro.site + "/meta-logo.png";
+const metalLogo = Astro.site + "meta-banner.png";
 
 const isProd = import.meta.env.PROD;
 ---
@@ -33,7 +32,7 @@ const isProd = import.meta.env.PROD;
 		<link rel="canonical" href={canonicalURL.toString()} />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={metaDescription} />
-		<title>{title}</title>
+		<title>{pageTitle}</title>
 
 		<link
 			rel="preload"
@@ -43,19 +42,21 @@ const isProd = import.meta.env.PROD;
 			crossorigin
 		/>
 
-		<meta property="og:title" content={title} />
+		<meta property="og:title" content={pageTitle} />
 		<meta property="og:description" content={metaDescription} />
 		<meta property="og:image" content={metalLogo} />
 		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="1200" />
+		<meta property="og:image:height" content="630" />
 		<meta property="og:url" content={canonicalURL.toString()} />
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="Ohdit" />
+		<meta property="og:image:alt" content="" />
 
-		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:title" content={title} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={pageTitle} />
 		<meta name="twitter:description" content={metaDescription} />
 		<meta name="twitter:image" content={metalLogo} />
+		<meta name="twitter:image:alt" content="" />
 
 		<script type="application/ld+json">
 			{
