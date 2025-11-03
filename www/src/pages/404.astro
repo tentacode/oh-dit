@@ -1,4 +1,5 @@
 ---
+import Error404 from "../components/Graphic/Error404.astro";
 import Layout from "../layouts/Layout.astro";
 
 const pageTitle = "Page non trouvée (404) - Ohdit";
@@ -7,5 +8,35 @@ const metaDescription =
 ---
 
 <Layout metaDescription={metaDescription} pageTitle={pageTitle}>
-	<h1>404</h1>
+	<div class="m-auto max-w-2xl text-center">
+		<Error404 />
+
+		<h1 class="mb-4 text-4xl font-bold text-gray-800">Oh! Cette page n'a pas été trouvée.</h1>
+
+		<!-- Back home link -->
+		<a href="/" class="text-3xl"> Revenir à la page d'accueil </a>
+	</div>
 </Layout>
+
+<style>
+	html,
+	body {
+		height: 100%;
+	}
+
+	main {
+		display: flex;
+		height: 100%;
+	}
+
+	.text-center {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		justify-content: center;
+		gap: 10px;
+		height: 100%;
+	}
+</style>
