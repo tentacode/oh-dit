@@ -8,7 +8,7 @@ import MatomoScript from "../components/Matomo/MatomoScript.astro";
 const lang = "fr";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { pageTitle, metaDescription } = Astro.props;
+const { pageTitle, metaDescription, metaRobots } = Astro.props;
 const linkColor = colors.darkPurple;
 const linkFocusColor = colors.pink;
 const backgroundColor = colorRoles.light;
@@ -32,6 +32,7 @@ const isProd = import.meta.env.PROD;
 		<link rel="canonical" href={canonicalURL.toString()} />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={metaDescription} />
+		{metaRobots && <meta name="robots" content={metaRobots} />}
 		<title>{pageTitle}</title>
 
 		<link

@@ -5,16 +5,21 @@ import Layout from "../layouts/Layout.astro";
 const pageTitle = "Page non trouvée (404) - Ohdit";
 const metaDescription =
 	"Ohdit facilite les audits d'accessibilité RGAA et RAAM. Remplacez vos Excel par des vues optimisées, centralisez vos projets et générez des rapports clairs pour vos clients.";
+const metaRobots = "noindex, nofollow";
 ---
 
-<Layout metaDescription={metaDescription} pageTitle={pageTitle}>
-	<div class="m-auto max-w-2xl text-center">
-		<Error404 />
+<Layout metaDescription={metaDescription} pageTitle={pageTitle} metaRobots={metaRobots}>
+	<div class="m-auto text-center">
+		<div class="illustration flex">
+			<Error404 />
+		</div>	
 
-		<h1 class="mb-4 text-4xl font-bold text-gray-800">Oh! Cette page n'a pas été trouvée.</h1>
+		<div class="text">
+			<h1 class="text-4xl font-bold text-gray-800">Oh! Cette page n'a pas été trouvée.</h1>
 
-		<!-- Back home link -->
-		<a href="/" class="text-3xl"> Revenir à la page d'accueil </a>
+			<!-- Back home link -->
+			<a href="/" class="text-3xl"> Revenir à la page d'accueil </a>
+		</div>
 	</div>
 </Layout>
 
@@ -36,7 +41,21 @@ const metaDescription =
 		align-items: center;
 		text-align: center;
 		justify-content: center;
-		gap: 10px;
+		gap: 20px;
 		height: 100%;
+	}
+
+	.illustration {
+		flex: 2;
+	}
+
+	.text {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 20px;
+		padding: 20px;
 	}
 </style>
