@@ -10,7 +10,7 @@ when@dev:
     nelmio_cors:
         paths:
             '^/api/':
-                allow_origin: '*'
+                allow_origin: ['*']
 
 when@prod:
     nelmio_cors:
