@@ -6,9 +6,7 @@ import { MainLayout } from "../../components/MainLayout"
 export default function Home() {
   return (
     <MainLayout>
-      <main className="min-h-screen flex items-center justify-center">
-        <RuleSetGrid />
-      </main>
+      <p></p>
     </MainLayout>
   )
 }

@@ -10,6 +10,7 @@ export const colors = {
 	green: "#56C07C",
 	red: "#BA0303",
 	pink: "#E2026A",
+	white: "#FFFFFF",
 };
 
 export const colorRoles = {

@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className='h-full'>
-      <body className={`${lexendDeca.variable} antialiased h-full`}>
+      <body className={`${lexendDeca.variable} antialiased h-full flex`}>
         {children}
       </body>
     </html>
