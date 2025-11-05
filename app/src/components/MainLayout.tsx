@@ -1,13 +1,32 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import TopBar from '../features/debug/TopBar';
+import SideBar from '../features/layout/SideBar';
+import BetaBanner from '../features/layout/BetaBanner';
 
 export const MainLayout = ({ children }: { children: ReactNode }) => {
+    const bodyContainerStyle = {
+        display: 'flex',
+        flexDirection: 'column' as 'column',
+        width: '100%',
+    };
+
+    const appContainerStyle = {
+        flex: 1,
+        display: 'flex',
+    };
+
     return (
         <>
-            <TopBar />
-            {children}
+            <div style={bodyContainerStyle}>
+                <BetaBanner />
+                <div style={appContainerStyle}>
+                    <SideBar />
+                    <main>
+                        {children}
+                    </main>
+                </div>
+            </div>
         </>
     );
 };
