@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Features\Newsletter\Controller;
 
-use App\Features\Newsletter\Entity\Newsletter;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Features\Newsletter\Command\AddToBrevoCommand;
+use App\Features\Newsletter\Command\BrevoNewsletter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
@@ -14,18 +14,17 @@ use Symfony\Component\Routing\Attribute\Route;
 final class CreateNewsletterController extends AbstractController
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
+        private readonly AddToBrevoCommand $addToBrevoCommand,
     ) {
     }
 
     #[Route('/api/newsletters', name: 'create_newsletter', methods: ['POST'], format: 'json')]
     public function __invoke(
         #[MapRequestPayload]
-        Newsletter $newsletter,
+        BrevoNewsletter $brevoNewsletter,
     ): JsonResponse {
-        $this->entityManager->persist($newsletter);
-        $this->entityManager->flush();
+        ($this->addToBrevoCommand)($brevoNewsletter);
 
-        return $this->json($newsletter, JsonResponse::HTTP_CREATED);
+        return $this->json([], JsonResponse::HTTP_CREATED);
     }
 }
