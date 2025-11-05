@@ -12,7 +12,7 @@ metaDescription: ""
 [Ohdit.com](/) est totalement conforme avec le référentiel général d'amélioration de l'accessibilité (RGAA) version 4.1.2.
 
 <p class="cartouche">
-Merci de noter que l'audit RGAA a été réalisé avec tous les moyens à notre disposition, mais il  est toujours possible qu'un oubli ou une erreur soit passé sous notre vigilance. Si vous notez le moindre problème d'accessibilité, n'hésitez pas à nous le signaler à <a href="mailto:rgaa@tentacode.dev">rgaa@tentacode.dev</a>.
+Merci de noter que l'audit RGAA a été réalisé avec tous les moyens à notre disposition, mais il  est toujours possible qu'un oubli ou une erreur soit passé sous notre vigilance. Si vous notez le moindre problème d'accessibilité, n'hésitez pas à nous le signaler à <a href="mailto:rgaa@ohdit.com">rgaa@ohdit.com</a>.
 </p>
 
 ## Résultats des tests
@@ -51,7 +51,7 @@ Les vérifications de restitution de contenus ont été réalisées sur la base 
 
 Si vous n'arrivez pas à accéder à un contenu ou à un service, ou si vous détectez des problèmes d'accessibilité, vous pouvez contacter le responsable du site pour que le problème soit corrigé.
 
-- Envoyer un message : [rgaa@tentacode.dev](mailto:rgaa@tentacode.dev)
+- Envoyer un message : [rgaa@ohdit.com](mailto:rgaa@ohdit.com)
 - Contacter : société tentacode.dev
 
 ## Voies de recours

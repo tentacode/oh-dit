@@ -12,7 +12,7 @@ metaDescription: ""
 <p class="cartouche">
 société <strong>tentacode.dev</strong><br />
 Gabriel Pillet<br />
-Email : <a href="mailto:rgpd@tentacode.dev">rgpd@tentacode.dev</a>
+Email : <a href="mailto:rgpd@ohdit.com">rgpd@ohdit.com</a>
 </p>
 
 ## Données collectées et finalités
@@ -74,7 +74,7 @@ Conformément au RGPD, vous disposez des droits suivants :
 - **Portabilité** : récupérer vos données dans un format structuré
 - **Retrait du consentement** : vous désinscrire à tout moment (lien dans chaque email)
 
-Pour exercer ces droits, contactez-nous à : <a href="mailto:rgpd@tentacode.dev">rgpd@tentacode.dev</a>
+Pour exercer ces droits, contactez-nous à : <a href="mailto:rgpd@ohdit.com">rgpd@ohdit.com</a>
 
 Vous pouvez également déposer une réclamation auprès de la CNIL : [www.cnil.fr](https://www.cnil.fr)
 

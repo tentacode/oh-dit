@@ -21,8 +21,8 @@ export default function BetaBanner() {
         </a>
         <span aria-hidden="true" className="mx-2">•</span>
         N'hésitez pas à nous faire part de vos retours à 
-        <a href="mailto:ohdit@tentacode.dev"className="underline ml-1">
-          ohdit@tentacode.dev
+        <a href="mailto:support@ohdit.com" className="underline ml-1">
+          support@ohdit.com
         </a>
       </p>
     </div>
