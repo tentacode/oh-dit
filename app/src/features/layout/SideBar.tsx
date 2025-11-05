@@ -7,7 +7,6 @@ import {
   UsersIcon,
 } from '@heroicons/react/24/outline'
 import OhditLogo from './OhditLogo';
-import { colorRoles, colors } from '@/src/config/colors';
 
 const navigation = [
   { name: 'Accueil', href: '#', icon: HomeIcon, current: true },

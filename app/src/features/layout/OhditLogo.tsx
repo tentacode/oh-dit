@@ -63,7 +63,7 @@ export default function OhditLogo({style}: {style?: React.CSSProperties}) {
                 fontWeight={fontWeight}
                 fill={secondaryColor}
             >
-                '
+                &apos;
             </text>
         </svg>
     );

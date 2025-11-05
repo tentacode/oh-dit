@@ -20,7 +20,7 @@ export default function BetaBanner() {
           [En savoir plus]
         </a>
         <span aria-hidden="true" className="mx-2">•</span>
-        N'hésitez pas à nous faire part de vos retours à 
+        N&apos;hésitez pas à nous faire part de vos retours à 
         <a href="mailto:support@ohdit.com" className="underline ml-1">
           support@ohdit.com
         </a>
