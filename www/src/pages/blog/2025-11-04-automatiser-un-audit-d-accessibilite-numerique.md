@@ -18,7 +18,6 @@ Mais aujourd'hui il est impossible d'automatiser les 106 critères du RGAA : cer
     </dd>
 </dl>
 
-
 <dl>
     <dt>critère 8.7 "Dans chaque page web, chaque changement de langue est-il indiqué dans le code source (hors cas particuliers) ?"</dt>
     <dd>

@@ -22,8 +22,7 @@ class AddToNewsletterConsole extends Command
         private readonly ValidatorInterface $validator,
         private readonly AddToBrevoCommand $addToBrevoCommand,
         private readonly EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -31,45 +30,47 @@ class AddToNewsletterConsole extends Command
     {
         $this
             ->setDescription('Add all newsletter data to Brevo.')
-        ;}
+        ;
+    }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
-        $io->info('Adding to newsletter...');
+        $symfonyStyle = new SymfonyStyle($input, $output);
+        $symfonyStyle->info('Adding to newsletter...');
 
         $newsletterEntities = $this->entityManager->getRepository(Newsletter::class)->findAll();
         $newsletters = [];
-        foreach ($newsletterEntities as $newsletterEntity) {
+        foreach ($newsletterEntities as $newletterEntity) {
             $brevoNewsletter = new BrevoNewsletter(
-                email: $newsletterEntity->getEmail(),
-                consentNewsletter: $newsletterEntity->getConsentNewsletter(),
-                consentBlog: $newsletterEntity->getConsentBlog(),
-                consentBeta: $newsletterEntity->getConsentBeta(),
+                email: $newletterEntity->getEmail(),
+                consentBeta: $newletterEntity->getConsentBeta(),
+                consentNewsletter: $newletterEntity->getConsentNewsletter(),
+                consentBlog: $newletterEntity->getConsentBlog(),
             );
 
             $errors = $this->validator->validate($brevoNewsletter);
             if (count($errors) > 0) {
                 foreach ($errors as $error) {
-                    $io->error($error->getMessage());
+                    $symfonyStyle->error((string) $error->getMessage());
                 }
+
                 return Command::FAILURE;
             }
 
             $newsletters[] = [
                 'brevo' => $brevoNewsletter,
-                'entity' => $newsletterEntity,
+                'entity' => $newletterEntity,
             ];
         }
 
-        foreach ($newsletters as $newsletter) {
-            ($this->addToBrevoCommand)($newsletter['brevo']);
-            $this->entityManager->remove($newsletter['entity']);
+        foreach ($newsletters as $newletter) {
+            ($this->addToBrevoCommand)($newletter['brevo']);
+            $this->entityManager->remove($newletter['entity']);
         }
 
         $this->entityManager->flush();
 
-        $io->success(sprintf('%d email(s) added to Brevo successfully.', count($newsletters)));
+        $symfonyStyle->success(sprintf('%d email(s) added to Brevo successfully.', count($newsletters)));
 
         return Command::SUCCESS;
     }

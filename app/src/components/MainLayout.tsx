@@ -7,7 +7,7 @@ import BetaBanner from '../features/layout/BetaBanner';
 export const MainLayout = ({ children }: { children: ReactNode }) => {
     const bodyContainerStyle = {
         display: 'flex',
-        flexDirection: 'column' as 'column',
+        flexDirection: 'column',
         width: '100%',
     };
 

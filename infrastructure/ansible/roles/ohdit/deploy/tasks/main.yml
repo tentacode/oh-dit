@@ -92,11 +92,11 @@
     chdir: "{{ user.workspace_directory }}/oh-dit/app"
     executable: /bin/bash
 
-- name: Building app
-  shell: source ~/.nvm/nvm.sh && npm run build
-  args:
-    chdir: "{{ user.workspace_directory }}/oh-dit/app"
-    executable: /bin/bash
+# - name: Building app
+#   shell: source ~/.nvm/nvm.sh && npm run build
+#   args:
+#     chdir: "{{ user.workspace_directory }}/oh-dit/app"
+#     executable: /bin/bash
     
 - name: Get npm path
   shell: source ~/.nvm/nvm.sh && which npm
