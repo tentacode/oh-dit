@@ -16,7 +16,7 @@ import styles from '../styles/sidebar.module.css';
 const navigation = [
   // { name: 'Accueil', href: '#', icon: HomeIcon, current: true },
   // { name: 'Dernier audit', href: '#', icon: BoltIcon, current: false },
-  { name: 'Projets', href: '/', icon: FolderIcon },
+  { name: 'Audits', href: '/', icon: FolderIcon },
   // { name: 'Utilisateurs', href: '#', icon: UsersIcon },
   { name: 'Aide', href: '/aide', icon: LifebuoyIcon },
   { name: 'Contactez-nous', href: '/contact', icon: EnvelopeIcon },
@@ -24,6 +24,10 @@ const navigation = [
 ]
 
 function isCurrentPage(menuHref: string, currentPathname: string) {
+  if (menuHref === '/') {
+    return currentPathname === '/' || currentPathname.startsWith('/projet/');
+  }
+
   return currentPathname === menuHref;
 }
 
