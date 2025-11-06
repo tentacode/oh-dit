@@ -1,11 +1,11 @@
 'use client'
 
-import { MainLayout } from "../../components/MainLayout"
+import { MainLayout } from "../../components/layouts/MainLayout"
 
-export default function Home() {
+export default function Projects() {
   return (
-    <MainLayout>
-      <p></p>
+    <MainLayout>  
+      <h1>Vos projets</h1>
     </MainLayout>
   )
 }

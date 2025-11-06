@@ -1,6 +1,6 @@
 import { colorRoles, colors } from "@/src/config/colors";
 
-export default function OhditLogo({style}: {style?: React.CSSProperties}) {
+export default function OhditLogo({className}: {className?: string}) {
     const mainColor = colorRoles.dark;
     const secondaryColor = colors.green;
     const fontFamily = "Lexend Deca, Lexend Deca Fallback, Arial, sans-serif";
@@ -8,7 +8,7 @@ export default function OhditLogo({style}: {style?: React.CSSProperties}) {
     const fontWeight = "700";
 
     return (
-        <svg style={style} viewBox="5 14 108 27" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <svg className={className} viewBox="5 14 108 27" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
             <g>
                 <ellipse
                     cx="18"

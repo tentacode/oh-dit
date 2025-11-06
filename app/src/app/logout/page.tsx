@@ -9,15 +9,12 @@ export default function Logout() {
   useEffect(() => {
     // Deleting the auth token cookie
     document.cookie = 'auth_token=; path=/; max-age=0; SameSite=Strict'
-    
-    setTimeout(() =>
-      router.push('/login')
-    , 3000)
+    router.push('/login')
   }, [router])
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
-      <p className="text-4xl text-gray-900">Déconnexion en cours...</p>
+    <div className="w-full h-full flex items-center justify-center">
+      <p className="text-4xl text-center">En cours de déconnexion...</p>
     </div>
   )
 }
