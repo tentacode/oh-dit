@@ -28,6 +28,12 @@ www.connect: ## Open www container shell
 app.connect: ## Open app container shell
 	docker compose exec app sh
 
+app.lint: ## Run ESLint in app container
+	docker compose exec app npm run lint
+
+app.typescript: ## Run Typescript checks in app container
+	docker compose exec app npm run typescript
+
 api.connect: ## Open api container shell
 	docker compose exec api zsh
 
@@ -58,6 +64,8 @@ tests: ## Run all tests
 	echo "$(GREEN)www prettier passed!$(NC)" && \
 	docker compose exec app npm run lint && \
 	echo "$(GREEN)app eslint passed!$(NC)" && \
+	docker compose exec app npm run typescript && \
+	echo "$(GREEN)app typescript passed!$(NC)" && \
 	docker compose exec api bin/phpstan --memory-limit=1G && \
 	echo "$(GREEN)phpstan passed!$(NC)" && \
 	docker compose exec api bin/ecs --fix && \

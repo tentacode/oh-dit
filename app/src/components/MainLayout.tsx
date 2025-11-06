@@ -9,12 +9,12 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
-    };
+    } as const;
 
     const appContainerStyle = {
         flex: 1,
         display: 'flex',
-    };
+    } as const;
 
     return (
         <>
