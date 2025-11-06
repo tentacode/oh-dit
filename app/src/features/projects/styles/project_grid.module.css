@@ -1,0 +1,74 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px 16px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+.cardContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px 20px;
+}
+
+.card h2 {
+    margin: 0 0 8px 0;
+    font-size: 1.3rem;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.projectName {
+    flex: 1;
+}
+
+.card:hover {
+    outline: 3px solid #8579DC;
+}
+
+.card:focus  {
+    outline: 3px solid #E2026A;
+}
+
+.dateContainer {
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.dateContainer svg {
+    height: 20px;
+    color: #AAA;
+}
+
+.progressContainer {
+    background: #f0f0f0;
+    border-radius: 4px;
+    height: 10px;
+    width: 100%;
+    margin-top: 12px;
+}
+
+.progressBar {
+    background: var(--color-accent);
+    height: 100%;
+    border-radius: 4px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}   
+
+.progressBarComplete {
+    background: #BBB;
+}
