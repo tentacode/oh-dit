@@ -121,13 +121,13 @@ jobs:
         working-directory: ./app
         run: npm run lint
       
-      # - name: Check Typescript
-      #   working-directory: ./app
-      #   run: npm run typescript
+      - name: Check Typescript
+        working-directory: ./app
+        run: npm run typescript
       
-      # - name: Check Build
-      #   working-directory: ./app
-      #   run: npm run build
+      - name: Check Build
+        working-directory: ./app
+        run: npm run build
 
       - name: Npm audit app
         working-directory: ./app

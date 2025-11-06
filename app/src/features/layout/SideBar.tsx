@@ -17,7 +17,7 @@ const navigation = [
   { name: 'Contactez-nous', href: '#', icon: EnvelopeIcon, current: false },
 ]
 
-function classNames(...classes) {
+function classNames(...classes: (string)[]) {
   return classes.filter(Boolean).join(' ')
 }
 
@@ -36,7 +36,7 @@ export default function SideBar() {
     sidebarContainer: { 
       padding: '0 20px',
     },
-  };
+  } as const;
 
   return (
     <div style={styles.sidebarContainer} className="border-r border-gray-200 bg-white">
@@ -65,14 +65,6 @@ export default function SideBar() {
                   )}
                 />
                 {item.name}
-                {item.count ? (
-                  <span
-                    aria-hidden="true"
-                    className="ml-auto w-9 min-w-max rounded-full bg-white px-2.5 py-0.5 text-center text-xs/5 font-medium whitespace-nowrap text-gray-600 outline-1 -outline-offset-1 outline-gray-200"
-                  >
-                    {item.count}
-                  </span>
-                ) : null}
               </a>
             </li>
           ))}
