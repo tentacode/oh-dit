@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Features\Newsletter\Command;
 
-use InvalidArgumentException;
 use Brevo\Client\Api\ContactsApi;
 use Brevo\Client\Configuration;
 use Brevo\Client\Model\CreateContact;
+use InvalidArgumentException;
 use Webmozart\Assert\Assert;
 
 class AddToBrevoCommand

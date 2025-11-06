@@ -1,8 +1,8 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import SideBar from '../features/layout/SideBar';
-import BetaBanner from '../features/layout/BetaBanner';
+import SideBar from '../../features/layout/components/SideBar';
+import BetaBanner from '../../features/layout/components/BetaBanner';
 
 export const MainLayout = ({ children }: { children: ReactNode }) => {
     const bodyContainerStyle = {

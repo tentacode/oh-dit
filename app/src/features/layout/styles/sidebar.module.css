@@ -1,0 +1,32 @@
+.logoLink {
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    height: 30px;
+}
+
+.sidebarContainer {
+    padding: 0 20px;
+    width: 250px;
+}
+
+.navLink {
+    border: 3px solid white;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    text-decoration: none;
+}
+
+.navLink:hover, .navLink:focus {
+    border: 3px solid #E2026A;
+    outline: none;
+}
+
+.active {
+    border-color: var(--color-accent);
+}

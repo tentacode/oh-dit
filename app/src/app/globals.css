@@ -18,3 +18,60 @@ body {
   color: var(--foreground);
   font-size: 16px;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+  font-family: 'Lexend Deca', sans-serif;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.75em;
+}
+
+h4 {
+  font-size: 1.5em;
+}
+
+h5 {
+  font-size: 1.25em;
+}
+
+h6 {
+  font-size: 1em;
+}
+
+main {
+  flex: 1;
+  padding: 20px 70px;
+}
+
+main p {
+  margin-bottom: 1em;
+  line-height: 1.6;
+  font-size: 1.2em;
+}
+
+
+a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--color-accent);
+}
+
+a:hover,
+a:focus {
+  color: var(--textColor);
+  text-decoration-color: #E2026A;
+  text-decoration-style: wavy;
+}
