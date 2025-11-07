@@ -1,42 +1,20 @@
+import CardSkeleton from "@/src/components/skeleton/CardSkeleton";
+import { useFetchProjects } from "../queries/useFetchProjects";
 import styles from "../styles/project_grid.module.css";
-import { ProjectStatus } from "../types/ProjectInterface";
+import { ProjectInterface } from "../types/ProjectInterface";
 import ProjectCard from "./ProjectCard";
+import ErrorBox from "../../error_handling/components/ErrorBox";
 
 export default function ProjectGrid() {
-  const projects = [
-    {
-      uuid: "1",
-      name: "Ohdit",
-      updatedAt: new Date("2025-11-01").toISOString(),
-      progress: 15,
-      status: ProjectStatus.InProgress,
-    },
-    {
-      uuid: "2",
-      name: "DisneyLand",
-      updatedAt: new Date("2024-01-02").toISOString(),
-      progress: 70,
-      status: ProjectStatus.OnHold,
-    },
-    {
-      uuid: "3",
-      name: "SNCF",
-      updatedAt: new Date("2024-01-03").toISOString(),
-      progress: 100,
-      status: ProjectStatus.Completed,
-    },
-    {
-      uuid: "4",
-      name: "tentacode.dev",
-      updatedAt: new Date("2023-01-04").toISOString(),
-      progress: 100,
-      status: ProjectStatus.Completed,
-    },
-  ];
+  const { data: projects, isLoading, isError } = useFetchProjects();
+
+  if (isLoading) return (<CardSkeleton />);
+
+  if (isError || !projects) return (<ErrorBox message="Une erreur est survenue lors du chargement des projets." />);
 
   return (
     <div className={styles.grid}>
-      {projects.map((project) => (
+      {projects.map((project: ProjectInterface) => (
         <ProjectCard key={project.uuid} project={project} />
       ))}
     </div>

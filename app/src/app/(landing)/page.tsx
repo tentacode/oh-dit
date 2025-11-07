@@ -1,11 +1,13 @@
 'use client'
 
-import { MainLayout } from "../../components/layouts/MainLayout"
+import ProjectGrid from "@/src/features/projects/components/ProjectGrid"
+import { AuthenticatedLayout } from "../../components/layouts/AuthenticatedLayout"
 
 export default function Projects() {
   return (
-    <MainLayout>  
+    <AuthenticatedLayout>  
       <h1>Vos projets</h1>
-    </MainLayout>
+      <ProjectGrid />
+    </AuthenticatedLayout>
   )
 }

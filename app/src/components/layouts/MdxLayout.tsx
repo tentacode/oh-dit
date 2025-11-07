@@ -3,12 +3,12 @@
 import "../../styles/markdown.css";
 
 import type { ReactNode } from 'react'
-import { MainLayout } from './MainLayout';
+import { AuthenticatedLayout } from './AuthenticatedLayout';
 
 export const MdxLayout = ({ children }: { children: ReactNode }) => {
     return (
-        <MainLayout>
+        <AuthenticatedLayout>
             {children}
-        </MainLayout>
+        </AuthenticatedLayout>
     );
 };

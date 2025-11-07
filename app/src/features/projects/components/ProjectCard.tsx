@@ -8,6 +8,7 @@ import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/fr";
+import { getStatusName } from "../queries/getStatusName";
 
 export default function ProjectCard({
   project,
@@ -28,7 +29,7 @@ export default function ProjectCard({
                 RGAA 4.1.2
             </span>
             <span className="mt-1 inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">
-                {project.status}
+                {getStatusName(project.status)}
             </span>
         </h2>
         <p className={styles.dateContainer}>
