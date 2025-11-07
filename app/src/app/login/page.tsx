@@ -9,8 +9,8 @@ function LoginForm() {
   const searchParams = useSearchParams()
   const redirect = searchParams.get('redirect') || '/'
 
-  const [email, setEmail] = useState('darth_vader@empire.com') // @TODO remove default value
-  const [password, setPassword] = useState('vader_64') // @TODO remove default value
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {

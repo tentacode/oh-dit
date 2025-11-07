@@ -34,6 +34,7 @@ final class GetProjectsControllerTest extends WebTestCase
                 'name' => 'Death Star',
                 'createdAt' => '@datetime@',
                 'updatedAt' => '@datetime@',
+                'status' => 'in_progress',
                 'screens' => [
                     [
                         'uuid' => '@uuid@',

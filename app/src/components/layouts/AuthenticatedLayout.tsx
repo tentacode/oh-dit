@@ -3,8 +3,10 @@
 import type { ReactNode } from 'react'
 import SideBar from '../../features/layout/components/SideBar';
 import BetaBanner from '../../features/layout/components/BetaBanner';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from '@/src/lib/react-query/queryClient';
 
-export const MainLayout = ({ children }: { children: ReactNode }) => {
+export const AuthenticatedLayout = ({ children }: { children: ReactNode }) => {
     const bodyContainerStyle = {
         display: 'flex',
         flexDirection: 'column',
@@ -17,7 +19,7 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
     } as const;
 
     return (
-        <>
+        <QueryClientProvider client={queryClient}>
             <div style={bodyContainerStyle}>
                 <BetaBanner />
                 <div style={appContainerStyle}>
@@ -27,6 +29,6 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
                     </main>
                 </div>
             </div>
-        </>
+        </QueryClientProvider>
     );
 };

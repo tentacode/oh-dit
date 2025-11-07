@@ -18,6 +18,13 @@ use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
+enum ProjectStatus: string
+{
+    case IN_PROGRESS = 'in_progress';
+    case ON_HOLD = 'on_hold';
+    case COMPLETED = 'completed';
+}
+
 #[ORM\Entity]
 #[ORM\Table(name: 'project')]
 class Project implements HasUuidInterface
@@ -41,6 +48,9 @@ class Project implements HasUuidInterface
     #[Ignore]
     #[Assert\NotBlank]
     private Team $team;
+
+    // TODO: add as column
+    private string $status = ProjectStatus::IN_PROGRESS->value;
 
     /**
      * @var ArrayCollection<int, Screen>
@@ -92,5 +102,10 @@ class Project implements HasUuidInterface
     public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
     }
 }

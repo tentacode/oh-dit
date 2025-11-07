@@ -62,7 +62,7 @@ tests: ## Run all tests
 	echo "$(GREEN)www eslint passed!$(NC)" && \
 	docker compose exec www npx prettier --write src && \
 	echo "$(GREEN)www prettier passed!$(NC)" && \
-	docker compose exec app npm run lint && \
+	docker compose exec app npm run lint-fix && \
 	echo "$(GREEN)app eslint passed!$(NC)" && \
 	docker compose exec app npm run typescript && \
 	echo "$(GREEN)app typescript passed!$(NC)" && \

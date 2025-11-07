@@ -39,6 +39,7 @@ final class CreateProjectControllerTest extends WebTestCase
             'name' => 'Mon nouveau projet',
             'createdAt' => '@datetime@.after("today")',
             'updatedAt' => '@datetime@.after("today")',
+            'status' => 'in_progress',
             'screens' => [],
         ], $response, Response::HTTP_CREATED);
     }
