@@ -23,10 +23,14 @@ final class CreateProjectControllerTest extends WebTestCase
     public function test_it_can_add_a_project(): void
     {
         $response = $this->request(
-            uri: '/api/projects/' . TeamUsersStory::TEAM_THE_EMPIRE_UUID,
+            uri: '/api/projects',
             method: Request::METHOD_POST,
             payload: [
                 'name' => 'Mon nouveau projet',
+                'screens' => [
+                    'Page 1',
+                    'Page 2',
+                ],
             ],
             authenticationToken: $this->getAuthenticationToken(
                 email: 'darth_vader@empire.com',
@@ -40,17 +44,37 @@ final class CreateProjectControllerTest extends WebTestCase
             'createdAt' => '@datetime@.after("today")',
             'updatedAt' => '@datetime@.after("today")',
             'status' => 'in_progress',
-            'screens' => [],
+            'progress' => 0,
+            'screens' => [
+                [
+                    'uuid' => '@uuid@',
+                    'name' => 'Page 1',
+                    'createdAt' => '@datetime@.after("today")',
+                    'updatedAt' => '@datetime@.after("today")',
+                    'project' => '@@uuid@',
+                ],
+                [
+                    'uuid' => '@uuid@',
+                    'name' => 'Page 2',
+                    'createdAt' => '@datetime@.after("today")',
+                    'updatedAt' => '@datetime@.after("today")',
+                    'project' => '@@uuid@',
+                ],
+            ],
         ], $response, Response::HTTP_CREATED);
     }
 
     public function test_it_cant_add_a_project_if_not_logged_in(): void
     {
         $response = $this->request(
-            uri: '/api/projects/' . TeamUsersStory::TEAM_THE_EMPIRE_UUID,
+            uri: '/api/projects',
             method: Request::METHOD_POST,
             payload: [
                 'name' => 'Mon nouveau projet',
+                'screens' => [
+                    'Page 1',
+                    'Page 2',
+                ],
             ],
         );
 
@@ -60,10 +84,14 @@ final class CreateProjectControllerTest extends WebTestCase
         ], $response, Response::HTTP_UNAUTHORIZED);
 
         $response = $this->request(
-            uri: '/api/projects/' . TeamUsersStory::TEAM_THE_EMPIRE_UUID,
+            uri: '/api/projects',
             method: Request::METHOD_POST,
             payload: [
                 'name' => 'Mon nouveau projet',
+                'screens' => [
+                    'Page 1',
+                    'Page 2',
+                ],
             ],
             authenticationToken: 'invalid_token',
         );
@@ -74,57 +102,17 @@ final class CreateProjectControllerTest extends WebTestCase
         ], $response, Response::HTTP_UNAUTHORIZED);
     }
 
-    public function test_it_cant_add_a_project_to_another_team(): void
-    {
-        $response = $this->request(
-            uri: '/api/projects/' . TeamUsersStory::TEAM_THE_REBELLION_UUID,
-            method: Request::METHOD_POST,
-            payload: [
-                'name' => 'Mon nouveau projet',
-            ],
-            authenticationToken: $this->getAuthenticationToken(
-                email: 'darth_vader@empire.com',
-                password: 'vader_64',
-            ),
-        );
-
-        $this->assertJsonResponseMatches([
-            'code' => 'not_found',
-            'message' => 'Resource not found.',
-        ], $response, Response::HTTP_NOT_FOUND);
-    }
-
-    public function test_it_cant_add_a_project_to_a_non_existing_team(): void
-    {
-        $response = $this->request(
-            uri: '/api/projects/00000000-0000-0000-0000-000000000999',
-            method: Request::METHOD_POST,
-            payload: [
-                'name' => 'Mon nouveau projet',
-            ],
-            authenticationToken: $this->getAuthenticationToken(
-                email: 'darth_vader@empire.com',
-                password: 'vader_64',
-            ),
-        );
-
-        $this->assertJsonResponseMatches([
-            'code' => 'not_found',
-            'message' => 'Resource not found.',
-        ], $response, Response::HTTP_NOT_FOUND);
-    }
-
     /**
      * @param array<mixed> $payload
      * @param array<mixed> $expectedResponse
      */
-    #[DataProvider('emptyProjectNameProvider')]
-    public function test_it_cant_add_a_project_with_invalid_name(
+    #[DataProvider('invalidProjectDataProvider')]
+    public function test_it_cant_add_a_project_with_invalid_data(
         array $payload,
         array $expectedResponse
     ): void {
         $response = $this->request(
-            uri: '/api/projects/' . TeamUsersStory::TEAM_THE_EMPIRE_UUID,
+            uri: '/api/projects',
             method: Request::METHOD_POST,
             payload: $payload,
             authenticationToken: $this->getAuthenticationToken(
@@ -136,11 +124,15 @@ final class CreateProjectControllerTest extends WebTestCase
         $this->assertJsonResponseEquals($expectedResponse, $response, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    public static function emptyProjectNameProvider(): Iterator
+    public static function invalidProjectDataProvider(): Iterator
     {
         yield 'missing name field' => [
             [
                 'project' => 'Ratatouille remake',
+                'screens' => [
+                    'Page 1',
+                    'Page 2',
+                ],
             ],
             [
                 'code' => 'unprocessable_entity',
@@ -149,7 +141,7 @@ final class CreateProjectControllerTest extends WebTestCase
                     [
                         'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                         'propertyPath' => 'name',
-                        'message' => 'Project name is required',
+                        'message' => 'Le nom du projet est obligatoire.',
                     ],
                 ],
             ],
@@ -158,6 +150,10 @@ final class CreateProjectControllerTest extends WebTestCase
         yield 'empty name' => [
             [
                 'name' => '',
+                'screens' => [
+                    'Page 1',
+                    'Page 2',
+                ],
             ],
             [
                 'code' => 'unprocessable_entity',
@@ -166,7 +162,43 @@ final class CreateProjectControllerTest extends WebTestCase
                     [
                         'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                         'propertyPath' => 'name',
-                        'message' => 'Project name is required',
+                        'message' => 'Le nom du projet est obligatoire.',
+                    ],
+                ],
+            ],
+        ];
+
+        yield 'no screens' => [
+            [
+                'name' => 'New Project',
+                'screens' => [],
+            ],
+            [
+                'code' => 'unprocessable_entity',
+                'message' => 'Validation Failed',
+                'errors' => [
+                    [
+                        'code' => 'bef8e338-6ae5-4caf-b8e2-50e7b0579e69',
+                        'propertyPath' => 'screens',
+                        'message' => 'Au moins une page est requise.',
+                    ],
+                ],
+            ],
+        ];
+
+        yield 'empty screens' => [
+            [
+                'name' => 'New Project',
+                'screens' => ['Page 1', ''],
+            ],
+            [
+                'code' => 'unprocessable_entity',
+                'message' => 'Validation Failed',
+                'errors' => [
+                    [
+                        'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
+                        'propertyPath' => 'screens[1]',
+                        'message' => 'Le nom de la page ne peut pas être vide.',
                     ],
                 ],
             ],

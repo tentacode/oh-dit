@@ -7,6 +7,7 @@ namespace App\Features\Project\Command;
 use App\Features\Authentication\Entity\Team;
 use App\Features\Authentication\Entity\User;
 use App\Features\Project\Entity\Project;
+use App\Features\Project\Entity\Screen;
 use App\Infrastructure\Symfony\ErrorHandling\Command\ValidateOrThrowApiErrorCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
@@ -30,6 +31,16 @@ final class CreateProjectCommand
         ($this->validateOrThrow)($project);
 
         $this->entityManager->persist($project);
+
+        foreach ($createProjectRequest->screens as $screenName) {
+            $screen = new Screen($project, $screenName);
+            ($this->validateOrThrow)($screen);
+
+            $this->entityManager->persist($screen);
+
+            $project->addScreen($screen);
+        }
+
         $this->entityManager->flush();
 
         return $project;

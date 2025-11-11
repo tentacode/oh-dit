@@ -20,7 +20,7 @@ final class GetProjectsControllerTest extends WebTestCase
     public function test_it_get_all_projects(): void
     {
         $response = $this->request(
-            uri: '/api/projects/',
+            uri: '/api/projects',
             method: Request::METHOD_GET,
             authenticationToken: $this->getAuthenticationToken(
                 email: 'darth_vader@empire.com',
@@ -35,6 +35,7 @@ final class GetProjectsControllerTest extends WebTestCase
                 'createdAt' => '@datetime@',
                 'updatedAt' => '@datetime@',
                 'status' => 'in_progress',
+                'progress' => 0,
                 'screens' => [
                     [
                         'uuid' => '@uuid@',

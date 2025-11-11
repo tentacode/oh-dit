@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: {{BASE_URL}}/api/projects/11111111-0000-0000-0000-000000000001
+  url: {{BASE_URL}}/api/projects
   body: json
   auth: inherit
 }
@@ -17,10 +17,15 @@ headers {
 
 body:json {
   {
-    "name": "C'est notre projeeeeeeet"
+    "name": "C'est notre projeeeeeeet",
+    "screens": [
+      "Accueil",
+      "Contact"
+    ]
   }
 }
 
 settings {
   encodeUrl: false
+  timeout: 0
 }

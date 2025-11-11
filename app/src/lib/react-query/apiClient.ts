@@ -3,13 +3,23 @@ import { redirect } from 'next/navigation';
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
+export interface ApiValidationError {
+  code: string;
+  propertyPath: string;
+  message: string;
+}
+
 export class ApiError extends Error {
+  errors: ApiValidationError[] | null;
+
   constructor(
     public status: number,
-    message: string
+    message: string,
+    errors: ApiValidationError[] | null = null
   ) {
     super(message);
     this.name = 'ApiError';
+    this.errors = errors;
   }
 }
 
@@ -35,7 +45,8 @@ export async function apiClient<T>(
   if (!response.ok) {
     throw new ApiError(
       response.status,
-      `Erreur API: ${response.statusText}`
+      `Erreur API: ${response.statusText}`,
+      (await response.json()).errors || null
     );
   }
 

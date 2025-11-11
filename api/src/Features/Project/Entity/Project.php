@@ -52,6 +52,9 @@ class Project implements HasUuidInterface
     // TODO: add as column
     private string $status = ProjectStatus::IN_PROGRESS->value;
 
+    // TODO: add as column
+    private int $progress = 0;
+
     /**
      * @var ArrayCollection<int, Screen>
      */
@@ -89,6 +92,13 @@ class Project implements HasUuidInterface
         return $this->screens;
     }
 
+    public function addScreen(Screen $screen): void
+    {
+        if (! $this->screens->contains($screen)) {
+            $this->screens->add($screen);
+        }
+    }
+
     public function getName(): string
     {
         return $this->name;
@@ -107,5 +117,10 @@ class Project implements HasUuidInterface
     public function getStatus(): string
     {
         return $this->status;
+    }
+
+    public function getProgress(): int
+    {
+        return $this->progress;
     }
 }

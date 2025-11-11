@@ -1,10 +1,10 @@
 'use client'
 
-import type { ReactNode } from 'react'
 import SideBar from '../../features/layout/components/SideBar';
 import BetaBanner from '../../features/layout/components/BetaBanner';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/src/lib/react-query/queryClient';
+import { ReactNode } from 'react';
 
 export const AuthenticatedLayout = ({ children }: { children: ReactNode }) => {
     const bodyContainerStyle = {
