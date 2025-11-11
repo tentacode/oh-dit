@@ -10,4 +10,9 @@ export interface ProjectInterface {
     updatedAt: string;
     progress: number;
     status: ProjectStatus;
+    ruleSet: {
+        uuid: string;
+        name: string;
+        version: string;
+    };
 }

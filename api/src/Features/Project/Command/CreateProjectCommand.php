@@ -8,9 +8,11 @@ use App\Features\Authentication\Entity\Team;
 use App\Features\Authentication\Entity\User;
 use App\Features\Project\Entity\Project;
 use App\Features\Project\Entity\Screen;
+use App\Features\RuleSet\Entity\RuleSet;
 use App\Infrastructure\Symfony\ErrorHandling\Command\ValidateOrThrowApiErrorCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
+use Webmozart\Assert\Assert;
 
 final class CreateProjectCommand
 {
@@ -23,10 +25,19 @@ final class CreateProjectCommand
     public function __invoke(User $user, Team $team, CreateProjectRequest $createProjectRequest): Project
     {
         if (! $user->getTeams()->contains($team)) {
-            throw new SuspiciousOperationException('User is tryinig to create a project in a team they do not belong to.');
+            throw new SuspiciousOperationException('User is trying to create a project in a team they do not belong to.');
         }
 
-        $project = new Project($team, $createProjectRequest->name);
+        $ruleSet = $this->entityManager->getRepository(RuleSet::class)
+            ->findOneByName(RuleSet::RGAA_NAME);
+
+        Assert::isInstanceOf($ruleSet, RuleSet::class, 'Default RuleSet "RGAA" not found in the database.');
+
+        $project = new Project(
+            team: $team,
+            ruleSet: $ruleSet,
+            name: $createProjectRequest->name
+        );
 
         ($this->validateOrThrow)($project);
 

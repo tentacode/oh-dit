@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Features\RuleSet\Entity;
 
 use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
+use App\Infrastructure\Doctrine\Entity\SerializableInterface;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,11 +17,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'rule_set')]
-class RuleSet implements HasUuidInterface
+class RuleSet implements HasUuidInterface, SerializableInterface
 {
+    public const RGAA_NAME = 'RGAA';
+
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
-    private readonly Uuid $uuid;
+    private Uuid $uuid;
 
     #[ORM\Column(length: 180)]
     #[Assert\NotBlank]
@@ -44,6 +47,9 @@ class RuleSet implements HasUuidInterface
      * @var Collection<int, RuleCategory>
      */
     #[ORM\OneToMany(targetEntity: RuleCategory::class, mappedBy: 'ruleSet')]
+    #[ORM\OrderBy([
+        'prefix' => 'ASC',
+    ])]
     private Collection $ruleCategories;
 
     public function __construct(
@@ -97,5 +103,25 @@ class RuleSet implements HasUuidInterface
     public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    public function getDefaultFields(): array
+    {
+        return [
+            'uuid',
+            'name',
+            'description',
+            'version',
+            'ruleCategories' => [
+                'uuid',
+                'prefix',
+                'name',
+                'rules' => [
+                    'uuid',
+                    'prefix',
+                    'shortDescription',
+                ],
+            ],
+        ];
     }
 }

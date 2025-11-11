@@ -6,9 +6,9 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import { FormEvent, useState } from "react";
-import { useCreateProject } from "../mutations/useCreateProject";
 import { ApiError, ApiValidationError } from "@/src/lib/react-query/apiClient";
 import { useRouter } from "next/navigation";
+import { useCreateProject } from "../mutations/useCreateProject";
 
 
 function getErrorsForField(fieldName: string, errors: ApiValidationError[]): ApiValidationError[] {
@@ -37,7 +37,6 @@ export default function NewProjectForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const createProject = useCreateProject();
-
 
   const router = useRouter();
 

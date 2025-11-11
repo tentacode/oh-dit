@@ -1,0 +1,21 @@
+meta {
+  name: Get Project Compliances
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{BASE_URL}}/api/projects/22222222-0000-0000-0000-000000000001/compliances
+  body: formUrlEncoded
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{AUTH_TOKEN}}
+  ~Content-Type: application/json
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

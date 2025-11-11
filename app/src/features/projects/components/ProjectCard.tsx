@@ -26,7 +26,7 @@ export default function ProjectCard({
         <h2>
             <span className={styles.projectName}>{project.name}</span>
             <span className="mt-1 inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">
-                RGAA 4.1.2
+                {project.ruleSet.name} {project.ruleSet.version}
             </span>
             <span className="mt-1 inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">
                 {getStatusName(project.status)}

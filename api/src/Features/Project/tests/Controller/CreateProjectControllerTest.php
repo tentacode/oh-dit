@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Features\Project\tests\Controller;
 
-use App\Features\Authentication\Fixture\Story\TeamUsersStory;
 use App\Infrastructure\PHPUnit\ApiRequest;
 use App\Infrastructure\PHPUnit\LoginRequest;
 use App\Infrastructure\PHPUnit\ResponseAssertions;
@@ -49,17 +48,16 @@ final class CreateProjectControllerTest extends WebTestCase
                 [
                     'uuid' => '@uuid@',
                     'name' => 'Page 1',
-                    'createdAt' => '@datetime@.after("today")',
-                    'updatedAt' => '@datetime@.after("today")',
-                    'project' => '@@uuid@',
                 ],
                 [
                     'uuid' => '@uuid@',
                     'name' => 'Page 2',
-                    'createdAt' => '@datetime@.after("today")',
-                    'updatedAt' => '@datetime@.after("today")',
-                    'project' => '@@uuid@',
                 ],
+            ],
+            'ruleSet' => [
+                'uuid' => '@uuid@',
+                'name' => 'RGAA',
+                'version' => '4.1.2',
             ],
         ], $response, Response::HTTP_CREATED);
     }

@@ -62,7 +62,7 @@ class ImportRgaaConsole extends Command
     private function createRuleSet(array $criteria): void
     {
         $ruleSet = new RuleSet(
-            name: 'RGAA',
+            name: RuleSet::RGAA_NAME,
             description: 'Référentiel Général d’Amélioration de l’Accessibilité (RGAA)',
             version: '4.1.2',
         );

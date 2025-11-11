@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Features\Project\Entity;
 
 use App\Features\Authentication\Entity\Team;
+use App\Features\RuleSet\Entity\RuleSet;
 use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
+use App\Infrastructure\Doctrine\Entity\SerializableInterface;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,7 +16,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
-use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -27,7 +28,7 @@ enum ProjectStatus: string
 
 #[ORM\Entity]
 #[ORM\Table(name: 'project')]
-class Project implements HasUuidInterface
+class Project implements HasUuidInterface, SerializableInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
@@ -45,14 +46,18 @@ class Project implements HasUuidInterface
 
     #[ManyToOne(targetEntity: Team::class)]
     #[JoinColumn(name: 'team_uuid', referencedColumnName: 'uuid')]
-    #[Ignore]
     #[Assert\NotBlank]
     private Team $team;
 
-    // TODO: add as column
-    private string $status = ProjectStatus::IN_PROGRESS->value;
+    #[ManyToOne(targetEntity: RuleSet::class)]
+    #[JoinColumn(name: 'rule_set_uuid', referencedColumnName: 'uuid')]
+    #[Assert\NotBlank]
+    private RuleSet $ruleSet;
 
-    // TODO: add as column
+    #[ORM\Column(type: Types::STRING, length: 20, enumType: ProjectStatus::class)]
+    private ProjectStatus $status = ProjectStatus::IN_PROGRESS;
+
+    #[ORM\Column(type: Types::INTEGER)]
     private int $progress = 0;
 
     /**
@@ -63,11 +68,13 @@ class Project implements HasUuidInterface
 
     public function __construct(
         Team $team,
+        RuleSet $ruleSet,
         string $name,
         ?string $uuid = null
     ) {
         $this->uuid = $uuid ? Uuid::fromString($uuid) : Uuid::v4();
         $this->team = $team;
+        $this->ruleSet = $ruleSet;
         $this->screens = new ArrayCollection();
         $this->name = $name;
         $this->createdAt = CarbonImmutable::now();
@@ -82,6 +89,11 @@ class Project implements HasUuidInterface
     public function getTeam(): Team
     {
         return $this->team;
+    }
+
+    public function getRuleSet(): RuleSet
+    {
+        return $this->ruleSet;
     }
 
     /**
@@ -114,7 +126,7 @@ class Project implements HasUuidInterface
         return $this->updatedAt;
     }
 
-    public function getStatus(): string
+    public function getStatus(): ProjectStatus
     {
         return $this->status;
     }
@@ -122,5 +134,26 @@ class Project implements HasUuidInterface
     public function getProgress(): int
     {
         return $this->progress;
+    }
+
+    public function getDefaultFields(): array
+    {
+        return [
+            'uuid',
+            'name',
+            'createdAt',
+            'updatedAt',
+            'status',
+            'progress',
+            'ruleSet' => [
+                'uuid',
+                'name',
+                'version',
+            ],
+            'screens' => [
+                'uuid',
+                'name',
+            ],
+        ];
     }
 }
