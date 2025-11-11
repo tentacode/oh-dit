@@ -59,6 +59,7 @@ final class GetRuleSetsControllerTest extends WebTestCase
                     '@...@',
                 ],
             ],
+            '@...@',
         ], $response, Response::HTTP_OK);
     }
 

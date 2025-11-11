@@ -26,6 +26,7 @@ class GetProjectsQuery
             ->createQueryBuilder('project')
             ->where('project.team IN (:team)')
             ->setParameter('team', $user->getTeams())
+            ->orderBy('project.updatedAt', 'DESC')
             ->getQuery()
             ->getResult();
 

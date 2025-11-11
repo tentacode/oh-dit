@@ -142,4 +142,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuid
 
         return $this->email;
     }
+
+    public function getCurrentTeam(): Team
+    {
+        $team = $this->teams->first();
+        WebmozartAssert::isInstanceOf($team, Team::class, 'User does not belong to any team.');
+
+        return $team;
+    }
 }
