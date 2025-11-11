@@ -46,6 +46,9 @@ class RuleCategory implements HasUuidInterface
      * @var Collection<int, Rule>
      */
     #[ORM\OneToMany(targetEntity: Rule::class, mappedBy: 'ruleCategory')]
+    #[ORM\OrderBy([
+        'prefix' => 'ASC',
+    ])]
     private Collection $rules;
 
     public function __construct(

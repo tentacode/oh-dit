@@ -26,7 +26,7 @@ class GetProjectQuery
             ->setParameter('team', $user->getTeams())
             ->setParameter('uuid', $uuid)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
 
         return $project;
     }

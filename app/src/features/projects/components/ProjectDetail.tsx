@@ -17,6 +17,6 @@ export default function ProjectDetail({projectUuid}: {projectUuid: string}) {
 
   return (<>
       <h1>Audit — {project.name}</h1>
-      <RuleSetGrid />
+      <RuleSetGrid ruleSetUuid={project.ruleSet.uuid} />
   </>);
 }

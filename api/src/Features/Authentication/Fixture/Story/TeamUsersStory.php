@@ -30,6 +30,9 @@ final class TeamUsersStory extends Story
             'username' => 'Darth Vader',
         ]);
 
+        $this->addToPool('users', $darthVader);
+        $this->addState(self::USER_DARTH_VADER_UUID, $darthVader, 'users');
+
         $lukeSkywalker = UserFactory::createOne([
             'uuid' => self::USER_LUKE_SKYWALKER_UUID,
             'email' => 'luke@rebels.com',

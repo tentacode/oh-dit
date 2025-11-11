@@ -34,24 +34,16 @@ final class GetRuleSetsControllerTest extends WebTestCase
                 'name' => 'IWSQA',
                 'description' => 'Imperial Weapon Systems Quality Assurance Standard',
                 'version' => '1.3.3.7',
-                'createdAt' => '@datetime@',
-                'updatedAt' => '@datetime@',
                 'ruleCategories' => [
                     [
                         'uuid' => '@uuid@',
                         'prefix' => '1',
                         'name' => 'Personnel & Training',
-                        'createdAt' => '@datetime@',
-                        'updatedAt' => '@datetime@',
-                        'ruleSet' => '@@uuid@',
                         'rules' => [
                             [
                                 'uuid' => '@uuid@',
                                 'prefix' => '1.1',
                                 'shortDescription' => 'Les Stormtroopers doivent atteindre un taux de réussite minimal aux tests de tir.',
-                                'createdAt' => '@datetime@',
-                                'updatedAt' => '@datetime@',
-                                'ruleCategory' => '@@uuid@',
                             ],
                             '@...@',
                         ],

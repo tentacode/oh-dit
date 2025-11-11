@@ -7,6 +7,7 @@ namespace App\Features\Project\Fixture\Story;
 use App\Features\Authentication\Fixture\Story\TeamUsersStory;
 use App\Features\Project\Fixture\Factory\ProjectFactory;
 use App\Features\Project\Fixture\Factory\ScreenFactory;
+use App\Features\RuleSet\Fixture\Story\RuleSetsStory;
 use Zenstruck\Foundry\Attribute\AsFixture;
 use Zenstruck\Foundry\Story;
 
@@ -25,17 +26,26 @@ final class ProjectsStory extends Story
 
         $theEmpireTeam = TeamUsersStory::get(TeamUsersStory::TEAM_THE_EMPIRE_UUID);
 
+        $empireRuleSet = RuleSetsStory::get(RuleSetsStory::RULE_SET_EMPIRE_UUID);
+
         $deathStarProject = ProjectFactory::new()->withoutPersisting()->create([
             'uuid' => self::PROJECT_DEATH_STAR_UUID,
             'name' => 'Death Star',
             'team' => $theEmpireTeam,
+            'ruleSet' => $empireRuleSet,
         ]);
 
-        ScreenFactory::createOne([
+        $this->addToPool('projects', $deathStarProject);
+        $this->addState(self::PROJECT_DEATH_STAR_UUID, $deathStarProject, 'projects');
+
+        $homeScreen = ScreenFactory::createOne([
             'name' => 'Home Screen',
             'uuid' => self::SCREEN_HOME_UUID,
             'project' => $deathStarProject,
         ]);
+
+        $this->addToPool('screens', $homeScreen);
+        $this->addState(self::SCREEN_HOME_UUID, $homeScreen, 'screens');
 
         ScreenFactory::createOne([
             'name' => 'Contact Screen',
@@ -48,6 +58,7 @@ final class ProjectsStory extends Story
         $xWingProject = ProjectFactory::createOne([
             'name' => 'X-Wing Project',
             'team' => $theRebellionTeam,
+            'ruleSet' => $empireRuleSet,
         ]);
 
         ScreenFactory::createOne([

@@ -43,6 +43,9 @@ final class RuleSetsStory extends Story
             'version' => $ruleSetData['ruleSet']['version'],
         ]);
 
+        $this->addToPool('ruleSets', $ruleSet);
+        $this->addState(self::RULE_SET_EMPIRE_UUID, $ruleSet, 'ruleSets');
+
         $categoryIndex = 1;
         foreach ($ruleSetData['ruleSet']['ruleSetCategories'] as $categoryData) {
             $ruleCategory = RuleCategoryFactory::createOne([
@@ -54,12 +57,15 @@ final class RuleSetsStory extends Story
 
             $ruleIndex = 1;
             foreach ($categoryData['rules'] as $ruleData) {
-                RuleFactory::createOne([
+                $rule = RuleFactory::createOne([
                     'uuid' => self::RULE_BASE_UUID . str_pad((string) $categoryIndex, 4, '0', STR_PAD_LEFT) . '-' . str_pad((string) $ruleIndex, 12, '0', STR_PAD_LEFT),
                     'prefix' => $ruleData['prefix'],
                     'shortDescription' => $ruleData['description'],
                     'ruleCategory' => $ruleCategory,
                 ]);
+
+                $this->addToPool('rules', $rule);
+                $this->addState(sprintf('rule_%d.%d', $categoryIndex, $ruleIndex), $rule, 'rules');
 
                 ++$ruleIndex;
             }

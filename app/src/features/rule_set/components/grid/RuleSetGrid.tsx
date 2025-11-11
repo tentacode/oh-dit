@@ -4,7 +4,7 @@ import RuleCategory from "./RuleCategory";
 
 import styles from './rule_set_grid.module.css';
 
-export default function RuleSetGrid() {
+export default function RuleSetGrid({ruleSetUuid}: {ruleSetUuid: string}) {
   const { ruleSets, isLoading, error } = useGetRuleSets();
 
   if (isLoading) {
@@ -19,7 +19,10 @@ export default function RuleSetGrid() {
     return <div>No rule sets available.</div>;
   }
 
-  const ruleSet = ruleSets[1] as RuleSetInterface; // @TODO: handle multiple rule sets
+  const ruleSet = ruleSets.find((rs: RuleSetInterface) => rs.uuid === ruleSetUuid);
+  if (!ruleSet) {
+    throw new Error(`Rule set with UUID ${ruleSetUuid} not found.`);
+  }
 
   let isOdd = true;
 
