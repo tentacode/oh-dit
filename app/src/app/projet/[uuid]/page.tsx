@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation"
 import { AuthenticatedLayout } from "../../../components/layouts/AuthenticatedLayout"
-import ProjectDetail from "@/src/features/projects/components/ProjectDetail";
+import ProjectDetail from "@/src/features/project/components/ProjectDetail";
 
 export default function Projects() {
   const params = useParams()

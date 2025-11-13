@@ -1,6 +1,6 @@
 "use client";
 
-import ProjectGrid from "@/src/features/projects/components/ProjectGrid";
+import ProjectGrid from "@/src/features/project/components/ProjectGrid";
 import { AuthenticatedLayout } from "../../components/layouts/AuthenticatedLayout";
 import { CheckCircleIcon, FolderPlusIcon } from "@heroicons/react/24/outline";
 import CallToActionLink from "@/src/components/form/CallToActionLink";

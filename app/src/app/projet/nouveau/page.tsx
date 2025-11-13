@@ -1,7 +1,7 @@
 'use client'
 
 import { AuthenticatedLayout } from "../../../components/layouts/AuthenticatedLayout"
-import NewProjectForm from "@/src/features/projects/components/NewProjectForm"
+import NewProjectForm from "@/src/features/project/components/NewProjectForm"
 
 export default function Projects() {
   return (
