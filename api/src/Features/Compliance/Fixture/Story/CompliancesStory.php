@@ -33,6 +33,15 @@ final class CompliancesStory extends Story
 
         ComplianceFactory::new()->create([
             'user' => TeamUsersStory::get(TeamUsersStory::USER_DARTH_VADER_UUID),
+            'status' => ComplianceStatus::COMPLIANT,
+            'project' => ProjectsStory::get(ProjectsStory::PROJECT_DEATH_STAR_UUID),
+            'screen' => ProjectsStory::get(ProjectsStory::SCREEN_CONTACT_UUID),
+            'rule' => RuleSetsStory::get('rule_1.1'),
+            'createdAt' => new DateTimeImmutable('-3 hours'),
+        ]);
+
+        ComplianceFactory::new()->create([
+            'user' => TeamUsersStory::get(TeamUsersStory::USER_DARTH_VADER_UUID),
             'status' => ComplianceStatus::NON_COMPLIANT,
             'project' => ProjectsStory::get(ProjectsStory::PROJECT_DEATH_STAR_UUID),
             'screen' => ProjectsStory::get(ProjectsStory::SCREEN_HOME_UUID),

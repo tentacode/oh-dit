@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/fr";
 import { getStatusName } from "../queries/getStatusName";
+import { getProjectUrl } from "@/src/app/projet/routing";
 
 export default function ProjectCard({
   project,
@@ -21,7 +22,7 @@ export default function ProjectCard({
   const relativeUpdatedAt = dayjs(project.updatedAt).fromNow();
 
   return (
-    <Link prefetch={false} href={`/projet/${project.uuid}`} className={styles.card}>
+    <Link prefetch={false} href={getProjectUrl.dashboard(project.uuid)} className={styles.card}>
       <div className={styles.cardContent}>
         <h2>
             <span className={styles.projectName}>{project.name}</span>

@@ -43,6 +43,8 @@ export default function NewProjectForm() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (isLoading) return;
+
     setIsLoading(true);
 
     const formData = new FormData(e.currentTarget);
@@ -144,11 +146,22 @@ export default function NewProjectForm() {
           </p>
         </legend>
         <ul>
+          <li>
+            <div className={styles.inputContainer}>
+              <span className={styles.fieldsetListIndex} aria-hidden="true">
+                1.
+              </span>
+
+              <span className="py-2 font-medium">
+                Éléments transverses (toujours inclus dans l'audit)
+              </span>
+            </div>
+          </li>
           {pages.map((page, index) => (
             <li key={index}>
               <div className={styles.inputContainer}>
                 <span className={styles.fieldsetListIndex} aria-hidden="true">
-                  {index + 1}.
+                  {index + 2}.
                 </span>
 
                 <input
@@ -156,7 +169,7 @@ export default function NewProjectForm() {
                   type="text"
                   name={`screens[${index}]`}
                   value={page}
-                  arial-label={`Nom de la page ${index + 1}`}
+                  arial-label={`Nom de la page ${index + 2}`}
                   aria-required={true}
                   aria-invalid={hasFieldError(`screens[${index}]`, errors)}
                   aria-describedby={

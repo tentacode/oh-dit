@@ -7,7 +7,7 @@ import { AuthenticatedLayout } from './AuthenticatedLayout';
 
 export const MdxLayout = ({ children }: { children: ReactNode }) => {
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout mainClass="markdown">
             {children}
         </AuthenticatedLayout>
     );

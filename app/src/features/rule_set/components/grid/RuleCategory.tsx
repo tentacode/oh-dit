@@ -1,37 +1,60 @@
-import {
-  Rule as RuleInterface,
-  RuleCategory as RuleCategoryInterface,
-} from "../../types/RuleSetTypes";
-import ComplianceStatus from "./ComplianceStatus";
+import CategoryComplianceStatus from "./buttons/CategoryComplianceStatus";
 import Rule from "./Rule";
+import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
-import styles from "./rule_set_grid.module.css";
+import styles from "../../styles/audit_grid.module.css";
+import {
+  Rule as RuleStoreType,
+} from "@/src/features/audit/store/auditStore";
+import { useAuditSettingsStore } from "@/src/features/audit/store/auditSettingsStore";
 
-export default function RuleCategory({
-  ruleCategory,
-  isOdd,
-}: {
-  ruleCategory: RuleCategoryInterface;
-  isOdd: boolean;
-}) {
-  let isLast = false;
+interface RuleCategoryProps {
+  ruleCategory: {
+    uuid: string;
+    name: string;
+    prefix: string;
+    rules: RuleStoreType[];
+  };
+}
+
+export default function RuleCategory({ ruleCategory }: RuleCategoryProps) {
+  const isCollapsed = useAuditSettingsStore(
+    (state) => state.isRuleCategoryCollapsed(ruleCategory.uuid)
+  );
+
+  const toggleCollapse = useAuditSettingsStore(
+    (state) => state.toggleRuleCategoryCollapse
+  );
 
   return (
-    <>
-      <tr className={`${styles.ruleCategoryRow} ${isOdd ? styles.odd : ""} ${styles.first}`}>
-        <th scope="rowgroup">
-          {ruleCategory.prefix} {ruleCategory.name}
-        </th>
-        <ComplianceStatus />
-      </tr>
-      {ruleCategory.rules.map((rule: RuleInterface) => {
-        isLast =
-          ruleCategory.rules.indexOf(rule) === ruleCategory.rules.length - 1;
-
-        return (
-          <Rule isOdd={isOdd} isLast={isLast} rule={rule} key={rule.uuid} />
-        );
-      })}
-    </>
+    <div role="rowgroup" className={styles.ruleCategoryContainer}>
+      <div role="row" className={styles.ruleCategoryRow}>
+        <button
+          role="gridcell"
+          id={`category-header-${ruleCategory.uuid}`}
+          aria-expanded={isCollapsed ? "false" : "true"}
+          aria-controls={`category-rules-${ruleCategory.uuid}`}
+          className={styles.accordionButton}
+          onClick={() => toggleCollapse(ruleCategory.uuid)}
+        >
+          {isCollapsed ? <ChevronDownIcon /> : <ChevronUpIcon />}
+          <h2>
+            {ruleCategory.prefix} {ruleCategory.name}
+          </h2>
+        </button>
+        <CategoryComplianceStatus />
+        <div className={styles.ruleCategorySpacer}></div>
+      </div>
+      <div
+        style={{ display: isCollapsed ? "none" : "block" }}
+        id={`category-rules-${ruleCategory.uuid}`}
+        role="region"
+        aria-labelledby={`category-header-${ruleCategory.uuid}`}
+      >
+        {ruleCategory.rules.map((rule: RuleStoreType) => {
+          return <Rule rule={rule} key={rule.uuid} />;
+        })}
+      </div>
+    </div>
   );
 }

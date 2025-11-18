@@ -1,0 +1,21 @@
+meta {
+  name: Get One RuleSet
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{BASE_URL}}/api/rule_sets/12341234-0000-0000-0000-000000000001
+  body: formUrlEncoded
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{AUTH_TOKEN}}
+  ~Content-Type: application/json
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

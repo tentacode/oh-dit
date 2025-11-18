@@ -18,13 +18,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'project_screen')]
 class Screen implements HasUuidInterface
 {
+    public const string ROOT_SCREEN_NAME = 'Éléments transverses';
+
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
-    private readonly Uuid $uuid;
+    #[Assert\Uuid(message: 'L\'UUID de la page doit être un UUID valide.')]
+    private Uuid $uuid;
 
     #[ORM\Column(length: 180)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'Le nom de la page est obligatoire.')]
     private string $name;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $isRoot = false;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private readonly DateTimeImmutable $createdAt;
@@ -39,11 +45,13 @@ class Screen implements HasUuidInterface
     public function __construct(
         Project $project,
         string $name,
+        bool $isRoot = false,
         ?string $uuid = null
     ) {
         $this->uuid = $uuid ? Uuid::fromString($uuid) : Uuid::v4();
         $this->project = $project;
         $this->name = $name;
+        $this->isRoot = $isRoot;
         $this->createdAt = CarbonImmutable::now();
         $this->updatedAt = CarbonImmutable::now();
     }
@@ -61,6 +69,11 @@ class Screen implements HasUuidInterface
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getIsRoot(): bool
+    {
+        return $this->isRoot;
     }
 
     public function getCreatedAt(): DateTimeImmutable

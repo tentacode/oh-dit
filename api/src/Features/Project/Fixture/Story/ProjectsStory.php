@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Features\Project\Fixture\Story;
 
 use App\Features\Authentication\Fixture\Story\TeamUsersStory;
+use App\Features\Project\Entity\Screen;
 use App\Features\Project\Fixture\Factory\ProjectFactory;
 use App\Features\Project\Fixture\Factory\ScreenFactory;
 use App\Features\RuleSet\Fixture\Story\RuleSetsStory;
@@ -14,11 +15,13 @@ use Zenstruck\Foundry\Story;
 #[AsFixture(name: 'projects', groups: ['all'])]
 final class ProjectsStory extends Story
 {
-    public const PROJECT_DEATH_STAR_UUID = '22222222-0000-0000-0000-000000000001';
+    public const PROJECT_DEATH_STAR_UUID = '22222222-0000-4000-8000-000000000001';
 
-    public const SCREEN_HOME_UUID = '33333333-0000-0000-0000-000000000001';
+    public const SCREEN_ROOT_UUID = '33333333-0000-4000-8000-000000000000';
 
-    public const SCREEN_CONTACT_UUID = '33333333-0000-0000-0000-000000000002';
+    public const SCREEN_HOME_UUID = '33333333-0000-4000-8000-000000000001';
+
+    public const SCREEN_CONTACT_UUID = '33333333-0000-4000-8000-000000000002';
 
     public function build(): void
     {
@@ -38,6 +41,15 @@ final class ProjectsStory extends Story
         $this->addToPool('projects', $deathStarProject);
         $this->addState(self::PROJECT_DEATH_STAR_UUID, $deathStarProject, 'projects');
 
+        $rootScreen = ScreenFactory::createOne([
+            'name' => Screen::ROOT_SCREEN_NAME,
+            'project' => $deathStarProject,
+            'isRoot' => true,
+        ]);
+
+        $this->addToPool('screens', $rootScreen);
+        $this->addState(self::SCREEN_ROOT_UUID, $rootScreen, 'screens');
+
         $homeScreen = ScreenFactory::createOne([
             'name' => 'Home Screen',
             'uuid' => self::SCREEN_HOME_UUID,
@@ -47,11 +59,14 @@ final class ProjectsStory extends Story
         $this->addToPool('screens', $homeScreen);
         $this->addState(self::SCREEN_HOME_UUID, $homeScreen, 'screens');
 
-        ScreenFactory::createOne([
+        $contactScreen = ScreenFactory::createOne([
             'name' => 'Contact Screen',
             'uuid' => self::SCREEN_CONTACT_UUID,
             'project' => $deathStarProject,
         ]);
+
+        $this->addToPool('screens', $contactScreen);
+        $this->addState(self::SCREEN_CONTACT_UUID, $contactScreen, 'screens');
 
         $theRebellionTeam = TeamUsersStory::get(TeamUsersStory::TEAM_THE_REBELLION_UUID);
 
@@ -59,6 +74,12 @@ final class ProjectsStory extends Story
             'name' => 'X-Wing Project',
             'team' => $theRebellionTeam,
             'ruleSet' => $empireRuleSet,
+        ]);
+
+        ScreenFactory::createOne([
+            'name' => Screen::ROOT_SCREEN_NAME,
+            'project' => $xWingProject,
+            'isRoot' => true,
         ]);
 
         ScreenFactory::createOne([

@@ -23,18 +23,19 @@ class RuleSet implements HasUuidInterface, SerializableInterface
 
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
+    #[Assert\Uuid(message: 'L\'UUID du standard doit être un UUID valide.')]
     private Uuid $uuid;
 
     #[ORM\Column(length: 180)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'Le nom du standard est obligatoire.')]
     private string $name;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'La description du standard est obligatoire.')]
     private string $description;
 
     #[ORM\Column(length: 180)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'La version du standard est obligatoire.')]
     private string $version;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]

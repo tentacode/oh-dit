@@ -1,6 +1,7 @@
 export interface RuleSet {
     uuid: string;
     name: string;
+    version: string;
     description: string;
     ruleCategories: RuleCategory[];
 }
@@ -21,4 +22,4 @@ export interface Rule {
     complianceStatus: ComplianceStatus;
 }
 
-export type ComplianceStatus = 'compliant' | 'non-compliant' | 'not-applicable';
+export type ComplianceStatus = 'compliant' | 'non_compliant' | 'not_applicable';

@@ -1,27 +1,30 @@
-.logoLink {
+.navigationContainer {
+    background: #010101;
+    color: #FFF5F3;
     display: flex;
-    margin-top: 32px;
-    margin-bottom: 20px;
-    margin-left: 10px;
+    padding: 10px 60px;
+    margin-bottom: 10px;
+}
+
+.navigationContainer ul {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    gap: 10px;
 }
 
-.logo {
-    height: 30px;
-}
-
-.sidebarContainer {
-    padding: 0 20px;
-    width: 250px;
+.navigationContainer ul li:first-child {
+    flex: 1;
 }
 
 .navLink {
-    border: 3px solid white;
+    border: 3px solid transparent;
     border-radius: 10px;
-    margin-bottom: 5px;
     text-decoration: none;
     font-size: 1.125rem;
+    width: max-content;
 }
 
 .navLink:hover {
@@ -40,5 +43,4 @@
     text-underline-offset: 3px;
     text-decoration-thickness: 3px;
     text-decoration-color: var(--color-accent);
-    
 }

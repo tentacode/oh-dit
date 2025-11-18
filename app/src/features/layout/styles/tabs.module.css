@@ -1,0 +1,61 @@
+.tabsHeader {
+    display: flex;
+    list-style-type: none;
+    padding-left: 70px;
+    margin: 0;
+    margin-top: 40px;
+    border-bottom: 3px solid #010101;
+}
+
+.tab {
+    display: block;
+    height: fit-content;
+    font-family: Lexend Deca, sans-serif;
+}
+
+.tabBadge {
+    font-size: 16px !important;
+    font-family: Lexend Deca, sans-serif;
+    font-weight: 600;
+    border: 2px solid #8579DC;
+}
+
+.tabLink {
+    height: 60px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1.125rem;
+    padding: 15px 30px;
+    padding-top: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 15px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 2px solid transparent;
+    border-bottom-width: 0px;
+    margin-bottom: -3px;
+}
+
+.tabLink svg {
+    height: 25px;
+    width: 25px;
+}
+
+.activeTabLink {
+    background: white;
+    border-radius: 15px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 2px solid #010101; /*dbb1a9*/
+    border-bottom-width: 0px;
+}
+
+.tabContainer {
+    flex: 1;
+    width: 100%;
+    background-color: white;
+}
+

@@ -20,7 +20,7 @@ class Newsletter implements HasUuidInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
-    private readonly Uuid $uuid;
+    private Uuid $uuid;
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\Email(message: "L'adresse email {{ value }} n'est pas valide.")]
