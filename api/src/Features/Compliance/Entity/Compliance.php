@@ -8,6 +8,8 @@ use App\Features\Authentication\Entity\User;
 use App\Features\Project\Entity\Project;
 use App\Features\Project\Entity\Screen;
 use App\Features\RuleSet\Entity\Rule;
+use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
+use App\Infrastructure\Doctrine\Entity\SerializableInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -16,42 +18,37 @@ use Safe\DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
-enum ComplianceStatus: string
-{
-    case COMPLIANT = 'compliant';
-    case NON_COMPLIANT = 'non_compliant';
-    case NOT_APPLICABLE = 'not_applicable';
-}
-
 #[ORM\Entity]
 #[ORM\Table(name: 'compliance')]
-class Compliance
+class Compliance implements HasUuidInterface, SerializableInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
-    private readonly Uuid $uuid;
+    #[Assert\Uuid(message: 'L\'UUID de la conformité doit être un UUID valide.')]
+    private Uuid $uuid;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $createdAt;
 
     #[ManyToOne(targetEntity: User::class)]
     #[JoinColumn(name: 'user_uuid', referencedColumnName: 'uuid')]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: "L'utilisateur est obligatoire.")]
     private User $user;
 
     #[ManyToOne(targetEntity: Rule::class)]
     #[JoinColumn(name: 'rule_uuid', referencedColumnName: 'uuid')]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'La règle est obligatoire.')]
     private Rule $rule;
 
     #[ManyToOne(targetEntity: Project::class)]
     #[JoinColumn(name: 'project_uuid', referencedColumnName: 'uuid')]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'Le projet est obligatoire.')]
     private Project $project;
 
     #[ManyToOne(targetEntity: Screen::class)]
     #[JoinColumn(name: 'screen_uuid', referencedColumnName: 'uuid')]
-    private ?Screen $screen;
+    #[Assert\NotBlank(message: 'La page est obligatoire.')]
+    private Screen $screen;
 
     #[ORM\Column(type: Types::STRING, length: 20, enumType: ComplianceStatus::class)]
     private ComplianceStatus $status;
@@ -61,7 +58,7 @@ class Compliance
         Rule $rule,
         Project $project,
         ComplianceStatus $status,
-        ?Screen $screen = null,
+        Screen $screen,
         // used for fixtures
         ?DateTimeImmutable $createdAt = null,
     ) {
@@ -99,7 +96,7 @@ class Compliance
         return $this->project;
     }
 
-    public function getScreen(): ?Screen
+    public function getScreen(): Screen
     {
         return $this->screen;
     }
@@ -112,5 +109,38 @@ class Compliance
     public function getUser(): User
     {
         return $this->user;
+    }
+
+    public function getRuleUuid(): Uuid
+    {
+        return $this->rule->getUuid();
+    }
+
+    public function getProjectUuid(): Uuid
+    {
+        return $this->project->getUuid();
+    }
+
+    public function getScreenUuid(): Uuid
+    {
+        return $this->screen->getUuid();
+    }
+
+    public function getUserUuid(): Uuid
+    {
+        return $this->user->getUuid();
+    }
+
+    public function getDefaultFields(): array
+    {
+        return [
+            'uuid',
+            'createdAt',
+            'status',
+            'ruleUuid',
+            'projectUuid',
+            'screenUuid',
+            'userUuid',
+        ];
     }
 }

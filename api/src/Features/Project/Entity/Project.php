@@ -32,10 +32,11 @@ class Project implements HasUuidInterface, SerializableInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
-    private readonly Uuid $uuid;
+    #[Assert\Uuid(message: 'L\'UUID du projet doit être un UUID valide.')]
+    private Uuid $uuid;
 
     #[ORM\Column(length: 180)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'Le nom du projet est obligatoire.')]
     private string $name;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
@@ -153,6 +154,7 @@ class Project implements HasUuidInterface, SerializableInterface
             'screens' => [
                 'uuid',
                 'name',
+                'isRoot',
             ],
         ];
     }

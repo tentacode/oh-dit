@@ -26,7 +26,7 @@ class GetProjectCompliancesQuery
         string $projectUuid,
     ): array {
         $sql = <<<SQL
-            SELECT DISTINCT ON (compliance.rule_uuid)
+            SELECT DISTINCT ON (compliance.rule_uuid, compliance.screen_uuid)
                 compliance.uuid,
                 compliance.status,
                 compliance.rule_uuid AS "ruleUuid",
@@ -39,7 +39,7 @@ class GetProjectCompliancesQuery
             JOIN team ON project.team_uuid = team.uuid
             JOIN team_user ON team.uuid = team_user.team_uuid AND team_user.user_uuid = :userUuid
             WHERE compliance.project_uuid = :projectUuid
-            ORDER BY compliance.rule_uuid, compliance.created_at DESC
+            ORDER BY compliance.screen_uuid, compliance.rule_uuid, compliance.created_at DESC
         SQL;
 
         $stmt = $this->connection->prepare($sql);

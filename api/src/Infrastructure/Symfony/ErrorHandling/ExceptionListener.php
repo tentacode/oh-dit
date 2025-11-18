@@ -37,10 +37,15 @@ final class ExceptionListener
 
         if ($exception instanceof BadRequestHttpException) {
             if ($exception->getPrevious() instanceof SuspiciousOperationException) {
-                // SuspiciousOperationException should not be exposed to the client
-                $exception = new LogicException('Suspicious operation should always be handled.', 0, $exception);
-                captureException($exception);
+                $exception = new LogicException('Suspicious operation should always be handled. Previous exception: ' . $exception->getPrevious()->getMessage(), 0, $exception);
 
+                if ($_SERVER['APP_ENV'] === 'dev') {
+                    $event->setResponse($this->createDefaultDevelopmentErrorResponse($exception));
+                    return;
+                }
+
+                // SuspiciousOperationException should not be exposed to the client
+                captureException($exception);
                 $event->setResponse($this->createDefaultErrorResponse());
                 return;
             }
@@ -55,7 +60,7 @@ final class ExceptionListener
         }
 
         if ($exception instanceof NotFoundHttpException) {
-            $event->setResponse($this->createNotFoundErrorResponse());
+            $event->setResponse($this->createNotFoundErrorResponse($exception));
             return;
         }
 
@@ -89,12 +94,12 @@ final class ExceptionListener
         return new JsonResponse($responseBody, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    private function createNotFoundErrorResponse(): JsonResponse
+    private function createNotFoundErrorResponse(NotFoundHttpException $exception): JsonResponse
     {
         return new JsonResponse(
             [
                 'code' => self::NOT_FOUND,
-                'message' => 'Resource not found.',
+                'message' => $_SERVER['APP_ENV'] === 'dev' ? $exception->getMessage() : 'Resource not found.',
             ],
             Response::HTTP_NOT_FOUND,
         );

@@ -1,4 +1,4 @@
-import styles from '../styles/beta-banner.module.css';
+import styles from '../styles/beta_banner.module.css';
 
 export default function BetaBanner() {
 

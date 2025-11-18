@@ -1,0 +1,174 @@
+.auditContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.gridContainer {
+  width: 100%;
+  font-size: 1.2em;
+  padding: 20px;
+}
+
+@media (max-width: 1280px) {
+  .gridContainer {
+    width: 100%;
+  }
+}
+
+.gridSettingsContainer {
+  margin-bottom: 10px;
+}
+
+.gridContainer h2, .gridContainer h3 {
+  font-weight: normal;
+  text-align: left;
+  padding: 10px 20px 10px 20px;
+  font-size: 1.2em;
+  font-weight: 300;
+}
+
+.gridContainer h2 {
+  font-family: Lexend Deca, sans-serif;
+  font-size: 1.3em;
+  font-weight: 600;
+  flex: 1;
+}
+
+.gridContainer h3 {
+  flex: 1;
+  padding-left: 0;
+}
+
+.ruleCategoryRow, .ruleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 5px 20px;
+  border: 2px dashed transparent;
+}
+
+.activeRow {
+  /* background-color: #eae9fb; */
+  border-radius: 10px;
+  border: 2px dashed #010101;
+}
+
+.activeRow h3 {
+  font-weight: 500;
+}
+
+.ruleCategorySpacer {
+  width: 160px;
+}
+
+.ruleCategoryRow .accordionButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.ruleCategoryRow {
+  justify-content: space-between;
+}
+
+.ruleCategoryRow svg {
+  height: 25px;
+  width: 25px;
+}
+
+.complianceStatus {
+  text-transform: capitalize;
+  font-family: Lexend Deca, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.squareButton {
+  background: none;
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.squareButton:hover, .squareButton:focus {
+  border: 5px solid #010101;
+  outline-offset: 2px;
+  outline: 2px solid #010101;
+}
+
+.complianceStatus button {
+  border: 2px solid #ccc;
+}
+
+button.compliant  {
+  border: 5px solid #56C07C !important;
+  outline-color: #56C07C !important;
+  font-weight: 600;
+}
+
+ button.nonCompliant {
+  border: 5px solid #E2026A !important;
+  outline-color: #E2026A !important;
+  font-weight: 600;
+}
+
+button.notApplicable  {
+  border: 5px solid #8579DC !important;
+  outline-color: #8579DC !important;
+  font-weight: 600;
+}
+
+.ruleButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  width: 60px;
+  height: 60px;
+  border: 5px solid transparent;
+  border-radius: 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+.ruleButton .badge {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -2px;
+  right: -2px;
+  background-color: white;
+  color: #010101;
+  border: 2px solid #010101;
+  border-radius: 10px;
+  height: 25px;
+  min-width: 25px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+.ruleButton:hover {
+  border: 5px solid #010101;
+}
+
+.buttonIcon {
+  height: 40px;
+  width: 40px;
+}
+
+.buttonIcon path {
+  stroke-width: 1 !important;
+}

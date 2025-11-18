@@ -23,10 +23,11 @@ class Team implements HasUuidInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
-    private readonly Uuid $uuid;
+    #[Assert\Uuid(message: 'L\'UUID de l\'équipe doit être un UUID valide.')]
+    private Uuid $uuid;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'Le nom de l\'équipe est obligatoire.')]
     private string $name;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]

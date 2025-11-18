@@ -20,10 +20,11 @@ class Rule implements HasUuidInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
-    private readonly Uuid $uuid;
+    #[Assert\Uuid(message: 'L\'UUID de la règle doit être un UUID valide.')]
+    private Uuid $uuid;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'La description courte de la règle est obligatoire.')]
     private string $shortDescription;
 
     #[ORM\Column(length: 180, nullable: true)]

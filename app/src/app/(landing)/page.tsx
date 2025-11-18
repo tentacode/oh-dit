@@ -1,6 +1,6 @@
 "use client";
 
-import ProjectGrid from "@/src/features/project/components/ProjectGrid";
+import ProjectList from "@/src/features/project/components/ProjectList";
 import { AuthenticatedLayout } from "../../components/layouts/AuthenticatedLayout";
 import { CheckCircleIcon, FolderPlusIcon } from "@heroicons/react/24/outline";
 import CallToActionLink from "@/src/components/form/CallToActionLink";
@@ -43,13 +43,13 @@ export default function Projects() {
         <SuccessMessage />
       </Suspense>
         <div className="flex items-center align-center mb-10 gap-10">
-          <h1 className="m-0">Vos audits</h1>
+          <h1 className="h1 m-0">Vos audits</h1>
           <CallToActionLink href="/projet/nouveau">
             <FolderPlusIcon />
             Créer un nouvel audit
           </CallToActionLink>
         </div>
-        <ProjectGrid />
+        <ProjectList />
     </AuthenticatedLayout>
   );
 }

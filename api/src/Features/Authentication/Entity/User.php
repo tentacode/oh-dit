@@ -27,7 +27,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuid
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
-    private readonly Uuid $uuid;
+    #[Assert\Uuid(message: 'L\'UUID de l\'utilisateur doit être un UUID valide.')]
+    private Uuid $uuid;
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\Email]
@@ -149,5 +150,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuid
         WebmozartAssert::isInstanceOf($team, Team::class, 'User does not belong to any team.');
 
         return $team;
+    }
+
+    public function isInTeam(Team $team): bool
+    {
+        return $this->teams->contains($team);
     }
 }

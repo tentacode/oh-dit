@@ -15,4 +15,8 @@ export interface ProjectInterface {
         name: string;
         version: string;
     };
+    screens: {
+        uuid: string;
+        name: string;
+    }[];
 }

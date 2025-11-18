@@ -22,10 +22,11 @@ class RuleCategory implements HasUuidInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
-    private readonly Uuid $uuid;
+    #[Assert\Uuid(message: 'L\'UUID de la catégorie doit être un UUID valide.')]
+    private Uuid $uuid;
 
     #[ORM\Column(length: 180)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'Le nom de la catégorie est obligatoire.')]
     private string $name;
 
     #[ORM\Column(length: 180, nullable: true)]

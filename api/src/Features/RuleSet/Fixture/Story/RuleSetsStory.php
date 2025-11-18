@@ -15,11 +15,11 @@ use Zenstruck\Foundry\Story;
 #[AsFixture(name: 'rule_sets', groups: ['all'])]
 final class RuleSetsStory extends Story
 {
-    public const RULE_SET_EMPIRE_UUID = '12341234-0000-0000-0000-000000000001';
+    public const RULE_SET_EMPIRE_UUID = '12341234-0000-4000-8000-000000000001';
 
-    public const RULE_CATEGORY_BASE_UUID = '12341234-1111-0000-0000-';
+    public const RULE_CATEGORY_BASE_UUID = '12341234-1111-4000-8000-';
 
-    public const RULE_BASE_UUID = '12341234-2222-0000-';
+    public const RULE_BASE_UUID = '12341234-2222-4000-8';
 
     public function build(): void
     {
@@ -58,7 +58,7 @@ final class RuleSetsStory extends Story
             $ruleIndex = 1;
             foreach ($categoryData['rules'] as $ruleData) {
                 $rule = RuleFactory::createOne([
-                    'uuid' => self::RULE_BASE_UUID . str_pad((string) $categoryIndex, 4, '0', STR_PAD_LEFT) . '-' . str_pad((string) $ruleIndex, 12, '0', STR_PAD_LEFT),
+                    'uuid' => self::RULE_BASE_UUID . str_pad((string) $categoryIndex, 3, '0', STR_PAD_LEFT) . '-' . str_pad((string) $ruleIndex, 12, '0', STR_PAD_LEFT),
                     'prefix' => $ruleData['prefix'],
                     'shortDescription' => $ruleData['description'],
                     'ruleCategory' => $ruleCategory,

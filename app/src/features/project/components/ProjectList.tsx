@@ -5,7 +5,7 @@ import { ProjectInterface } from "../types/ProjectInterface";
 import ProjectCard from "./ProjectCard";
 import ErrorBox from "../../error_handling/components/ErrorBox";
 
-export default function ProjectGrid() {
+export default function ProjectList() {
   const { data: projects, isLoading, isError } = useFetchProjects();
 
   if (isLoading) return (<CardSkeleton />);

@@ -9,7 +9,7 @@
 		<p>Le même menu mais corrigé pour être accessible.</p>
 
 		<nav role="navigation" aria-label="Menu principal">
-			<button id="burgerMenu" aria-label="Menu" aria-expanded="false">
+			<button id="burgerMenu" aria-label="Menu" aria-expanded="false" onclick="toggleMenu()">
 				<img src="/labs/img/burger-123.png" alt="" />
 			</button>
 			<ul id="mobileMenu" style="display: none;">
@@ -33,11 +33,6 @@
 
 				isOpened = !isOpened;
 			}
-
-			// le "click" sur un <button> répond aussi à la touche "Espace" et "Entrée"
-			document.getElementById("burgerMenu").addEventListener("click", function () {
-				toggleMenu();
-			});
 
 			document.querySelectorAll("#burgerMenu, #mobileMenu a").forEach((link) => {
 				link.addEventListener("keydown", (e) => {

@@ -41,11 +41,18 @@ final class GetProjectsControllerTest extends WebTestCase
                 'screens' => [
                     [
                         'uuid' => '@uuid@',
+                        'name' => 'Éléments transverses',
+                        'isRoot' => true,
+                    ],
+                    [
+                        'uuid' => '@uuid@',
                         'name' => 'Home Screen',
+                        'isRoot' => false,
                     ],
                     [
                         'uuid' => '@uuid@',
                         'name' => 'Contact Screen',
+                        'isRoot' => false,
                     ],
                 ],
                 'ruleSet' => [

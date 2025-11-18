@@ -47,11 +47,18 @@ final class CreateProjectControllerTest extends WebTestCase
             'screens' => [
                 [
                     'uuid' => '@uuid@',
+                    'name' => 'Éléments transverses',
+                    'isRoot' => true,
+                ],
+                [
+                    'uuid' => '@uuid@',
                     'name' => 'Page 1',
+                    'isRoot' => false,
                 ],
                 [
                     'uuid' => '@uuid@',
                     'name' => 'Page 2',
+                    'isRoot' => false,
                 ],
             ],
             'ruleSet' => [

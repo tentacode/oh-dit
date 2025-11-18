@@ -29,7 +29,7 @@ final class GetProjectCompliancesTest extends WebTestCase
             ),
         );
 
-        $this->assertJsonResponseLength(3, $response);
+        $this->assertJsonResponseLength(4, $response);
 
         $this->assertJsonResponseMatches([
             [
@@ -57,6 +57,15 @@ final class GetProjectCompliancesTest extends WebTestCase
                 'projectUuid' => ProjectsStory::PROJECT_DEATH_STAR_UUID,
                 'screenUuid' => ProjectsStory::SCREEN_HOME_UUID,
                 'status' => 'not_applicable',
+                'createdAt' => '@datetime@',
+            ],
+            [
+                'uuid' => '@uuid@',
+                'ruleUuid' => '@uuid@',
+                'userUuid' => '@uuid@',
+                'projectUuid' => ProjectsStory::PROJECT_DEATH_STAR_UUID,
+                'screenUuid' => ProjectsStory::SCREEN_CONTACT_UUID,
+                'status' => 'compliant',
                 'createdAt' => '@datetime@',
             ],
         ], $response, Response::HTTP_OK);

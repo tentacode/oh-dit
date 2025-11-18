@@ -24,7 +24,7 @@
 			<li>Le menu n'a pas de sémentique de liste.</li>
 		</ul>
 
-		<div id="burgerMenu">
+		<div id="burgerMenu" onclick="toggleMenu()">
 			<img src="/labs/img/burger-123.png" />
 		</div>
 		<div id="mobileMenu" style="display: none;">
@@ -32,6 +32,7 @@
 			<div><a href="/profil">Mon profil</a></div>
 			<div><a href="/contact">Contactez-nous</a></div>
 		</div>
+
 		<script type="text/javascript">
 			let isOpened = false;
 			function toggleMenu() {
@@ -42,10 +43,6 @@
 				}
 				isOpened = !isOpened;
 			}
-
-			document.getElementById("burgerMenu").addEventListener("click", function (event) {
-				toggleMenu();
-			});
 		</script>
 	</body>
 </html>
