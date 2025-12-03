@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Features\Compliance\Controller;
+namespace App\Features\Recommandation\Controller;
 
 use App\Features\Authentication\Entity\User;
-use App\Features\Compliance\Command\CreateComplianceCommand;
-use App\Features\Compliance\Command\CreateComplianceRequest;
+use App\Features\Recommandation\Command\CreateRecommandationCommand;
+use App\Features\Recommandation\Command\CreateRecommandationRequest;
 use App\Infrastructure\Symfony\Controller\ApiController;
 use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,24 +15,24 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
-class CreateComplianceController extends ApiController
+class CreateRecommandationController extends ApiController
 {
     public function __construct(
-        private CreateComplianceCommand $createComplianceCommand
+        private CreateRecommandationCommand $createRecommandationCommand
     ) {
     }
 
-    #[Route('/api/compliances', name: 'create_project_compliance', methods: ['POST'], format: 'json')]
+    #[Route('/api/recommandations', name: 'create_project_recommandation', methods: ['POST'], format: 'json')]
     public function __invoke(
         #[MapRequestPayload()]
-        CreateComplianceRequest $createComplianceRequest,
+        CreateRecommandationRequest $createRecommandationRequest,
         #[CurrentUser]
         User $user
     ): JsonResponse {
         try {
-            $compliance = ($this->createComplianceCommand)(user: $user, createComplianceRequest: $createComplianceRequest);
+            $recommandation = ($this->createRecommandationCommand)(user: $user, createRecommandationRequest: $createRecommandationRequest);
 
-            return $this->getSerializedJsonResponse($compliance, JsonResponse::HTTP_CREATED);
+            return $this->getSerializedJsonResponse($recommandation, JsonResponse::HTTP_CREATED);
         } catch (SuspiciousOperationException $e) {
             throw new NotFoundHttpException('Resource not found.');
         }
