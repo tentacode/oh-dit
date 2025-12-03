@@ -128,6 +128,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuid
         return $this->updatedAt;
     }
 
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
     public function getRoles(): array
     {
         return ['ROLE_USER'];
