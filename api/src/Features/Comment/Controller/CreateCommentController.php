@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Features\Compliance\Controller;
+namespace App\Features\Comment\Controller;
 
 use App\Features\Authentication\Entity\User;
-use App\Features\Compliance\Command\CreateComplianceCommand;
-use App\Features\Compliance\Command\CreateComplianceRequest;
+use App\Features\Comment\Command\CreateCommentCommand;
+use App\Features\Comment\Command\CreateCommentRequest;
 use App\Infrastructure\Symfony\Controller\ApiController;
 use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,24 +15,24 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
-class CreateComplianceController extends ApiController
+class CreateCommentController extends ApiController
 {
     public function __construct(
-        private CreateComplianceCommand $createComplianceCommand
+        private CreateCommentCommand $createCommentCommand
     ) {
     }
 
-    #[Route('/api/compliances', name: 'create_project_compliance', methods: ['POST'], format: 'json')]
+    #[Route('/api/comments', name: 'create_project_comment', methods: ['POST'], format: 'json')]
     public function __invoke(
         #[MapRequestPayload()]
-        CreateComplianceRequest $createComplianceRequest,
+        CreateCommentRequest $createCommentRequest,
         #[CurrentUser]
         User $user
     ): JsonResponse {
         try {
-            $compliance = ($this->createComplianceCommand)(user: $user, createComplianceRequest: $createComplianceRequest);
+            $comment = ($this->createCommentCommand)(user: $user, createCommentRequest: $createCommentRequest);
 
-            return $this->getSerializedJsonResponse($compliance, JsonResponse::HTTP_CREATED);
+            return $this->getSerializedJsonResponse($comment, JsonResponse::HTTP_CREATED);
         } catch (SuspiciousOperationException $e) {
             throw new NotFoundHttpException('Resource not found.');
         }
