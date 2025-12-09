@@ -4,6 +4,10 @@
   width: 100%;
 }
 
+.drawerSpacer {
+  width: calc(var(--drawerWidth) + 200px); /* use variable */
+}
+
 .gridContainer {
   width: 100%;
   font-size: 1.2em;
@@ -17,7 +21,12 @@
 }
 
 .gridSettingsContainer {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  background: #ffece6;
+  color: #010101;
+  border-radius: 10px;
+  padding: 10px 20px;     
+  font-weight: 600;
 }
 
 .gridContainer h2, .gridContainer h3 {
@@ -41,12 +50,16 @@
 }
 
 .ruleCategoryRow, .ruleRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
   padding: 5px 20px;
   border: 2px dashed transparent;
+}
+
+.ruleRowHeader, .ruleCategoryRow {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .activeRow {
@@ -57,10 +70,6 @@
 
 .activeRow h3 {
   font-weight: 500;
-}
-
-.ruleCategorySpacer {
-  width: 160px;
 }
 
 .ruleCategoryRow .accordionButton {
@@ -129,6 +138,13 @@ button.notApplicable  {
   font-weight: 600;
 }
 
+button.disabled  {
+  border: 5px dashed #EEE !important;
+  outline-color: #EEE !important;
+  color: #949494;
+  font-weight: 600;
+}
+
 .ruleButton {
   display: flex;
   align-items: center;
@@ -171,4 +187,9 @@ button.notApplicable  {
 
 .buttonIcon path {
   stroke-width: 1 !important;
+}
+
+.activeTab {
+  border: 5px solid #8579DC !important;
+  outline-color: #8579DC !important;
 }

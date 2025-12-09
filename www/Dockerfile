@@ -24,4 +24,4 @@ EXPOSE 4321
 # Copy the rest of the app
 COPY . .
 
-CMD ["npm", "run", "dev"]
+CMD ["sh", "-c", "npm install @rollup/rollup-linux-arm64-musl && npm run dev"]

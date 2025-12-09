@@ -7,6 +7,8 @@ namespace App\Features\Compliance\Fixture\Story;
 use App\Features\Authentication\Fixture\Story\TeamUsersStory;
 use App\Features\Compliance\Entity\ComplianceStatus;
 use App\Features\Compliance\Fixture\Factory\ComplianceFactory;
+use App\Features\Compliance\Fixture\Factory\IssueFactory;
+use App\Features\Issue\Entity\Severity;
 use App\Features\Project\Fixture\Story\ProjectsStory;
 use App\Features\RuleSet\Fixture\Story\RuleSetsStory;
 use Safe\DateTimeImmutable;
@@ -22,6 +24,7 @@ final class CompliancesStory extends Story
         ProjectsStory::load();
         RuleSetsStory::load();
 
+        // NC sur 1.1 et la page home
         ComplianceFactory::new()->create([
             'user' => TeamUsersStory::get(TeamUsersStory::USER_DARTH_VADER_UUID),
             'status' => ComplianceStatus::NON_COMPLIANT,
@@ -31,6 +34,60 @@ final class CompliancesStory extends Story
             'createdAt' => new DateTimeImmutable('-3 hours'),
         ]);
 
+        // Deux issues sur la règle 1.1 pour la page home
+        $issueText = <<<MARKDOWN
+            Les stormtroopers manque la cible à moins de 10 mètres, 8 fois sur 10.
+
+            C'est **extrèmement problématique** pour la crédibilité de l'Empire Galactique.
+
+            Plusieurs stormtroopers m'ont confirmé que leurs blasters étaient mal calibrés. Il faudrait ajouter une correction au code du viseur :
+
+            ```js
+            function calibrateBlaster(blaster) {
+                if (blaster.accuracy < 90) {
+                    blaster.adjustSight(5); // Ajuste le viseur de 5 unités
+                }
+            }
+            ```
+
+            Il faudrait également ajouter une alerte dans le tableau de bord des stormtroopers pour les prévenir lorsque leur blaster nécessite une recalibration, voici une suggestion d'implémentation :
+
+            ```javascript
+            import sentry from 'sentry-sdk';
+
+            function checkBlasterStatus(blaster) {
+                if (blaster.accuracy < 90) {
+                    sentry.captureMessage(`Blaster \${blaster.id} needs recalibration.`);
+
+                    console.error(`Alerte : Le blaster \${blaster.id} nécessite une recalibration !`);
+                }
+            }
+            ```
+            MARKDOWN;
+
+        IssueFactory::new()->create([
+            'uuid' => '00000000-0000-4000-8000-000000013337',
+            'user' => TeamUsersStory::get(TeamUsersStory::USER_DARTH_VADER_UUID),
+            'issueId' => 1337,
+            'rule' => RuleSetsStory::get('rule_1.1'),
+            'project' => ProjectsStory::get(ProjectsStory::PROJECT_DEATH_STAR_UUID),
+            'screen' => ProjectsStory::get(ProjectsStory::SCREEN_HOME_UUID),
+            'severity' => Severity::BLOCKING,
+            'text' => $issueText,
+        ]);
+
+        IssueFactory::new()->create([
+            'uuid' => '00000000-0000-4000-8000-000000013338',
+            'user' => TeamUsersStory::get(TeamUsersStory::USER_DARTH_VADER_UUID),
+            'issueId' => 1338,
+            'rule' => RuleSetsStory::get('rule_1.1'),
+            'project' => ProjectsStory::get(ProjectsStory::PROJECT_DEATH_STAR_UUID),
+            'screen' => ProjectsStory::get(ProjectsStory::SCREEN_HOME_UUID),
+            'severity' => Severity::MODERATE,
+            'text' => 'Les stormtroopers ne portent pas correctement leur casque dans 30% des cas.',
+        ]);
+
+        // 1.1 compliant sur la page contact
         ComplianceFactory::new()->create([
             'user' => TeamUsersStory::get(TeamUsersStory::USER_DARTH_VADER_UUID),
             'status' => ComplianceStatus::COMPLIANT,
@@ -40,6 +97,7 @@ final class CompliancesStory extends Story
             'createdAt' => new DateTimeImmutable('-3 hours'),
         ]);
 
+        // 1.2 non compliant then compliant on the page home
         ComplianceFactory::new()->create([
             'user' => TeamUsersStory::get(TeamUsersStory::USER_DARTH_VADER_UUID),
             'status' => ComplianceStatus::NON_COMPLIANT,
@@ -59,12 +117,13 @@ final class CompliancesStory extends Story
             'createdAt' => new DateTimeImmutable('-2 hours'),
         ]);
 
+        // 1.3 non applicable on the page home
         ComplianceFactory::new()->create([
             'user' => TeamUsersStory::get(TeamUsersStory::USER_DARTH_VADER_UUID),
             'status' => ComplianceStatus::NOT_APPLICABLE,
             'project' => ProjectsStory::get(ProjectsStory::PROJECT_DEATH_STAR_UUID),
             'screen' => ProjectsStory::get(ProjectsStory::SCREEN_HOME_UUID),
-            'rule' => RuleSetsStory::get('rule_1.4'),
+            'rule' => RuleSetsStory::get('rule_1.3'),
             'createdAt' => new DateTimeImmutable('-1 hours'),
         ]);
     }

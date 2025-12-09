@@ -3,21 +3,30 @@ import styles from "../../../styles/audit_grid.module.css";
 import { clsx } from 'clsx';
 import { ComplianceStatus as ComplianceStatusType } from "../../../types/RuleSetTypes";
 import { useCreateCompliance } from "@/src/features/compliance/mutations/useCreateCompliance";
+import { useIssuesFormStateStore } from "@/src/features/issue/store/issuesFormStateStore";
 
 export default function ComplianceStatus({
   ruleUuid,
   projectUuid,
   screenUuid,
+  onNonCompliantClick,
 }: {
   ruleUuid: string;
   projectUuid: string;
   screenUuid: string;
+  onNonCompliantClick: () => void;
 }) {
-  const getCompliance = useAuditStore((state) => state.getCompliance);
+  const compliances = useAuditStore((state) => state.compliances);
   const overrideCompliance = useAuditStore((state) => state.overrideCompliance);
   const setActiveElement = useAuditStore((state) => state.setActiveElement);
 
-  const compliance = getCompliance(ruleUuid, projectUuid, screenUuid);
+  const removeIssueFormState = useIssuesFormStateStore((state) => state.removeIssueFormState);  
+
+  const compliance = compliances.find((compliance) =>
+    compliance.ruleUuid === ruleUuid &&
+    compliance.projectUuid === projectUuid &&
+    compliance.screenUuid === screenUuid
+  );
 
   const createCompliance = useCreateCompliance();
 
@@ -45,7 +54,6 @@ export default function ComplianceStatus({
     setActiveElement({ "ruleUuid": ruleUuid, "screenUuid": screenUuid });
 
     const updatedCompliance = {
-      // uuid: compliance?.uuid ?? uuidv4(), // Générer un uuid si nouvelle compliance
       ruleUuid,
       projectUuid,
       screenUuid,
@@ -54,6 +62,11 @@ export default function ComplianceStatus({
     
     // Store is updated before API call to provide instant feedback
     overrideCompliance(updatedCompliance);
+
+    if (newStatus === 'non_compliant') {
+      onNonCompliantClick();
+      removeIssueFormState(ruleUuid, screenUuid);
+    }
     
     try {
       await createCompliance.mutateAsync(updatedCompliance);

@@ -6,6 +6,6 @@ export interface ComplianceInterface {
     createdAt: string;
     ruleUuid: string;
     projectUuid: string;
-    screenUuid: string | undefined;
+    screenUuid: string;
     userUuid: string;
 }

@@ -58,7 +58,6 @@ export default function NewProjectForm() {
       router.push(`/?success=${encodeURIComponent(`L'audit pour le projet "${name}" a été créé.`)}`);
     } catch (apiError) {
       if (apiError instanceof ApiError) {
-        console.log("apiError.errors", apiError.errors);
         setErrors(apiError.errors || []);
       }
     } finally {

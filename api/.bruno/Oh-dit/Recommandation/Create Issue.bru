@@ -1,0 +1,31 @@
+meta {
+  name: Create Issue
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/api/issues
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "text": "mdr sa march pa",
+    "severity": "blocking",
+    "ruleUuid": "12341234-2222-4000-8001-000000000006",
+    "projectUuid": "22222222-0000-4000-8000-000000000001",
+    "screenUuid": "33333333-0000-4000-8000-000000000001"
+  }
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

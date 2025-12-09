@@ -1,21 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FFF5F3;
-  --foreground: #010101;
+  --backgroundColor: #FFF5F3;
+  --foregroundColor: #010101;
+
+  --drawerWidth: 500px;
+  --auditHeaderHeight: 350px;
+  --drawerTop: 350px; /* default drawer top margin, updated with JS */
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--backgroundColor);
+  --color-foreground: var(--foregroundColor);
   --font-heading: var(--font-lexend-deca);
   --color-accent: #8579DC;
   --color-primary: #010101;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--backgroundColor);
+  color: var(--foregroundColor);
   font-size: 16px;
 }
 
@@ -91,3 +95,22 @@ a:focus {
   text-decoration-color: #E2026A;
   text-decoration-style: wavy;
 }
+
+dl {
+  margin-bottom: 1em;
+  display: grid;
+  grid-template-columns: max-content auto;
+  column-gap: 5px;
+}
+
+dt {
+  font-weight: 600;
+  font-family: 'Lexend Deca', sans-serif;
+}
+
+dd {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+

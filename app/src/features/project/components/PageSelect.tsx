@@ -4,25 +4,33 @@ import styles from "../../../components/form/styles/select.module.css";
 import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
 import CheckIcon from "@heroicons/react/24/solid/esm/CheckIcon";
 import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
+import { getProjectUrl } from "@/src/app/projet/routing";
+import { useAuditSettingsStore } from "../../audit/store/auditSettingsStore";
 
-export default function PageSelect() {
-  const currentScreenUuid = useAuditStore((state) => state.currentScreenUuid);
-  const setCurrentScreenUuid = useAuditStore(
-    (state) => state.setCurrentScreenUuid
-  );
+export default function PageSelect({screenUuid}: {screenUuid: string}) {
+  const router = useRouter();
+
   const project = useAuditStore((state) => state.project);
+  const setProjectSetting = useAuditSettingsStore((state) => state.setProjectSetting);
 
   if (!project) {
     return null;
   }
 
-  const currentScreen = project.screens.find((screen => screen.uuid === currentScreenUuid));
+  const currentScreen = project.screens.find((screen => screen.uuid === screenUuid));
   if (!currentScreen) {
     throw new Error("Current screen not found");
   }
 
+  const setScreenUuid = (newValue: string) => {
+    setProjectSetting({ projectUuid: project.uuid, currentScreenUuid: newValue });
+    
+    router.replace(getProjectUrl.auditScreen(project.uuid, newValue));
+  };
+
   return (
-    <Listbox value={currentScreenUuid} onChange={setCurrentScreenUuid}>
+    <Listbox value={screenUuid} onChange={setScreenUuid}>
       <div className={styles.selectContainer}>
         <Label aria-hidden="true" className="block">Page en cours :</Label>
         <div>
