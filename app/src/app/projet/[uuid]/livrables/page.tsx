@@ -7,7 +7,7 @@ export default function ProjectDeliverablesPage() {
         padding: "20px",
       }}
     >
-      Page recommandations.
+      Page livrables.
     </p>
   );
 }

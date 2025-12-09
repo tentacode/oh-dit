@@ -64,12 +64,12 @@ tests: ## Run all tests
 	echo "$(GREEN)www prettier passed!$(NC)" && \
 	docker compose exec app npm run lint-fix && \
 	echo "$(GREEN)app eslint passed!$(NC)" && \
-	docker compose exec api bin/phpstan --memory-limit=1G && \
-	echo "$(GREEN)phpstan passed!$(NC)" && \
 	docker compose exec api bin/ecs --fix && \
 	echo "$(GREEN)ecs passed!$(NC)" && \
 	docker compose exec api bin/rector process src && \
 	echo "$(GREEN)rector passed!$(NC)" && \
+	docker compose exec api bin/phpstan --memory-limit=1G && \
+	echo "$(GREEN)phpstan passed!$(NC)" && \
 	docker compose exec api bin/phpunit --testdox --fail-on-warning --fail-on-risky --fail-on-incomplete --fail-on-skipped && \
 	echo "$(GREEN)phpunit passed!$(NC)" && \
 	docker compose exec app npm run typescript && \

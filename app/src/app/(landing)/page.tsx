@@ -6,6 +6,7 @@ import { CheckCircleIcon, FolderPlusIcon } from "@heroicons/react/24/outline";
 import CallToActionLink from "@/src/components/form/CallToActionLink";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { getProjectUrl } from "../projet/routing";
 
 const SuccessMessage = () => {
   const searchParams = useSearchParams();
@@ -44,7 +45,7 @@ export default function Projects() {
       </Suspense>
         <div className="flex items-center align-center mb-10 gap-10">
           <h1 className="h1 m-0">Vos audits</h1>
-          <CallToActionLink href="/projet/nouveau">
+          <CallToActionLink href={getProjectUrl.new()}>
             <FolderPlusIcon />
             Créer un nouvel audit
           </CallToActionLink>

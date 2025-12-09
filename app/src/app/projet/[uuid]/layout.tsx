@@ -16,21 +16,49 @@ import {
 import Cog6ToothIcon from "@heroicons/react/24/solid/esm/Cog6ToothIcon";
 import { useParams, usePathname } from "next/navigation";
 import { getProjectUrl, isProjectRoute } from "../routing";
+import { useAuditStore } from "@/src/features/audit/store/auditStore";
+import { useAuditSettingsStore } from "@/src/features/audit/store/auditSettingsStore";
 
 enum AuditTab {
   DASHBOARD = "dashboard",
   AUDIT = "audit",
-  RECOMMENDATIONS = "recommendations",
+  RECOMMENDATIONS = "issues",
   DELIVERABLES = "deliverables",
   SETTINGS = "settings",
 }
  
 const getActiveTab = (pathname: string): AuditTab => {
   if (isProjectRoute.audit(pathname)) return AuditTab.AUDIT
-  if (isProjectRoute.recommendations(pathname)) return AuditTab.RECOMMENDATIONS
+  if (isProjectRoute.issues(pathname)) return AuditTab.RECOMMENDATIONS
   if (isProjectRoute.deliverables(pathname)) return AuditTab.DELIVERABLES
   if (isProjectRoute.settings(pathname)) return AuditTab.SETTINGS
   return AuditTab.DASHBOARD
+}
+
+function AuditScreenTab ({ selectedTab, projectUuid }: { selectedTab: AuditTab, projectUuid: string }) {
+  const getProjectSetting = useAuditSettingsStore((state) => state.getProjectSetting);
+  const projectSetting = getProjectSetting(projectUuid);
+  
+  let screenUuid = projectSetting.currentScreenUuid;
+
+  const project = useAuditStore((state) => state.project);
+
+  if (!project) {
+    return null;
+  }
+
+  if (screenUuid === null) {
+    screenUuid = project.screens[0]?.uuid || null;
+    if (!screenUuid) {
+      throw new Error("No screen available for this project.");
+    }
+  }
+
+  return (
+      <Tab isActive={selectedTab === AuditTab.AUDIT} href={getProjectUrl.auditScreen(projectUuid, screenUuid)}>
+        <ClipboardDocumentCheckIcon /> Audit
+      </Tab>
+  );
 }
 
 export default function ProjectLayout({
@@ -43,6 +71,8 @@ export default function ProjectLayout({
 
   const selectedTab = getActiveTab(pathname);
 
+  const issuesCount = useAuditStore((state) => state.issues.length || 0);
+
   return (
     <AuthenticatedLayout mainClass="tabLayout">
       <ProjectDataProvider projectUuid={params.uuid as string}>
@@ -52,13 +82,11 @@ export default function ProjectLayout({
           <Tab isActive={selectedTab === AuditTab.DASHBOARD} href={getProjectUrl.dashboard(params.uuid as string)}>
             <ChartPieIcon /> Résumé
           </Tab>
-          <Tab isActive={selectedTab === AuditTab.AUDIT} href={getProjectUrl.audit(params.uuid as string)}>
-            <ClipboardDocumentCheckIcon /> Audit
-          </Tab>
-          <Tab isActive={selectedTab === AuditTab.RECOMMENDATIONS} href={getProjectUrl.recommendations(params.uuid as string)}>
+          <AuditScreenTab selectedTab={selectedTab} projectUuid={params.uuid as string} />
+          <Tab isActive={selectedTab === AuditTab.RECOMMENDATIONS} href={getProjectUrl.issues(params.uuid as string)}>
             <ExclamationTriangleIcon />
             Recommandations
-            <TabBadge value="5" />
+            <TabBadge value={issuesCount.toString()} />
           </Tab>
           <Tab isActive={selectedTab === AuditTab.DELIVERABLES} href={getProjectUrl.deliverables(params.uuid as string)}>
             <DocumentCheckIcon /> Livrables

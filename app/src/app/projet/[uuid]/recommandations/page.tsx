@@ -1,13 +1,13 @@
 "use client";
 
-export default function ProjectRecommendationsPage() {
+export default function ProjectIssuesPage() {
   return (
     <p
       style={{
         padding: "20px",
       }}
     >
-      Page livrables.
+      Page recommandations.
     </p>
   );
 }

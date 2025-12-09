@@ -6,6 +6,8 @@ import { useFetchProject } from "../queries/useFetchProject";
 import CardSkeleton from "@/src/components/skeleton/CardSkeleton";
 import ErrorBox from "../../error_handling/components/ErrorBox";
 import { notFound } from "next/navigation";
+import { useFetchProjectIssues } from "../../issue/queries/useFetchProjectIssues";
+import { useAuditSettingsStore } from "../../audit/store/auditSettingsStore";
 
 export default function ProjectDataProvider({
   projectUuid,
@@ -19,11 +21,13 @@ export default function ProjectDataProvider({
     isLoading: isLoadingProject,
     isError: isErrorProject,
   } = useFetchProject(projectUuid);
+  
   const {
     data: projectCompliances,
     isLoading: isLoadingCompliances,
     isError: isErrorCompliances,
   } = useFetchProjectCompliances(projectUuid);
+
   const {
     data: ruleSet,
     isLoading: isLoadingRuleSet,
@@ -31,27 +35,32 @@ export default function ProjectDataProvider({
   } = useFetchRuleSet(project?.ruleSet.uuid ?? "", {
     enabled: project?.ruleSet.uuid !== undefined,
   });
-  const { setProject, setCompliances, setCurrentScreenUuid, setRuleSet } =
+
+  const {
+    data: projectIssues,
+    isLoading: isLoadingIssues,
+    isError: isErrorIssues,
+  } = useFetchProjectIssues(projectUuid);
+
+  const { setProject, setCompliances, setRuleSet, setIssues } =
     useAuditStore();
 
-  useEffect(() => {
-    if (project) {
-      setCurrentScreenUuid(
-        project.screens.length > 0 ? project.screens[0].uuid : undefined
-      );
-    } else {
-      setCurrentScreenUuid(undefined);
-    }
-  }, [project, setCurrentScreenUuid ]);
+  const getProjectSetting = useAuditSettingsStore((state) => state.getProjectSetting); 
+  const projectSetting = getProjectSetting(projectUuid);
+  const setProjectSetting = useAuditSettingsStore((state) => state.setProjectSetting);
 
   useEffect(() => {
     if (project) {
       setProject(project);
-      setCurrentScreenUuid(
-        project.screens.length > 0 ? project.screens[0].uuid : undefined
-      );
+
+      if (!projectSetting.currentScreenUuid) {
+        const firstScreenUuid = project.screens[0]?.uuid || null;
+        if (firstScreenUuid) {
+          setProjectSetting({ projectUuid, currentScreenUuid: firstScreenUuid });
+        }
+      }
     }
-  }, [project, setProject, setCurrentScreenUuid]);
+  }, [project, setProject, projectSetting.currentScreenUuid, setProjectSetting, projectUuid]);
 
   useEffect(() => {
     if (ruleSet) {
@@ -65,10 +74,16 @@ export default function ProjectDataProvider({
     }
   }, [projectCompliances, setCompliances]);
 
-  if (isLoadingProject || isLoadingCompliances || isLoadingRuleSet)
+  useEffect(() => {
+    if (projectIssues) {
+      setIssues(projectIssues);
+    }
+  }, [projectIssues, setIssues]);
+
+  if (isLoadingProject || isLoadingCompliances || isLoadingRuleSet || isLoadingIssues)
     return <CardSkeleton />;
 
-  if (isErrorProject || isErrorCompliances || isErrorRuleSet)
+  if (isErrorProject || isErrorCompliances || isErrorRuleSet || isErrorIssues)
     return (
       <ErrorBox message="Une erreur est survenue lors du chargement du projet." />
     );

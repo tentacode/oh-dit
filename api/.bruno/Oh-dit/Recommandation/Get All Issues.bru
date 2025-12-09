@@ -1,0 +1,21 @@
+meta {
+  name: Get All Issues
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{BASE_URL}}/api/projects/22222222-0000-4000-8000-000000000001/issues
+  body: formUrlEncoded
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{AUTH_TOKEN}}
+  ~Content-Type: application/json
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

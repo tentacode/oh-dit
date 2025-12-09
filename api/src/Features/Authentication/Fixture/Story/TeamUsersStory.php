@@ -23,6 +23,7 @@ final class TeamUsersStory extends Story
 
     public function build(): void
     {
+        // The Empire
         $darthVader = UserFactory::createOne([
             'uuid' => self::USER_DARTH_VADER_UUID,
             'email' => 'darth_vader@empire.com',
@@ -32,13 +33,6 @@ final class TeamUsersStory extends Story
 
         $this->addToPool('users', $darthVader);
         $this->addState(self::USER_DARTH_VADER_UUID, $darthVader, 'users');
-
-        $lukeSkywalker = UserFactory::createOne([
-            'uuid' => self::USER_LUKE_SKYWALKER_UUID,
-            'email' => 'luke@rebels.com',
-            'plainPassword' => 'luke69420',
-            'username' => 'Luke Skywalker',
-        ]);
 
         $theEmpire = TeamFactory::new()->withoutPersisting()->create([
             'uuid' => self::TEAM_THE_EMPIRE_UUID,
@@ -51,6 +45,14 @@ final class TeamUsersStory extends Story
         $theEmpire->addUser($darthVader);
         save($theEmpire);
 
+        // Rebels
+        $lukeSkywalker = UserFactory::createOne([
+            'uuid' => self::USER_LUKE_SKYWALKER_UUID,
+            'email' => 'luke@rebels.com',
+            'plainPassword' => 'luke69420',
+            'username' => 'Luke Skywalker',
+        ]);
+
         $theRebellion = TeamFactory::new()->withoutPersisting()->create([
             'uuid' => self::TEAM_THE_REBELLION_UUID,
             'name' => 'The Rebellion',
@@ -61,5 +63,25 @@ final class TeamUsersStory extends Story
 
         $theRebellion->addUser($lukeSkywalker);
         save($theRebellion);
+
+        // Gandalf
+        $gandalf = UserFactory::createOne([
+            'email' => 'gandalf@middleearth.com',
+            'plainPassword' => 'youShallNotPass',
+            'username' => 'Gandalf the Grey',
+        ]);
+
+        $this->addToPool('users', $gandalf);
+        $this->addState('gandalf', $gandalf, 'users');
+
+        $theFellowship = TeamFactory::new()->withoutPersisting()->create([
+            'name' => 'The Fellowship',
+        ]);
+
+        $this->addToPool('teams', $theFellowship);
+        $this->addState('the_fellowship', $theFellowship, 'teams');
+
+        $theFellowship->addUser($gandalf);
+        save($theFellowship);
     }
 }

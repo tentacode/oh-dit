@@ -4,13 +4,20 @@ import styles from "../styles/project_grid.module.css";
 import { ProjectInterface } from "../types/ProjectInterface";
 import ProjectCard from "./ProjectCard";
 import ErrorBox from "../../error_handling/components/ErrorBox";
+import ProjectListEmpty from "./ProjectListEmpty";
 
 export default function ProjectList() {
   const { data: projects, isLoading, isError } = useFetchProjects();
 
   if (isLoading) return (<CardSkeleton />);
 
+  console.log('Projects data:', projects);
+
   if (isError || !projects) return (<ErrorBox message="Une erreur est survenue lors du chargement des projets." />);
+
+  if (projects.length === 0) {
+    return <ProjectListEmpty />;
+  }
 
   return (
     <div className={styles.grid}>

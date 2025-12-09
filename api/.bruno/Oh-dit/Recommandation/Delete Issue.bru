@@ -1,0 +1,21 @@
+meta {
+  name: Delete Issue
+  type: http
+  seq: 3
+}
+
+delete {
+  url: {{BASE_URL}}/api/issues/00000000-0000-4000-8000-000000013337
+  body: formUrlEncoded
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{AUTH_TOKEN}}
+  ~Content-Type: application/json
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

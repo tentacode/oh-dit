@@ -17,8 +17,20 @@ export interface Project {
 export interface Compliance {
   ruleUuid: string;
   projectUuid: string;
-  screenUuid?: string;
+  screenUuid: string;
   status: "compliant" | "non_compliant" | "not_applicable";
+}
+
+export interface Issue {
+  uuid: string;
+  issueId: number;
+  severity: "low" | "moderate" | "blocking";
+  text: string;
+  ruleUuid: string;
+  projectUuid: string;
+  screenUuid: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Rule {
@@ -52,7 +64,7 @@ interface AuditStore {
   // state
   project: Project | null;
   compliances: Compliance[];
-  currentScreenUuid: string | undefined;
+  issues: Issue[];
   ruleSet: RuleSet | null;
   activeElement: ActiveElement | null;
 
@@ -60,24 +72,20 @@ interface AuditStore {
   setProject: (project: Project | null) => void;
   setRuleSet: (ruleSet: RuleSet | null) => void;
   setCompliances: (compliances: Compliance[]) => void;
+  setIssues: (issues: Issue[]) => void;
   overrideCompliance: (compliance: Compliance) => void;
-  setCurrentScreenUuid: (uuid: string | undefined) => void;
+  addIssue: (issue: Issue) => void;
+  overrideIssue: (issue: Issue) => void;
+  removeIssue: (issueUuid: string) => void;
   setActiveElement: (activeElement: ActiveElement | null) => void;
   reset: () => void;
-
-  // selectors
-  getCompliance: (
-    ruleUuid: string,
-    projectUuid: string,
-    screenUuid?: string
-  ) => Compliance | undefined;
 }
 
 const initialState = {
   project: null,
   ruleSet: null,
   compliances: [],
-  currentScreenUuid: undefined,
+  issues: [],
   activeElement: null,
 };
 
@@ -88,18 +96,46 @@ export const useAuditStore = create<AuditStore>((set, get) => ({
   setProject: (project) => set({ project }),
   setRuleSet: (ruleSet) => set({ ruleSet }),
   setCompliances: (compliances) => set({ compliances }),
-  setCurrentScreenUuid: (uuid) => set({ currentScreenUuid: uuid }),
+  setIssues: (issues) => set({ issues }),
+  addIssue: (issue) => {
+    console.log("Adding issue:", issue);
+    set((state) => {
+      const newIssues = [...state.issues, issue];
+      console.log("New issues array:", newIssues);
+      return { issues: newIssues };
+    });
+  },
+  overrideIssue: (issue) => {
+    set((state) => {
+      const existingIndex = state.issues.findIndex(
+        (i) => i.uuid === issue.uuid
+      );
+
+      if (existingIndex >= 0) {
+        const newIssues = [...state.issues];
+        newIssues[existingIndex] = issue;
+        return { issues: newIssues };
+      } else {
+        return { issues: [...state.issues, issue] };
+      }
+    });
+  },
+  removeIssue: (issueUuid) => {
+    set((state) => ({
+      issues: state.issues.filter((i) => i.uuid !== issueUuid),
+    }));
+  },
   setActiveElement: (activeElement) => set({ activeElement }),
   overrideCompliance: (compliance) => {
     const { compliances } = get();
-    
+
     const existingIndex = compliances.findIndex(
       (c) =>
         c.ruleUuid === compliance.ruleUuid &&
         c.projectUuid === compliance.projectUuid &&
         c.screenUuid === compliance.screenUuid
     );
-    
+
     if (existingIndex >= 0) {
       const newCompliances = [...compliances];
       newCompliances[existingIndex] = compliance;
@@ -111,13 +147,4 @@ export const useAuditStore = create<AuditStore>((set, get) => ({
   reset: () => set(initialState),
 
   // selectors
-  getCompliance: (ruleUuid, projectUuid, screenUuid) => {
-    const { compliances } = get();
-    return compliances.find(
-      (c) =>
-        c.ruleUuid === ruleUuid &&
-        c.projectUuid === projectUuid &&
-        c.screenUuid === screenUuid
-    );
-  },
 }));

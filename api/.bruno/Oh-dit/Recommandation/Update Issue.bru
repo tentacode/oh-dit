@@ -1,0 +1,28 @@
+meta {
+  name: Update Issue
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{BASE_URL}}/api/issues/00000000-0000-4000-8000-000000013337
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "text": "mdr sa marche toujour pa",
+    "severity": "moderate"
+  }
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

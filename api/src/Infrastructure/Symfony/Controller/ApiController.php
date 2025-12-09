@@ -36,7 +36,7 @@ class ApiController extends AbstractController
             $firstItem = $item[0];
             $attributes = $firstItem->getDefaultFields();
         } else {
-            return new JsonResponse([], $statusCode, [], true);
+            return new JsonResponse([], $statusCode, []);
         }
 
         $context = [

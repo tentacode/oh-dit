@@ -21,6 +21,8 @@
     "clsx": "^2.1.1",
     "dayjs": "^1.11.19",
     "next": "15.5.9",
+    "highlight.js": "^11.11.1",
+    "markdown-to-jsx": "^9.3.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "zustand": "^5.0.8"
