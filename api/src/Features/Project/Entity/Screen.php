@@ -29,6 +29,12 @@ class Screen implements HasUuidInterface
     #[Assert\NotBlank(message: 'Le nom de la page est obligatoire.')]
     private string $name;
 
+    #[ORM\Column(type: Types::INTEGER)]
+    private int $progress = 0;
+
+    #[ORM\Column(type: Types::INTEGER)]
+    private int $complianceRate = 0;
+
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $isRoot = false;
 
@@ -69,6 +75,23 @@ class Screen implements HasUuidInterface
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getProgress(): int
+    {
+        return $this->progress;
+    }
+
+    public function getComplianceRate(): int
+    {
+        return $this->complianceRate;
+    }
+
+    public function updateMetrics(int $progress, int $complianceRate): void
+    {
+        $this->progress = $progress;
+        $this->complianceRate = $complianceRate;
+        $this->updatedAt = CarbonImmutable::now();
     }
 
     public function getIsRoot(): bool

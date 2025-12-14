@@ -9,6 +9,7 @@ export interface ProjectInterface {
     name: string;
     updatedAt: string;
     progress: number;
+    complianceRate: number;
     status: ProjectStatus;
     ruleSet: {
         uuid: string;

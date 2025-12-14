@@ -4,6 +4,7 @@ import { clsx } from 'clsx';
 import { ComplianceStatus as ComplianceStatusType } from "../../../types/RuleSetTypes";
 import { useCreateCompliance } from "@/src/features/compliance/mutations/useCreateCompliance";
 import { useIssuesFormStateStore } from "@/src/features/issue/store/issuesFormStateStore";
+import { useUpdateProjectMetrics } from "@/src/features/project/queries/useUpdateProjectMetrics";
 
 export default function ComplianceStatus({
   ruleUuid,
@@ -29,6 +30,7 @@ export default function ComplianceStatus({
   );
 
   const createCompliance = useCreateCompliance();
+  const updateProjectMetrics = useUpdateProjectMetrics();
 
   const compliantClasses = [styles.complianceStatus];
   const nonCompliantClasses = [styles.complianceStatus];
@@ -70,8 +72,8 @@ export default function ComplianceStatus({
     
     try {
       await createCompliance.mutateAsync(updatedCompliance);
+      await updateProjectMetrics.mutateAsync(projectUuid);
     } catch (error) {
-      // @TODO maybe a toast ?
       console.error("Error creating compliance:", error);
     }
   };

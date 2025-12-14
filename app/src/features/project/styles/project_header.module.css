@@ -1,0 +1,65 @@
+.statsContainer {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.statsContainer > div {
+    position: relative;
+    background-color: #fff;
+    padding: 15px 25px;
+    border-radius: 15px;
+    color: #333;
+    font-size: 1.1em;
+    overflow: hidden;
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+}
+
+.statsContainer dt {
+    font-weight: 600;
+    font-family: "Lexend Deca", sans-serif;
+}
+
+.statsContainer dd {
+    display: flex;
+    align-items: center;
+}
+
+.statsContainer dd strong {
+    margin-right: 4px;
+}
+
+.progressBar {
+    position: absolute; 
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background-color: #F5F5F5;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    overflow: hidden;
+}
+
+.progressBarFill {
+    height: 100%;
+    background-color: #8579DC;
+}
+
+.helpText {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-style: italic;
+    color: #010101;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+.statsContainer svg, .helpText svg {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 8px;
+    color: #010101;
+}
