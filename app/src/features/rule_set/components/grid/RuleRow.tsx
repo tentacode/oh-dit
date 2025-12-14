@@ -56,7 +56,7 @@ export default function RuleRow({
     setActiveTab(ActiveTab.ISSUES);
 
     setTimeout(() => {
-      const element = document.getElementById("text");
+      const element = document.getElementById(`text-${rule.uuid}-${screenUuid}`);
       if (element) {
         element.focus();
       }

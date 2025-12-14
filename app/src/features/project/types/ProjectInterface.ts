@@ -19,5 +19,8 @@ export interface ProjectInterface {
     screens: {
         uuid: string;
         name: string;
+        progress: number;
+        complianceRate: number;
+        isRoot: boolean;
     }[];
 }
