@@ -5,8 +5,6 @@ import {
   HandThumbDownIcon,
   HandThumbUpIcon,
   InformationCircleIcon,
-  SparklesIcon,
-  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { useAuditStore } from "../../audit/store/auditStore";
 import styles from "../styles/project_header.module.css";

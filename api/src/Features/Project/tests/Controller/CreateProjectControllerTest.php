@@ -44,20 +44,27 @@ final class CreateProjectControllerTest extends WebTestCase
             'updatedAt' => '@datetime@.after("today")',
             'status' => 'in_progress',
             'progress' => 0,
+            'complianceRate' => 0,
             'screens' => [
                 [
                     'uuid' => '@uuid@',
                     'name' => 'Éléments transverses',
+                    'progress' => 0,
+                    'complianceRate' => 0,
                     'isRoot' => true,
                 ],
                 [
                     'uuid' => '@uuid@',
                     'name' => 'Page 1',
+                    'progress' => 0,
+                    'complianceRate' => 0,
                     'isRoot' => false,
                 ],
                 [
                     'uuid' => '@uuid@',
                     'name' => 'Page 2',
+                    'progress' => 0,
+                    'complianceRate' => 0,
                     'isRoot' => false,
                 ],
             ],

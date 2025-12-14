@@ -9,6 +9,8 @@ use App\Features\Project\Entity\Project;
 use App\Features\RuleSet\Entity\RuleSet;
 use App\Infrastructure\Symfony\ErrorHandling\Command\ValidateOrThrowApiErrorCommand;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
+use Webmozart\Assert\Assert;
 
 final class Metrics
 {
@@ -24,7 +26,9 @@ final class ProjectMetrics
     public function __construct(
         public Metrics $metrics,
 
-        /** @var array<string, Metrics> */
+        /**
+         * @var array<string, Metrics>
+         */
         public array $screensMetrics,
     ) {
     }
@@ -103,6 +107,7 @@ final class UpdateProjectMetricsCommand
         $stmt->bindValue('projectUuid', $project->getUuid()->toString());
         $stmt->bindValue('userUuid', $user->getUuid()->toString());
         $stmt->bindValue('totalRules', $totalRules);
+
         $result = $stmt->executeQuery();
         $data = $result->fetchAllAssociative();
 
@@ -112,15 +117,30 @@ final class UpdateProjectMetricsCommand
         $totalNonCompliant = 0;
         foreach ($data as $screenData) {
             $screenUuid = $screenData['uuid'];
+            Assert::stringNotEmpty($screenUuid);
+
+            $screenProgress = $screenData['progress'];
+            $screenComplianceRate = $screenData['compliance_rate'];
+
+            Assert::numeric($screenProgress);
+            Assert::numeric($screenComplianceRate);
 
             $screenMetrics[$screenUuid] = new Metrics(
-                progress: (int) $screenData['progress'],
-                complianceRate: (int) $screenData['compliance_rate'],
+                progress: (int) $screenProgress,
+                complianceRate: (int) $screenComplianceRate,
             );
 
-            $totalRulesSet += (int) $screenData['total_set'];
-            $totalCompliant += (int) $screenData['total_compliant'];
-            $totalNonCompliant += (int) $screenData['total_non_compliant'];
+            $screenTotalRulesSet = $screenData['total_set'];
+            $screenTotalCompliant = $screenData['total_compliant'];
+            $screenTotalNonCompliant = $screenData['total_non_compliant'];
+
+            Assert::numeric($screenTotalRulesSet);
+            Assert::numeric($screenTotalCompliant);
+            Assert::numeric($screenTotalNonCompliant);
+
+            $totalRulesSet += (int) $screenTotalRulesSet;
+            $totalCompliant += (int) $screenTotalCompliant;
+            $totalNonCompliant += (int) $screenTotalNonCompliant;
         }
 
         return new ProjectMetrics(
@@ -148,9 +168,12 @@ final class UpdateProjectMetricsCommand
         $data = $result->fetchAssociative();
 
         if (! $data) {
-            throw new \RuntimeException('Failed to fetch total rules.');
+            throw new RuntimeException('Failed to fetch total rules.');
         }
 
-        return (int) ($data['total_rules']);
+        $totalRules = $data['total_rules'];
+        Assert::numeric($totalRules);
+
+        return (int) ($totalRules);
     }
 }

@@ -9,7 +9,6 @@ use App\Features\RuleSet\Entity\RuleSet;
 use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
 use App\Infrastructure\Doctrine\Entity\SerializableInterface;
 use Carbon\CarbonImmutable;
-use DateTime;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

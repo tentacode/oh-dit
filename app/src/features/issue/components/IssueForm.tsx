@@ -231,7 +231,7 @@ export default function IssueForm({
       <textarea
         value={textValue}
         ref={textAreaRef}
-        id="text"
+        id={`text-${ruleUuid}-${screenUuid}`}
         name="text"
         aria-invalid={hasFieldError("text", errors)}
         aria-describedby={

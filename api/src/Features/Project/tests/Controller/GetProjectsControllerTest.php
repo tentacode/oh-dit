@@ -38,20 +38,27 @@ final class GetProjectsControllerTest extends WebTestCase
                 'updatedAt' => '@datetime@',
                 'status' => 'in_progress',
                 'progress' => 0,
+                'complianceRate' => 0,
                 'screens' => [
                     [
                         'uuid' => '@uuid@',
                         'name' => 'Éléments transverses',
+                        'progress' => 0,
+                        'complianceRate' => 0,
                         'isRoot' => true,
                     ],
                     [
                         'uuid' => '@uuid@',
                         'name' => 'Home Screen',
+                        'progress' => 0,
+                        'complianceRate' => 0,
                         'isRoot' => false,
                     ],
                     [
                         'uuid' => '@uuid@',
                         'name' => 'Contact Screen',
+                        'progress' => 0,
+                        'complianceRate' => 0,
                         'isRoot' => false,
                     ],
                 ],
