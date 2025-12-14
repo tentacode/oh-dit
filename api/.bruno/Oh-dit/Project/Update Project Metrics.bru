@@ -1,11 +1,11 @@
 meta {
-  name: Get One Project
+  name: Update Project Metrics
   type: http
-  seq: 4
+  seq: 2
 }
 
-get {
-  url: {{BASE_URL}}/api/projects/22222222-0000-4000-8000-000000000001
+post {
+  url: {{BASE_URL}}/api/projects/22222222-0000-4000-8000-000000000001/update-metrics
   body: formUrlEncoded
   auth: inherit
 }

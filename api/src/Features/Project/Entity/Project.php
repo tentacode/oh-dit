@@ -9,6 +9,7 @@ use App\Features\RuleSet\Entity\RuleSet;
 use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
 use App\Infrastructure\Doctrine\Entity\SerializableInterface;
 use Carbon\CarbonImmutable;
+use DateTime;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -60,6 +61,12 @@ class Project implements HasUuidInterface, SerializableInterface
 
     #[ORM\Column(type: Types::INTEGER)]
     private int $progress = 0;
+
+    #[ORM\Column(type: Types::INTEGER)]
+    private int $complianceRate = 0;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?DateTimeImmutable $complianceRateUpdatedAt = null;
 
     /**
      * @var ArrayCollection<int, Screen>
@@ -137,6 +144,25 @@ class Project implements HasUuidInterface, SerializableInterface
         return $this->progress;
     }
 
+    public function getComplianceRate(): int
+    {
+        return $this->complianceRate;
+    }
+
+    public function markAsCompleted(): void
+    {
+        $this->status = ProjectStatus::COMPLETED;
+        $this->updatedAt = CarbonImmutable::now();
+    }
+
+    public function updateMetrics(int $progress, int $complianceRate): void
+    {
+        $this->progress = $progress;
+        $this->complianceRate = $complianceRate;
+        $this->complianceRateUpdatedAt = CarbonImmutable::now();
+        $this->updatedAt = CarbonImmutable::now();
+    }
+
     public function getDefaultFields(): array
     {
         return [
@@ -146,6 +172,7 @@ class Project implements HasUuidInterface, SerializableInterface
             'updatedAt',
             'status',
             'progress',
+            'complianceRate',
             'ruleSet' => [
                 'uuid',
                 'name',
@@ -154,6 +181,8 @@ class Project implements HasUuidInterface, SerializableInterface
             'screens' => [
                 'uuid',
                 'name',
+                'progress',
+                'complianceRate',
                 'isRoot',
             ],
         ];

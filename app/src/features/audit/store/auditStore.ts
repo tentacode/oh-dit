@@ -3,12 +3,16 @@ import { create } from "zustand";
 export interface Screen {
   uuid: string;
   name: string;
+  progress: number;
+  complianceRate: number;
 }
 
 export interface Project {
   uuid: string;
   name: string;
   screens: Screen[];
+  progress: number;
+  complianceRate: number;
   ruleSet: {
     uuid: string;
   };

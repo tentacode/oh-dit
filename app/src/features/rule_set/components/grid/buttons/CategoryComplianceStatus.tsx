@@ -3,6 +3,7 @@ import styles from "../../../styles/audit_grid.module.css";
 import { useAuditStore } from "@/src/features/audit/store/auditStore";
 import { useAuditSettingsStore } from "@/src/features/audit/store/auditSettingsStore";
 import { useCreateCompliance } from "@/src/features/compliance/mutations/useCreateCompliance";
+import { useUpdateProjectMetrics } from "@/src/features/project/queries/useUpdateProjectMetrics";
 
 const enum NotApplicableStatus {
   ENABLED = "ENABLED",
@@ -23,6 +24,7 @@ export default function CategoryComplianceStatus({
   const compliances = useAuditStore((state) => state.compliances);
   const overrideCompliance = useAuditStore((state) => state.overrideCompliance);
   const createCompliance = useCreateCompliance();
+  const updateProjectMetrics = useUpdateProjectMetrics();
 
   if (!ruleSet || !compliances || !project) {
     return null;
@@ -75,7 +77,7 @@ export default function CategoryComplianceStatus({
       return;
     }
 
-    rulesInCategory.forEach((rule) => {
+    rulesInCategory.forEach(async (rule) => {
       const updatedCompliance = {
         ruleUuid: rule.uuid,
         projectUuid: project.uuid,
@@ -85,8 +87,10 @@ export default function CategoryComplianceStatus({
 
       overrideCompliance(updatedCompliance);
 
-      createCompliance.mutateAsync(updatedCompliance)
+      await createCompliance.mutateAsync(updatedCompliance)
     });
+
+    updateProjectMetrics.mutateAsync(project.uuid);
   }
 
   return (
