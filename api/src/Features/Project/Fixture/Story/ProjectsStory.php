@@ -43,6 +43,7 @@ final class ProjectsStory extends Story
 
         $rootScreen = ScreenFactory::createOne([
             'name' => Screen::ROOT_SCREEN_NAME,
+            'uuid' => self::SCREEN_ROOT_UUID,
             'project' => $deathStarProject,
             'isRoot' => true,
         ]);

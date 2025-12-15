@@ -92,8 +92,8 @@ final class UpdateProjectMetricsCommand
             SELECT
                 s.uuid,
                 s.name,
-                SUM(1) FILTER (WHERE status = 'compliant') AS total_compliant,
-                SUM(1) FILTER (WHERE status = 'non_compliant') AS total_non_compliant,
+                COALESCE(SUM(1) FILTER (WHERE status = 'compliant'), 0) AS total_compliant,
+                COALESCE(SUM(1) FILTER (WHERE status = 'non_compliant'), 0) AS total_non_compliant,
                 COUNT(DISTINCT c.uuid) AS total_set,
                 100 * COUNT(DISTINCT c.uuid) / :totalRules AS progress,
                 100 * (SUM(1) FILTER (WHERE status = 'compliant')) / (SUM(1) FILTER (WHERE status = 'non_compliant') + SUM(1) FILTER (WHERE status = 'compliant')) AS compliance_rate
@@ -123,6 +123,10 @@ final class UpdateProjectMetricsCommand
             $screenComplianceRate = $screenData['compliance_rate'];
 
             Assert::numeric($screenProgress);
+            if ($screenComplianceRate === null) {
+                $screenComplianceRate = 0;
+            }
+
             Assert::numeric($screenComplianceRate);
 
             $screenMetrics[$screenUuid] = new Metrics(
@@ -143,10 +147,15 @@ final class UpdateProjectMetricsCommand
             $totalNonCompliant += (int) $screenTotalNonCompliant;
         }
 
+        $projectProgress = (int) (100 * $totalRulesSet / ($totalRules * count($project->getScreens())));
+        $projectComplianceRate = $totalCompliant + $totalNonCompliant > 0
+            ? (int) (100 * $totalCompliant / ($totalCompliant + $totalNonCompliant))
+            : 0;
+
         return new ProjectMetrics(
             new Metrics(
-                progress: (int) (100 * $totalRulesSet / ($totalRules * count($project->getScreens()))),
-                complianceRate: (int) (100 * $totalCompliant / ($totalCompliant + $totalNonCompliant)),
+                progress: $projectProgress,
+                complianceRate: $projectComplianceRate,
             ),
             screensMetrics: $screenMetrics
         );
