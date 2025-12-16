@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Features\Authentication\Entity;
 
 use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
+use App\Infrastructure\Doctrine\Entity\SerializableInterface;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,8 +23,7 @@ use Webmozart\Assert\Assert as WebmozartAssert;
 #[ORM\Entity]
 #[ORM\Table(name: '"user"')]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuidInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuidInterface, SerializableInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
@@ -48,7 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuid
     private ?DateTimeImmutable $disabledAt = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    private readonly DateTimeImmutable $createdAt;
+    private DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
@@ -160,5 +160,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuid
     public function isInTeam(Team $team): bool
     {
         return $this->teams->contains($team);
+    }
+
+    public function getDefaultFields(): array
+    {
+        return [
+            'uuid',
+            'email',
+            'username',
+            'teams' => [
+                'uuid',
+                'name',
+            ],
+        ];
     }
 }

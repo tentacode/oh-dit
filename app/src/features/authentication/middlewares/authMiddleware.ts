@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const PUBLIC_ROUTES = ['/login']
+const PUBLIC_ROUTES = ['/login', '/inscription/beta']
 
 export function authMiddleware(request: NextRequest) {
   const token = request.cookies.get('auth_token')?.value

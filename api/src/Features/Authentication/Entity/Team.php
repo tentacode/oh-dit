@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Features\Authentication\Entity;
 
 use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
+use App\Infrastructure\Doctrine\Entity\SerializableInterface;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -19,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity]
 #[ORM\Table(name: 'team')]
 #[UniqueEntity(fields: ['name'], message: 'There is already a team with this name')]
-class Team implements HasUuidInterface
+class Team implements HasUuidInterface, SerializableInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
@@ -92,5 +93,13 @@ class Team implements HasUuidInterface
     public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    public function getDefaultFields(): array
+    {
+        return [
+            'uuid',
+            'name',
+        ];
     }
 }

@@ -10,7 +10,6 @@ import { ApiError, ApiValidationError } from "@/src/lib/react-query/apiClient";
 import { useRouter } from "next/navigation";
 import { useCreateProject } from "../mutations/useCreateProject";
 
-
 function getErrorsForField(fieldName: string, errors: ApiValidationError[]): ApiValidationError[] {
   return errors.filter((error) => error.propertyPath === fieldName);
 }

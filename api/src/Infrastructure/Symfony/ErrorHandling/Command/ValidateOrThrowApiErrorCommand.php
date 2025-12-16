@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Symfony\ErrorHandling\Command;
 
-use Exception;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Webmozart\Assert\Assert;
@@ -23,7 +23,7 @@ final readonly class ValidateOrThrowApiErrorCommand
         // @TODO: throw specific exception with all errors
         if (count($errors) > 0) {
             Assert::isInstanceOf($errors[0], ConstraintViolation::class);
-            throw new Exception((string) $errors[0]->getMessage());
+            throw new BadRequestHttpException((string) $errors[0]->getMessage());
         }
     }
 }
