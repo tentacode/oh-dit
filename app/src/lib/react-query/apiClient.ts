@@ -25,17 +25,25 @@ export class ApiError extends Error {
 
 export async function apiClient<T>(
   endpoint: string,
-  options?: RequestInit
+  options?: RequestInit,
+  anonymous?: boolean
 ): Promise<T> {
   const url = `${API_HOST}${endpoint}`;
+
+  const headers = anonymous
+    ? {
+        'Content-Type': 'application/json',
+        ...options?.headers,
+      }
+    : {
+        'Authorization': `Bearer ${getAuthToken()}`,
+        'Content-Type': 'application/json',
+        ...options?.headers,
+      };
   
   const response = await fetch(url, {
     ...options,
-    headers: {
-      'Authorization': `Bearer ${getAuthToken()}`,
-      'Content-Type': 'application/json',
-      ...options?.headers,
-    },
+    headers: headers,
   });
 
   if (response.status === 401) {

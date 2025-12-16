@@ -1,0 +1,71 @@
+.formContainer {
+    margin-top: 20px;
+    width: 550px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.form label {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #010101;
+}
+
+.form label svg {
+    margin-right: 8px;
+    width: 24px;
+    height: 24px;
+    color: #010101;
+}
+
+.input {
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 3px solid #010101;
+    color: #010101;
+    font-size: 16px;
+}
+
+.input[aria-invalid="true"] {
+    border-color: #BA0303 !important;
+}
+
+.inputDisabled {
+    background-color: #f3f4f6 !important;
+    border: 3px solid transparent !important;
+    outline: none !important;
+    color: #6E6E6E !important;
+}
+
+.helpText {
+    width: 100%;
+    margin-top: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    color: #6E6E6E;
+    font-style: italic;
+}
+
+.helpText svg {
+    margin-top: 2px;
+    width: 24px;
+}
+
+.helpText span {
+    flex: 1;
+    font-size: 16px;
+}
+
+.errorText {
+    color: #BA0303;
+    font-weight: 600;
+}

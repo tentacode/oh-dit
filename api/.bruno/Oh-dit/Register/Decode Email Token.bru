@@ -1,0 +1,26 @@
+meta {
+  name: Decode Email Token
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{BASE_URL}}/api/register/decode-email-token
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "token": "Ymlya0B0ZW50YWNvZGUuZGV2.c26c68921c2ea1530fcb12878b4c42c1c05841a60908fad0a96907799a91eb5d"
+  }
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}
