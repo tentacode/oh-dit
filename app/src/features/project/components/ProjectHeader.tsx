@@ -73,11 +73,13 @@ export default function ProjectDetailHeader() {
           </div>
         </div>
       </dl>
-      <p className={styles.helpText}>
-        <InformationCircleIcon />
-        Le taux de conformité est donné à titre indicatif. Il n'est pas valable
-        tant que l'audit n'est pas terminé.
-      </p>
+      {project.progress !== 100 && (
+        <p className={styles.helpText}>
+          <InformationCircleIcon />
+          Le taux de conformité est donné à titre indicatif. Il n'est pas valable
+          tant que l'audit n'est pas terminé.
+        </p>
+      )}
     </div>
   );
 }
