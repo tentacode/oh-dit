@@ -1,0 +1,48 @@
+.markdownContainer {
+  padding: 30px;
+  padding-top: 15px;
+  font-size: 16px !important;
+}
+
+.markdownContainer h1,
+.markdownContainer h2,
+.markdownContainer h3,
+.markdownContainer h4,
+.markdownContainer h5,
+.markdownContainer h6 {
+    font-family: "Lexend Deca", sans-serif;
+}
+
+.markdownContainer ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.markdownContainer h4 {
+    font-size: 1.3em;
+    font-weight: 500;
+    margin-bottom: 15px;
+    margin-top: 20px
+}
+
+.markdownContainer h4:first-child {
+    margin-top: 5px;
+}
+
+.markdownContainer h5 {
+    font-size: 1.1em;
+}
+
+.markdownContainer  :global(.ruleDocumentationTest) {
+    background: white;
+    padding: 15px 25px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.markdownContainer  :global(.ruleDocumentationTest) ul {
+    margin-top: 10px;
+}

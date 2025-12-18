@@ -49,3 +49,17 @@ En conséquence, l'utilisation des informations et contenus disponibles sur ce s
 ## Droit applicable
 
 Les présentes mentions légales sont régies par le droit français. Tout litige relatif à l'utilisation du site est soumis à la compétence exclusive des tribunaux français.
+
+## Sources, crédits et remerciements
+
+- RGAA (Référentiel Général d'Amélioration de l'Accessibilité)
+  Utilisé pour générer la documentation des critères d'accessibilité.
+  Source : https://github.com/DISIC/accessibilite.numerique.gouv.fr
+  Licence : MIT – © DINUM
+
+Je n'aurais pas pu créer Ohdit sans ces outils open-source :
+
+- [Symfony](https://symfony.com/)
+- [Astro](https://astro.build/)
+- [Next.js](https://nextjs.org/)
+- [PostgreSQL](https://www.postgresql.org/)
