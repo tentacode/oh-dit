@@ -1,0 +1,21 @@
+meta {
+  name: Get Rule Documentation
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{BASE_URL}}/api/documentation/rule/7e7c9ae0-797a-42da-a06f-90126f7786e5
+  body: formUrlEncoded
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{AUTH_TOKEN}}
+  ~Content-Type: application/json
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

@@ -104,7 +104,7 @@ export default function RuleRow({
           onClick={toggleTab(ActiveTab.HELP)}
         />
       </div>
-      {activeTab === ActiveTab.HELP && <RuleHelp />}
+      {activeTab === ActiveTab.HELP && <RuleHelp ruleUuid={rule.uuid} />}
       {activeTab === ActiveTab.ISSUES && (
         <IssuesDetail ruleUuid={rule.uuid} screenUuid={screenUuid} />
       )}
