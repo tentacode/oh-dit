@@ -22,9 +22,14 @@ final class CreateProjectCommand
     ) {
     }
 
-    public function __invoke(User $user, Team $team, CreateProjectRequest $createProjectRequest): Project
+    public function __invoke(User $user, CreateProjectRequest $createProjectRequest): Project
     {
-        if (! $user->getTeams()->contains($team)) {
+        $team = $this->entityManager->getRepository(Team::class)->find($createProjectRequest->teamUuid);
+        if (!$team instanceof Team) {
+            throw new SuspiciousOperationException('User is trying to create a project in a team that does not exist.');
+        }
+
+        if (! $user->isInTeam($team)) {
             throw new SuspiciousOperationException('User is trying to create a project in a team they do not belong to.');
         }
 

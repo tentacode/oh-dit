@@ -3,13 +3,13 @@ import { useQuery } from '@tanstack/react-query';
 import { ProjectInterface } from "../types/ProjectInterface";
 import { projectCacheKeys } from "./cacheKeys";
 
-async function fetchProjects(): Promise<ProjectInterface[]> {
-  return apiClient<ProjectInterface[]>('/api/projects');
+async function fetchProjects(teamUuid: string): Promise<ProjectInterface[]> {
+  return apiClient<ProjectInterface[]>(`/api/teams/${teamUuid}/projects`);
 }
 
-export function useFetchProjects() {
+export function useFetchProjects(teamUuid: string) {
   return useQuery({
-    queryKey: projectCacheKeys.list(),
-    queryFn: fetchProjects,
+    queryKey: projectCacheKeys.list(teamUuid),
+    queryFn: () => fetchProjects(teamUuid),
   });
 }

@@ -7,6 +7,7 @@ import CallToActionLink from "@/src/components/form/CallToActionLink";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { getProjectUrl } from "../projet/routing";
+import { useTeamsStateStore } from "@/src/features/authentication/store/teamsStore";
 
 const SuccessMessage = () => {
   const searchParams = useSearchParams();
@@ -38,6 +39,9 @@ const SuccessMessage = () => {
 };
 
 export default function Projects() {
+
+  const currentTeamUuid = useTeamsStateStore((state) => state.currentTeamUuid);
+
   return (
     <AuthenticatedLayout>
       <Suspense fallback={<div>Loading...</div>}>
@@ -50,7 +54,8 @@ export default function Projects() {
             Créer un nouvel audit
           </CallToActionLink>
         </div>
-        <ProjectList />
+        
+        {currentTeamUuid && <ProjectList teamUuid={currentTeamUuid} />}
     </AuthenticatedLayout>
   );
 }

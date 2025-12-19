@@ -5,6 +5,7 @@ import BetaBanner from '../../features/layout/components/BetaBanner';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/src/lib/react-query/queryClient';
 import { ReactNode } from 'react';
+import UserDataProvider from '@/src/features/authentication/data_providers/UserDataProvider';
 
 interface AuthenticatedLayoutProps {
     children: ReactNode
@@ -20,13 +21,15 @@ export const AuthenticatedLayout = ({ children, mainClass }: AuthenticatedLayout
 
     return (
         <QueryClientProvider client={queryClient}>
-            <div style={bodyContainerStyle}>
-                <BetaBanner />
-                <MainNavigation />
-                <main className={mainClass}>
-                    {children}
-                </main>
-            </div>
+            <UserDataProvider>
+                <div style={bodyContainerStyle}>
+                    <BetaBanner />
+                    <MainNavigation />
+                    <main className={mainClass}>
+                        {children}
+                    </main>
+                </div>
+            </UserDataProvider>
         </QueryClientProvider>
     );
 };

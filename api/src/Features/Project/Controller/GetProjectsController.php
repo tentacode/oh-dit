@@ -18,10 +18,10 @@ final class GetProjectsController extends ApiController
     ) {
     }
 
-    #[Route('/api/projects', name: 'get_projects', methods: ['GET'], format: 'json')]
-    public function __invoke(#[CurrentUser] User $user): JsonResponse
+    #[Route('/api/teams/{teamUuid}/projects', name: 'get_projects', methods: ['GET'], format: 'json')]
+    public function __invoke(#[CurrentUser] User $user, string $teamUuid): JsonResponse
     {
-        $projects = ($this->getProjectsQuery)($user);
+        $projects = ($this->getProjectsQuery)($user, $teamUuid);
 
         return $this->getSerializedJsonResponse($projects);
     }

@@ -41,7 +41,7 @@ final class UpdateProjectMetricsControllerTest extends WebTestCase
             'ruleUuid' => '12341234-2222-4000-8002-000000000005',
             'screenUuid' => '33333333-0000-4000-8000-000000000001',
             'projectUuid' => '22222222-0000-4000-8000-000000000001',
-            'userUuid' => '00000000-0000-0000-0000-000000000001',
+            'userUuid' => '00000000-0000-4000-8000-000000000001',
         ], $response, Response::HTTP_CREATED);
 
         $response = $this->request(
@@ -95,8 +95,8 @@ final class UpdateProjectMetricsControllerTest extends WebTestCase
     public function test_it_cant_update_metrics_if_not_logged_in(): void
     {
         $response = $this->request(
-            uri: '/api/projects/',
-            method: Request::METHOD_GET,
+            uri: '/api/projects/22222222-0000-4000-8000-000000000001/update-metrics',
+            method: Request::METHOD_POST,
         );
 
         $this->assertJsonResponseMatches([

@@ -9,6 +9,9 @@ import { FormEvent, useState } from "react";
 import { ApiError, ApiValidationError } from "@/src/lib/react-query/apiClient";
 import { useRouter } from "next/navigation";
 import { useCreateProject } from "../mutations/useCreateProject";
+import { useTeamsStateStore } from "../../authentication/store/teamsStore";
+import ErrorBox from "../../error_handling/components/ErrorBox";
+import { getProjectUrl } from "@/src/app/projet/routing";
 
 function getErrorsForField(fieldName: string, errors: ApiValidationError[]): ApiValidationError[] {
   return errors.filter((error) => error.propertyPath === fieldName);
@@ -35,9 +38,15 @@ export default function NewProjectForm() {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const createProject = useCreateProject();
+  const teamUuid = useTeamsStateStore((state) => state.currentTeamUuid!);
+
+  const createProject = useCreateProject(teamUuid);
 
   const router = useRouter();
+
+  if (!teamUuid) {
+    return (<ErrorBox message="Aucune équipe sélectionnée." />);
+  }
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,9 +61,9 @@ export default function NewProjectForm() {
     const screens = pages;
 
     try {
-      await createProject.mutateAsync({ name, screens });
+      const newProject = await createProject.mutateAsync({ teamUuid, name, screens });
 
-      router.push(`/?success=${encodeURIComponent(`L'audit pour le projet "${name}" a été créé.`)}`);
+      router.push(getProjectUrl.dashboard(newProject.uuid));
     } catch (apiError) {
       if (apiError instanceof ApiError) {
         setErrors(apiError.errors || []);
