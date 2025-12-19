@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Features\Project\tests\Controller;
 
+use App\Features\Authentication\Fixture\Story\TeamUsersStory;
 use App\Infrastructure\PHPUnit\ApiRequest;
 use App\Infrastructure\PHPUnit\LoginRequest;
 use App\Infrastructure\PHPUnit\ResponseAssertions;
@@ -20,7 +21,7 @@ final class GetProjectsControllerTest extends WebTestCase
     public function test_it_get_all_projects(): void
     {
         $response = $this->request(
-            uri: '/api/projects',
+            uri: sprintf('/api/teams/%s/projects', TeamUsersStory::TEAM_THE_EMPIRE_UUID),
             method: Request::METHOD_GET,
             authenticationToken: $this->getAuthenticationToken(
                 email: 'darth_vader@empire.com',
@@ -74,7 +75,7 @@ final class GetProjectsControllerTest extends WebTestCase
     public function test_it_cant_get_all_projects_if_not_logged_in(): void
     {
         $response = $this->request(
-            uri: '/api/projects/',
+            uri: sprintf('/api/teams/%s/projects', TeamUsersStory::TEAM_THE_EMPIRE_UUID),
             method: Request::METHOD_GET,
         );
 

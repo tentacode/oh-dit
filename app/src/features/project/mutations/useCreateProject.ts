@@ -4,19 +4,19 @@ import { ProjectInterface } from "../types/ProjectInterface";
 import { projectCacheKeys } from "../queries/cacheKeys";
 import { queryClient } from "@/src/lib/react-query/queryClient";
 
-async function createProject(data: { name: string; screens: string[] }): Promise<ProjectInterface> {
+async function createProject(data: { teamUuid: string; name: string; screens: string[] }): Promise<ProjectInterface> {
   return apiClient<ProjectInterface>('/api/projects', {
     method: 'POST',
     body: JSON.stringify(data),
   });
 }
 
-export function useCreateProject() {
+export function useCreateProject(teamUuid: string) {
   return useMutation({
     mutationFn: createProject,
     onSuccess: () => {
       // Invalide le cache de la liste pour forcer un refetch
-      queryClient.invalidateQueries({ queryKey: projectCacheKeys.list() });
+      queryClient.invalidateQueries({ queryKey: projectCacheKeys.list(teamUuid) });
     },
   });
 }

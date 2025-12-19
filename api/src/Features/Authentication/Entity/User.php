@@ -162,6 +162,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuid
         return $this->teams->contains($team);
     }
 
+    public function isInTeamUuid(string $teamUuid): bool
+    {
+        foreach ($this->teams as $team) {
+            if ($team->getUuid()->toString() === $teamUuid) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function getDefaultFields(): array
     {
         return [

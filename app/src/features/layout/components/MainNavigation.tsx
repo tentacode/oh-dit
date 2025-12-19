@@ -3,11 +3,13 @@ import {
   FolderIcon,
   LifebuoyIcon,
   UserIcon,
+  UsersIcon,
 } from '@heroicons/react/24/outline'
 import { usePathname } from 'next/navigation';
 import { clsx } from 'clsx';
 
 import styles from '../styles/main_navigation.module.css';
+import { useTeamsStateStore } from '../../authentication/store/teamsStore';
 
 const navigation = [
   { name: 'Audits', href: '/', icon: FolderIcon },
@@ -26,6 +28,10 @@ function isCurrentPage(menuHref: string, currentPathname: string) {
 
 export default function MainNavigation() {
   const currentPathname = usePathname();
+
+  const teams = useTeamsStateStore((state) => state.teams);
+  const currentTeamUuid = useTeamsStateStore((state) => state.currentTeamUuid);
+  const setCurrentTeamUuid = useTeamsStateStore((state) => state.setCurrentTeamUuid);
 
   return (
     <nav className={styles.navigationContainer}>
@@ -48,6 +54,21 @@ export default function MainNavigation() {
             </a>
           </li>
         ))}
+        {teams.length > 1 && (
+          <li style={{ display: 'flex', flexDirection: 'row', gap: '8px', marginLeft: '10px', alignItems: 'center' }}>
+            <UsersIcon className="size-6 shrink-0" />
+            <select onChange={(e) => {
+              const selectedTeamUuid = e.target.value;
+              setCurrentTeamUuid(selectedTeamUuid);
+            }}>
+              {teams.map((team) => (
+                <option key={team.uuid} value={team.uuid} selected={team.uuid === currentTeamUuid}>
+                  {team.name}
+                </option>
+              ))}
+            </select>
+          </li>
+        )}
       </ul>
     </nav>
   )

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Features\Project\tests\Controller;
 
+use App\Features\Authentication\Fixture\Story\TeamUsersStory;
 use App\Infrastructure\PHPUnit\ApiRequest;
 use App\Infrastructure\PHPUnit\LoginRequest;
 use App\Infrastructure\PHPUnit\ResponseAssertions;
@@ -25,6 +26,7 @@ final class CreateProjectControllerTest extends WebTestCase
             uri: '/api/projects',
             method: Request::METHOD_POST,
             payload: [
+                'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'name' => 'Mon nouveau projet',
                 'screens' => [
                     'Page 1',
@@ -140,6 +142,7 @@ final class CreateProjectControllerTest extends WebTestCase
     {
         yield 'missing name field' => [
             [
+                'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'project' => 'Ratatouille remake',
                 'screens' => [
                     'Page 1',
@@ -161,6 +164,7 @@ final class CreateProjectControllerTest extends WebTestCase
 
         yield 'empty name' => [
             [
+                'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'name' => '',
                 'screens' => [
                     'Page 1',
@@ -182,6 +186,7 @@ final class CreateProjectControllerTest extends WebTestCase
 
         yield 'no screens' => [
             [
+                'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'name' => 'New Project',
                 'screens' => [],
             ],
@@ -200,6 +205,7 @@ final class CreateProjectControllerTest extends WebTestCase
 
         yield 'empty screens' => [
             [
+                'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'name' => 'New Project',
                 'screens' => ['Page 1', ''],
             ],

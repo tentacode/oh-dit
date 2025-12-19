@@ -30,10 +30,8 @@ final class CreateProjectController extends ApiController
         #[CurrentUser]
         User $user,
     ): JsonResponse {
-        $team = $user->getCurrentTeam();
-
         try {
-            $project = ($this->createProjectCommand)($user, $team, $createProjectRequest);
+            $project = ($this->createProjectCommand)($user, $createProjectRequest);
 
             return $this->getSerializedJsonResponse($project, JsonResponse::HTTP_CREATED);
         } catch (SuspiciousOperationException $e) {

@@ -8,6 +8,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class CreateProjectRequest
 {
+    #[Assert\NotBlank(message: 'L\'UUID de l\'équipe est obligatoire.')]
+    #[Assert\Uuid(message: 'L\'UUID de l\'équipe doit être un UUID valide.')]
+    public string $teamUuid;
+
     #[Assert\NotBlank(message: 'Le nom du projet est obligatoire.')]
     #[Assert\Type('string')]
     #[Assert\Length(max: 255)]

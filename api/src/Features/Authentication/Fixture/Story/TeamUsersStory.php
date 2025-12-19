@@ -13,13 +13,15 @@ use Zenstruck\Foundry\Story;
 #[AsFixture(name: 'team_users', groups: ['all'])]
 final class TeamUsersStory extends Story
 {
-    public const USER_DARTH_VADER_UUID = '00000000-0000-0000-0000-000000000001';
+    public const USER_DARTH_VADER_UUID = '00000000-0000-4000-8000-000000000001';
 
-    public const USER_LUKE_SKYWALKER_UUID = '00000000-0000-0000-0000-000000000002';
+    public const USER_LUKE_SKYWALKER_UUID = '00000000-0000-4000-8000-000000000002';
 
-    public const TEAM_THE_EMPIRE_UUID = '11111111-0000-0000-0000-000000000001';
+    public const TEAM_THE_EMPIRE_UUID = '11111111-0000-4000-8000-000000000001';
 
-    public const TEAM_THE_REBELLION_UUID = '11111111-0000-0000-0000-000000000002';
+    public const TEAM_THE_REBELLION_UUID = '11111111-0000-4000-8000-000000000002';
+
+    public const TEAM_CHATON_MIGNONS_UUID = '11111111-0000-4000-8000-000000000003';
 
     public function build(): void
     {
@@ -44,6 +46,16 @@ final class TeamUsersStory extends Story
 
         $theEmpire->addUser($darthVader);
         save($theEmpire);
+
+        $chatonMignons = TeamFactory::new()->withoutPersisting()->create([
+            'uuid' => self::TEAM_CHATON_MIGNONS_UUID,
+            'name' => 'Les chatons mignons',
+        ]);
+
+        $this->addToPool('teams', $chatonMignons);
+        $this->addState(self::TEAM_CHATON_MIGNONS_UUID, $chatonMignons, 'teams');
+        $chatonMignons->addUser($darthVader);
+        save($chatonMignons);
 
         // Rebels
         $lukeSkywalker = UserFactory::createOne([

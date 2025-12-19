@@ -6,12 +6,10 @@ import ProjectCard from "./ProjectCard";
 import ErrorBox from "../../error_handling/components/ErrorBox";
 import ProjectListEmpty from "./ProjectListEmpty";
 
-export default function ProjectList() {
-  const { data: projects, isLoading, isError } = useFetchProjects();
+export default function ProjectList({ teamUuid }: { teamUuid: string }) {
+  const { data: projects, isLoading, isError } = useFetchProjects(teamUuid);
 
   if (isLoading) return (<CardSkeleton />);
-
-  console.log('Projects data:', projects);
 
   if (isError || !projects) return (<ErrorBox message="Une erreur est survenue lors du chargement des projets." />);
 
