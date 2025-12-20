@@ -4,44 +4,45 @@ declare(strict_types=1);
 
 namespace App\Features\Project\Command;
 
+use Symfony\Component\Serializer\Attribute\Context;
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Validator\Constraints as Assert;
-
-final class CreateScreenRequest
-{
-    #[Assert\NotBlank(message: 'Le nom de la page est obligatoire.')]
-    #[Assert\Type('string')]
-    #[Assert\Length(max: 180, maxMessage: 'Le nom de la page ne peut pas dépasser 180 caractères.')]
-    public string $name;
-
-    #[Assert\Type('string')]
-    public string $url;
-
-    #[Assert\Type('integer')]
-    #[Assert\NotBlank(message: 'Le rang de la page est obligatoire.')]
-    public int $rank;
-}
 
 final class CreateProjectRequest
 {
-    #[Assert\NotBlank(message: 'L\'UUID de l\'équipe est obligatoire.')]
-    #[Assert\Uuid(message: 'L\'UUID de l\'équipe doit être un UUID valide.')]
-    public string $teamUuid;
+    public function __construct(
+        #[Assert\NotBlank(message: 'L\'UUID de l\'équipe est obligatoire.')]
+        #[Assert\Uuid(message: 'L\'UUID de l\'équipe doit être un UUID valide.')]
+        public readonly string $teamUuid,
 
-    #[Assert\NotBlank(message: 'Le nom du projet est obligatoire.')]
-    #[Assert\Type('string')]
-    #[Assert\Length(max: 255)]
-    public string $name;
+        #[Assert\NotBlank(message: 'Le nom du projet est obligatoire.')]
+        #[Assert\Type('string')]
+        #[Assert\Length(max: 255)]
+        public readonly string $name,
 
-    #[Assert\Type('string')]
-    public string $url;
+        #[Assert\Type('string')]
+        public readonly string $url,
 
-    /**
-     * @var array<int, CreateScreenRequest>
-     */
-    #[Assert\Count(min: 1, minMessage: 'Au moins une page est requise.')]
-    #[Assert\All([
-        new Assert\Type(CreateScreenRequest::class),
-    ])]
-    #[Assert\Valid]
-    public array $screens;
+        #[Assert\Count(min: 1, minMessage: 'Au moins une page est requise.')]
+        #[Assert\All(
+            new Assert\Collection(
+                fields: [
+                    'name' => [
+                        new Assert\NotBlank(message: 'Le nom de la page est obligatoire.'),
+                        new Assert\Length(max: 180, maxMessage: 'Le nom de la page ne peut pas dépasser 180 caractères.'),
+                    ],
+                    'url' => [
+                        new Assert\Type('string'),
+                    ],
+                    'rank' => [
+                        new Assert\NotBlank(message: 'Le rang de la page est obligatoire.'),
+                        new Assert\Type('integer'),
+                    ],
+                ],
+                allowExtraFields: false,
+                allowMissingFields: false,
+            )
+        )]
+        public readonly array $screens,
+    ) {}
 }

@@ -61,12 +61,12 @@ final class CreateProjectCommand
         $this->entityManager->persist($rootScreen);
         $project->addScreen($rootScreen);
 
-        foreach ($createProjectRequest->screens as $createScreenRequest) {
+        foreach ($createProjectRequest->screens as $screenData) {
             $screen = new Screen(
                 project: $project,
-                name: $createScreenRequest->name,
-                url: $createScreenRequest->url,
-                rank: $createScreenRequest->rank,
+                name: $screenData['name'],
+                url: $screenData['url'] ?? '',
+                rank: $screenData['rank'],
                 isRoot: false
             );
             ($this->validateOrThrow)($screen);
