@@ -56,6 +56,7 @@ final class UpdateProjectMetricsControllerTest extends WebTestCase
         $this->assertJsonResponseMatches([
             'uuid' => '22222222-0000-4000-8000-000000000001',
             'name' => 'Death Star',
+            'url' => 'https://www.deathstar.empire',
             'createdAt' => '@datetime@',
             'updatedAt' => '@datetime@',
             'status' => 'in_progress',
@@ -65,6 +66,8 @@ final class UpdateProjectMetricsControllerTest extends WebTestCase
                 [
                     'uuid' => '33333333-0000-4000-8000-000000000000',
                     'name' => 'Éléments transverses',
+                    'url' => '',
+                    'rank' => 0,
                     'progress' => 0,
                     'complianceRate' => 0,
                     'isRoot' => true,
@@ -72,6 +75,8 @@ final class UpdateProjectMetricsControllerTest extends WebTestCase
                 [
                     'uuid' => '33333333-0000-4000-8000-000000000001',
                     'name' => 'Home Screen',
+                    'url' => '/',
+                    'rank' => 1,
                     'progress' => 13,
                     'complianceRate' => 33,
                     'isRoot' => false,
@@ -79,6 +84,8 @@ final class UpdateProjectMetricsControllerTest extends WebTestCase
                 [
                     'uuid' => '33333333-0000-4000-8000-000000000002',
                     'name' => 'Contact Screen',
+                    'url' => '/contact',
+                    'rank' => 2,
                     'progress' => 3,
                     'complianceRate' => 0,
                     'isRoot' => false,

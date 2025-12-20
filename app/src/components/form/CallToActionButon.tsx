@@ -2,6 +2,7 @@ import styles from "./styles/buttons.module.css";
 
 export default function CallToActionButton({
   children,
+  id, 
   className,
   ariaLabel,
   type,
@@ -9,6 +10,7 @@ export default function CallToActionButton({
   disabled
 }: {
   children: React.ReactNode;
+  id?: string;
   className?: string;
   ariaLabel?: string;
   type?: "button" | "submit";
@@ -17,6 +19,7 @@ export default function CallToActionButton({
 }) {
   return (
     <button
+      id={id}
       type={type ?? "submit"}
       className={`${styles.callToAction} ${className}`}
       disabled={disabled ?? false}

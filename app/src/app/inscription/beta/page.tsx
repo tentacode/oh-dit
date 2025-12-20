@@ -15,7 +15,7 @@ import {
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
 import { ApiError, ApiValidationError } from "@/src/lib/react-query/apiClient";
-import { useRegisterBetaUser } from "@/src/features/authentication/mutations/useCreateProject";
+import { useRegisterBetaUser } from "@/src/features/authentication/mutations/useRegisterBetaUser";
 import CallToActionButton from "@/src/components/form/CallToActionButon";
 
 function getErrorsForField(

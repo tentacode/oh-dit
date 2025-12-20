@@ -39,6 +39,9 @@ class Project implements HasUuidInterface, SerializableInterface
     #[Assert\NotBlank(message: 'Le nom du projet est obligatoire.')]
     private string $name;
 
+    #[ORM\Column(type: Types::TEXT)]
+    private string $url;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private readonly DateTimeImmutable $createdAt;
 
@@ -77,6 +80,7 @@ class Project implements HasUuidInterface, SerializableInterface
         Team $team,
         RuleSet $ruleSet,
         string $name,
+        string $url,
         ?string $uuid = null
     ) {
         $this->uuid = $uuid ? Uuid::fromString($uuid) : Uuid::v4();
@@ -84,6 +88,7 @@ class Project implements HasUuidInterface, SerializableInterface
         $this->ruleSet = $ruleSet;
         $this->screens = new ArrayCollection();
         $this->name = $name;
+        $this->url = $url;
         $this->createdAt = CarbonImmutable::now();
         $this->updatedAt = CarbonImmutable::now();
     }
@@ -123,6 +128,11 @@ class Project implements HasUuidInterface, SerializableInterface
         return $this->name;
     }
 
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
     public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
@@ -131,6 +141,11 @@ class Project implements HasUuidInterface, SerializableInterface
     public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    public function getComplianceRateUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->complianceRateUpdatedAt;
     }
 
     public function getStatus(): ProjectStatus
@@ -167,6 +182,7 @@ class Project implements HasUuidInterface, SerializableInterface
         return [
             'uuid',
             'name',
+            'url',
             'createdAt',
             'updatedAt',
             'status',
@@ -180,6 +196,8 @@ class Project implements HasUuidInterface, SerializableInterface
             'screens' => [
                 'uuid',
                 'name',
+                'url',
+                'rank',
                 'progress',
                 'complianceRate',
                 'isRoot',

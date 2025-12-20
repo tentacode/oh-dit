@@ -35,6 +35,7 @@ final class GetProjectsControllerTest extends WebTestCase
             [
                 'uuid' => '@uuid@',
                 'name' => 'Death Star',
+                'url' => 'https://www.deathstar.empire',
                 'createdAt' => '@datetime@',
                 'updatedAt' => '@datetime@',
                 'status' => 'in_progress',
@@ -44,6 +45,8 @@ final class GetProjectsControllerTest extends WebTestCase
                     [
                         'uuid' => '@uuid@',
                         'name' => 'Éléments transverses',
+                        'url' => '',
+                        'rank' => 0,
                         'progress' => 0,
                         'complianceRate' => 0,
                         'isRoot' => true,
@@ -51,6 +54,8 @@ final class GetProjectsControllerTest extends WebTestCase
                     [
                         'uuid' => '@uuid@',
                         'name' => 'Home Screen',
+                        'url' => '/',
+                        'rank' => 1,
                         'progress' => 0,
                         'complianceRate' => 0,
                         'isRoot' => false,
@@ -58,6 +63,8 @@ final class GetProjectsControllerTest extends WebTestCase
                     [
                         'uuid' => '@uuid@',
                         'name' => 'Contact Screen',
+                        'url' => '/contact',
+                        'rank' => 2,
                         'progress' => 0,
                         'complianceRate' => 0,
                         'isRoot' => false,
