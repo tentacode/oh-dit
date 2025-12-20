@@ -25,7 +25,7 @@ final class CreateProjectCommand
     public function __invoke(User $user, CreateProjectRequest $createProjectRequest): Project
     {
         $team = $this->entityManager->getRepository(Team::class)->find($createProjectRequest->teamUuid);
-        if (!$team instanceof Team) {
+        if (! $team instanceof Team) {
             throw new SuspiciousOperationException('User is trying to create a project in a team that does not exist.');
         }
 
@@ -41,21 +41,34 @@ final class CreateProjectCommand
         $project = new Project(
             team: $team,
             ruleSet: $ruleSet,
-            name: $createProjectRequest->name
+            name: $createProjectRequest->name,
+            url: $createProjectRequest->url ?? '',
         );
 
         ($this->validateOrThrow)($project);
 
         $this->entityManager->persist($project);
 
-        $rootScreen = new Screen($project, Screen::ROOT_SCREEN_NAME, true);
+        $rootScreen = new Screen(
+            project: $project,
+            name: Screen::ROOT_SCREEN_NAME,
+            url: '',
+            rank: 0,
+            isRoot: true
+        );
         ($this->validateOrThrow)($rootScreen);
 
         $this->entityManager->persist($rootScreen);
         $project->addScreen($rootScreen);
 
-        foreach ($createProjectRequest->screens as $screenName) {
-            $screen = new Screen($project, $screenName);
+        foreach ($createProjectRequest->screens as $createScreenRequest) {
+            $screen = new Screen(
+                project: $project,
+                name: $createScreenRequest->name,
+                url: $createScreenRequest->url,
+                rank: $createScreenRequest->rank,
+                isRoot: false
+            );
             ($this->validateOrThrow)($screen);
 
             $this->entityManager->persist($screen);

@@ -28,10 +28,16 @@ final class CreateProjectControllerTest extends WebTestCase
             payload: [
                 'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'name' => 'Mon nouveau projet',
-                'screens' => [
-                    'Page 1',
-                    'Page 2',
-                ],
+                'url' => 'https://www.monprojet.empire',
+                'screens' => [[
+                    'name' => 'Page 1',
+                    'url' => '/page-1',
+                    'rank' => 1,
+                ], [
+                    'name' => 'Page 2',
+                    'url' => '/page-2',
+                    'rank' => 2,
+                ]],
             ],
             authenticationToken: $this->getAuthenticationToken(
                 email: 'darth_vader@empire.com',
@@ -42,6 +48,7 @@ final class CreateProjectControllerTest extends WebTestCase
         $this->assertJsonResponseMatches([
             'uuid' => '@uuid@',
             'name' => 'Mon nouveau projet',
+            'url' => 'https://www.monprojet.empire',
             'createdAt' => '@datetime@.after("today")',
             'updatedAt' => '@datetime@.after("today")',
             'status' => 'in_progress',
@@ -51,6 +58,8 @@ final class CreateProjectControllerTest extends WebTestCase
                 [
                     'uuid' => '@uuid@',
                     'name' => 'Éléments transverses',
+                    'url' => '',
+                    'rank' => 0,
                     'progress' => 0,
                     'complianceRate' => 0,
                     'isRoot' => true,
@@ -58,6 +67,8 @@ final class CreateProjectControllerTest extends WebTestCase
                 [
                     'uuid' => '@uuid@',
                     'name' => 'Page 1',
+                    'url' => '/page-1',
+                    'rank' => 1,
                     'progress' => 0,
                     'complianceRate' => 0,
                     'isRoot' => false,
@@ -65,6 +76,8 @@ final class CreateProjectControllerTest extends WebTestCase
                 [
                     'uuid' => '@uuid@',
                     'name' => 'Page 2',
+                    'url' => '/page-2',
+                    'rank' => 2,
                     'progress' => 0,
                     'complianceRate' => 0,
                     'isRoot' => false,
@@ -84,11 +97,18 @@ final class CreateProjectControllerTest extends WebTestCase
             uri: '/api/projects',
             method: Request::METHOD_POST,
             payload: [
+                'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'name' => 'Mon nouveau projet',
-                'screens' => [
-                    'Page 1',
-                    'Page 2',
-                ],
+                'url' => 'https://www.monprojet.empire',
+                'screens' => [[
+                    'name' => 'Page 1',
+                    'url' => '/page-1',
+                    'rank' => 1,
+                ], [
+                    'name' => 'Page 2',
+                    'url' => '/page-2',
+                    'rank' => 2,
+                ]],
             ],
         );
 
@@ -101,11 +121,18 @@ final class CreateProjectControllerTest extends WebTestCase
             uri: '/api/projects',
             method: Request::METHOD_POST,
             payload: [
+                'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'name' => 'Mon nouveau projet',
-                'screens' => [
-                    'Page 1',
-                    'Page 2',
-                ],
+                'url' => 'https://www.monprojet.empire',
+                'screens' => [[
+                    'name' => 'Page 1',
+                    'url' => '/page-1',
+                    'rank' => 1,
+                ], [
+                    'name' => 'Page 2',
+                    'url' => '/page-2',
+                    'rank' => 2,
+                ]],
             ],
             authenticationToken: 'invalid_token',
         );
@@ -144,9 +171,18 @@ final class CreateProjectControllerTest extends WebTestCase
             [
                 'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'project' => 'Ratatouille remake',
+                'url' => 'https://www.ratatouille.remake',
                 'screens' => [
-                    'Page 1',
-                    'Page 2',
+                    [
+                        'name' => 'Page 1',
+                        'url' => '/page-1',
+                        'rank' => 1,
+                    ],
+                    [
+                        'name' => 'Page 2',
+                        'url' => '/page-2',
+                        'rank' => 2,
+                    ],
                 ],
             ],
             [
@@ -166,9 +202,18 @@ final class CreateProjectControllerTest extends WebTestCase
             [
                 'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'name' => '',
+                'url' => 'https://www.ratatouille.remake',
                 'screens' => [
-                    'Page 1',
-                    'Page 2',
+                    [
+                        'name' => 'Page 1',
+                        'url' => '/page-1',
+                        'rank' => 1,
+                    ],
+                    [
+                        'name' => 'Page 2',
+                        'url' => '/page-2',
+                        'rank' => 2,
+                    ],
                 ],
             ],
             [
@@ -188,6 +233,7 @@ final class CreateProjectControllerTest extends WebTestCase
             [
                 'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'name' => 'New Project',
+                'url' => 'https://www.new.project',
                 'screens' => [],
             ],
             [
@@ -207,7 +253,19 @@ final class CreateProjectControllerTest extends WebTestCase
             [
                 'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'name' => 'New Project',
-                'screens' => ['Page 1', ''],
+                'url' => 'https://www.new.project',
+                'screens' => [
+                    [
+                        'name' => 'Page 1',
+                        'url' => '/page-1',
+                        'rank' => 1,
+                    ],
+                    [
+                        'name' => '',
+                        'url' => '/page-2',
+                        'rank' => 2,
+                    ],
+                ],
             ],
             [
                 'code' => 'unprocessable_entity',
@@ -215,8 +273,8 @@ final class CreateProjectControllerTest extends WebTestCase
                 'errors' => [
                     [
                         'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
-                        'propertyPath' => 'screens[1]',
-                        'message' => 'Le nom de la page ne peut pas être vide.',
+                        'propertyPath' => 'screens[1].name',
+                        'message' => 'Le nom de la page est obligatoire.',
                     ],
                 ],
             ],

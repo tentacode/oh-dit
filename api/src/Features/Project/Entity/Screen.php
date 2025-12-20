@@ -29,6 +29,12 @@ class Screen implements HasUuidInterface
     #[Assert\NotBlank(message: 'Le nom de la page est obligatoire.')]
     private string $name;
 
+    #[ORM\Column(type: Types::TEXT)]
+    private string $url;
+
+    #[ORM\Column(type: Types::INTEGER)]
+    private int $rank;
+
     #[ORM\Column(type: Types::INTEGER)]
     private int $progress = 0;
 
@@ -51,12 +57,16 @@ class Screen implements HasUuidInterface
     public function __construct(
         Project $project,
         string $name,
+        string $url,
+        int $rank,
         bool $isRoot = false,
         ?string $uuid = null
     ) {
         $this->uuid = $uuid ? Uuid::fromString($uuid) : Uuid::v4();
         $this->project = $project;
         $this->name = $name;
+        $this->url = $url;
+        $this->rank = $rank;
         $this->isRoot = $isRoot;
         $this->createdAt = CarbonImmutable::now();
         $this->updatedAt = CarbonImmutable::now();
@@ -75,6 +85,16 @@ class Screen implements HasUuidInterface
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    public function getRank(): int
+    {
+        return $this->rank;
     }
 
     public function getProgress(): int

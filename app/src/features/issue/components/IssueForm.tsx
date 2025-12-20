@@ -168,7 +168,7 @@ export default function IssueForm({
     return (
       <form
         noValidate={true}
-        className={clsx(formStyles.form, listStyles.issueListForm)}
+        className={clsx(formStyles.formContainer, formStyles.form, listStyles.issueListForm)}
         onSubmit={onSubmit}
       >
         <span className="h5">
@@ -204,7 +204,7 @@ export default function IssueForm({
   return (
     <form
       noValidate={true}
-      className={clsx(formStyles.form, listStyles.issueListForm)}
+      className={clsx(formStyles.formContainer, formStyles.form, listStyles.issueListForm)}
       onSubmit={onSubmit}
     >
       <span className="h5">

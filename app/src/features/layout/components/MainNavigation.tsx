@@ -4,23 +4,23 @@ import {
   LifebuoyIcon,
   UserIcon,
   UsersIcon,
-} from '@heroicons/react/24/outline'
-import { usePathname } from 'next/navigation';
-import { clsx } from 'clsx';
+} from "@heroicons/react/24/outline";
+import { usePathname } from "next/navigation";
+import { clsx } from "clsx";
 
-import styles from '../styles/main_navigation.module.css';
-import { useTeamsStateStore } from '../../authentication/store/teamsStore';
+import styles from "../styles/main_navigation.module.css";
+import { useTeamsStateStore } from "../../authentication/store/teamsStore";
 
 const navigation = [
-  { name: 'Audits', href: '/', icon: FolderIcon },
-  { name: 'Aide', href: '/aide', icon: LifebuoyIcon },
-  { name: 'Contactez-nous', href: '/contact', icon: EnvelopeIcon },
-  { name: 'Mon profil', href: '/profil', icon: UserIcon },
-]
+  { name: "Audits", href: "/", icon: FolderIcon },
+  { name: "Aide", href: "/aide", icon: LifebuoyIcon },
+  { name: "Contactez-nous", href: "/contact", icon: EnvelopeIcon },
+  { name: "Mon profil", href: "/profil", icon: UserIcon },
+];
 
 function isCurrentPage(menuHref: string, currentPathname: string) {
-  if (menuHref === '/') {
-    return currentPathname === '/' || currentPathname.startsWith('/projet/');
+  if (menuHref === "/") {
+    return currentPathname === "/" || currentPathname.startsWith("/projet/");
   }
 
   return currentPathname === menuHref;
@@ -31,7 +31,9 @@ export default function MainNavigation() {
 
   const teams = useTeamsStateStore((state) => state.teams);
   const currentTeamUuid = useTeamsStateStore((state) => state.currentTeamUuid);
-  const setCurrentTeamUuid = useTeamsStateStore((state) => state.setCurrentTeamUuid);
+  const setCurrentTeamUuid = useTeamsStateStore(
+    (state) => state.setCurrentTeamUuid
+  );
 
   return (
     <nav className={styles.navigationContainer}>
@@ -42,27 +44,35 @@ export default function MainNavigation() {
               href={item.href}
               className={clsx([
                 isCurrentPage(item.href, currentPathname) && styles.active,
-                'group flex gap-x-3 p-2 text-sm/6 font-semibold',
+                "group flex gap-x-3 p-2 text-sm/6 font-semibold",
                 styles.navLink,
               ])}
             >
-              <item.icon
-                aria-hidden="true"
-                className={'size-6 shrink-0'}
-              />
+              <item.icon aria-hidden="true" className={"size-6 shrink-0"} />
               {item.name}
             </a>
           </li>
         ))}
         {teams.length > 1 && (
-          <li style={{ display: 'flex', flexDirection: 'row', gap: '8px', marginLeft: '10px', alignItems: 'center' }}>
+          <li
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "8px",
+              marginLeft: "10px",
+              alignItems: "center",
+            }}
+          >
             <UsersIcon className="size-6 shrink-0" />
-            <select onChange={(e) => {
-              const selectedTeamUuid = e.target.value;
-              setCurrentTeamUuid(selectedTeamUuid);
-            }}>
+            <select
+              value={currentTeamUuid}
+              onChange={(e) => {
+                const selectedTeamUuid = e.target.value;
+                setCurrentTeamUuid(selectedTeamUuid);
+              }}
+            >
               {teams.map((team) => (
-                <option key={team.uuid} value={team.uuid} selected={team.uuid === currentTeamUuid}>
+                <option key={team.uuid} value={team.uuid}>
                   {team.name}
                 </option>
               ))}
@@ -71,5 +81,5 @@ export default function MainNavigation() {
         )}
       </ul>
     </nav>
-  )
+  );
 }

@@ -4,7 +4,20 @@ import { ProjectInterface } from "../types/ProjectInterface";
 import { projectCacheKeys } from "../queries/cacheKeys";
 import { queryClient } from "@/src/lib/react-query/queryClient";
 
-async function createProject(data: { teamUuid: string; name: string; screens: string[] }): Promise<ProjectInterface> {
+export interface CreateScreenPayload {
+  name: string;
+  url: string;
+  rank: number;
+}
+
+export interface CreateProjectPayload {
+  teamUuid: string;
+  name: string;
+  url: string;
+  screens: CreateScreenPayload[];
+}
+
+async function createProject(data: CreateProjectPayload): Promise<ProjectInterface> {
   return apiClient<ProjectInterface>('/api/projects', {
     method: 'POST',
     body: JSON.stringify(data),

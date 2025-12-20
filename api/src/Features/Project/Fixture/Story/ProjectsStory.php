@@ -34,6 +34,7 @@ final class ProjectsStory extends Story
         $deathStarProject = ProjectFactory::new()->withoutPersisting()->create([
             'uuid' => self::PROJECT_DEATH_STAR_UUID,
             'name' => 'Death Star',
+            'url' => 'https://www.deathstar.empire',
             'team' => $theEmpireTeam,
             'ruleSet' => $empireRuleSet,
         ]);
@@ -43,6 +44,8 @@ final class ProjectsStory extends Story
 
         $rootScreen = ScreenFactory::createOne([
             'name' => Screen::ROOT_SCREEN_NAME,
+            'rank' => 0,
+            'url' => '',
             'uuid' => self::SCREEN_ROOT_UUID,
             'project' => $deathStarProject,
             'isRoot' => true,
@@ -53,6 +56,8 @@ final class ProjectsStory extends Story
 
         $homeScreen = ScreenFactory::createOne([
             'name' => 'Home Screen',
+            'url' => '/',
+            'rank' => 1,
             'uuid' => self::SCREEN_HOME_UUID,
             'project' => $deathStarProject,
         ]);
@@ -62,6 +67,8 @@ final class ProjectsStory extends Story
 
         $contactScreen = ScreenFactory::createOne([
             'name' => 'Contact Screen',
+            'url' => '/contact',
+            'rank' => 2,
             'uuid' => self::SCREEN_CONTACT_UUID,
             'project' => $deathStarProject,
         ]);
@@ -73,6 +80,7 @@ final class ProjectsStory extends Story
 
         $xWingProject = ProjectFactory::createOne([
             'name' => 'X-Wing Project',
+            'url' => 'https://www.xwing.rebellion',
             'team' => $theRebellionTeam,
             'ruleSet' => $empireRuleSet,
         ]);
@@ -80,11 +88,15 @@ final class ProjectsStory extends Story
         ScreenFactory::createOne([
             'name' => Screen::ROOT_SCREEN_NAME,
             'project' => $xWingProject,
+            'rank' => 0,
+            'url' => '',
             'isRoot' => true,
         ]);
 
         ScreenFactory::createOne([
             'name' => 'Landing Screen',
+            'url' => '/',
+            'rank' => 1,
             'project' => $xWingProject,
         ]);
     }
