@@ -4,25 +4,21 @@ declare(strict_types=1);
 
 namespace App\Features\Project\Command;
 
-use Symfony\Component\Serializer\Attribute\Context;
-use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class CreateProjectRequest
 {
+    /**
+     * @param array<int, array{name: string, url: string|null, rank: int}> $screens
+     */
     public function __construct(
         #[Assert\NotBlank(message: 'L\'UUID de l\'équipe est obligatoire.')]
         #[Assert\Uuid(message: 'L\'UUID de l\'équipe doit être un UUID valide.')]
-        public readonly string $teamUuid,
-
-        #[Assert\NotBlank(message: 'Le nom du projet est obligatoire.')]
-        #[Assert\Type('string')]
+        public readonly ?string $teamUuid,
         #[Assert\Length(max: 255)]
-        public readonly string $name,
-
-        #[Assert\Type('string')]
-        public readonly string $url,
-
+        #[Assert\NotBlank(message: 'Le nom du projet est obligatoire.')]
+        public readonly ?string $name,
+        public readonly string $url = '',
         #[Assert\Count(min: 1, minMessage: 'Au moins une page est requise.')]
         #[Assert\All(
             new Assert\Collection(
@@ -43,6 +39,7 @@ final class CreateProjectRequest
                 allowMissingFields: false,
             )
         )]
-        public readonly array $screens,
-    ) {}
+        public readonly array $screens = [],
+    ) {
+    }
 }

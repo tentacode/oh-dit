@@ -92,7 +92,15 @@ class RuleCategory implements HasUuidInterface
      */
     public function getRules(): Collection
     {
-        return $this->rules;
+        /** @var Rule[] $rules */
+        $rules = $this->rules->toArray();
+        usort(
+            $rules,
+            fn (Rule $a, Rule $b): int =>
+            version_compare($a->getPrefix() ?? '', $b->getPrefix() ?? '')
+        );
+
+        return new ArrayCollection($rules);
     }
 
     public function getCreatedAt(): DateTimeImmutable
