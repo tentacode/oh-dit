@@ -273,7 +273,7 @@ final class CreateProjectControllerTest extends WebTestCase
                 'errors' => [
                     [
                         'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
-                        'propertyPath' => 'screens[1].name',
+                        'propertyPath' => 'screens[1][name]',
                         'message' => 'Le nom de la page est obligatoire.',
                     ],
                 ],

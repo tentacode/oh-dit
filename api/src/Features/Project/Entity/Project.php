@@ -74,6 +74,9 @@ class Project implements HasUuidInterface, SerializableInterface
      * @var ArrayCollection<int, Screen>
      */
     #[ORM\OneToMany(targetEntity: Screen::class, mappedBy: 'project')]
+    #[ORM\OrderBy([
+        'rank' => 'ASC',
+    ])]
     private Collection $screens;
 
     public function __construct(

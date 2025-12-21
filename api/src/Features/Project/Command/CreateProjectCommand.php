@@ -41,7 +41,7 @@ final class CreateProjectCommand
         $project = new Project(
             team: $team,
             ruleSet: $ruleSet,
-            name: $createProjectRequest->name,
+            name: $createProjectRequest->name ?? '',
             url: $createProjectRequest->url ?? '',
         );
 
