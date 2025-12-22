@@ -1,14 +1,14 @@
-import ComplianceStatus from "./buttons/ComplianceStatus";
+import ComplianceStatus, { getComplianceButtonStatusId } from "./buttons/ComplianceStatus";
 
 import styles from "../../styles/audit_grid.module.css";
-import IssuesButton from "./buttons/IssuesButton";
-import CommentsButton from "./buttons/CommentsButton";
+import IssuesButton, { getIssuesButtonId } from "./buttons/IssuesButton";
+import CommentsButton, { getCommentsButtonId } from "./buttons/CommentsButton";
 import {
   Rule as RuleStoreType,
   useAuditStore,
 } from "@/src/features/audit/store/auditStore";
 import { clsx } from "clsx";
-import RuleHelpButton from "./buttons/RuleHelpButton";
+import RuleHelpButton, { getRuleHelpButtonId } from "./buttons/RuleHelpButton";
 import { useState } from "react";
 import RuleHelp from "../rule/RuleHelp";
 import IssuesDetail from "@/src/features/issue/components/IssuesDetail";
@@ -17,6 +17,7 @@ import CommentsDetail from "@/src/features/comments/components/CommentsDetail";
 enum ActiveTab {
   HELP = "help",
   ISSUES = "issues",
+  ISSUES_NC = "issues_nc",
   COMMENTS = "comments",
 }
 
@@ -53,7 +54,7 @@ export default function RuleRow({
   };
 
   const onNonCompliantClick = () => {
-    setActiveTab(ActiveTab.ISSUES);
+    setActiveTab(ActiveTab.ISSUES_NC);
 
     setTimeout(() => {
       const element = document.getElementById(`text-${rule.uuid}-${screenUuid}`);
@@ -65,7 +66,34 @@ export default function RuleRow({
 
   const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape") {
+      const lastActiveTab = activeTab;
+
       setActiveTab(null);
+
+      /**
+       * Setting the focus back to the button corresponding to the closed tab
+       * only if the focus is not already within the rule header. 
+       */
+
+      const focusedElement = document.activeElement;
+      if (focusedElement && focusedElement.closest(`.${styles.ruleRowHeader}`)) {
+        return;
+      }
+
+      switch(lastActiveTab) {
+        case ActiveTab.HELP:
+          document.getElementById(getRuleHelpButtonId(rule.uuid, screenUuid))?.focus();
+          break;
+        case ActiveTab.ISSUES:
+          document.getElementById(getIssuesButtonId(rule.uuid, screenUuid))?.focus();
+          break;
+        case ActiveTab.ISSUES_NC:
+          document.getElementById(getComplianceButtonStatusId("non_compliant", rule.uuid, screenUuid))?.focus();
+          break;
+        case ActiveTab.COMMENTS:
+          document.getElementById(getCommentsButtonId(rule.uuid, screenUuid))?.focus();
+          break;
+      }
     }
   };
 
@@ -90,22 +118,26 @@ export default function RuleRow({
           screenUuid={screenUuid}
         />
         <IssuesButton
-          isActive={activeTab === ActiveTab.ISSUES}
+          isActive={activeTab === ActiveTab.ISSUES || activeTab === ActiveTab.ISSUES_NC}
           ruleUuid={rule.uuid}
           screenUuid={screenUuid}
           onClick={toggleTab(ActiveTab.ISSUES)}
         />
         <CommentsButton
+          ruleUuid={rule.uuid}
+          screenUuid={screenUuid}
           isActive={activeTab === ActiveTab.COMMENTS}
           onClick={toggleTab(ActiveTab.COMMENTS)}
         />
         <RuleHelpButton
+          ruleUuid={rule.uuid}
+          screenUuid={screenUuid}
           isActive={activeTab === ActiveTab.HELP}
           onClick={toggleTab(ActiveTab.HELP)}
         />
       </div>
       {activeTab === ActiveTab.HELP && <RuleHelp ruleUuid={rule.uuid} />}
-      {activeTab === ActiveTab.ISSUES && (
+      {(activeTab === ActiveTab.ISSUES || activeTab === ActiveTab.ISSUES_NC) && (
         <IssuesDetail ruleUuid={rule.uuid} screenUuid={screenUuid} />
       )}
       {activeTab === ActiveTab.COMMENTS && <CommentsDetail />}
