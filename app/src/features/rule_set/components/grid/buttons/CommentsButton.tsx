@@ -12,11 +12,13 @@ export default function CommentsButton({
   screenUuid,
   isActive,
   onClick,
+  onFocus,
 }: {
   ruleUuid: string;
   screenUuid: string;
   isActive: boolean;
   onClick: () => void;
+  onFocus: () => void;
 }) {
   const badgeNumber = 0; // Replace with actual logic to get number of comments
 
@@ -30,6 +32,10 @@ export default function CommentsButton({
         isActive && styles.activeTab
       )}
       onClick={onClick}
+      onFocus={(e) => {
+        e.stopPropagation();
+        onFocus()}
+      }
     >
       {badgeNumber > 0 && <span className={styles.badge}>{badgeNumber}</span>}
       <ChatBubbleLeftRightIcon className={styles.buttonIcon} />

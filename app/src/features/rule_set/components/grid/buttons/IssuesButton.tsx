@@ -13,11 +13,13 @@ export default function IssuesButton({
   ruleUuid,
   screenUuid,
   onClick,
+  onFocus,
 }: {
   isActive: boolean;
   ruleUuid: string;
   screenUuid: string;
   onClick: () => void;
+  onFocus: () => void;
 }) {
   const allIssues = useAuditStore((state) => state.issues);
   const issues = allIssues.filter(
@@ -36,6 +38,10 @@ export default function IssuesButton({
         isActive && styles.activeTab
       )}
       onClick={onClick}
+      onFocus={(e) => {
+        e.stopPropagation();
+        onFocus()}
+      }
     >
       {badgeNumber > 0 && <span className={styles.badge}>{badgeNumber}</span>}
       <ExclamationTriangleIcon className={styles.buttonIcon} />

@@ -10,27 +10,6 @@ export default function AuditGrid({ screenUuid }: { screenUuid: string }) {
     return null;
   }
 
-  const sortedCategories = [...ruleSet.ruleCategories].sort((a, b) => {
-    const prefixA =
-      a.prefix !== null && a.prefix !== undefined
-        ? a.prefix
-        : Number.MAX_SAFE_INTEGER;
-    const prefixB =
-      b.prefix !== null && b.prefix !== undefined
-        ? b.prefix
-        : Number.MAX_SAFE_INTEGER;
-
-    if (
-      prefixA !== prefixB &&
-      !isNaN(Number(prefixA)) &&
-      !isNaN(Number(prefixB))
-    ) {
-      return Number(prefixA) - Number(prefixB);
-    }
-
-    return a.name.localeCompare(b.name);
-  });
-
   return (
     <>
       <div className={styles.auditContainer}>
@@ -39,7 +18,7 @@ export default function AuditGrid({ screenUuid }: { screenUuid: string }) {
             <PageSelect screenUuid={screenUuid} />
           </div>
           <div role="grid" data-grid-content>
-            {sortedCategories.map((ruleCategory) => {
+            {ruleSet.ruleCategories.map((ruleCategory) => {
               return (
                 <RuleCategoryRow
                   screenUuid={screenUuid}

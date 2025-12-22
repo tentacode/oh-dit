@@ -93,7 +93,15 @@ class RuleSet implements HasUuidInterface, SerializableInterface
      */
     public function getRuleCategories(): Collection
     {
-        return $this->ruleCategories;
+        /** @var RuleCategory[] $categories */
+        $categories = $this->ruleCategories->toArray();
+        usort(
+            $categories,
+            fn (RuleCategory $a, RuleCategory $b): int =>
+            version_compare($a->getPrefix() ?? '', $b->getPrefix() ?? '')
+        );
+
+        return new ArrayCollection($categories);
     }
 
     public function getCreatedAt(): DateTimeImmutable

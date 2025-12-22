@@ -12,11 +12,13 @@ export default function RuleHelpButton({
   screenUuid,
   isActive,
   onClick,
+  onFocus,
 }: {
   ruleUuid: string;
   screenUuid: string;
   isActive: boolean;
   onClick: () => void;
+  onFocus: () => void;
 }) {
   return (
     <button
@@ -28,6 +30,10 @@ export default function RuleHelpButton({
         isActive && styles.activeTab
       )}
       onClick={onClick}
+      onFocus={(e) => {
+        e.stopPropagation();
+        onFocus()}
+      }
     >
       <QuestionMarkCircleIcon className={styles.buttonIcon} />
     </button>
