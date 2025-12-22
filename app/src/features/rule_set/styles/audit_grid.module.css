@@ -1,7 +1,7 @@
 .auditContainer {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  max-width: 1400px;
 }
 
 .drawerSpacer {
