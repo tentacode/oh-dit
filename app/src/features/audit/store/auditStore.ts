@@ -58,10 +58,20 @@ export interface RuleSet {
   ruleCategories: RuleCategory[];
 }
 
+export enum ActiveButton {
+  COMPLIANT = "compliant",
+  NON_COMPLIANT = "non_compliant",
+  NOT_APPLICABLE = "not_applicable",
+  ISSUES = "issues",
+  COMMENTS = "comments",
+  HELP = "help",
+}
+
 export interface ActiveElement {
   ruleUuid?: string;
   ruleCategoryUuid?: string;
   screenUuid: string;
+  buttonFocused?: ActiveButton;
 }
 
 interface AuditStore {

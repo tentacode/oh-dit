@@ -1,4 +1,7 @@
-import { useAuditStore } from "@/src/features/audit/store/auditStore";
+import {
+  ActiveButton,
+  useAuditStore,
+} from "@/src/features/audit/store/auditStore";
 import styles from "../../../styles/audit_grid.module.css";
 import { clsx } from "clsx";
 import { ComplianceStatus as ComplianceStatusType } from "../../../types/RuleSetTypes";
@@ -9,7 +12,7 @@ import { useUpdateProjectMetrics } from "@/src/features/project/queries/useUpdat
 export function getComplianceButtonStatusId(
   status: ComplianceStatusType,
   ruleUuid: string,
-  screenUuid: string,
+  screenUuid: string
 ) {
   return `compliance-status-${status}-${ruleUuid}-${screenUuid}`;
 }
@@ -81,11 +84,61 @@ export default function ComplianceStatus({
       removeIssueFormState(ruleUuid, screenUuid);
     }
 
+    switch (newStatus) {
+      case "compliant":
+        setActiveElement({
+          ruleUuid: ruleUuid,
+          screenUuid: screenUuid,
+          buttonFocused: ActiveButton.COMPLIANT,
+        });
+        break;
+      case "non_compliant":
+        setActiveElement({
+          ruleUuid: ruleUuid,
+          screenUuid: screenUuid,
+          buttonFocused: ActiveButton.NON_COMPLIANT,
+        });
+        break;
+      case "not_applicable":
+        setActiveElement({
+          ruleUuid: ruleUuid,
+          screenUuid: screenUuid,
+          buttonFocused: ActiveButton.NOT_APPLICABLE,
+        });
+        break;
+    }
+
     try {
       await createCompliance.mutateAsync(updatedCompliance);
       await updateProjectMetrics.mutateAsync(projectUuid);
     } catch (error) {
       console.error("Error creating compliance:", error);
+    }
+  };
+
+  const onFocusStatus = (status: ComplianceStatusType) => {
+    switch (status) {
+      case "compliant":
+        setActiveElement({
+          ruleUuid: ruleUuid,
+          screenUuid: screenUuid,
+          buttonFocused: ActiveButton.COMPLIANT,
+        });
+        break;
+      case "non_compliant":
+        setActiveElement({
+          ruleUuid: ruleUuid,
+          screenUuid: screenUuid,
+          buttonFocused: ActiveButton.NON_COMPLIANT,
+        });
+        break;
+      case "not_applicable":
+        setActiveElement({
+          ruleUuid: ruleUuid,
+          screenUuid: screenUuid,
+          buttonFocused: ActiveButton.NOT_APPLICABLE,
+        });
+        break;
     }
   };
 
@@ -96,6 +149,11 @@ export default function ComplianceStatus({
         role="gridcell"
         className={clsx([styles.squareButton, compliantClasses])}
         onClick={() => changeComplianceStatus("compliant")}
+        onFocus={(e) => {
+          e.stopPropagation();
+
+          onFocusStatus("compliant");
+        }}
       >
         C
       </button>
@@ -104,6 +162,11 @@ export default function ComplianceStatus({
         role="gridcell"
         className={clsx([styles.squareButton, nonCompliantClasses])}
         onClick={() => changeComplianceStatus("non_compliant")}
+        onFocus={(e) => {
+          e.stopPropagation();
+
+          onFocusStatus("non_compliant");
+        }}
       >
         NC
       </button>
@@ -112,6 +175,11 @@ export default function ComplianceStatus({
         role="gridcell"
         className={clsx([styles.squareButton, notApplicableClasses])}
         onClick={() => changeComplianceStatus("not_applicable")}
+        onFocus={(e) => {
+          e.stopPropagation();
+
+          onFocusStatus("not_applicable");
+        }}
       >
         NA
       </button>
