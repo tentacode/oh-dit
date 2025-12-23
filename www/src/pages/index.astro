@@ -1,10 +1,12 @@
 ---
+import Faq from "../components/Landing/Faq/Faq.astro";
 import Features from "../components/Landing/Feature/Features.astro";
 import Hero from "../components/Landing/Hero/Hero.astro";
 import Newsletter from "../components/Landing/Newsletter/Newsletter.astro";
 import Layout from "../layouts/Layout.astro";
 
-const pageTitle = "Ohdit - Plateforme collaborative pour faciliter vos audits d'accessibilité";
+const pageTitle =
+	"Ohdit - Outil collaboratif pour faciliter vos audits d'accessibilité (RGAA et RAAM)";
 const metaDescription =
 	"Ohdit facilite vos audits d'accessibilité RGAA et RAAM. Centralisez vos projets, travaillez en équipe et générez des rapports clairs pour vos clients.";
 ---
@@ -12,5 +14,6 @@ const metaDescription =
 <Layout metaDescription={metaDescription} pageTitle={pageTitle}>
 	<Hero />
 	<Features />
+	<Faq />
 	<Newsletter />
 </Layout>

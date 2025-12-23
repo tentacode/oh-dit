@@ -57,9 +57,13 @@ Les présentes mentions légales sont régies par le droit français. Tout litig
   Source : https://github.com/DISIC/accessibilite.numerique.gouv.fr
   Licence : MIT – © DINUM
 
-Je n'aurais pas pu créer Ohdit sans ces outils open-source :
+Nous n'aurions pas pu créer Ohdit sans ces outils open-source :
 
 - [Symfony](https://symfony.com/)
 - [Astro](https://astro.build/)
 - [Next.js](https://nextjs.org/)
 - [PostgreSQL](https://www.postgresql.org/)
+
+## Modification des mentions légales
+
+Ces mentions peut être mise à jour. La date de dernière modification est indiquée en haut de la page.

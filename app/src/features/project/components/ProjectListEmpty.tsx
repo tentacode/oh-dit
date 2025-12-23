@@ -1,8 +1,17 @@
-import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
+import SleepyCat from "@/src/components/illustrations/SleepingCat";
+import { ArrowUpRightIcon, FolderIcon } from "@heroicons/react/24/outline";
 
 export default function ProjectListEmpty() {
   const styles = {
-    emtpyContainer: {
+    illustrationContainer: {
+      display: "flex",
+      flexDirection: "row" as const,
+      alignItems: "flex-start",
+      justifyContent: "center",
+      gap: "40px",
+    },
+    textBox: {
+      flex: 2,
       display: "flex",
       flexDirection: "row" as const,
       alignItems: "center",
@@ -12,7 +21,7 @@ export default function ProjectListEmpty() {
       borderRadius: "15px",
       padding: "40px",
     },
-    illustration: {
+    icon: {
         width: "70px",
     },
     text: {
@@ -20,17 +29,22 @@ export default function ProjectListEmpty() {
       fontSize: "1.75em",
       fontFamily: "Lexend Deca, sans-serif",
     },
+    illustration: {
+      flex: 1,
+    },
   };
 
   return (
-    <div style={styles.emtpyContainer}>
-      <div>
-        <ArrowUpRightIcon style={styles.illustration} />
+    <div style={styles.illustrationContainer}>
+      <div style={styles.textBox}>
+        <div>
+          <FolderIcon aria-hidden="true" style={styles.icon} />
+        </div>
+        <div style={styles.text}>
+          C'est ici que vous retrouverez tous vos beaux projets d'audit.
+        </div>
       </div>
-      <div style={styles.text}>
-        C'est ici que vous retrouverez tous vos beaux projets.<br />
-        Vous pouvez cliquer là-haut pour créer votre premier audit.
-      </div>
+      <SleepyCat style={styles.illustration} />
     </div>
   );
 }
