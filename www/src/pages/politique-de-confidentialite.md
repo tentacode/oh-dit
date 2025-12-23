@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/LegalPagesLayout.astro
-lastUpdatedAt: "2 novembre 2025"
+lastUpdatedAt: "23 décembre 2025"
 pageTitle: Politique de confidentialité - Ohdit
 metaDescription: ""
 ---
@@ -36,12 +36,25 @@ Lorsque vous créez un compte sur Ohdit, nous collectons :
 - **Votre nom d'utilisateur** (peut contenir votre nom et prénom)
 - **Votre adresse email**
 - **Votre mot de passe** (chiffré)
+- **Le nom de votre équipe** (qui peut être le nom de votre société)
 
 **Finalité :** Permettre l'accès et l'utilisation de l'outil Ohdit.
 
 **Base légale :** Exécution du service demandé.
 
 **Durée de conservation :** Jusqu'à la suppression de votre compte.
+
+### Autres données
+
+D'autres données stockées sur Ohdit peuvent être confidentielles, sans être personnelles :
+
+- **Nom d'un projet** (peut référer à un site ou un client)
+- **Nom d'un client**
+- **Adresse email d'un client**
+- **Discussion technique**
+- **Recommandation technique**
+
+Pour en savoir plus sur le traitement et la sécurisation de vos données, vous pouvez avoir plus d'information sur notre page dédiée à la [sécurisation de vos données](/politique-de-securisation-des-donnees).
 
 ### Données de navigation
 
@@ -56,12 +69,19 @@ Nous utilisons Matomo en mode "sans cookies" pour mesurer l'audience du site.
 
 **Durée de conservation :** 13 mois maximum.
 
+### Cookies
+
+Ohdit utilise uniquement des cookies strictement nécessaires au fonctionnement du service (maintien de votre session de connexion). Ces cookies ne nécessitent pas votre consentement conformément à la réglementation.
+
+Aucun cookie publicitaire ou de tracking n'est utilisé.
+
 ## Destinataires des données
 
 Vos données sont transmises à :
 
+- **[Scaleway](https://scaleway.com/fr)** : serveurs d'Ohdit (sous-traitement, hébergement en France)
 - **[Brevo](https://brevo.com/fr)** : plateforme d'envoi de newsletter (sous-traitant, hébergement UE)
-- Les données restent hébergées au sein de l'Union Européenne
+- Toutes les données restent hébergées au sein de l'Union Européenne
 
 ## Vos droits
 
@@ -86,6 +106,8 @@ Nous mettons en œuvre les mesures techniques appropriées pour protéger vos do
 - Mots de passe chiffrés
 - Accès restreint aux données
 
+Pour en savoir plus sur la sécurisation de vos données, vous pouvez avoir plus d'information sur notre page dédiée à la [sécurisation de vos données](/politique-de-securisation-des-donnees).
+
 ## Modification de la politique
 
-Cette politique peut être mise à jour. La date de dernière modification est indiquée en haut de page.
+Cette politique peut être mise à jour. La date de dernière modification est indiquée en haut de la page.

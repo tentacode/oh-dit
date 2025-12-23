@@ -1,0 +1,99 @@
+---
+import CodingIllustration from "../../Graphic/CodingIllustration.astro";
+---
+
+<div class="landingContainer newsletterContainer">
+	<div class="newsletterFormContainer">
+		<h2>Pourquoi Ohdit ?</h2>
+		<p>
+			L'idée d'Ohdit nous est venue en constatant les défis rencontrés par les professionnels de
+			l'accessibilité numérique.
+		</p>
+		<p class="secondParagraph">
+			Entre le manque d'outils adaptés pour saisir l'audit et la difficulté à collaborer
+			efficacement avec les équipes techniques ou les clients via des fichiers Excel, nous avons
+			voulu créer une solution "tout-en-un" qui permet de retrouver toutes les informations
+			nécessaires à la réalisation d'un audit d'accessibilité numérique au même endroit.
+		</p>
+		<p class="secondParagraph">
+			Bref, <strong>faire gagner du temps à tout le monde !</strong>
+		</p>
+		<h3>Ohdit est en développement !</h3>
+		<p>
+			Après plusieurs mois d'un travail acharné, nous sommes ravis de vous annoncer qu'Ohdit est
+			bientôt prêt à être lancé ! La bêta démarrera le <strong>06 janvier 2026</strong> et, si tout se
+			passe bien, Ohdit sera accessible à toutes et à tous rapidement après.
+		</p>
+	</div>
+	<div class="illustration">
+		<CodingIllustration />
+	</div>
+</div>
+
+<style>
+	h2 {
+		font-size: 3rem;
+		font-weight: 700;
+		margin-bottom: 20px;
+	}
+
+	h3 {
+		font-size: 2.125rem;
+		font-weight: 700;
+		margin-top: 30px;
+		margin-bottom: 20px;
+	}
+
+	p {
+		font-size: 1.3em;
+	}
+
+	.secondParagraph {
+		margin-top: 15px;
+	}
+
+	.newsletterContainer {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 50px;
+		margin-bottom: 120px;
+		padding: 40px 40px;
+	}
+
+	.newsletterFormContainer {
+		flex: 2;
+	}
+
+	.illustration {
+		flex: 1;
+	}
+
+	@media (max-width: 1350px) {
+		.newsletterContainer {
+			flex-direction: column-reverse;
+			align-items: flex-start;
+			gap: 20px;
+		}
+		.illustration {
+			max-width: 300px !important;
+		}
+	}
+
+	@media (max-width: 800px) {
+		.newsletterContainer {
+			max-width: 100%;
+		}
+		h2 {
+			max-width: 100%;
+			word-wrap: break-word;
+			font-size: 2.5rem;
+		}
+	}
+
+	@media (max-width: 420px) {
+		h2 {
+			font-size: 2rem;
+		}
+	}
+</style>

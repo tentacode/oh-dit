@@ -66,3 +66,7 @@ Vous pouvez :
   Défenseur des droits
   Libre réponse 71120
   75342 Paris CEDEX 07
+
+## Modification de la déclaration
+
+Cette déclaration peut être mise à jour. La date de dernière modification est indiquée en haut de la page.

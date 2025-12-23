@@ -3,7 +3,7 @@ import Feature from "./Feature.astro";
 import { colors } from "../../../config/colors";
 import FeaturesIllustration from "../../Graphic/FeaturesIllustration.astro";
 import SparklesIcon from "astro-heroicons/outline/Sparkles.astro";
-import BookOpenIcon from "astro-heroicons/outline/BookOpen.astro";
+import LockClosedIcon from "astro-heroicons/outline/LockClosed.astro";
 import ChatBubbleBottomCenterTextIcon from "astro-heroicons/outline/ChatBubbleBottomCenterText.astro";
 import ClipboardDocumentCheckIcon from "astro-heroicons/outline/ClipboardDocumentCheck.astro";
 import RectangleStackIcon from "astro-heroicons/outline/RectangleStack.astro";
@@ -28,21 +28,15 @@ import SadRobot from "../../Icon/SadRobot.astro";
 			<Feature Icon={RectangleStackIcon}>
 				<h3>Tous vos projets sont ici</h3>
 				<p>
-					Centralisez vos projets et vos clients pour un meilleur suivi. Configurez chaque projet
-					pour détailler les écrans et composants des applications à auditer.
+					Centralisez vos projets et vos clients dans le même outil. Configurez chaque projet pour
+					détailler les écrans et composants des applications à auditer.
 				</p>
 			</Feature>
 			<Feature Icon={ChatBubbleBottomCenterTextIcon}>
 				<h3>Collaborons efficacement</h3>
 				<p>
-					Échangez simplement dans votre équipe et fournissez des issues pertinentes à vos clients.
-				</p>
-			</Feature>
-			<Feature Icon={BookOpenIcon}>
-				<h3>Une vraie documentation</h3>
-				<p>
-					Ohdit éclaircit la réglementation (RGAA, RAAM) pour que celles et ceux qui auditent, qui
-					développent et qui pilotent parlent le même langage.
+					Échangez simplement dans votre équipe et fournissez des recommandations pertinentes à vos
+					clients. Suivez les correctifs directement dans Ohdit.
 				</p>
 			</Feature>
 			<Feature Icon={ClipboardDocumentCheckIcon}>
@@ -50,6 +44,15 @@ import SadRobot from "../../Icon/SadRobot.astro";
 				<p>
 					Votre clientèle appréciera des rapports clairs lui permettant de visualiser facilement le
 					résultat de l'audit et les actions à entreprendre.
+				</p>
+			</Feature>
+			<Feature Icon={LockClosedIcon}>
+				<h3>Vos données sont en sécurité</h3>
+				<p>
+					Vos données sont sécurisées, hébergées en France, jamais revendues ni transférées à un
+					tiers et exportables à tout moment. Lisez notre
+					<a href="/politique-de-securisation-des-donnees">politique de sécurisation des données</a> pour
+					en savoir plus.
 				</p>
 			</Feature>
 			<Feature Icon={SadRobot} iconColor={colors.pink}>
@@ -107,18 +110,21 @@ import SadRobot from "../../Icon/SadRobot.astro";
 		h2 {
 			font-size: 3rem;
 		}
+
 		.featuresContainer {
 			padding: 0 40px;
-			align-items: center;
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 20px;
+			max-width: 800px;
 		}
 
 		.featuresLeft {
-			display: none;
+			max-width: 300px !important;
 		}
 
 		.featuresRight {
 			flex: 1;
-			max-width: 800px;
 			margin: auto;
 		}
 
