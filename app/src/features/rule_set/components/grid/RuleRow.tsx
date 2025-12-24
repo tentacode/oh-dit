@@ -65,16 +65,28 @@ export default function RuleRow({
   const onFocusTab = (tab: ActiveTab) => () => {
     switch (tab) {
       case ActiveTab.HELP:
-        setActiveElement({ ruleUuid: rule.uuid, screenUuid: screenUuid, buttonFocused: ActiveButton.HELP });
+        setActiveElement({
+          ruleUuid: rule.uuid,
+          screenUuid: screenUuid,
+          buttonFocused: ActiveButton.HELP,
+        });
         break;
       case ActiveTab.ISSUES:
-        setActiveElement({ ruleUuid: rule.uuid, screenUuid: screenUuid, buttonFocused: ActiveButton.ISSUES });
+        setActiveElement({
+          ruleUuid: rule.uuid,
+          screenUuid: screenUuid,
+          buttonFocused: ActiveButton.ISSUES,
+        });
         break;
       case ActiveTab.COMMENTS:
-        setActiveElement({ ruleUuid: rule.uuid, screenUuid: screenUuid, buttonFocused: ActiveButton.COMMENTS });
+        setActiveElement({
+          ruleUuid: rule.uuid,
+          screenUuid: screenUuid,
+          buttonFocused: ActiveButton.COMMENTS,
+        });
         break;
     }
-  }
+  };
 
   const onNonCompliantClick = () => {
     setActiveTab(ActiveTab.ISSUES_NC);
@@ -160,42 +172,45 @@ export default function RuleRow({
         <h3 role="gridcell" tabIndex={-1}>
           {rule.prefix} {rule.shortDescription}
         </h3>
-        <ComplianceStatus
-          onNonCompliantClick={onNonCompliantClick}
-          projectUuid={project.uuid}
-          ruleUuid={rule.uuid}
-          screenUuid={screenUuid}
-        />
-        <IssuesButton
-          isActive={
-            activeTab === ActiveTab.ISSUES || activeTab === ActiveTab.ISSUES_NC
-          }
-          ruleUuid={rule.uuid}
-          screenUuid={screenUuid}
-          onClick={toggleTab(ActiveTab.ISSUES)}
-          onFocus={onFocusTab(ActiveTab.ISSUES)}
-        />
-        <CommentsButton
-          ruleUuid={rule.uuid}
-          screenUuid={screenUuid}
-          isActive={activeTab === ActiveTab.COMMENTS}
-          onClick={toggleTab(ActiveTab.COMMENTS)}
-          onFocus={onFocusTab(ActiveTab.COMMENTS)}
-        />
-        <RuleHelpButton
-          ruleUuid={rule.uuid}
-          screenUuid={screenUuid}
-          isActive={activeTab === ActiveTab.HELP}
-          onClick={toggleTab(ActiveTab.HELP)}
-          onFocus={onFocusTab(ActiveTab.HELP)}
-        />
+        <div className={styles.ruleRowButtons}>
+          <ComplianceStatus
+            onNonCompliantClick={onNonCompliantClick}
+            projectUuid={project.uuid}
+            ruleUuid={rule.uuid}
+            screenUuid={screenUuid}
+          />
+          <IssuesButton
+            isActive={
+              activeTab === ActiveTab.ISSUES ||
+              activeTab === ActiveTab.ISSUES_NC
+            }
+            ruleUuid={rule.uuid}
+            screenUuid={screenUuid}
+            onClick={toggleTab(ActiveTab.ISSUES)}
+            onFocus={onFocusTab(ActiveTab.ISSUES)}
+          />
+          <CommentsButton
+            ruleUuid={rule.uuid}
+            screenUuid={screenUuid}
+            isActive={activeTab === ActiveTab.COMMENTS}
+            onClick={toggleTab(ActiveTab.COMMENTS)}
+            onFocus={onFocusTab(ActiveTab.COMMENTS)}
+          />
+          <RuleHelpButton
+            ruleUuid={rule.uuid}
+            screenUuid={screenUuid}
+            isActive={activeTab === ActiveTab.HELP}
+            onClick={toggleTab(ActiveTab.HELP)}
+            onFocus={onFocusTab(ActiveTab.HELP)}
+          />
+        </div>
       </div>
       {activeTab === ActiveTab.HELP && <RuleHelp ruleUuid={rule.uuid} />}
       {(activeTab === ActiveTab.ISSUES ||
         activeTab === ActiveTab.ISSUES_NC) && (
         <IssuesDetail ruleUuid={rule.uuid} screenUuid={screenUuid} />
       )}
-      {activeTab === ActiveTab.COMMENTS && <CommentsDetail />}
+      {activeTab === ActiveTab.COMMENTS && <CommentsDetail ruleUuid={rule.uuid} screenUuid={screenUuid} />}
     </div>
   );
 }

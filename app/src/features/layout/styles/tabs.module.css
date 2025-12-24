@@ -59,3 +59,21 @@
     background-color: white;
 }
 
+
+@media (max-width: 1100px) {
+  .tabLink:not(.activeTabLink) {
+    position: relative;
+    font-size: 0;
+    padding: 15px;
+    align-items: center;
+    margin-bottom: -2px;
+    gap: 0;
+  }
+
+  .tabLink:not(.activeTabLink) .tabBadge {
+    margin-top: -5px;
+    margin-left: 5px;
+    font-size: 16px !important;
+  }
+}
+

@@ -25,3 +25,11 @@
 .selectOption {
     border-radius: 10px;
 }
+
+
+@media (max-width: 490px) {
+    .selectContainer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

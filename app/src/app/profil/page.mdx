@@ -1,11 +1,23 @@
 import { MdxLayout } from "../../components/layouts/MdxLayout"
+import WorkInProgress from "../../features/work_in_progress/components/WorkInProgress"
+import Link from "next/link";
+import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline";
 
-# Mon profil
+Cette page est en **cours de développement**.
 
-Un formulaire pour gérer les informations de votre compte sera bientôt disponible ici. Entre temps si vous avez besoin de modifier votre email ou votre mot de passe, veuillez contacter le support à l'adresse suivante : [support@ohdit.com](mailto:support@ohdit.com).
+Un formulaire pour gérer les informations de votre compte sera bientôt disponible ici : votre email, votre nom d'utilisateur et votre mot de passe.
 
-[Me déconnecter d'Ohdit](/logout)
+Entre-temps, si vous avez besoin de modifier votre email ou votre mot de passe, ou même de supprimer votre compte, vous pouvez contacter le support à l'adresse suivante : [support@ohdit.com](mailto:support@ohdit.com).
 
-export default function Profile({ children }) {
-  return <MdxLayout>{children}</MdxLayout>
+<ArrowRightStartOnRectangleIcon aria-hidden="true" /> [Je veux me déconnecter d'Ohdit](/logout)
+
+export default function Contact({ children }) {
+  return <MdxLayout>  
+    <WorkInProgress>
+      <div className="mt-8">
+        <h1 className="h1">Mon profil</h1>
+        {children}
+      </div>
+    </WorkInProgress>  
+  </MdxLayout>
 }

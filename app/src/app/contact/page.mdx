@@ -1,11 +1,21 @@
 import { MdxLayout } from "../../components/layouts/MdxLayout"
+import WorkInProgress from "../../features/work_in_progress/components/WorkInProgress"
+import Link from "next/link";
+import ContactUsIllustration from "./components/ContactUsIllustration";
 
-# Contactez-nous
- 
 Que vous ayez une question, une suggestion ou besoin d'assistance, n'hésitez pas à nous contacter. Nous sommes là pour vous aider !
 
 Vous pouvez nous joindre par email à l'adresse suivante : [support@ohdit.com](mailto:support@ohdit.com).
 
+Vous pouvez également discuter avec nous sur le [chat Slack d'Ohdit](https://join.slack.com/t/ohdit/shared_invite/zt-3lch4xllw-SA6~RyEMRkhEdTNLV37pqA).
+
 export default function Contact({ children }) {
-  return <MdxLayout>{children}</MdxLayout>
+  return <MdxLayout>  
+    <WorkInProgress illustration={<ContactUsIllustration />}>
+      <div className="mt-8">
+        <h1 className="h1">Contactez-nous</h1>
+        {children}
+      </div>
+    </WorkInProgress>  
+  </MdxLayout>
 }

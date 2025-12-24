@@ -1,7 +1,46 @@
 import { MdxLayout } from "../../components/layouts/MdxLayout"
+import WorkInProgress from "../../features/work_in_progress/components/WorkInProgress"
+import Link from "next/link";
+import BetaIllustration from "./components/BetaIllustration";
 
-# À propos de la version bêta
+D'abords **merci beaucoup !**
 
-export default function Beta({ children }) {
-  return <MdxLayout>{children}</MdxLayout>
+Merci de participer à cette bêta, de nous faire confiance pour tester un outil qui va être parfois imparfait, et qui est en tout cas incomplet aujourd'hui.
+
+Pourtant on est convaincu qu'Ohdit va vous être utile et même vous faire gagner du temps, en vous fournissant un outil qui centralise toute la gestion de vos audits au même endroit :
+
+- Excel c'est bien, mais c'est quand même plutôt limité.
+- Les échanges entre les auditeur·ices, l'équipe technique et le client sont souvent compliqués à gérer.
+- Le contre audit et la validation des corrections, encore une fois pas très pratique (avec Excel).
+- Et puis Excel on en parle ?! Ah non pardon on l'a déjà dit.
+
+## Ohdit est gratuit pendant la bêta
+
+Pendant toute la durée de la bêta (qui devrait durer plusieurs mois), Ohdit est gratuit et vous pouvez utiliser toutes ses fonctionnalités.
+
+Si après vous êtes séduit·e par Ohdit, nous proposerons ensuite un abonnement mensuel pour continuer à utiliser l'outil. Il n'y aura qu'une seule formule.
+
+On a déjà fait le calcul, ça sera simple : **15€ par mois et par compte utilisateur** (s'il vous plait, on va garder cette information entre nous pour l'instant 🤫).
+
+Pourquoi 15€ ? En calculant ce que coûte le salaire d'un·e auditeur·ice en France, ça représente environ 1 minute 30 d'économie par jour. Et si Ohdit ne vous fait pas gagner au moins 1 minute et 30 secondes par jour, c'est qu'on a raté notre produit.
+
+Après la bêta, nous avons prévu de proposer un plan gratuit avec toutes les fonctionnalités, mais limité à un seul audit actif à la fois.
+
+## Pour toutes vos questions pendant la bêta
+
+Pendant la bêta nous serons particulièrement attentifs à vos questions et vos retours. Si vous trouvez un bug, que vous avez une intérogation ou si vous avez une suggestion, n'hésitez surtout pas à envoyer un mail à [support@ohdit.com](mailto:support@ohdit.com). Nous vous en serons très reconnaissants !
+
+Vous pouvez également nous retrouver sur le [chat Slack d'Ohdit](https://join.slack.com/t/ohdit/shared_invite/zt-3lch4xllw-SA6~RyEMRkhEdTNLV37pqA).
+
+Si vous voulez avoir un état des lieux de ce qui est prévu pour la suite, n'hésitez pas à consulter notre [feuille de route](/feuille-de-route).
+
+export default function Contact({ children }) {
+  return <MdxLayout>  
+    <WorkInProgress illustration={<BetaIllustration />}>
+      <div className="mt-8">
+        <h1 className="h1">À propos de la bêta</h1>
+        {children}
+      </div>
+    </WorkInProgress>  
+  </MdxLayout>
 }

@@ -1,0 +1,52 @@
+import { MdxLayout } from "../../components/layouts/MdxLayout"
+import WorkInProgress from "../../features/work_in_progress/components/WorkInProgress"
+import Link from "next/link";
+import RoadMapIllustration from "./components/RoadMapIllustration";
+
+Il reste beaucoup à faire avant qu'Ohdit sorte de sa phase bêta, et nous avons prévu de belles choses pour la suite. Voici un aperçu de notre feuille de route actuelle :
+
+## À venir
+
+### Très vite
+
+- Améliorer l'accessibilité de l'interface.
+- Page recommandation avec discussions associées et état "corrigé".
+- Terminer les fonctionnalités de base sur la partie audit (résumé, commentaires).
+- Ajouter les livrables (rapport personnalisé, grille Excel).
+- Terminer la partie compte utilisateur et équipe (gestion des membres, reset du mot de passe, etc.).
+- Pouvoir inviter quelqu'un dans son équipe. (en attendant, demandez-nous à [support@ohdit.com](mailto:support@ohdit.com))
+- Ajouter la gestion des clients.
+- Compléter l'aide.
+
+### À moyen terme
+
+- Gestion des "composants" dans une page (ex: un carousel présent sur plusieurs pages).
+- Suggestion de recommandations personnalisées en fonction du critère en cours.
+- Modèles de recommandation, personnalisables.
+- Vue "grille par critère" en plus de "grille par page".
+- Vue "grille totale", croisée par critère et par page.
+- Plus de documentation sur les critères du RGAA : simplification des explications, exemples concrets, etc.
+- Ajouter d'autres formats d'audits (RGAA 25 critères, RAAM, RGESN, etc.).
+- Import d'audits existants (ex: rapport d'audit au format Excel).
+- Le blog d'Ohdit avec des articles sur l'accessibilité numérique.
+
+### On y pense déjà
+
+- Type d'audit complètement personnalisable.
+- Intégration de notifications (ex: slack, email).
+- Création automatique des tickets Jira.
+
+## Vous avez une idée géniale ?
+
+N'hésitez pas à nous la partager sur [boite-a-idees@ohdit.com](mailto:boite-a-idees@ohdit.com).
+
+export default function RoadMap({ children }) {
+  return <MdxLayout>  
+    <WorkInProgress illustration={<RoadMapIllustration />}>
+      <div className="mt-8">
+        <h1 className="h1">Feuille de route</h1>
+        {children}
+      </div>
+    </WorkInProgress>  
+  </MdxLayout>
+}

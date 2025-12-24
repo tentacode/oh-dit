@@ -23,11 +23,11 @@ Gabriel Pillet<br />
 Email : <a href="mailto:data@ohdit.com">data@ohdit.com</a>
 </p>
 
-Seul le responsable du traitement a un accès total aux données d'Ohdit, via des moyens sécurisés, à des fins de support et de maintenance uniquement. Vos données **restent confidentielles** et ne seront accédée qu'en cas de nécessité absolue.
+Seul le responsable du traitement a un accès total aux données d'Ohdit, via des moyens sécurisés, à des fins de support et de maintenance uniquement. Vos données **restent confidentielles** et ne seront accédées qu'en cas de nécessité absolue.
 
 ## Hébergement des données
 
-Toutes les données d'Ohdit sont hébergées en France. Certains prestataires ont accès a des données limitées d'Ohdit, qui sont hébergées dans l'Union Européenne.
+Toutes les données d'Ohdit sont hébergées en France. Certains prestataires ont accès à des données limitées d'Ohdit, qui sont hébergées dans l'Union Européenne.
 
 - Les serveurs et la base de données d'Ohdit sont hébergés par [Scaleway](https://www.scaleway.com/fr). En savoir plus sur [les engagements de Scaleway en matière de sécurité et de protections des données](https://www.scaleway.com/fr/public-sector-solutions/).
 - Les données de la newsletter sont stockées chez [Brevo](https://brevo.com), dans l'Union Européenne. Seul l'email de contact est envoyé à Brevo, aucune autre donnée ne provient d'Ohdit.
@@ -76,9 +76,9 @@ Ohdit ne transmet, ne vend et ne divulgue jamais vos données à des tiers, pour
 
 ## Utilisation des données anonymisées par Ohdit
 
-À des fins de traitement statistique, l'équipe d'Ohdit peut avoir accès à des données anonymisées sur l'utilisation de l'application. Ces données sont utilisées dans un cadre strictement encadré de surveillance, de vérification de l'activité et de l'utilisation du site. Ces statistiques sont anonymes et ne contiennent pas de données permettant d'identifier une équipe, un utilisateur, un client, le contenu d'une discussion ou d'une recommandation, etc.
+À des fins de traitement statistique, l'équipe d'Ohdit peut avoir accès à des données anonymisées sur l'utilisation de l'application. Ces données sont utilisées dans un cadre strictement encadré de surveillance, de vérification de l'activité et de l'utilisation de l'application. Ces statistiques sont anonymes et ne contiennent pas de données permettant d'identifier une équipe, un utilisateur, un client, le contenu d'une discussion ou d'une recommandation, etc.
 
-Ces données sont uniquement accessible par l'équipe d'Ohdit.
+Ces données sont uniquement accessibles par l'équipe d'Ohdit.
 
 ## Durée de conservation des données
 
