@@ -22,7 +22,7 @@ export default function ProjectDetailHeader() {
 
   return (
     <div className="horizontalGutter">
-      <h1 className={"h1"} style={{ display: "flex", alignItems: "center" }}>
+      <h1 className={`h1 ${styles.projectTitle}`} style={{ display: "flex", alignItems: "center" }}>
         Audit — {project.name}
       </h1>
       <dl className={`${styles.statsContainer}`}>

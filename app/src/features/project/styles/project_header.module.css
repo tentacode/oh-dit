@@ -48,12 +48,16 @@
 
 .helpText {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     font-size: 16px;
     font-style: italic;
     color: #010101;
     margin-top: 5px;
     margin-bottom: 0;
+}
+
+.helpText svg {
+    margin-top: 3px;
 }
 
 .statsContainer svg, .helpText svg {
@@ -62,4 +66,20 @@
     vertical-align: middle;
     margin-right: 8px;
     color: #010101;
+}
+
+
+@media (max-width: 850px) {
+    .statsContainer {
+        flex-direction: column;
+    }
+
+    .statsContainer > div {
+        width: 100%;
+    }
+
+    .projectTitle {
+        font-size: 2em;
+        word-break: break-word;
+    }
 }
