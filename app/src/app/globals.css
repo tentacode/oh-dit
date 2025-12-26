@@ -126,3 +126,10 @@ dd {
   white-space: nowrap;
 }
 
+.roadmap ul {
+  /* list-style: none !important; */
+}
+
+.roadmap li {
+  margin-bottom: 0.7em;
+}
