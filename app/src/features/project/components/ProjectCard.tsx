@@ -1,9 +1,7 @@
 import styles from "../styles/project_grid.module.css";
-import {ProjectInterface} from "../types/ProjectInterface";
+import { ProjectInterface } from "../types/ProjectInterface";
 import { clsx } from "clsx";
-import {
-    CalendarDaysIcon,
-} from '@heroicons/react/24/outline'
+import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -22,21 +20,31 @@ export default function ProjectCard({
   const relativeUpdatedAt = dayjs(project.updatedAt).fromNow();
 
   return (
-    <Link prefetch={false} href={getProjectUrl.dashboard(project.uuid)} className={styles.card}>
+    <Link
+      prefetch={false}
+      href={getProjectUrl.dashboard(project.uuid)}
+      className={styles.card}
+    >
       <div className={styles.cardContent}>
         <h2>
-            <span className={styles.projectName}>{project.name}</span>
-            <span className="mt-1 inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">
-                {project.ruleSet.name} {project.ruleSet.version}
-            </span>
-            <span className="mt-1 inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">
-                {getStatusName(project.status)}
-            </span>
+          <span className={styles.projectName}>{project.name}</span>
+          <span className="mt-1 inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">
+            {project.ruleSet.name} {project.ruleSet.version}
+          </span>
+          <span className="mt-1 inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">
+            {getStatusName(project.status)}
+          </span>
         </h2>
         <p className={styles.dateContainer}>
-            <CalendarDaysIcon />
-            mis à jour {relativeUpdatedAt}
+          <CalendarDaysIcon />
+          mis à jour {relativeUpdatedAt}
         </p>
+        {project.status === "in_progress" && (
+          <p className={styles.cardProgressContainer}>
+            <ClockIcon />
+            progrès : <strong>{project.progress}%</strong>
+          </p>
+        )}
       </div>
 
       <div className={styles.progressContainer}>

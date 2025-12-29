@@ -5,6 +5,7 @@ import {
   HandThumbDownIcon,
   HandThumbUpIcon,
   InformationCircleIcon,
+  LinkIcon,
 } from "@heroicons/react/24/outline";
 import { useAuditStore } from "../../audit/store/auditStore";
 import styles from "../styles/project_header.module.css";
@@ -25,6 +26,10 @@ export default function ProjectDetailHeader() {
       <h1 className={`h1 ${styles.projectTitle}`} style={{ display: "flex", alignItems: "center" }}>
         Audit — {project.name}
       </h1>
+      {project.url && (
+        <p className={styles.siteUrl}>
+          <LinkIcon />Adresse du projet : <a href={project.url}>{project.url}</a></p>
+      )}
       <dl className={`${styles.statsContainer}`}>
         <div>
           <dt>Référentiel</dt>

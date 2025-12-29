@@ -46,9 +46,23 @@
     align-items: center;
     flex-direction: row;
     gap: 8px;
+    margin-bottom: 5px;
 }
 
 .dateContainer svg {
+    height: 20px;
+    color: #AAA;
+}
+
+.cardProgressContainer {
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.cardProgressContainer svg {
     height: 20px;
     color: #AAA;
 }
