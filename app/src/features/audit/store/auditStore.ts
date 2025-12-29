@@ -3,6 +3,7 @@ import { create } from "zustand";
 export interface Screen {
   uuid: string;
   name: string;
+  url?: string;
   progress: number;
   complianceRate: number;
 }
@@ -10,6 +11,7 @@ export interface Screen {
 export interface Project {
   uuid: string;
   name: string;
+  url?: string;
   screens: Screen[];
   progress: number;
   complianceRate: number;

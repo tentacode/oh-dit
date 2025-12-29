@@ -19,8 +19,25 @@
   background: #ffece6;
   color: #010101;
   border-radius: 10px;
-  padding: 10px 20px;     
+  padding: 20px 40px;     
   font-weight: 600;
+}
+
+.settingDetail {
+  display: flex;
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+
+.settingDetail svg {
+  margin-top: 3px;
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+  margin-right: 6px;
+  color: #010101;
 }
 
 .gridContainer h2, .gridContainer h3 {

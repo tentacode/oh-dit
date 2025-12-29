@@ -1,0 +1,20 @@
+.pageSelectOption {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.optionDetail {
+    font-size: 16px;
+    display: flex;
+    font-weight: 400;
+    /* font-style: italic; */
+}
+
+.optionDetail svg {
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+    margin-top: 2px;
+}
