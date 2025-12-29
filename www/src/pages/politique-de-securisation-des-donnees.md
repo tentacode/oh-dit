@@ -82,7 +82,9 @@ Ces données sont uniquement accessibles par l'équipe d'Ohdit.
 
 ## Durée de conservation des données
 
-Vos données sont conservées tant que votre compte est actif. En cas de suppression de compte ou de demande de suppression, les données sont effacées immédiatement de la base de données et des sauvegardes sous 7 jours.
+Vos données sont conservées tant que votre compte est actif, et automatiquement supprimées après 12 mois d'inactivité. Un email sera envoyé 15 jours, 7 jours et 1 jour avant la suppression définitive.
+
+En cas de suppression de compte ou de demande de suppression, les données sont effacées immédiatement de la base de données, puis des sauvegardes sous 7 jours.
 
 ## Contractualisation d'un accord de confidentialité (NDA)
 

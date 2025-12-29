@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/LegalPagesLayout.astro
-lastUpdatedAt: "23 décembre 2025"
+lastUpdatedAt: "29 décembre 2025"
 pageTitle: Politique de confidentialité - Ohdit
 metaDescription: ""
 ---
@@ -27,7 +27,7 @@ Lorsque vous vous inscrivez à notre newsletter, nous collectons :
 
 **Base légale :** Votre consentement explicite.
 
-**Durée de conservation :** Jusqu'à votre désinscription ou 6 mois d'inactivité.
+**Durée de conservation :** Jusqu'à votre désinscription ou après 6 mois d'inactivité. La date d'activité correspond à la date du dernier email ouvert.
 
 ### Compte utilisateur
 
@@ -42,19 +42,21 @@ Lorsque vous créez un compte sur Ohdit, nous collectons :
 
 **Base légale :** Exécution du service demandé.
 
-**Durée de conservation :** Jusqu'à la suppression de votre compte.
+**Durée de conservation :** Jusqu'à la suppression de votre compte ou 12 mois d'inactivité. La date d'activité correspond à la dernière utilisation d'Ohdit. Un email sera envoyé 15 jours, 7 jours et 1 jour avant la suppression définitive.
 
-### Autres données
+### Données liées aux projets
 
-D'autres données stockées sur Ohdit peuvent être confidentielles, sans être personnelles :
+Dans le cadre de l'utilisation d'Ohdit, vous pouvez stocker :
 
-- **Nom d'un projet** (peut référer à un site ou un client)
-- **Nom d'un client**
-- **Adresse email d'un client**
-- **Discussion technique**
-- **Recommandation technique**
+- Noms de projets
+- Noms et adresses email de clients
+- Discussions et recommandations techniques
 
-Pour en savoir plus sur le traitement et la sécurisation de vos données, vous pouvez avoir plus d'information sur notre page dédiée à la [sécurisation de vos données](/politique-de-securisation-des-donnees).
+Ces données peuvent contenir des informations personnelles relatives à des tiers. Vous êtes responsable de leur collecte et traitement conformément au RGPD.
+
+**Durée de conservation :** Identique à celle du compte utilisateur.
+
+Pour en savoir plus sur le traitement et la sécurisation de vos données, vous pouvez avoir plus d'informations sur notre page dédiée à la [sécurisation de vos données](/politique-de-securisation-des-donnees).
 
 ### Données de navigation
 
