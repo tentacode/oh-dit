@@ -16,7 +16,7 @@ export default function ProjectSettingsPage() {
         </p>
         <ul>
           <li>Modifier le nom de l'audit et les informations associées.</li>
-          <li>Ajouter, modifier ou supprimer des pages en cours d'audit.</li>
+          <li>Ajouter, modifier, réordonner ou supprimer des pages en cours d'audit.</li>
         </ul>
         <p>
           Si vous avez besoin de modifier des paramètres importants de votre audit avant la disponibilité de cette fonctionnalité, n'hésitez pas à nous contacter à <a href="mailto:support@ohdit.com">support@ohdit.com</a>.
