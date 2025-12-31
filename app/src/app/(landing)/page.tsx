@@ -8,6 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { getProjectUrl } from "../projet/routing";
 import { useTeamsStateStore } from "@/src/features/authentication/store/teamsStore";
+import pageTitleStyles from "@/src/components/layouts/styles/page_title.module.css";
 
 const SuccessMessage = () => {
   const searchParams = useSearchParams();
@@ -47,16 +48,16 @@ export default function Projects() {
         <SuccessMessage />
       </Suspense>
 
-      <title>Vos audits - Ohdit</title>
-        <div className="flex items-center align-center mb-10 gap-10">
-          <h1 className="h1 m-0">Vos audits</h1>
-          <CallToActionLink href={getProjectUrl.new()}>
-            <FolderPlusIcon />
-            Créer un nouvel audit
-          </CallToActionLink>
-        </div>
-        
-        {currentTeamUuid && <ProjectList teamUuid={currentTeamUuid} />}
+      <div className={pageTitleStyles.pageTitleContainer}>
+        <title>Vos audits - Ohdit</title>
+        <h1 className="h1">Vos audits</h1>
+        <CallToActionLink href={getProjectUrl.new()}>
+          <FolderPlusIcon />
+          Créer un nouvel audit
+        </CallToActionLink>
+      </div>
+
+      {currentTeamUuid && <ProjectList teamUuid={currentTeamUuid} />}
     </AuthenticatedLayout>
   );
 }

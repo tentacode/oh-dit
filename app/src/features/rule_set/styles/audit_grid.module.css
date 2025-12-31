@@ -16,10 +16,11 @@
 
 .gridSettingsContainer {
   margin-bottom: 20px;
-  background: #ffece6;
-  color: #010101;
-  border-radius: 10px;
-  padding: 20px 40px;     
+  background: white;
+  color: #010101;  
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
   font-weight: 600;
 }
 
@@ -62,8 +63,9 @@
 
 .ruleCategoryRow, .ruleRow {
   width: 100%;
-  padding: 5px 20px;
+  padding: 2px 20px;
   border: 2px dashed transparent;
+  border-radius: 10px;
 }
 
 .ruleRowHeader, .ruleCategoryRow {
@@ -75,12 +77,14 @@
 
 .activeRow {
   /* background-color: #eae9fb; */
-  border-radius: 10px;
-  border: 2px dashed #010101;
+  /* padding: 5px 20px;
+  margin-bottom: 10px;
+  margin-top: 10px; */
+  border-color: #010101;
 }
 
 .activeRow h3 {
-  font-weight: 500;
+  /* font-weight: 500; */
 }
 
 .ruleCategoryRow .accordionButton {

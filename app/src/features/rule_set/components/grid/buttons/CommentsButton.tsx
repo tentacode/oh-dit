@@ -24,6 +24,7 @@ export default function CommentsButton({
 
   return (
     <button
+      aria-label="Commentaires"
       id={getCommentsButtonId(ruleUuid, screenUuid)}
       role="gridcell"
       className={clsx(
@@ -34,8 +35,8 @@ export default function CommentsButton({
       onClick={onClick}
       onFocus={(e) => {
         e.stopPropagation();
-        onFocus()}
-      }
+        onFocus();
+      }}
     >
       {badgeNumber > 0 && <span className={styles.badge}>{badgeNumber}</span>}
       <ChatBubbleLeftRightIcon className={styles.buttonIcon} />

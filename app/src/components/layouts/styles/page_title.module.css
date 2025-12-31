@@ -1,0 +1,14 @@
+.pageTitleContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2.5rem; /* 10 */
+  gap: 2.5rem; /* 10 */
+}
+
+@media (max-width: 880px) {
+  .pageTitleContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}

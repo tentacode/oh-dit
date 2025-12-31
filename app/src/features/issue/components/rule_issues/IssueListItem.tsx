@@ -1,8 +1,9 @@
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/fr";
-import { Issue } from "../../audit/store/auditStore";
+import { Issue, useAuditStore } from "../../../audit/store/auditStore";
 import {
+  CheckIcon,
   DocumentDuplicateIcon,
   EllipsisHorizontalIcon,
   PencilSquareIcon,
@@ -14,8 +15,9 @@ import hljs from "highlight.js";
 import "highlight.js/styles/a11y-dark.css";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import styles from "../styles/issue_list.module.css";
-import { useIssuesFormStateStore } from "../store/issuesFormStateStore";
+import styles from "../../styles/issue_list.module.css";
+import { useIssuesFormStateStore } from "../../store/issuesFormStateStore";
+import { useUpdateIssue } from "../../mutations/useUpdateIssue";
 
 const translateSeverity = (severity: string) => {
   switch (severity) {
@@ -70,6 +72,9 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
   const overrideIssueFormState = useIssuesFormStateStore(
     (state) => state.overrideIssueFormState
   );
+
+  const updateIssue = useUpdateIssue();
+  const overrideIssueInStore = useAuditStore((state) => state.overrideIssue);
 
   const closeMenu = useCallback(() => {
     setIsActionMenuOpen(false);
@@ -162,13 +167,27 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
       ruleUuid: issue.ruleUuid,
       screenUuid: issue.screenUuid,
       text: issue.text,
+      status: issue.status,
       severity: issue.severity,
       mode: mode,
     });
   }
 
+  const onStatusToggle = async () => {
+    const newStatus = issue.status === "pending" ? "fixed" : "pending";
+
+    const updatedIssue = await updateIssue.mutateAsync({
+      issueUuid: issue.uuid,
+      severity: issue.severity,
+      text: issue.text,
+      status: newStatus,
+    });
+
+    overrideIssueInStore(updatedIssue as Issue);
+  }
+
   return (
-    <li className={styles.card} key={issue.uuid}>
+    <li className={`${styles.card} ${styles.ruleCard}`} key={issue.uuid}>
       <div className={styles.cardHeader}>
         <span>
           #{issue.issueId} - Impact : {translateSeverity(issue.severity)}
@@ -238,6 +257,13 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
           </button>
         </div>
       )}
+
+      <div className={styles.cardStatusContainer}>
+        <span id={`${issue.issueId}-checkedLabel`}>Marquer comme {issue.status === "pending" ? "corrigé" : "à corriger"} : </span>
+        <button onClick={onStatusToggle} className={styles.cardStatus} aria-labelledby={`${issue.issueId}-checkedLabel`}>
+          {issue.status === "pending" ? null : <CheckIcon />}
+        </button>
+      </div>
     </li>
   );
 }

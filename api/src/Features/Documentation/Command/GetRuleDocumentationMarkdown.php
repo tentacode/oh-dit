@@ -10,7 +10,7 @@ use function Safe\preg_match;
 use function Safe\preg_replace;
 use App\Features\RuleSet\Entity\Rule;
 use Doctrine\ORM\EntityManagerInterface;
-use Parsedown;
+use League\CommonMark\CommonMarkConverter;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Webmozart\Assert\Assert;
 
@@ -24,7 +24,7 @@ final class GetRuleDocumentationMarkdown
     public function __construct(
         private string $projectDirectory,
         private EntityManagerInterface $entityManager,
-        private Parsedown $parsedown = new Parsedown(),
+        private CommonMarkConverter $markdownConverter = new CommonMarkConverter(),
     ) {
         $rgaaDataFolder = $this->projectDirectory . '/var/data/rgaa-git/RGAA/';
 
@@ -245,8 +245,7 @@ final class GetRuleDocumentationMarkdown
 
     private function removeMarkdown(string $markdown): string
     {
-        $html = $this->parsedown->text($markdown);
-        Assert::string($html);
+        $html = $this->markdownConverter->convert($markdown)->getContent();
 
         return strip_tags($html);
     }

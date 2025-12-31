@@ -11,17 +11,17 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import formStyles from "@/src/components/form/styles/form.module.css";
-import listStyles from "../styles/issue_list.module.css";
-import SeverityInput from "./SeverityInput";
+import listStyles from "../../styles/issue_list.module.css";
+import SeverityInput from "../SeverityInput";
 import { useEffect, useRef, useState } from "react";
 import { ApiError, ApiValidationError } from "@/src/lib/react-query/apiClient";
-import { useCreateIssue } from "../mutations/useCreateIssue";
-import { Issue, useAuditStore } from "../../audit/store/auditStore";
+import { useCreateIssue } from "../../mutations/useCreateIssue";
+import { Issue, useAuditStore } from "../../../audit/store/auditStore";
 import clsx from "clsx";
-import { useIssuesFormStateStore } from "../store/issuesFormStateStore";
-import { Severity } from "../types/IssueInterface";
-import { useUpdateIssue } from "../mutations/useUpdateIssue";
-import { useDeleteIssue } from "../mutations/useDeleteIssue";
+import { useIssuesFormStateStore } from "../../store/issuesFormStateStore";
+import { Severity } from "../../types/IssueInterface";
+import { useUpdateIssue } from "../../mutations/useUpdateIssue";
+import { useDeleteIssue } from "../../mutations/useDeleteIssue";
 
 function getErrorsForField(
   fieldName: string,
@@ -108,6 +108,7 @@ export default function IssueForm({
           ruleUuid: ruleUuid,
           projectUuid: project.uuid,
           screenUuid: screenUuid,
+          status: 'pending',
         });
 
         addIssueInStore(issue as Issue);
@@ -118,6 +119,7 @@ export default function IssueForm({
           issueUuid: issueFormState.issueUuid,
           severity: formData.get("severity") as Severity,
           text: formData.get("text") as string,
+          status: issueFormState.status,
         });
 
         overrideIssueInStore(issue as Issue);

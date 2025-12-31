@@ -22,6 +22,7 @@ export default function RuleHelpButton({
 }) {
   return (
     <button
+      aria-label="Aide sur le critère"
       id={getRuleHelpButtonId(ruleUuid, screenUuid)}
       role="gridcell"
       className={clsx(

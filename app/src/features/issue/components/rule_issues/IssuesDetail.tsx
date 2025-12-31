@@ -2,8 +2,8 @@
 
 import IssuesList from "./IssuesList";
 import IssueForm from "./IssueForm";
-import tabStyles from "../../rule_set/styles/rule_tab.module.css";
-import listStyles from "../styles/issue_list.module.css";
+import tabStyles from "../../../rule_set/styles/rule_tab.module.css";
+import listStyles from "../../styles/issue_list.module.css";
 
 export default function IssuesDetail({
   ruleUuid,

@@ -1,0 +1,52 @@
+.filters {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* border: 3px solid #010101; */
+    padding: 20px 0px;
+    border-radius: 10px;
+}
+
+.filterLinks {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.filterActions {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.filterLink {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+}
+
+.filterLinkActive {
+    font-weight: 600;
+}
+
+.filterLink svg {
+    width: 24px;
+    height: 24px;
+}
+
+.filterLinkActive path {  
+    stroke-width: 2 !important;
+}
+
+.filterAction {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.filterAction svg {
+    width: 24px;
+    height: 24px;
+}

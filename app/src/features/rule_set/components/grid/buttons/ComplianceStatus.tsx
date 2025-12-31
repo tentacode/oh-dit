@@ -145,6 +145,7 @@ export default function ComplianceStatus({
   return (
     <div className={styles.complianceStatus}>
       <button
+        aria-label="Conforme"
         id={getComplianceButtonStatusId("compliant", ruleUuid, screenUuid)}
         role="gridcell"
         className={clsx([styles.squareButton, compliantClasses])}
@@ -158,6 +159,7 @@ export default function ComplianceStatus({
         C
       </button>
       <button
+        aria-label="Non conforme"
         id={getComplianceButtonStatusId("non_compliant", ruleUuid, screenUuid)}
         role="gridcell"
         className={clsx([styles.squareButton, nonCompliantClasses])}
@@ -171,6 +173,7 @@ export default function ComplianceStatus({
         NC
       </button>
       <button
+        aria-label="Non applicable"
         id={getComplianceButtonStatusId("not_applicable", ruleUuid, screenUuid)}
         role="gridcell"
         className={clsx([styles.squareButton, notApplicableClasses])}

@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Features\Issue\Query;
 
+use function Safe\json_decode;
 use App\Features\Authentication\Entity\User;
+use App\Features\Project\Entity\Project;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 
 class GetProjectIssuesQuery
 {
@@ -23,8 +26,12 @@ class GetProjectIssuesQuery
      */
     public function __invoke(
         User $user,
-        string $projectUuid,
+        Project $project,
     ): array {
+        if (! $user->isInTeam($project->getTeam())) {
+            throw new SuspiciousOperationException('User try to access issues from a project that is not in their team.');
+        }
+
         $sql = <<<SQL
             SELECT
                 issue.uuid,
@@ -33,6 +40,10 @@ class GetProjectIssuesQuery
                 issue.screen_uuid as "screenUuid",
                 issue.rule_uuid as "ruleUuid",
                 issue.severity,
+                issue.status,
+                issue.status_updated_at as "statusUpdatedAt",
+                issue.status_updated_by_user_uuid as "statusUpdatedBy",
+                issue.status_change_history as "statusChangeHistory",
                 issue.text,
                 issue.created_at as "createdAt",
                 issue.updated_at as "updatedAt",
@@ -46,11 +57,20 @@ class GetProjectIssuesQuery
         SQL;
 
         $stmt = $this->connection->prepare($sql);
-        $stmt->bindValue('projectUuid', $projectUuid);
+        $stmt->bindValue('projectUuid', (string) $project->getUuid());
         $stmt->bindValue('userUuid', (string) $user->getUuid());
 
         $result = $stmt->executeQuery();
 
-        return $result->fetchAllAssociative();
+        // Need to decode JSONB field
+        $data = array_map(function (array $item): array {
+            /** @var string $statusChangeHistory */
+            $statusChangeHistory = $item['statusChangeHistory'];
+            $item['statusChangeHistory'] = json_decode($statusChangeHistory, true);
+
+            return $item;
+        }, $result->fetchAllAssociative());
+
+        return $data;
     }
 }

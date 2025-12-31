@@ -4,6 +4,7 @@ export interface IssueInterface {
     uuid: string;
     issueId: number;
     severity: Severity;
+    status: 'pending' | 'fixed';
     text: string;
     createdAt: string;
     updatedAt: string;

@@ -83,4 +83,21 @@ final class GetProjectCompliancesTest extends WebTestCase
             'message' => 'JWT Token not found',
         ], $response, Response::HTTP_UNAUTHORIZED);
     }
+
+    public function test_it_cant_get_compliances_on_a_project_i_dont_own(): void
+    {
+        $response = $this->request(
+            uri: sprintf('/api/projects/%s/compliances', ProjectsStory::PROJECT_DEATH_STAR_UUID),
+            method: Request::METHOD_GET,
+            authenticationToken: $this->getAuthenticationToken(
+                email: 'luke@rebels.com',
+                password: 'luke69420',
+            ),
+        );
+
+        $this->assertJsonResponseMatches([
+            'code' => 'not_found',
+            'message' => 'Resource not found.',
+        ], $response, Response::HTTP_NOT_FOUND);
+    }
 }

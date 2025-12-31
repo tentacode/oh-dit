@@ -9,6 +9,7 @@ interface IssueFormState {
   mode: "duplicate" | "edit" | "delete";
   severity: "low" | "moderate" | "blocking";
   text: string;
+  status: 'pending' | 'fixed';
 }
 
 interface IssuesFormState {

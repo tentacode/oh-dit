@@ -12,6 +12,15 @@
   gap: 15px;
 }
 
+.groupedCartList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
 .card {
   position: relative;
   background-color: #fff;
@@ -20,12 +29,76 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+.cardStatusContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.ruleCard .cardStatusContainer {
+  margin-top: 20px;
+  font-size: 16px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.cardStatus {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  border: 3px solid #010101;
+  padding: 5px;
+}
+
+.ruleCard .cardStatus {
+  width: 30px;
+  height: 30px;
+  border: 2px solid #010101;
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.cardStatus:hover,
+.cardStatus:focus {
+  border-color: #8579dc !important;
+  outline: none;
+}
+
+.cardContent {
+  flex: 1;
+}
+
 .cardHeader {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 16px;
   color: #555;
+}
+
+.cardRule {
+  display: flex;
+  align-items: flex-start;
+  /* font-family: 'Lexend Deca', sans-serif; */
+  font-weight: 500;
+  font-size: 1.25em;
+  color: #010101;
+  margin-bottom: 40px;
+}
+
+.cardRule svg {
+  margin-top: 6px;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.cardRule svg path {
+  stroke-width: 2;
 }
 
 .actionsButton {

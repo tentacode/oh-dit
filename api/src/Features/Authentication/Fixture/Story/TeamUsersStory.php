@@ -65,6 +65,9 @@ final class TeamUsersStory extends Story
             'username' => 'Luke Skywalker',
         ]);
 
+        $this->addToPool('users', $lukeSkywalker);
+        $this->addState(self::USER_LUKE_SKYWALKER_UUID, $lukeSkywalker, 'users');
+
         $theRebellion = TeamFactory::new()->withoutPersisting()->create([
             'uuid' => self::TEAM_THE_REBELLION_UUID,
             'name' => 'The Rebellion',

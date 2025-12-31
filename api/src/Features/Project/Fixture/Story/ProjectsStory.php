@@ -17,6 +17,8 @@ final class ProjectsStory extends Story
 {
     public const PROJECT_DEATH_STAR_UUID = '22222222-0000-4000-8000-000000000001';
 
+    public const PROJECT_XWING_UUID = '22222222-0000-4000-8000-000000000002';
+
     public const SCREEN_ROOT_UUID = '33333333-0000-4000-8000-000000000000';
 
     public const SCREEN_HOME_UUID = '33333333-0000-4000-8000-000000000001';
@@ -55,7 +57,7 @@ final class ProjectsStory extends Story
         $this->addState(self::SCREEN_ROOT_UUID, $rootScreen, 'screens');
 
         $homeScreen = ScreenFactory::createOne([
-            'name' => 'Home Screen',
+            'name' => 'Accueil',
             'url' => '/',
             'rank' => 1,
             'uuid' => self::SCREEN_HOME_UUID,
@@ -66,7 +68,7 @@ final class ProjectsStory extends Story
         $this->addState(self::SCREEN_HOME_UUID, $homeScreen, 'screens');
 
         $contactScreen = ScreenFactory::createOne([
-            'name' => 'Contact Screen',
+            'name' => 'Contact',
             'url' => '/contact',
             'rank' => 2,
             'uuid' => self::SCREEN_CONTACT_UUID,
@@ -83,7 +85,11 @@ final class ProjectsStory extends Story
             'url' => 'https://www.xwing.rebellion',
             'team' => $theRebellionTeam,
             'ruleSet' => $empireRuleSet,
+            'uuid' => self::PROJECT_XWING_UUID,
         ]);
+
+        $this->addToPool('projects', $xWingProject);
+        $this->addState(self::PROJECT_XWING_UUID, $xWingProject, 'projects');
 
         ScreenFactory::createOne([
             'name' => Screen::ROOT_SCREEN_NAME,

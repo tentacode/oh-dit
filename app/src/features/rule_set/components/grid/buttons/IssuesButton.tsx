@@ -26,7 +26,11 @@ export default function IssuesButton({
     (issue) => issue.ruleUuid === ruleUuid && issue.screenUuid === screenUuid
   );
 
-  const badgeNumber = issues.length;
+  const pendingIssues = issues.filter((issue) => issue.status === "pending");
+
+  const badgeNumber = pendingIssues.length;
+
+  const allIssuesFixed = issues.length > 0 && pendingIssues.length === 0;
 
   return (
     <button
@@ -37,13 +41,18 @@ export default function IssuesButton({
         styles.ruleButton,
         isActive && styles.activeTab
       )}
+      aria-label='Recommandations'
       onClick={onClick}
       onFocus={(e) => {
         e.stopPropagation();
         onFocus()}
       }
     >
-      {badgeNumber > 0 && <span className={styles.badge}>{badgeNumber}</span>}
+      <span className="sr-only">{allIssuesFixed ? `Toutes les recommandations sont corrigées` : `${badgeNumber} recommandations à corriger`}</span>
+      {!allIssuesFixed && badgeNumber > 0 && <span aria-hidden="true" className={styles.badge}>{badgeNumber}</span>}
+      {allIssuesFixed && (
+        <span className={styles.badge} aria-hidden="true">✓</span>
+      )}
       <ExclamationTriangleIcon className={styles.buttonIcon} />
     </button>
   );
