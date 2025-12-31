@@ -50,7 +50,7 @@ final class GetProjectControllerTest extends WebTestCase
                 ],
                 [
                     'uuid' => '@uuid@',
-                    'name' => 'Home Screen',
+                    'name' => 'Accueil',
                     'url' => '/',
                     'rank' => 1,
                     'progress' => 0,
@@ -59,7 +59,7 @@ final class GetProjectControllerTest extends WebTestCase
                 ],
                 [
                     'uuid' => '@uuid@',
-                    'name' => 'Contact Screen',
+                    'name' => 'Contact',
                     'url' => '/contact',
                     'rank' => 2,
                     'progress' => 0,
@@ -86,5 +86,22 @@ final class GetProjectControllerTest extends WebTestCase
             'code' => 401,
             'message' => 'JWT Token not found',
         ], $response, Response::HTTP_UNAUTHORIZED);
+    }
+
+    public function test_it_cant_get_a_project_i_dont_own(): void
+    {
+        $response = $this->request(
+            uri: '/api/projects/' . ProjectsStory::PROJECT_DEATH_STAR_UUID,
+            method: Request::METHOD_GET,
+            authenticationToken: $this->getAuthenticationToken(
+                email: 'luke@rebels.com',
+                password: 'luke69420',
+            ),
+        );
+
+        $this->assertJsonResponseMatches([
+            'code' => 'not_found',
+            'message' => 'Resource not found.',
+        ], $response, Response::HTTP_NOT_FOUND);
     }
 }

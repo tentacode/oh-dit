@@ -19,13 +19,6 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
-enum Severity: string
-{
-    case LOW = 'low';
-    case MODERATE = 'moderate';
-    case BLOCKING = 'blocking';
-}
-
 #[ORM\Entity]
 #[ORM\Table(name: 'issue')]
 class Issue implements HasUuidInterface, SerializableInterface
@@ -69,17 +62,26 @@ class Issue implements HasUuidInterface, SerializableInterface
     #[Assert\NotBlank(message: 'Le texte de la recommandation est obligatoire.')]
     private string $text;
 
-    // @TODO: this should not be in this entity
-    // but we should have history of status (fixed -> not fixed -> fixed again)
-    // #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    // private ?DateTimeImmutable $fixedAt = null;
-
-    // #[ManyToOne(targetEntity: User::class)]
-    // #[JoinColumn(name: 'fixed_by_user_uuid', referencedColumnName: 'uuid', nullable: true)]
-    // private ?User $fixedBy = null;
-
     #[ORM\Column(type: Types::STRING, length: 20, enumType: Severity::class)]
     private Severity $severity;
+
+    #[ORM\Column(type: Types::STRING, length: 20, enumType: Status::class)]
+    private Status $status;
+
+    #[ManyToOne(targetEntity: User::class)]
+    #[JoinColumn(name: 'status_updated_by_user_uuid', referencedColumnName: 'uuid')]
+    private User $statusUpdatedBy;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private DateTimeImmutable $statusUpdatedAt;
+
+    /**
+     * @var array<int, array<string, string>>
+     */
+    #[ORM\Column(type: Types::JSON, options: [
+        'jsonb' => true,
+    ])]
+    private array $statusChangeHistory = [];
 
     public function __construct(
         User $user,
@@ -89,13 +91,12 @@ class Issue implements HasUuidInterface, SerializableInterface
         int $issueId,
         string $text,
         Severity $severity,
+
         // used for fixtures
         ?DateTimeImmutable $createdAt = null,
-        ?string $uuid = null
+        ?string $uuid = null,
+        ?Status $status = null,
     ) {
-        $this->uuid = $uuid ? Uuid::fromString($uuid) : Uuid::v4();
-        $this->createdAt = $createdAt ?? CarbonImmutable::now();
-        $this->updatedAt = $createdAt ?? CarbonImmutable::now();
         $this->user = $user;
         $this->rule = $rule;
         $this->project = $project;
@@ -103,6 +104,13 @@ class Issue implements HasUuidInterface, SerializableInterface
         $this->screen = $screen;
         $this->text = $text;
         $this->severity = $severity;
+
+        $this->changeStatus($user, $status ?? Status::PENDING);
+
+        // used for fixtures
+        $this->uuid = $uuid ? Uuid::fromString($uuid) : Uuid::v4();
+        $this->createdAt = $createdAt ?? CarbonImmutable::now();
+        $this->updatedAt = $createdAt ?? CarbonImmutable::now();
     }
 
     public function getUuid(): Uuid
@@ -140,6 +148,43 @@ class Issue implements HasUuidInterface, SerializableInterface
     {
         $this->severity = $severity;
         $this->updatedAt = CarbonImmutable::now();
+    }
+
+    public function getStatus(): Status
+    {
+        return $this->status;
+    }
+
+    public function changeStatus(User $user, Status $status): void
+    {
+        $this->status = $status;
+        $this->statusUpdatedAt = CarbonImmutable::now();
+        $this->updatedAt = CarbonImmutable::now();
+        $this->statusUpdatedBy = $user;
+
+        $this->statusChangeHistory[] = [
+            'status' => $status->value,
+            'statusUpdatedBy' => $user->getUuid()->toString(),
+            'statusUpdatedAt' => $this->statusUpdatedAt->format(DateTimeImmutable::ATOM),
+        ];
+    }
+
+    public function getStatusUpdatedBy(): ?User
+    {
+        return $this->statusUpdatedBy;
+    }
+
+    public function getStatusUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->statusUpdatedAt;
+    }
+
+    /**
+     * @return array<int, array<string, string>>
+     */
+    public function getStatusChangeHistory(): array
+    {
+        return $this->statusChangeHistory;
     }
 
     public function getRule(): Rule
@@ -196,6 +241,10 @@ class Issue implements HasUuidInterface, SerializableInterface
             'updatedAt',
             'text',
             'severity',
+            'status',
+            'statusUpdatedAt',
+            'statusUpdatedBy',
+            'statusChangeHistory',
             'ruleUuid',
             'projectUuid',
             'screenUuid',

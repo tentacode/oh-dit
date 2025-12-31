@@ -13,6 +13,7 @@ async function createIssue(data: {
   ruleUuid: string;
   projectUuid: string;
   screenUuid: string;
+  status: string;
 }): Promise<IssueInterface> {
   return apiClient<IssueInterface>("/api/issues", {
     method: "POST",

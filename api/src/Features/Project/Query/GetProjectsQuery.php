@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Features\Project\Query;
 
+use App\Features\Authentication\Entity\Team;
 use App\Features\Authentication\Entity\User;
 use App\Features\Project\Entity\Project;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,9 +20,9 @@ class GetProjectsQuery
     /**
      * @return array<Project>
      */
-    public function __invoke(User $user, string $teamUuid): array
+    public function __invoke(User $user, Team $team): array
     {
-        if (! $user->isInTeamUuid($teamUuid)) {
+        if (! $user->isInTeam($team)) {
             throw new SuspiciousOperationException('User try to access projects of a team he is not part of.');
         }
 
@@ -30,7 +31,7 @@ class GetProjectsQuery
             ->getRepository(Project::class)
             ->createQueryBuilder('project')
             ->where('project.team = :team')
-            ->setParameter('team', $teamUuid)
+            ->setParameter('team', $team->getUuid())
             ->orderBy('project.updatedAt', 'DESC')
             ->getQuery()
             ->getResult();

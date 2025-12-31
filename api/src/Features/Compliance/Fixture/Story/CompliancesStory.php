@@ -9,6 +9,7 @@ use App\Features\Compliance\Entity\ComplianceStatus;
 use App\Features\Compliance\Fixture\Factory\ComplianceFactory;
 use App\Features\Compliance\Fixture\Factory\IssueFactory;
 use App\Features\Issue\Entity\Severity;
+use App\Features\Issue\Entity\Status;
 use App\Features\Project\Fixture\Story\ProjectsStory;
 use App\Features\RuleSet\Fixture\Story\RuleSetsStory;
 use Safe\DateTimeImmutable;
@@ -85,6 +86,7 @@ final class CompliancesStory extends Story
             'screen' => ProjectsStory::get(ProjectsStory::SCREEN_HOME_UUID),
             'severity' => Severity::MODERATE,
             'text' => 'Les stormtroopers ne portent pas correctement leur casque dans 30% des cas.',
+            'status' => Status::FIXED,
         ]);
 
         // 1.1 compliant sur la page contact

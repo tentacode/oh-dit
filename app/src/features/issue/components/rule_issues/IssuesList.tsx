@@ -1,8 +1,8 @@
 "use client";
 
-import { useAuditStore } from "../../audit/store/auditStore";
+import { useAuditStore } from "../../../audit/store/auditStore";
 import IssueListItem from "./IssueListItem";
-import styles from "../styles/issue_list.module.css";
+import styles from "../../styles/issue_list.module.css";
 
 export default function IssuesList({
   ruleUuid,

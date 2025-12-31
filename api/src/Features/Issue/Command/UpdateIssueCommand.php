@@ -7,6 +7,7 @@ namespace App\Features\Issue\Command;
 use App\Features\Authentication\Entity\User;
 use App\Features\Issue\Entity\Issue;
 use App\Features\Issue\Entity\Severity;
+use App\Features\Issue\Entity\Status;
 use App\Infrastructure\Symfony\ErrorHandling\Command\ValidateOrThrowApiErrorCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
@@ -35,6 +36,10 @@ final class UpdateIssueCommand
 
         $issue->setText($updateIssueRequest->text);
         $issue->setSeverity(Severity::from($updateIssueRequest->severity));
+
+        if ($issue->getStatus()->value !== $updateIssueRequest->status) {
+            $issue->changeStatus($user, Status::from($updateIssueRequest->status));
+        }
 
         ($this->validateOrThrow)($issue);
 

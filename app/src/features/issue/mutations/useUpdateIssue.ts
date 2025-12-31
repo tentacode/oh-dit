@@ -11,6 +11,7 @@ async function updateIssue(data: {
   issueUuid?: string;
   severity: Severity;
   text: string;
+  status: 'pending' | 'fixed';
 }): Promise<IssueInterface> {
   const issueUuid = data.issueUuid;
   delete data.issueUuid;

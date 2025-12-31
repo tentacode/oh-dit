@@ -74,7 +74,7 @@ final class UpdateProjectMetricsControllerTest extends WebTestCase
                 ],
                 [
                     'uuid' => '33333333-0000-4000-8000-000000000001',
-                    'name' => 'Home Screen',
+                    'name' => 'Accueil',
                     'url' => '/',
                     'rank' => 1,
                     'progress' => 13,
@@ -83,7 +83,7 @@ final class UpdateProjectMetricsControllerTest extends WebTestCase
                 ],
                 [
                     'uuid' => '33333333-0000-4000-8000-000000000002',
-                    'name' => 'Contact Screen',
+                    'name' => 'Contact',
                     'url' => '/contact',
                     'rank' => 2,
                     'progress' => 3,
@@ -110,5 +110,22 @@ final class UpdateProjectMetricsControllerTest extends WebTestCase
             'code' => 401,
             'message' => 'JWT Token not found',
         ], $response, Response::HTTP_UNAUTHORIZED);
+    }
+
+    public function test_it_cant_update_metrics_on_a_project_i_dont_own(): void
+    {
+        $response = $this->request(
+            uri: '/api/projects/22222222-0000-4000-8000-000000000001/update-metrics',
+            method: Request::METHOD_POST,
+            authenticationToken: $this->getAuthenticationToken(
+                email: 'luke@rebels.com',
+                password: 'luke69420',
+            ),
+        );
+
+        $this->assertJsonResponseMatches([
+            'code' => 'not_found',
+            'message' => 'Resource not found.',
+        ], $response, Response::HTTP_NOT_FOUND);
     }
 }

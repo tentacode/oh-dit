@@ -31,6 +31,7 @@ export interface Issue {
   uuid: string;
   issueId: number;
   severity: "low" | "moderate" | "blocking";
+  status: "pending" | "fixed";
   text: string;
   ruleUuid: string;
   projectUuid: string;

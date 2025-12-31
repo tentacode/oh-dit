@@ -16,6 +16,7 @@ import { useAuditSettingsStore } from "../../audit/store/auditSettingsStore";
 
 export function AuditDataPerScreen() {
   const project = useAuditStore((state) => state.project);
+  const issues = useAuditStore((state) => state.issues);
 
   const setProjectSetting = useAuditSettingsStore(
     (state) => state.setProjectSetting
@@ -96,7 +97,13 @@ export function AuditDataPerScreen() {
                 )}
               </td>
               <td style={{ textAlign: "right" }}>
-                <strong>3</strong> / 7
+                {issues.filter((issue) => issue.screenUuid === screen.uuid).length === 0 && '-'}
+
+                {issues.filter((issue) => issue.screenUuid === screen.uuid).length > 0 && (
+                  <>
+                    <strong>{issues.filter((issue) => issue.screenUuid === screen.uuid && issue.status === "fixed").length}</strong> / {issues.filter((issue) => issue.screenUuid === screen.uuid).length}
+                  </>
+                )}
               </td>
               <td style={{ textAlign: "right" }}>
                 <CallToActionLink

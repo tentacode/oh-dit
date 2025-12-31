@@ -48,7 +48,7 @@ export default function PageSelect({ screenUuid }: { screenUuid: string }) {
 
   return (
     <Listbox value={screenUuid} onChange={setScreenUuid}>
-      <div className={selectStyles.selectContainer}>
+      <div className={selectStyles.selectContainer} style={{ marginBottom: 15 }}>
         <Label aria-hidden="true" className="block">
           Page en cours :
         </Label>

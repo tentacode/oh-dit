@@ -39,10 +39,10 @@ api.connect: ## Open api container shell
 
 api.phpstan: ## Run PHPStan in api container
 	docker compose exec api bin/phpstan --memory-limit=1G
-	docker compose exec api zsh
 
-api.phpunit: ## Run phpuni in api container
-	docker compose exec api bin/phpunit --testdox --fail-on-warning --fail-on-risky --fail-on-incomplete --fail-on-skipped
+api.phpunit: filter=
+api.phpunit: ## Run phpunit in api container
+	docker compose exec api bin/phpunit --testdox --fail-on-warning --fail-on-risky --fail-on-incomplete --fail-on-skipped $(if $(filter),--filter=$(filter))
 
 database.connect: ## Open PostgreSQL shell
 	docker compose exec database psql -U ohdit ohdit_dev

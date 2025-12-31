@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Features\Comment\Query;
 
 use App\Features\Authentication\Entity\User;
+use App\Features\Project\Entity\Project;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 
 class GetProjectCommentsQuery
 {
@@ -23,10 +25,14 @@ class GetProjectCommentsQuery
      */
     public function __invoke(
         User $user,
-        string $projectUuid,
+        Project $project,
     ): array {
+        if (! $user->isInTeam($project->getTeam())) {
+            throw new SuspiciousOperationException('User is trying to load comments in a project they are not a member of.');
+        }
+
         $sql = <<<SQL
-            SELECT *
+            SELECT comment.*
             FROM comment
             JOIN project ON comment.project_uuid = project.uuid
             JOIN team ON project.team_uuid = team.uuid
@@ -36,7 +42,7 @@ class GetProjectCommentsQuery
         SQL;
 
         $stmt = $this->connection->prepare($sql);
-        $stmt->bindValue('projectUuid', $projectUuid);
+        $stmt->bindValue('projectUuid', $project->getUuid());
         $stmt->bindValue('userUuid', (string) $user->getUuid());
 
         $result = $stmt->executeQuery();

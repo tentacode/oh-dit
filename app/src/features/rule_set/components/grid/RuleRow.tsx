@@ -14,7 +14,7 @@ import { clsx } from "clsx";
 import RuleHelpButton, { getRuleHelpButtonId } from "./buttons/RuleHelpButton";
 import { useState } from "react";
 import RuleHelp from "../rule/RuleHelp";
-import IssuesDetail from "@/src/features/issue/components/IssuesDetail";
+import IssuesDetail from "@/src/features/issue/components/rule_issues/IssuesDetail";
 import CommentsDetail from "@/src/features/comments/components/CommentsDetail";
 import {
   getDirectionFromKey,
