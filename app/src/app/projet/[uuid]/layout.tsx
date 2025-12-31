@@ -86,7 +86,7 @@ export default function ProjectLayout({
           <Tab isActive={selectedTab === AuditTab.RECOMMENDATIONS} href={getProjectUrl.issues(params.uuid as string)}>
             <ExclamationTriangleIcon />
             Recommandations
-            <TabBadge value={issuesCount.toString()} />
+            {issuesCount > 0 && <TabBadge value={issuesCount.toString() } />}
           </Tab>
           <Tab isActive={selectedTab === AuditTab.DELIVERABLES} href={getProjectUrl.deliverables(params.uuid as string)}>
             <DocumentCheckIcon /> Livrables

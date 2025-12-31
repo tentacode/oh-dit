@@ -87,7 +87,7 @@ final class UpdateProjectMetricsControllerTest extends WebTestCase
                     'url' => '/contact',
                     'rank' => 2,
                     'progress' => 3,
-                    'complianceRate' => 0,
+                    'complianceRate' => 100,
                     'isRoot' => false,
                 ],
             ],

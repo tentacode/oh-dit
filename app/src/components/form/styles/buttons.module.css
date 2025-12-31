@@ -34,3 +34,17 @@
     color: #A9A9A9;
     cursor: not-allowed;
 }
+
+.callToActionSmall {
+    font-size: 16px !important;
+    padding: 20px 15px;
+    height: 2.5rem;
+    margin: 5px 0;
+    margin-left: auto; /* quick fix to align to right in table */
+}
+
+.callToActionSmall svg {
+    font-size: 1em;
+    height: 1.5rem;
+    width: 1.5rem;
+}

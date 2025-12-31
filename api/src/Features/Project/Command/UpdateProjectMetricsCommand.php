@@ -96,7 +96,10 @@ final class UpdateProjectMetricsCommand
                 COALESCE(SUM(1) FILTER (WHERE status = 'non_compliant'), 0) AS total_non_compliant,
                 COUNT(DISTINCT c.uuid) AS total_set,
                 100 * COUNT(DISTINCT c.uuid) / :totalRules AS progress,
-                100 * (SUM(1) FILTER (WHERE status = 'compliant')) / (SUM(1) FILTER (WHERE status = 'non_compliant') + SUM(1) FILTER (WHERE status = 'compliant')) AS compliance_rate
+                100.0 *
+                    COUNT(*) FILTER (WHERE status = 'compliant') /
+                    NULLIF(COUNT(*) FILTER (WHERE status IN ('compliant', 'non_compliant')), 0)
+                AS compliance_rate
             FROM project_screen s
             LEFT JOIN distinct_compliance c ON c.screen_uuid = s.uuid
             WHERE s.project_uuid = :projectUuid
