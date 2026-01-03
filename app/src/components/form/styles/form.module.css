@@ -16,6 +16,12 @@
     gap: 12px;
 }
 
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .form label, .form legend {
     font-family: "Lexed Deca", sans-serif;
     font-weight: 600;

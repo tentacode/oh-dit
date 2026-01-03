@@ -6,7 +6,6 @@
     color: #010101;
     padding: 0.5rem 1rem;
     border-radius: 100px;
-    height: 3rem;
     font-size: 1.25rem;
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 600;
@@ -17,6 +16,7 @@
 .callToAction svg {
     height: 2rem;
     width: 2rem;
+    flex-shrink: 0;
     margin-right: 0.5rem;
 }
 

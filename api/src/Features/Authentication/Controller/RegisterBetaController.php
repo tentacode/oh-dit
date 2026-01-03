@@ -42,7 +42,6 @@ class RegisterBetaController extends ApiController
     public function __construct(
         private readonly ValidateOrThrowApiErrorCommand $validateOrThrow,
         private readonly EntityManagerInterface $entityManager,
-        // encode passwrd
         private readonly UserPasswordHasherInterface $passwordHasher,
     ) {
     }

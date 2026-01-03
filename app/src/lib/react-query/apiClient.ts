@@ -51,10 +51,12 @@ export async function apiClient<T>(
   }
 
   if (!response.ok) {
+    const data = await response.json();
+    
     throw new ApiError(
       response.status,
-      `Erreur API: ${response.statusText}`,
-      (await response.json()).errors || null
+      data.message || `Erreur API: ${response.statusText}`,
+      data.errors || null
     );
   }
 

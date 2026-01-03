@@ -1,0 +1,20 @@
+# config/packages/rate_limiter.yaml
+framework:
+    rate_limiter:
+        # Endpoints publics sensibles (forgot-password, login)
+        public:
+            policy: 'sliding_window'
+            limit: 10
+            interval: '15 minutes'
+
+        # JWT invalide/absent sur routes protégées
+        auth_failed:
+            policy: 'sliding_window'
+            limit: 100
+            interval: '15 minutes'
+
+        # Par utilisateur authentifié
+        authenticated_user:
+            policy: 'sliding_window'
+            limit: 100
+            interval: '1 minute'
