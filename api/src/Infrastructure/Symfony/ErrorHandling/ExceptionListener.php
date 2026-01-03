@@ -39,7 +39,7 @@ final class ExceptionListener
             if ($exception->getPrevious() instanceof SuspiciousOperationException) {
                 $exception = new LogicException('Suspicious operation should always be handled. Previous exception: ' . $exception->getPrevious()->getMessage(), 0, $exception);
 
-                if ($_SERVER['APP_ENV'] === 'dev') {
+                if (in_array($_SERVER['APP_ENV'], ['dev', 'test'], true)) {
                     $event->setResponse($this->createDefaultDevelopmentErrorResponse($exception));
                     return;
                 }
@@ -64,7 +64,7 @@ final class ExceptionListener
             return;
         }
 
-        if ($_SERVER['APP_ENV'] === 'dev') {
+        if (in_array($_SERVER['APP_ENV'], ['dev', 'test'], true)) {
             $event->setResponse($this->createDefaultDevelopmentErrorResponse($exception));
             return;
         }

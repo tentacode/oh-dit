@@ -1,0 +1,73 @@
+.loginContainer {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    height: fit-content;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 15px;
+    padding: 60px 40px;
+    padding-bottom: 40px;
+    gap: 20px;
+}
+
+.logo {
+    width: 200px;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 30px !important;
+}
+
+.loginForm label {
+    font-size: 1.25em !important;
+}
+
+
+.loginForm input {
+    margin: 0 !important;
+}
+
+.loginButtonContainer {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.forgotPasswordLink {
+    font-size: 1.2em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.forgotPasswordLink svg {
+    width: 24px;
+    height: 24px;
+}
+
+.forgotPasswordSuccessContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: left;
+}
+
+.forgotPasswordSuccessContainer svg {
+    width: 200px;
+    height: 200px;
+}
+
+@media (max-width: 650px) {
+    .loginContainer {
+        margin: 40px;
+    }
+}

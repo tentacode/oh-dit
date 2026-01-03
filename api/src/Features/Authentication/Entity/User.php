@@ -18,6 +18,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Webmozart\Assert\Assert as WebmozartAssert;
 
 #[ORM\Entity]
@@ -52,6 +53,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuid
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
+
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $passwordResetToken = null;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?DateTimeImmutable $passwordResetExpireAt = null;
 
     /**
      * @var Collection<int, Team>
@@ -133,6 +140,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuid
         $this->updatedAt = $updatedAt;
     }
 
+    public function getPasswordResetToken(): ?string
+    {
+        return $this->passwordResetToken;
+    }
+
+    public function getPasswordResetExpireAt(): ?DateTimeImmutable
+    {
+        return $this->passwordResetExpireAt;
+    }
+
     public function getRoles(): array
     {
         return ['ROLE_USER'];
@@ -171,6 +188,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuid
         }
 
         return false;
+    }
+
+    public function setRandomPasswordResetToken(): void
+    {
+        $this->passwordResetToken = bin2hex(random_bytes(32));
+        $this->passwordResetExpireAt = CarbonImmutable::now()->addHours(1);
+    }
+
+    public function clearResetToken(): void
+    {
+        $this->passwordResetToken = null;
+        $this->passwordResetExpireAt = null;
+    }
+
+    #[Assert\Callback]
+    public function validatePasswordResetToken(ExecutionContextInterface $context): void
+    {
+        if ($this->passwordResetToken === null) {
+            return;
+        }
+
+        if (! $this->passwordResetExpireAt instanceof DateTimeImmutable || $this->passwordResetExpireAt < CarbonImmutable::now()) {
+            $context->buildViolation('Le token de réinitialisation a expiré.')
+                ->atPath('passwordResetToken')
+                ->addViolation();
+        }
     }
 
     public function getDefaultFields(): array

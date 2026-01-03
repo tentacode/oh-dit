@@ -22,6 +22,9 @@ security:
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            login_throttling:
+                max_attempts: 10
+                interval: '15 minutes'
         api:
             pattern:   ^/api
             stateless: true
@@ -37,6 +40,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/forgot_password, roles: PUBLIC_ACCESS }
+        - { path: ^/api/reset_password, roles: PUBLIC_ACCESS }
         - { path: ^/api/register, roles: PUBLIC_ACCESS }
         - { path: ^/api/healthcheck, roles: PUBLIC_ACCESS }
         - { path: ^/api/newsletter, roles: PUBLIC_ACCESS }

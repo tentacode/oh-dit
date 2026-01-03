@@ -22,3 +22,6 @@ services:
         arguments:
             $profiler: '@?profiler'
             $environment: '%kernel.environment%'
+
+    Symfony\Component\Security\Http\AccessMapInterface:
+        alias: 'security.access_map'
