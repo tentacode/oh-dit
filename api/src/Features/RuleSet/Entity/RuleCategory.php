@@ -61,7 +61,7 @@ class RuleCategory implements HasUuidInterface
         $this->uuid = $uuid ? Uuid::fromString($uuid) : Uuid::v4();
         $this->ruleSet = $ruleSet;
         $this->name = $name;
-        $this->prefix = $prefix === null || $prefix === '' || $prefix === '0' ? null : $prefix;
+        $this->prefix = in_array($prefix, [null, '', '0'], true) ? null : $prefix;
         $this->rules = new ArrayCollection();
         $this->createdAt = CarbonImmutable::now();
         $this->updatedAt = CarbonImmutable::now();

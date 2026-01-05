@@ -60,6 +60,10 @@ export default function ProjectListEmpty() {
             <strong>Avant de créer votre premier audit</strong>, sachez que vos données sont protégées et ne quittent pas Ohdit.
             Nous avons rédigé un <a href={`${process.env.NEXT_PUBLIC_WWW_HOST}/politique-de-securisation-des-donnees`} target="_blank">guide simple et lisible sur notre politique de sécurisation des données</a> que nous vous invitons à consulter.
           </p>
+          <p style={styles.paragraph}>
+            <strong>À propos de l'accessibilité</strong> : nous avons fait notre maximum pour intégrer l'accessibilité dès la conception d'Ohdit, mais "l'audit d'Ohdit" est en cours
+            et nous avons encore du chemin à faire avant d'être 100 % conforme au RGAA, ce qui reste notre objectif pendant la bêta.
+          </p>
           <p style={styles.paragraph}>Sur ce, <strong>ohditez bien !</strong></p>
         </div>
       </div>

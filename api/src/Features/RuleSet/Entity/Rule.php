@@ -50,7 +50,7 @@ class Rule implements HasUuidInterface
         $this->uuid = $uuid ? Uuid::fromString($uuid) : Uuid::v4();
         $this->ruleCategory = $ruleCategory;
         $this->shortDescription = $shortDescription;
-        $this->prefix = $prefix === null || $prefix === '' || $prefix === '0' ? null : $prefix;
+        $this->prefix = in_array($prefix, [null, '', '0'], true) ? null : $prefix;
         $this->createdAt = CarbonImmutable::now();
         $this->updatedAt = CarbonImmutable::now();
     }

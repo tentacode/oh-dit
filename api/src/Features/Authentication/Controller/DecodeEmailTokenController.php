@@ -22,10 +22,6 @@ class DecodeEmailTokenRequest
 
 class DecodeEmailTokenController extends ApiController
 {
-    public function __construct(
-    ) {
-    }
-
     #[Route('/api/register/decode-email-token', name: 'decode_email_token', methods: ['POST'], format: 'json')]
     public function __invoke(
         #[MapRequestPayload()]
