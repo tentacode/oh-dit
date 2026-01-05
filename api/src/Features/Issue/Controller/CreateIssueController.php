@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Features\Issue\Controller;
 
+use function Sentry\captureException;
 use App\Features\Authentication\Entity\User;
 use App\Features\Issue\Command\CreateIssueCommand;
 use App\Features\Issue\Command\CreateIssueRequest;
