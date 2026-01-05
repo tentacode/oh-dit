@@ -50,6 +50,16 @@ export default function RuleRow({
   }
 
   const toggleTab = (tab: ActiveTab) => () => {
+    if (tab === ActiveTab.ISSUES_NC || tab === ActiveTab.ISSUES) {
+      if (activeTab === ActiveTab.ISSUES_NC || activeTab === ActiveTab.ISSUES) {
+        setActiveTab(null);
+        return;
+      }
+
+      setActiveTab(ActiveTab.ISSUES);
+      return;
+    }
+
     if (activeTab === tab) {
       setActiveTab(null);
       return;
