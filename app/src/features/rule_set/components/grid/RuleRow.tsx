@@ -168,6 +168,11 @@ export default function RuleRow({
           event.key === "ArrowLeft" ||
           event.key === "ArrowRight"
         ) {
+          // Ne gérer la navigation que si le focus est sur un bouton
+          if (!(event.target instanceof HTMLButtonElement)) {
+            return;
+          }
+
           const direction = getDirectionFromKey(event.key);
 
           const success = navigateToRuleOrCategory(direction);
