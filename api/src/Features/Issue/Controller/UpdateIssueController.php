@@ -36,6 +36,8 @@ class UpdateIssueController extends ApiController
 
             return $this->getSerializedJsonResponse($issue, JsonResponse::HTTP_OK);
         } catch (SuspiciousOperationException $e) {
+            captureException($e);
+
             throw new NotFoundHttpException('Resource not found.');
         }
     }

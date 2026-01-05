@@ -47,6 +47,8 @@ class DeleteIssueController extends ApiController
 
             return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
         } catch (SuspiciousOperationException $e) {
+            captureException($e);
+
             throw new NotFoundHttpException('Resource not found.');
         }
     }
