@@ -6,6 +6,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/src/lib/react-query/queryClient';
 import { ReactNode } from 'react';
 import UserDataProvider from '@/src/features/authentication/data_providers/UserDataProvider';
+import { SkipLinks } from './SkipLinks';
 
 interface AuthenticatedLayoutProps {
     children: ReactNode
@@ -23,9 +24,12 @@ export const AuthenticatedLayout = ({ children, mainClass }: AuthenticatedLayout
         <QueryClientProvider client={queryClient}>
             <UserDataProvider>
                 <div style={bodyContainerStyle}>
-                    <BetaBanner />
-                    <MainNavigation />
-                    <main className={mainClass}>
+                    <SkipLinks />
+                    <header>
+                        <BetaBanner />
+                        <MainNavigation />
+                    </header>
+                    <main id="main-content" className={mainClass}>
                         {children}
                     </main>
                 </div>

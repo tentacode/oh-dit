@@ -9,6 +9,7 @@ export default function ResetPassword() {
   return (
     <QueryClientProvider client={queryClient}>
       <Suspense fallback={<div></div>}>
+        <title>Changement de mot de passe - Ohdit</title>
         <ResetPasswordForm />
       </Suspense>
     </QueryClientProvider>

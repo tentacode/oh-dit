@@ -6,6 +6,7 @@ import Link from "next/link";
 export default function ProjectSettingsPage() {
   return (
     <WorkInProgress>
+      <title>Paramètres de l'audit - Ohdit</title>
       <div className="horizontalGutter mt-8">
         <h2 className="h2">Paramètres</h2>
         <p>

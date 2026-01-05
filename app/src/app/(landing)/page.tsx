@@ -39,7 +39,6 @@ const SuccessMessage = () => {
 };
 
 export default function Projects() {
-
   const currentTeamUuid = useTeamsStateStore((state) => state.currentTeamUuid);
 
   return (
@@ -47,6 +46,8 @@ export default function Projects() {
       <Suspense fallback={<div>Loading...</div>}>
         <SuccessMessage />
       </Suspense>
+
+      <title>Vos audits - Ohdit</title>
         <div className="flex items-center align-center mb-10 gap-10">
           <h1 className="h1 m-0">Vos audits</h1>
           <CallToActionLink href={getProjectUrl.new()}>

@@ -7,6 +7,7 @@ import Link from "next/link";
 export default function ProjectDashboardPage() {
   return (
     <>
+      <title>Résumé de l'audit - Ohdit</title>
       <div className="horizontalGutter mt-8">
         <AuditDataPerScreen />
       </div>
