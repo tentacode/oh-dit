@@ -35,6 +35,8 @@ class CreateCommentController extends ApiController
 
             return $this->getSerializedJsonResponse($comment, JsonResponse::HTTP_CREATED);
         } catch (SuspiciousOperationException $e) {
+            captureException($e);
+
             throw new NotFoundHttpException('Resource not found.');
         }
     }

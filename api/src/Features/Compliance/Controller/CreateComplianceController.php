@@ -35,6 +35,8 @@ class CreateComplianceController extends ApiController
 
             return $this->getSerializedJsonResponse($compliance, JsonResponse::HTTP_CREATED);
         } catch (SuspiciousOperationException $e) {
+            captureException($e);
+
             throw new NotFoundHttpException('Resource not found.');
         }
     }
