@@ -8,8 +8,7 @@ const lexendDeca = Lexend_Deca({
 });
 
 export const metadata: Metadata = {
-  title: "Oh Dit",
-  description: "Votre application Oh Dit",
+  description: "Votre application Ohdit",
 };
 
 export default function RootLayout({
@@ -18,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className='h-full'>
+    <html lang="fr" className="h-full">
       <body className={`${lexendDeca.variable} antialiased h-full flex`}>
         {children}
       </body>

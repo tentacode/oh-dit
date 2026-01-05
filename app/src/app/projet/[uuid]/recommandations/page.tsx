@@ -6,6 +6,7 @@ import Link from "next/link";
 export default function ProjectIssuesPage() {
   return (
     <WorkInProgress>
+      <title>Recommandations - Ohdit</title>
       <div className="horizontalGutter mt-8">
         <h2 className="h2">Recommandations</h2>
         <p>

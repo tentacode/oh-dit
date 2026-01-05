@@ -9,6 +9,7 @@ export default function ForgotPassword() {
   return (
     <QueryClientProvider client={queryClient}>
       <Suspense fallback={<div></div>}>
+        <title>Mot de passe oublié - Ohdit</title>
         <ForgotPasswordForm />
       </Suspense>
     </QueryClientProvider>

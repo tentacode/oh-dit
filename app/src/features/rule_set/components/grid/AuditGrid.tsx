@@ -37,6 +37,7 @@ export default function AuditGrid({ screenUuid }: { screenUuid: string }) {
 
   return (
     <>
+      <title>Saisie de l'audit - Ohdit</title>
       <div className={styles.auditContainer}>
         <div className={styles.gridContainer}>
           <div className={styles.gridSettingsContainer}>
