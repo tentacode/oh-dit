@@ -3,7 +3,7 @@
 import { useFetchEmailFromToken } from "@/src/features/authentication/queries/useFetchEmailFromToken";
 import OhditLogo from "@/src/features/layout/components/OhditLogo";
 import { useRouter, useSearchParams } from "next/navigation";
-import { FormEvent, Suspense, useState } from "react";
+import { FormEvent, Suspense, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import {
   EnvelopeIcon,
@@ -47,6 +47,10 @@ function BetaRegisterForm() {
   const token = searchParams.get("token") || "";
 
   const registerBetaUser = useRegisterBetaUser();
+
+  useEffect(() => {
+    document.title = "Inscription à la bêta - Ohdit";
+  }, []);
 
   const {
     data: emailResponse,
@@ -117,6 +121,7 @@ function BetaRegisterForm() {
     } catch (apiError) {
       if (apiError instanceof ApiError) {
         setErrors(apiError.errors || []);
+        document.getElementById(apiError.errors[0]?.propertyPath)?.focus();
       }
     } finally {
       setIsSubmitting(false);
@@ -173,14 +178,14 @@ function BetaRegisterForm() {
                   className={`${styles.inputDisabled} ${styles.input}`}
                 />
               </div>
-              { hasFieldError("email", errors) && (
-              <p id="email-help" className={styles.helpText}>
-                <InformationCircleIcon aria-hidden="true" />
-                <span>
-                  Vous pourrez modifier cette adresse email dans les paramètres
-                  de votre compte.
-                </span>
-              </p>
+              {hasFieldError("email", errors) && (
+                <p id="email-help" className={styles.helpText}>
+                  <InformationCircleIcon aria-hidden="true" />
+                  <span>
+                    Vous pourrez modifier cette adresse email dans les
+                    paramètres de votre compte.
+                  </span>
+                </p>
               )}
 
               {hasFieldError("email", errors) && (

@@ -8,6 +8,8 @@ export default function OhditLogo({ className }: { className?: string }) {
   const fontWeight = "700";
 
   return (
+    <>
+    <span className="sr-only">Ohdit</span>
     <svg
       className={className}
       viewBox="5 14 108 27"
@@ -74,6 +76,6 @@ export default function OhditLogo({ className }: { className?: string }) {
       >
         &apos;
       </text>
-    </svg>
+    </svg></>
   );
 }
