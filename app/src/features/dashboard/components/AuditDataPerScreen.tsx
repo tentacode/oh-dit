@@ -12,9 +12,15 @@ import {
   InformationCircleIcon,
 } from "@heroicons/react/24/outline";
 import CallToActionLink from "@/src/components/form/CallToActionLink";
+import { useAuditSettingsStore } from "../../audit/store/auditSettingsStore";
 
 export function AuditDataPerScreen() {
   const project = useAuditStore((state) => state.project);
+
+  const setProjectSetting = useAuditSettingsStore(
+    (state) => state.setProjectSetting
+  );
+
   if (!project) {
     return null;
   }
@@ -53,12 +59,12 @@ export function AuditDataPerScreen() {
                   </>
                 )}
                 {screen.progress > 0 && (
-                <div className={tableStyles.progressBar}>
-                  <div
-                    className={tableStyles.progress}
-                    style={{ width: `${screen.progress}%` }}
-                  ></div>
-                </div>
+                  <div className={tableStyles.progressBar}>
+                    <div
+                      className={tableStyles.progress}
+                      style={{ width: `${screen.progress}%` }}
+                    ></div>
+                  </div>
                 )}
               </td>
               <td style={{ textAlign: "right", width: "200px" }}>
@@ -96,6 +102,12 @@ export function AuditDataPerScreen() {
                 <CallToActionLink
                   variant="small"
                   href={getProjectUrl.auditScreen(project.uuid, screen.uuid)}
+                  onClick={() => {
+                    setProjectSetting({
+                      projectUuid: project.uuid,
+                      currentScreenUuid: screen.uuid,
+                    });
+                  }}
                 >
                   <ClipboardDocumentCheckIcon />
                   Auditer
