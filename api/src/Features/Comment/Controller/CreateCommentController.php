@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Features\Comment\Controller;
 
+use function Sentry\captureException;
 use App\Features\Authentication\Entity\User;
 use App\Features\Comment\Command\CreateCommentCommand;
 use App\Features\Comment\Command\CreateCommentRequest;

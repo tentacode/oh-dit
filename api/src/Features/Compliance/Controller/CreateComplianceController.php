@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Features\Compliance\Controller;
 
+use function Sentry\captureException;
 use App\Features\Authentication\Entity\User;
 use App\Features\Compliance\Command\CreateComplianceCommand;
 use App\Features\Compliance\Command\CreateComplianceRequest;
