@@ -31,6 +31,14 @@ export default function UserDataProvider({
   if (isLoadingTeams)
     return <CardSkeleton />;
 
+  if (isErrorTeams) {
+    document.cookie = 'auth_token=; path=/; max-age=0; SameSite=Strict'
+    window.localStorage.clear()
+    window.location.href = '/login'  
+
+    return null;
+  }
+
   if (isErrorTeams || !teams || teams.length === 0)
     return (
       <ErrorBox message="Une erreur est survenue lors du chargement de votre compte." />
