@@ -177,6 +177,12 @@ fieldset .fieldError {
     margin: 0 !important;
 }
 
+.smallButton:hover svg, .smallButton:focus svg {
+    margin: 0 !important;
+    height: 25px !important;
+    width: 25px !important;
+}
+
 .helpText {
     font-size: 16px !important;
     font-style: italic;
