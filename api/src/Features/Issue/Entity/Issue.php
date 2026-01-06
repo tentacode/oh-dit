@@ -243,12 +243,10 @@ class Issue implements HasUuidInterface, SerializableInterface
             'severity',
             'status',
             'statusUpdatedAt',
-            'statusUpdatedBy' => ['uuid'],
             'statusChangeHistory',
             'ruleUuid',
             'projectUuid',
             'screenUuid',
-            'userUuid',
         ];
     }
 }
