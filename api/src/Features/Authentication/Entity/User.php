@@ -110,6 +110,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuid
         $this->password = $hashedPassword;
     }
 
+    public function getHashedPassword(): string
+    {
+        return $this->password;
+    }
+
     public function getUsername(): string
     {
         return $this->username;
