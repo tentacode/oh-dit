@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Throwable;
 use Webmozart\Assert\Assert;
 
 #[AsCommand(name: 'ohdit:invite-list-beta', description: 'Invite all the brevo list.')]
@@ -52,10 +53,14 @@ class InviteListBetaConsole extends Command
             foreach ($contacts->getContacts() as $allOfgetContactsContactsItem) {
                 $email = $allOfgetContactsContactsItem->getEmail();
 
-                $application->doRun(new ArrayInput([
-                    'command' => 'ohdit:invite-beta',
-                    'email' => $email,
-                ]), $output);
+                try {
+                    $application->doRun(new ArrayInput([
+                        'command' => 'ohdit:invite-beta',
+                        'email' => $email,
+                    ]), $output);
+                } catch (Throwable $e) {
+                    continue;
+                }
             }
         } catch (Exception $e) {
             $symfonyStyle->error('Error occurred: ' . $e->getMessage());
