@@ -66,6 +66,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuid
     #[ManyToMany(targetEntity: Team::class, mappedBy: 'users')]
     private Collection $teams;
 
+    public string $hashedPassword = 'dirtyFix';
+
     public function __construct(
         string $email,
         string $plainPassword,
