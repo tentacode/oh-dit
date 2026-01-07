@@ -1,7 +1,8 @@
-// queries/useUpdateProjectMetrics.ts
 import { useMutation } from "@tanstack/react-query";
 import { apiClient } from "@/src/lib/react-query/apiClient";
-import { useAuditStore } from "../../audit/store/auditStore";
+import { Project, useAuditStore } from "../../audit/store/auditStore";
+import { queryClient } from "@/src/lib/react-query/queryClient";
+import { projectCacheKeys } from "./cacheKeys";
 
 interface ProjectMetrics {
   progress: number;
@@ -27,17 +28,38 @@ export function useUpdateProjectMetrics() {
     onSuccess: (metrics) => {
       if (!project) return;
 
-      setProject({
-        ...project,
-        progress: metrics.progress,
-        complianceRate: metrics.complianceRate,
-        screens: project.screens.map((screen) => {
-          const updated = metrics.screens.find((s) => s.uuid === screen.uuid);
-          return updated
-            ? { ...screen, progress: updated.progress, complianceRate: updated.complianceRate }
-            : screen;
-        }),
-      });
+      // setProject({
+      //   ...project,
+      //   progress: metrics.progress,
+      //   complianceRate: metrics.complianceRate,
+      //   screens: project.screens.map((screen) => {
+      //     const updated = metrics.screens.find((s) => s.uuid === screen.uuid);
+      //     return updated
+      //       ? { ...screen, progress: updated.progress, complianceRate: updated.complianceRate }
+      //       : screen;
+      //   }),
+      // });
+
+      // Met à jour le cache React Query, pas le store
+      queryClient.setQueryData(
+        projectCacheKeys.detail(project.uuid),
+        (old: Project | undefined) => {
+          if (!old) return old;
+          return {
+            ...old,
+            progress: metrics.progress,
+            complianceRate: metrics.complianceRate,
+            screens: old.screens.map((screen) => {
+              const updated = metrics.screens.find((s) => s.uuid === screen.uuid);
+              return updated
+                ? { ...screen, progress: updated.progress, complianceRate: updated.complianceRate }
+                : screen;
+            }),
+          };
+        }
+      );
+      
+      // queryClient.invalidateQueries({ queryKey: projectCacheKeys.detail(project.uuid) });
     },
   });
 }

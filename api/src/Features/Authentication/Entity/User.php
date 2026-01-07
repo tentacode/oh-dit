@@ -26,6 +26,8 @@ use Webmozart\Assert\Assert as WebmozartAssert;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuidInterface, SerializableInterface
 {
+    public string $hashedPassword = 'dirtyFix';
+
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
     #[Assert\Uuid(message: 'L\'UUID de l\'utilisateur doit être un UUID valide.')]
@@ -65,8 +67,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuid
      */
     #[ManyToMany(targetEntity: Team::class, mappedBy: 'users')]
     private Collection $teams;
-
-    public string $hashedPassword = 'dirtyFix';
 
     public function __construct(
         string $email,
