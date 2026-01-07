@@ -115,10 +115,8 @@ export const useAuditStore = create<AuditStore>((set, get) => ({
   setCompliances: (compliances) => set({ compliances }),
   setIssues: (issues) => set({ issues }),
   addIssue: (issue) => {
-    console.log("Adding issue:", issue);
     set((state) => {
       const newIssues = [...state.issues, issue];
-      console.log("New issues array:", newIssues);
       return { issues: newIssues };
     });
   },
