@@ -81,8 +81,8 @@ Aucun cookie publicitaire ou de tracking n'est utilisé.
 
 Vos données sont transmises à :
 
-- **[Scaleway](https://scaleway.com/fr)** : serveurs d'Ohdit (sous-traitement, hébergement en France)
-- **[Brevo](https://brevo.com/fr)** : plateforme d'envoi de newsletter (sous-traitant, hébergement UE)
+- <a href="https://scaleway.com/fr" aria-label="Scaleway, nouvelle fenêtre" target="_blank" rel="noopener noreferrer">Scaleway</a> : serveurs d'Ohdit (sous-traitement, hébergement en France)
+- <a href="https://brevo.com/fr" aria-label="Brevo, nouvelle fenêtre" target="_blank" rel="noopener noreferrer">Brevo</a> : plateforme d'envoi de newsletter (sous-traitant, hébergement UE)
 - Toutes les données restent hébergées au sein de l'Union Européenne
 
 ## Vos droits
@@ -98,7 +98,7 @@ Conformément au RGPD, vous disposez des droits suivants :
 
 Pour exercer ces droits, contactez-nous à : <a href="mailto:rgpd@ohdit.com">rgpd@ohdit.com</a>
 
-Vous pouvez également déposer une réclamation auprès de la CNIL : [www.cnil.fr](https://www.cnil.fr)
+Vous pouvez également déposer une réclamation auprès de la CNIL : <a href="https://www.cnil.fr" aria-label="CNIL, nouvelle fenêtre" target="_blank" rel="noopener noreferrer">CNIL</a>.
 
 ## Sécurité
 

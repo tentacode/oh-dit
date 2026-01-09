@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/LegalPagesLayout.astro
-lastUpdatedAt: "2 novembre 2025"
+lastUpdatedAt: "9 janvier 2026"
 pageTitle: Déclaration d'accessibilité - Ohdit
 metaDescription: ""
 ---
@@ -9,7 +9,7 @@ metaDescription: ""
 
 ## Conformité
 
-[Ohdit.com](/) est totalement conforme avec le référentiel général d'amélioration de l'accessibilité (RGAA) version 4.1.2.
+[Ohdit.com](/) est totalement conforme avec le référentiel général d'amélioration de l'accessibilité (RGAA) version 4.1.2. Cette déclaration concerne uniquement le site public [www.ohdit.com](https://ohdit.com), l'application Ohdit est en bêta et l'audit est en cours.
 
 <p class="cartouche">
 Merci de noter que l'audit RGAA a été réalisé avec tous les moyens à notre disposition, mais il  est toujours possible qu'un oubli ou une erreur soit passé sous notre vigilance. Si vous notez le moindre problème d'accessibilité, n'hésitez pas à nous le signaler à <a href="mailto:rgaa@ohdit.com">rgaa@ohdit.com</a>.
@@ -23,7 +23,7 @@ L'audit de conformité réalisé révèle que 100 % des critères du RGAA versio
 
 - HTML5
 - CSS3
-- JavaScript ([Astro](https://astro.build))
+- JavaScript (<a href="https://astro.build" target="_blank" rel="noopener noreferrer" aria-label="Astro, nouvelle fenêtre">Astro</a>)
 
 ### Environnement de test
 
@@ -60,8 +60,8 @@ Cette procédure est à utiliser dans le cas suivant : vous avez signalé au res
 
 Vous pouvez :
 
-- Écrire un message au Défenseur des droits : https://formulaire.defenseurdesdroits.fr/
-- Contacter le délégué du Défenseur des droits dans votre région : https://www.defenseurdesdroits.fr/saisir/delegues
+- Écrire un message au Défenseur des droits : <a href="https://formulaire.defenseurdesdroits.fr/" target="_blank" rel="noopener noreferer" aria-label="Formulaire défenseur des droits, nouvelle fenêtre">Formulaire défenseur des droits</a>
+- Contacter le délégué du Défenseur des droits dans votre région : <a href="https://www.defenseurdesdroits.fr/saisir/delegues/" target="_blank" rel="noopener noreferer" aria-label="Contacter le délégué, nouvelle fenêtre">Contacter le délégué</a>
 - Envoyer un courrier par la poste (gratuit, ne pas mettre de timbre) :
   Défenseur des droits
   Libre réponse 71120

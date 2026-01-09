@@ -59,10 +59,10 @@ Les présentes mentions légales sont régies par le droit français. Tout litig
 
 Nous n'aurions pas pu créer Ohdit sans ces outils open-source :
 
-- [Symfony](https://symfony.com/)
-- [Astro](https://astro.build/)
-- [Next.js](https://nextjs.org/)
-- [PostgreSQL](https://www.postgresql.org/)
+- <a href="https://symfony.com/" aria-label="Symfony, nouvelle fenêtre" target="_blank" rel="noopener noreferrer"></a>
+- <a href="https://astro.build/" aria-label="Astro, nouvelle fenêtre" target="_blank" rel="noopener noreferrer"></a>
+- <a href="https://nextjs.org/" aria-label="Next.js, nouvelle fenêtre" target="_blank" rel="noopener noreferrer"></a>
+- <a href="https://www.postgresql.org/" aria-label="PostgreSQL, nouvelle fenêtre" target="_blank" rel="noopener noreferrer"></a>
 
 ## Modification des mentions légales
 

@@ -29,8 +29,8 @@ Seul le responsable du traitement a un accès total aux données d'Ohdit, via de
 
 Toutes les données d'Ohdit sont hébergées en France. Certains prestataires ont accès à des données limitées d'Ohdit, qui sont hébergées dans l'Union Européenne.
 
-- Les serveurs et la base de données d'Ohdit sont hébergés par [Scaleway](https://www.scaleway.com/fr). En savoir plus sur [les engagements de Scaleway en matière de sécurité et de protections des données](https://www.scaleway.com/fr/public-sector-solutions/).
-- Les données de la newsletter sont stockées chez [Brevo](https://brevo.com), dans l'Union Européenne. Seul l'email de contact est envoyé à Brevo, aucune autre donnée ne provient d'Ohdit.
+- Les serveurs et la base de données d'Ohdit sont hébergés par <a href="https://www.scaleway.com/fr" aria-label="Scaleway, nouvelle fenêtre" target="_blank" rel="noopener noreferrer">Scaleway</a>. En savoir plus sur <a href="https://www.scaleway.com/fr/public-sector-solutions/" aria-label="les engagements de Scaleway en matière de sécurité et de protections des données, nouvelle fenêtre" target="_blank" rel="noopener noreferrer">les engagements de Scaleway en matière de sécurité et de protections des données.</a>.
+- Les données de la newsletter sont stockées chez <a href="https://brevo.com" aria-label="Brevo, nouvelle fenêtre" target="_blank" rel="noopener noreferrer">Brevo</a>, dans l'Union Européenne. Seul l'email de contact est envoyé à Brevo, aucune autre donnée ne provient d'Ohdit.
 
 ## Confidentialité des données
 
@@ -63,7 +63,7 @@ Vous pouvez également demander la suppression de vos données dans Ohdit, qui s
 Tous les moyens sont mis en œuvre pour que les données d'Ohdit soient sécurisées et non accessibles à des personnes non autorisées :
 
 - Chiffrement des données en transit (HTTPS/TLS).
-- Hébergement chez un prestataire certifié ([Scaleway - ISO 27001](https://www.scaleway.com/fr/securite-et-resilience/)).
+- Hébergement chez un prestataire certifié (<a href="https://www.scaleway.com/fr/securite-et-resilience/" aria-label="Scaleway - ISO 27001, nouvelle fenêtre" target="_blank" rel="noopener noreferrer">Scaleway - ISO 27001</a>).
 - Base de données accessible uniquement par les serveurs d'Ohdit via un réseau privé.
 - Serveurs accessibles uniquement via clé privée chiffrée, détenue par le [responsable du traitement](#responsable-du-traitement).
 - Surveillance active des failles de sécurité sur les technologies utilisées par Ohdit et mise à jour régulière des dépendances.

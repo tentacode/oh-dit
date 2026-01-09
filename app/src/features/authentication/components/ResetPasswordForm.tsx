@@ -77,7 +77,6 @@ export default function ResetPasswordForm() {
         setErrors(apiError.errors || []);
         document.getElementById((apiError.errors ||[])[0]?.propertyPath)?.focus();
 
-        console.log("API Error message:", apiError.message);
         if (apiError.message == 'No user found with the given token.' ||
             apiError.message == 'Le token de réinitialisation a expiré.'
         ) {

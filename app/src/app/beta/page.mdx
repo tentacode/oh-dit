@@ -2,6 +2,8 @@ import { MdxLayout } from "../../components/layouts/MdxLayout"
 import WorkInProgress from "../../features/work_in_progress/components/WorkInProgress"
 import Link from "next/link";
 import BetaIllustration from "./components/BetaIllustration";
+import { ArrowTopRightOnSquareIcon} from "@heroicons/react/24/outline";
+import typographyStyle from "@/src/components/typography/styles/typography.module.css";
 
 export const metadata = {
   title: "À propos de la bêta - Ohdit",
@@ -45,7 +47,7 @@ Si vous n'êtes pas satisfait·e d'Ohdit pendant la bêta, vous pouvez à tout m
 
 Pendant la bêta nous serons particulièrement attentifs à vos questions et vos retours. Si vous trouvez un bug, que vous avez une interrogation ou si vous avez une suggestion, n'hésitez surtout pas à envoyer un mail à [support@ohdit.com](mailto:support@ohdit.com). Nous vous en serons très reconnaissants !
 
-Vous pouvez également nous retrouver sur le [chat Slack d'Ohdit](https://join.slack.com/t/ohdit/shared_invite/zt-3lch4xllw-SA6~RyEMRkhEdTNLV37pqA).
+Vous pouvez également nous retrouver sur le <a href="https://join.slack.com/t/ohdit/shared_invite/zt-3lch4xllw-SA6~RyEMRkhEdTNLV37pqA" className={typographyStyle.externalLink} target="_blank" rel="noopener noreferrer" aria-label="chat Slack d'Ohdit, nouvelle fenêtre">chat Slack d'Ohdit<ArrowTopRightOnSquareIcon /></a>.
 
 Si vous voulez avoir un état des lieux de ce qui est prévu pour la suite, n'hésitez pas à consulter notre [feuille de route](/feuille-de-route).
 
