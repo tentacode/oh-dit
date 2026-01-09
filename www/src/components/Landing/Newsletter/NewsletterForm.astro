@@ -1,5 +1,7 @@
 ---
 import EnvelopeIcon from "astro-heroicons/outline/Envelope.astro";
+import ArrowTopRightOnSquareIcon from "astro-heroicons/outline/ArrowTopRightOnSquare.astro";
+
 import { colorRoles, colors } from "../../../config/colors";
 
 const accentColor = colorRoles.accent;
@@ -8,13 +10,21 @@ const mainColor = colorRoles.dark;
 const errorColor = colors.red;
 ---
 
-<p class="aboutSpam">
+<p class="aboutSpam italic">
 	<strong>Pas de spam ici : </strong>
 	nous ne partagerons jamais votre adresse email avec des tiers. Nous utilisons <a
-		href="https://www.brevo.com">Brevo</a
+		target="_blank"
+		rel="noopener noreferrer"
+		aria-label="Brevo, nouvelle fenêtre"
+		class="externalLink"
+		href="https://www.brevo.com">Brevo<ArrowTopRightOnSquareIcon /></a
 	> pour gérer notre newsletter, vous pouvez consulter leur <a
 		href="https://www.brevo.com/fr/legal/privacypolicy/"
-		rel="noopener">politique de confidentialité</a
+		target="_blank"
+		rel="noopener noreferrer"
+		class="externalLink"
+		aria-label="politique de confidentialité, nouvelle fenêtre"
+		>politique de confidentialité<ArrowTopRightOnSquareIcon /></a
 	>.
 </p>
 <p class="requiredFields" aria-hidden="true">

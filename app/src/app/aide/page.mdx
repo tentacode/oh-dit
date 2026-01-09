@@ -1,6 +1,9 @@
 import { MdxLayout } from "../../components/layouts/MdxLayout"
 import WorkInProgress from "../../features/work_in_progress/components/WorkInProgress"
 import Link from "next/link";
+import { ArrowTopRightOnSquareIcon} from "@heroicons/react/24/outline";
+import typographyStyle from "@/src/components/typography/styles/typography.module.css";
+
 export const metadata = {
   title: "Aide - Ohdit",
 };
@@ -11,7 +14,7 @@ En attendant la documentation complète, que vous ayez une question, une suggest
 
 Vous pouvez nous joindre par email à l'adresse suivante : [support@ohdit.com](mailto:support@ohdit.com).
 
-Vous pouvez également discuter avec nous sur le [chat Slack d'Ohdit](https://join.slack.com/t/ohdit/shared_invite/zt-3lch4xllw-SA6~RyEMRkhEdTNLV37pqA).
+Vous pouvez également discuter avec nous sur le <a href="https://join.slack.com/t/ohdit/shared_invite/zt-3lch4xllw-SA6~RyEMRkhEdTNLV37pqA" className={typographyStyle.externalLink} target="_blank" rel="noopener noreferrer" aria-label="chat Slack d'Ohdit, nouvelle fenêtre">chat Slack d'Ohdit<ArrowTopRightOnSquareIcon /></a>.
 
 export default function Aide({ children }) {
   return <MdxLayout>  

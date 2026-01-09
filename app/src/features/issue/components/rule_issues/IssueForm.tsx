@@ -2,6 +2,7 @@
 
 import CallToActionButton from "@/src/components/form/CallToActionButon";
 import {
+  ArrowTopRightOnSquareIcon,
   DocumentDuplicateIcon,
   ExclamationTriangleIcon,
   LightBulbIcon,
@@ -22,6 +23,7 @@ import { useIssuesFormStateStore } from "../../store/issuesFormStateStore";
 import { Severity } from "../../types/IssueInterface";
 import { useUpdateIssue } from "../../mutations/useUpdateIssue";
 import { useDeleteIssue } from "../../mutations/useDeleteIssue";
+import typographyStyle from "@/src/components/typography/styles/typography.module.css";
 
 function getErrorsForField(
   fieldName: string,
@@ -130,8 +132,6 @@ export default function IssueForm({
           issueUuid: issueFormState.issueUuid,
         });
 
-        console.log("Deleting issue", issueFormState.issueUuid);
-
         removeIssueInStore(issueFormState.issueUuid);
       }
 
@@ -139,7 +139,6 @@ export default function IssueForm({
       setTextValue("");
       textAreaRef?.current?.focus();
     } catch (apiError) {
-      console.error("API Error:", apiError);
       if (apiError instanceof ApiError) {
         setErrors(apiError.errors || []);
 
@@ -220,13 +219,16 @@ export default function IssueForm({
       <SeverityInput value={severityValue} onChange={setSeverityValue} />
       <label htmlFor="text">Recommandation</label>
       <p className={formStyles.helpText}>
-        <LightBulbIcon /> Vous pouvez utiliser le format{" "}
+        <LightBulbIcon /> Vous pouvez utiliser le {" "}
         <a
           href="https://docs.framasoft.org/fr/grav/markdown.html"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="format Markdown, nouvelle fenêtre"
+          className={`${typographyStyle.externalLink} ${typographyStyle.italic}`}
         >
-          Markdown
+          format Markdown 
+          <ArrowTopRightOnSquareIcon />
         </a>
         .
       </p>

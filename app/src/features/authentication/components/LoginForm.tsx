@@ -57,7 +57,6 @@ export default function LoginForm() {
       // Rediriger vers la page demandée
       router.push(redirect);
     } catch (apiError) {
-      console.log("API Error:", apiError);
       if (apiError instanceof ApiError) {
         setErrors(apiError.errors || []);
       }

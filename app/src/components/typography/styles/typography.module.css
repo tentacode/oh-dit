@@ -12,3 +12,13 @@
     margin-top: 4px;
     flex-shrink: 0;
 }
+
+.externalLink svg {
+    color: #8579DC;
+    margin-left: 4px;
+    width: 1em;
+}
+
+.italic svg {
+    transform: skewX(-12deg);
+}

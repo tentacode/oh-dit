@@ -24,6 +24,18 @@ main {
 	margin: 0 auto;
 }
 
+.italic svg {
+	transform: skewX(-12deg);
+}
+
+.externalLink svg {
+	display: inline-block;
+	width: 18px;
+	color: #8579dc;
+	margin-left: 4px;
+	margin-top: -2px;
+}
+
 @media (max-width: 768px) {
 	.landingContainer {
 		padding-left: 50px;
