@@ -9,8 +9,18 @@ export default function ForgotPassword() {
   return (
     <QueryClientProvider client={queryClient}>
       <Suspense fallback={<div></div>}>
-        <title>Mot de passe oublié - Ohdit</title>
-        <ForgotPasswordForm />
+        <main
+          style={{
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <title>Mot de passe oublié - Ohdit</title>
+          <ForgotPasswordForm />
+        </main>
       </Suspense>
     </QueryClientProvider>
   );

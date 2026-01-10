@@ -28,10 +28,9 @@ export default function RuleCategoryRow({ ruleCategory, screenUuid }: RuleCatego
   );
 
   return (
-    <div role="rowgroup" className={styles.ruleCategoryContainer}>
-      <div role="row" className={styles.ruleCategoryRow}>
+    <div className={styles.ruleCategoryContainer}>
+      <div className={styles.ruleCategoryRow}>
         <button
-          role="gridcell"
           id={`category-header-${ruleCategory.uuid}`}
           aria-expanded={isCollapsed ? "false" : "true"}
           aria-controls={`category-rules-${ruleCategory.uuid}`}

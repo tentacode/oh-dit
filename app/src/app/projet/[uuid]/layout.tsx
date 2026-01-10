@@ -9,6 +9,7 @@ import ProjectDetailHeader from "@/src/features/project/components/ProjectHeader
 import ProjectDataProvider from "@/src/features/project/data_providers/ProjectDataProvider";
 import {
   ChartPieIcon,
+  CheckIcon,
   ClipboardDocumentCheckIcon,
   DocumentCheckIcon,
   ExclamationTriangleIcon,
@@ -73,20 +74,25 @@ export default function ProjectLayout({
 
   const issuesCount = useAuditStore((state) => state.issues.length || 0);
 
+  const allIssuesFixed = useAuditStore((state) => 
+    state.issues.every((issue) => issue.status === "fixed")
+  );
+
   return (
     <AuthenticatedLayout mainClass="tabLayout">
       <ProjectDataProvider projectUuid={params.uuid as string}>
         <ProjectDetailHeader />
 
-        <TabsHeaders>
+        <TabsHeaders label="Sections de l'audit">
           <Tab isActive={selectedTab === AuditTab.DASHBOARD} href={getProjectUrl.dashboard(params.uuid as string)}>
             <ChartPieIcon /> Résumé
           </Tab>
           <AuditScreenTab selectedTab={selectedTab} projectUuid={params.uuid as string} />
           <Tab isActive={selectedTab === AuditTab.RECOMMENDATIONS} href={getProjectUrl.issues(params.uuid as string)}>
-            <ExclamationTriangleIcon />
+            {issuesCount > 0 && allIssuesFixed && <CheckIcon />}
+            {issuesCount == 0 || !allIssuesFixed && <ExclamationTriangleIcon />}
+            {issuesCount > 0 && "(" + issuesCount.toString() + ") "}
             Recommandations
-            {issuesCount > 0 && <TabBadge value={issuesCount.toString() } />}
           </Tab>
           <Tab isActive={selectedTab === AuditTab.DELIVERABLES} href={getProjectUrl.deliverables(params.uuid as string)}>
             <DocumentCheckIcon /> Livrables

@@ -9,8 +9,18 @@ export default function Login() {
   return (
     <QueryClientProvider client={queryClient}>
       <Suspense fallback={<div></div>}>
-        <title>Connexion - Ohdit</title>
-        <LoginForm />
+        <main
+          style={{
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <title>Connexion - Ohdit</title>
+          <LoginForm />
+        </main>
       </Suspense>
     </QueryClientProvider>
   );
