@@ -172,9 +172,9 @@ export default function IssueForm({
         className={clsx(formStyles.formContainer, formStyles.form, listStyles.issueListForm)}
         onSubmit={onSubmit}
       >
-        <span className="h5">
+        <h4 className="h5">
           Supprimer la recommandation #{issueFormState?.issueId}
-        </span>
+        </h4>
         <p className={formStyles.warningText}>
           <ExclamationTriangleIcon />
           Êtes-vous bien sûr·e de vouloir supprimer cette recommandation ? Cette
@@ -208,13 +208,13 @@ export default function IssueForm({
       className={clsx(formStyles.formContainer, formStyles.form, listStyles.issueListForm)}
       onSubmit={onSubmit}
     >
-      <span className="h5">
+      <h4 className="h5">
         {formMode === "create" && "Ajouter une recommandation"}
         {formMode === "edit" &&
           "Modifier la recommandation #" + issueFormState?.issueId}
         {formMode === "duplicate" &&
           "Dupliquer la recommandation #" + issueFormState?.issueId}
-      </span>
+      </h4>
 
       <SeverityInput value={severityValue} onChange={setSeverityValue} />
       <label htmlFor="text">Recommandation</label>
