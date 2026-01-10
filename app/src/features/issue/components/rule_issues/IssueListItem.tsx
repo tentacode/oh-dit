@@ -231,7 +231,7 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
       )}
 
       <div className={styles.cardStatusContainer}>
-        <span id={`${issue.issueId}-checkedLabel`}>Marquer comme {issue.status === "pending" ? "corrigé" : "à corriger"} : </span>
+        <span aria-hidden="true" id={`${issue.issueId}-checkedLabel`}>Marquer comme {issue.status === "pending" ? "corrigé" : "à corriger"} : </span>
         <button onClick={onStatusToggle} className={styles.cardStatus} aria-labelledby={`${issue.issueId}-checkedLabel`}>
           {issue.status === "pending" ? null : <CheckIcon />}
         </button>

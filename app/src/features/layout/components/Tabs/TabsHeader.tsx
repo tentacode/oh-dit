@@ -1,9 +1,11 @@
 import styles from "../../styles/tabs.module.css";
 
-export default function TabsHeaders({ children }: { children: React.ReactNode }) {
+export default function TabsHeaders({ children, label }: { children: React.ReactNode, label: string }) {
   return (
-    <ul role="navigation" className={styles.tabsHeader}>
-      {children}
-    </ul>
+    <nav aria-label={label}>
+      <ul className={styles.tabsHeader}>
+        {children}
+      </ul>
+    </nav>
   );
 }

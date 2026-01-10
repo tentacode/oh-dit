@@ -169,24 +169,27 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
     });
 
     overrideIssueInStore(updatedIssue as Issue);
-  }
+  };
 
   return (
     <li className={styles.card} key={issue.uuid}>
-          <div className={styles.cardHeader}>
-            <span>
-              #{issue.issueId} - Impact : {translateSeverity(issue.severity)}
-            </span>
-            <span>
-              {isUpdated ? "Mis à jour" : "Créé"} {relativeDate}
-            </span>
-            <div className={styles.cardStatusContainer}>
-              <span>Marquer comme {issue.status === "pending" ? "corrigé" : "à corriger"} : </span>
-              <button className={styles.cardStatus} onClick={onStatusToggle}>
-                {issue.status === "pending" ? null : <CheckIcon />}
-              </button>
-            </div>
-            {/* <button
+      <div className={styles.cardHeader}>
+        <span>
+          #{issue.issueId} - Impact : {translateSeverity(issue.severity)}
+        </span>
+        <span>
+          {isUpdated ? "Mis à jour" : "Créé"} {relativeDate}
+        </span>
+        <div className={styles.cardStatusContainer}>
+          <span id={`status-label-${issue.uuid}`} aria-hidden="true">
+            Marquer comme{" "}
+            {issue.status === "pending" ? "corrigé" : "à corriger"} :{" "}
+          </span>
+          <button className={styles.cardStatus} onClick={onStatusToggle} aria-labelledby={`status-label-${issue.uuid}`}>
+            {issue.status === "pending" ? null : <CheckIcon />}
+          </button>
+        </div>
+        {/* <button
           ref={buttonRef}
           className={styles.actionsButton}
           type="button"
@@ -198,64 +201,62 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
         >
           <EllipsisHorizontalIcon aria-hidden="true" />
         </button> */}
-          </div>
-          <span className={styles.cardRule}>
-            <TagIcon />
-            {getRule(issue.ruleUuid)?.prefix} —{" "}
-            {getRule(issue.ruleUuid)?.shortDescription}
-          </span>
-          <Markdown minimalHeadingLevel={4}>
-            {issue.text}
-          </Markdown>
-          {isActionMenuOpen && (
-            <div
-              ref={menuRef}
-              id={menuId}
-              role="menu"
-              className={styles.actionMenu}
-              aria-label={`Menu des actions pour la recommandation ${issue.issueId}`}
-            >
-              <button
-                ref={(el) => {
-                  menuItemsRef.current[0] = el;
-                }}
-                role="menuitem"
-                onKeyDown={(e) => handleMenuKeyDown(e, 0)}
-                onClick={() => {
-                  menuButtonClick("edit");
-                }}
-              >
-                <PencilSquareIcon aria-hidden="true" />
-                Modifier
-              </button>
-              <button
-                ref={(el) => {
-                  menuItemsRef.current[1] = el;
-                }}
-                role="menuitem"
-                onKeyDown={(e) => handleMenuKeyDown(e, 1)}
-                onClick={() => {
-                  menuButtonClick("duplicate");
-                }}
-              >
-                <DocumentDuplicateIcon aria-hidden="true" />
-                Dupliquer
-              </button>
-              <button
-                ref={(el) => {
-                  menuItemsRef.current[2] = el;
-                }}
-                role="menuitem"
-                onKeyDown={(e) => handleMenuKeyDown(e, 2)}
-                onClick={() => {
-                  menuButtonClick("delete");
-                }}
-              >
-                <TrashIcon aria-hidden="true" />
-                Supprimer
-              </button>
-            </div>
-          )}
+      </div>
+      <span className={styles.cardRule}>
+        <TagIcon />
+        {getRule(issue.ruleUuid)?.prefix} —{" "}
+        {getRule(issue.ruleUuid)?.shortDescription}
+      </span>
+      <Markdown minimalHeadingLevel={4}>{issue.text}</Markdown>
+      {isActionMenuOpen && (
+        <div
+          ref={menuRef}
+          id={menuId}
+          role="menu"
+          className={styles.actionMenu}
+          aria-label={`Menu des actions pour la recommandation ${issue.issueId}`}
+        >
+          <button
+            ref={(el) => {
+              menuItemsRef.current[0] = el;
+            }}
+            role="menuitem"
+            onKeyDown={(e) => handleMenuKeyDown(e, 0)}
+            onClick={() => {
+              menuButtonClick("edit");
+            }}
+          >
+            <PencilSquareIcon aria-hidden="true" />
+            Modifier
+          </button>
+          <button
+            ref={(el) => {
+              menuItemsRef.current[1] = el;
+            }}
+            role="menuitem"
+            onKeyDown={(e) => handleMenuKeyDown(e, 1)}
+            onClick={() => {
+              menuButtonClick("duplicate");
+            }}
+          >
+            <DocumentDuplicateIcon aria-hidden="true" />
+            Dupliquer
+          </button>
+          <button
+            ref={(el) => {
+              menuItemsRef.current[2] = el;
+            }}
+            role="menuitem"
+            onKeyDown={(e) => handleMenuKeyDown(e, 2)}
+            onClick={() => {
+              menuButtonClick("delete");
+            }}
+          >
+            <TrashIcon aria-hidden="true" />
+            Supprimer
+          </button>
+        </div>
+      )}
     </li>
   );
 }

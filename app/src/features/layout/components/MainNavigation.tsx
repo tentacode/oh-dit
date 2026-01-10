@@ -37,7 +37,7 @@ export default function MainNavigation() {
 
   return (
     <nav className={styles.navigationContainer}>
-      <ul role="list">
+      <ul>
         {navigation.map((item) => (
           <li key={item.name}>
             <a
@@ -65,6 +65,7 @@ export default function MainNavigation() {
           >
             <UsersIcon className="size-6 shrink-0" />
             <select
+              aria-label="Sélectionner une équipe"
               value={currentTeamUuid}
               onChange={(e) => {
                 const selectedTeamUuid = e.target.value;

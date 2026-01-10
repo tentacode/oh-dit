@@ -2,6 +2,7 @@
     display: flex;
     gap: 20px;
     margin-top: 20px;
+    margin-bottom: 15px;
 }
 
 .statsContainer > div {
@@ -15,17 +16,17 @@
     /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
 }
 
-.statsContainer dt {
+.statsContainer strong {
     font-weight: 600;
     font-family: "Lexend Deca", sans-serif;
 }
 
-.statsContainer dd {
+.statsContainer span {
     display: flex;
     align-items: center;
 }
 
-.statsContainer dd strong {
+.statsContainer span strong {
     margin-right: 4px;
 }
 

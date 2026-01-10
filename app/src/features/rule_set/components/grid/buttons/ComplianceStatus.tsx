@@ -147,7 +147,6 @@ export default function ComplianceStatus({
       <button
         aria-label="Conforme"
         id={getComplianceButtonStatusId("compliant", ruleUuid, screenUuid)}
-        role="gridcell"
         className={clsx([styles.squareButton, compliantClasses])}
         onClick={() => changeComplianceStatus("compliant")}
         onFocus={(e) => {
@@ -161,7 +160,6 @@ export default function ComplianceStatus({
       <button
         aria-label="Non conforme"
         id={getComplianceButtonStatusId("non_compliant", ruleUuid, screenUuid)}
-        role="gridcell"
         className={clsx([styles.squareButton, nonCompliantClasses])}
         onClick={() => changeComplianceStatus("non_compliant")}
         onFocus={(e) => {
@@ -175,7 +173,6 @@ export default function ComplianceStatus({
       <button
         aria-label="Non applicable"
         id={getComplianceButtonStatusId("not_applicable", ruleUuid, screenUuid)}
-        role="gridcell"
         className={clsx([styles.squareButton, notApplicableClasses])}
         onClick={() => changeComplianceStatus("not_applicable")}
         onFocus={(e) => {

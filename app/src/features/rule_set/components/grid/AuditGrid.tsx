@@ -69,7 +69,7 @@ export default function AuditGrid({ screenUuid }: { screenUuid: string }) {
             </p>
             )}
           </div>
-          <div role="grid" data-grid-content>
+          <div data-grid-content>
             {ruleSet.ruleCategories.map((ruleCategory) => {
               return (
                 <RuleCategoryRow

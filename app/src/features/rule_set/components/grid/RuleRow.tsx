@@ -154,7 +154,6 @@ export default function RuleRow({
 
   return (
     <div
-      role="row"
       className={clsx(styles.ruleRow, isActiveElement && styles.activeRow)}
       onFocus={onFocusRow}
       onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -184,7 +183,7 @@ export default function RuleRow({
       tabIndex={-1}
     >
       <div className={styles.ruleRowHeader}>
-        <h3 role="gridcell" tabIndex={-1}>
+        <h3 tabIndex={-1}>
           {rule.prefix} {rule.shortDescription}
         </h3>
         <div className={styles.ruleRowButtons}>

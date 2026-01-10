@@ -17,7 +17,7 @@ export default function Tab({
       <Link
         prefetch={false}
         href={href}
-        aria-selected={isActive}
+        aria-current={isActive ? "page" : undefined}
         className={clsx([
           styles.tabLink,
           isActive && styles.activeTabLink,

@@ -130,7 +130,7 @@ function BetaRegisterForm() {
   };
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <main className="w-full flex flex-col items-center">
       <title>Inscription à la bêta - Ohdit</title>
       <div>
         <div
@@ -352,7 +352,7 @@ function BetaRegisterForm() {
           </form>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

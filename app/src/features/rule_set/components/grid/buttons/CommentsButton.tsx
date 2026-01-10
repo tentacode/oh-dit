@@ -26,7 +26,6 @@ export default function CommentsButton({
     <button
       aria-label="Commentaires"
       id={getCommentsButtonId(ruleUuid, screenUuid)}
-      role="gridcell"
       className={clsx(
         styles.squareButton,
         styles.ruleButton,

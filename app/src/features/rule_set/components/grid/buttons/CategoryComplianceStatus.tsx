@@ -97,7 +97,6 @@ export default function CategoryComplianceStatus({
     <div className={styles.complianceStatus}>
       <button
         aria-label="Non applicable"
-        role="gridcell"
         disabled={status !== NotApplicableStatus.ENABLED}
         className={clsx(
           styles.squareButton,

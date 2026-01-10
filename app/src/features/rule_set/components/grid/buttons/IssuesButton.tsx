@@ -35,7 +35,6 @@ export default function IssuesButton({
   return (
     <button
       id={getIssuesButtonId(ruleUuid, screenUuid)}
-      role="gridcell"
       className={clsx(
         styles.squareButton,
         styles.ruleButton,
