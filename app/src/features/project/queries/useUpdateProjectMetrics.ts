@@ -21,24 +21,12 @@ async function fetchProjectMetrics(projectUuid: string): Promise<ProjectMetrics>
 }
 
 export function useUpdateProjectMetrics() {
-  const { project, setProject } = useAuditStore();
+  const { project } = useAuditStore();
 
   return useMutation({
     mutationFn: fetchProjectMetrics,
     onSuccess: (metrics) => {
       if (!project) return;
-
-      // setProject({
-      //   ...project,
-      //   progress: metrics.progress,
-      //   complianceRate: metrics.complianceRate,
-      //   screens: project.screens.map((screen) => {
-      //     const updated = metrics.screens.find((s) => s.uuid === screen.uuid);
-      //     return updated
-      //       ? { ...screen, progress: updated.progress, complianceRate: updated.complianceRate }
-      //       : screen;
-      //   }),
-      // });
 
       // Met à jour le cache React Query, pas le store
       queryClient.setQueryData(

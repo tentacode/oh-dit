@@ -10,14 +10,13 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/outline";
 
-import Markdown from "markdown-to-jsx";
-import hljs from "highlight.js";
-import "highlight.js/styles/a11y-dark.css";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import styles from "../../styles/issue_list.module.css";
+
 import { useIssuesFormStateStore } from "../../store/issuesFormStateStore";
 import { useUpdateIssue } from "../../mutations/useUpdateIssue";
+import Markdown from "@/src/features/markdown/components/Mardown";
 
 const translateSeverity = (severity: string) => {
   switch (severity) {
@@ -30,30 +29,6 @@ const translateSeverity = (severity: string) => {
     default:
       return severity;
   }
-};
-
-const CodeBlock = ({ className, children }: { className?: string; children: React.ReactNode }) => {
-  const codeRef = useRef<HTMLElement>(null);
-  const code = String(children).trim();
-
-  useEffect(() => {
-    if (codeRef.current) {
-      codeRef.current.removeAttribute('data-highlighted');
-      hljs.highlightElement(codeRef.current);
-    }
-  }, [children]);
-
-  return (
-    <pre>
-      <code
-        style={{ borderRadius: "15px", marginBottom: "15px" }}
-        ref={codeRef}
-        className={className}
-      >
-        {code}
-      </code>
-    </pre>
-  );
 };
 
 export default function IssueListItem({ issue }: { issue: Issue }) {
@@ -208,10 +183,7 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
           <EllipsisHorizontalIcon aria-hidden="true" />
         </button>
       </div>
-      <Markdown
-        style={{ fontSize: "16px" }}
-        options={{ overrides: { code: CodeBlock } }}
-      >
+      <Markdown minimalHeadingLevel={4}>
         {issue.text}
       </Markdown>
       {isActionMenuOpen && (
