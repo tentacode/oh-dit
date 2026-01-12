@@ -112,7 +112,11 @@ export default function LoginForm() {
       <div className={styles.logo}>
         <OhditLogo />
       </div>
-      <h1 className={"h2"}>Connectez-vous à Ohdit</h1>
+      <h1 className={"h2"}>Connectez-vous à la bêta</h1>
+      <p className={formStyles.helpText}>
+        La bêta d'Ohdit est sur invitation uniquement. Si vous voulez en
+        faire partie, n'hésitez pas à nous envoyer votre demande sur <a href="mailto:beta@ohdit.com">beta@ohdit.com</a>.
+      </p>
       <form
         noValidate
         className={`${formStyles.form} ${styles.loginForm}`}
