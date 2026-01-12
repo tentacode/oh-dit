@@ -64,7 +64,7 @@ final class CreateIssueCommand
             rule: $rule,
             project: $project,
             screen: $screen,
-            issueId: $this->getNextIssueId($user->getCurrentTeam()),
+            issueId: $this->getNextIssueId($project->getTeam()),
             text: $createIssueRequest->text,
             severity: Severity::from($createIssueRequest->severity),
         );
@@ -86,7 +86,6 @@ final class CreateIssueCommand
             ->setParameter('teamUuid', $team->getUuid());
 
         $result = $qb->getQuery()->getSingleScalarResult();
-
         if ($result === null) {
             return 1;
         }
