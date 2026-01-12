@@ -20,6 +20,7 @@ import {
   getDirectionFromKey,
   useKeyboardGridNavigation,
 } from "../../hooks/useKeyboardGridNavigation";
+import { useIssuesFormStateStore } from "@/src/features/issue/store/issuesFormStateStore";
 
 enum ActiveTab {
   HELP = "help",
@@ -40,6 +41,10 @@ export default function RuleRow({
   const activeElement = useAuditStore((state) => state.activeElement);
   const isActiveElement = activeElement?.ruleUuid === rule.uuid;
   const setActiveElement = useAuditStore((state) => state.setActiveElement);
+
+  const overrideIssueFormState = useIssuesFormStateStore(
+    (state) => state.overrideIssueFormState
+  );
 
   const [activeTab, setActiveTab] = useState<ActiveTab | null>(null);
 
@@ -100,6 +105,16 @@ export default function RuleRow({
 
   const onNonCompliantClick = () => {
     setActiveTab(ActiveTab.ISSUES_NC);
+    overrideIssueFormState({
+      issueUuid: null,
+      issueId: null,
+      ruleUuid: rule.uuid,
+      screenUuid: screenUuid,
+      mode: "create",
+      severity: "moderate",
+      text: "",
+      status: "pending",
+    });
 
     setTimeout(() => {
       const element = document.getElementById(

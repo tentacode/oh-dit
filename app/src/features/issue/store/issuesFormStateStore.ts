@@ -2,11 +2,11 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface IssueFormState {
-  issueUuid: string;
+  issueUuid: string | null;
   ruleUuid: string;
   screenUuid: string;
-  issueId: number;
-  mode: "duplicate" | "edit" | "delete";
+  issueId: number | null;
+  mode: "duplicate" | "edit" | "delete" | "create";
   severity: "low" | "moderate" | "blocking";
   text: string;
   status: 'pending' | 'fixed';
@@ -20,10 +20,6 @@ interface IssuesFormStateStore extends IssuesFormState {
   reset: () => void;
   overrideIssueFormState: (newState: IssueFormState) => void;
   removeIssueFormState: (ruleUuid: string, screenUuid: string) => void;
-  getIssueFormStateById: (
-    ruleUuid: string,
-    screenUuid: string
-  ) => IssueFormState | undefined;
 }
 
 const initialState: IssuesFormState = {
@@ -32,7 +28,7 @@ const initialState: IssuesFormState = {
 
 export const useIssuesFormStateStore = create<IssuesFormStateStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       ...initialState,
 
       // actions
@@ -63,12 +59,6 @@ export const useIssuesFormStateStore = create<IssuesFormStateStore>()(
       },
 
       // selectors
-      getIssueFormStateById: (ruleUuid: string, screenUuid: string) => {
-        return get().issuesFormState.find(
-          (state) =>
-            state.ruleUuid === ruleUuid && state.screenUuid === screenUuid
-        );
-      },
     }),
     {
       name: "ohdit-issues-state-store",

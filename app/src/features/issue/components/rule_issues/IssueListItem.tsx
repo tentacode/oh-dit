@@ -17,6 +17,7 @@ import styles from "../../styles/issue_list.module.css";
 import { useIssuesFormStateStore } from "../../store/issuesFormStateStore";
 import { useUpdateIssue } from "../../mutations/useUpdateIssue";
 import Markdown from "@/src/features/markdown/components/Mardown";
+import IssueForm from "./IssueForm";
 
 const translateSeverity = (severity: string) => {
   switch (severity) {
@@ -50,6 +51,12 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
 
   const updateIssue = useUpdateIssue();
   const overrideIssueInStore = useAuditStore((state) => state.overrideIssue);
+
+  const issueFormState = useIssuesFormStateStore((state) =>
+    state.issuesFormState.find(
+      (ifs) => ifs.ruleUuid === issue.ruleUuid && ifs.screenUuid === issue.screenUuid
+    )
+  );
 
   const closeMenu = useCallback(() => {
     setIsActionMenuOpen(false);
@@ -136,6 +143,7 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
 
   const menuButtonClick = (mode: "duplicate" | "edit" | "delete") => {
     closeMenu();
+
     overrideIssueFormState({
       issueUuid: issue.uuid,
       issueId: issue.issueId,
@@ -146,6 +154,22 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
       severity: issue.severity,
       mode: mode,
     });
+
+    if (mode === "duplicate" || mode === "edit") {
+      setTimeout(() => {
+        document.getElementById(
+          `text-${issue.ruleUuid}-${issue.screenUuid}`
+        )?.focus();
+      }, 100);
+    }
+
+    if (mode === "delete") {
+      setTimeout(() => {
+        document.getElementById(
+          `confirm-delete-issue-button-${issue.issueId}`
+        )?.focus();
+      }, 100);
+    }
   }
 
   const onStatusToggle = async () => {
@@ -161,6 +185,10 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
     overrideIssueInStore(updatedIssue as Issue);
   }
 
+  if (issueFormState && issueFormState.issueId === issue.issueId && (issueFormState.mode === "edit" || issueFormState.mode === "delete")) {
+    return (<IssueForm ruleUuid={issue.ruleUuid} screenUuid={issue.screenUuid} />);
+  }
+
   return (
     <li className={`${styles.card} ${styles.ruleCard}`} key={issue.uuid}>
       <div className={styles.cardHeader}>
@@ -171,6 +199,7 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
           {isUpdated ? "Mis à jour" : "Créé"} {relativeDate}
         </span>
         <button
+          id={`issue-action-menu-button-${issue.issueId}`}
           ref={buttonRef}
           className={styles.actionsButton}
           type="button"
@@ -192,9 +221,10 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
           id={menuId}
           role="menu"
           className={styles.actionMenu}
-          aria-label={`Menu des actions pour la recommandation ${issue.issueId}`}
+          aria-label={`Actions pour la recommandation ${issue.issueId}`}
         >
           <button
+            aria-label="Modifier la recommandation"
             ref={(el) => {menuItemsRef.current[0] = el}}
             role="menuitem"
             onKeyDown={(e) => handleMenuKeyDown(e, 0)}
@@ -206,6 +236,7 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
             Modifier
           </button>
           <button
+            aria-label="Dupliquer la recommandation"
             ref={(el) => {menuItemsRef.current[1] = el}}
             role="menuitem"
             onKeyDown={(e) => handleMenuKeyDown(e, 1)}
@@ -217,6 +248,7 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
             Dupliquer
           </button>
           <button
+            aria-label="Supprimer la recommandation"
             ref={(el) => {menuItemsRef.current[2] = el}}
             role="menuitem"
             onKeyDown={(e) => handleMenuKeyDown(e, 2)}
@@ -231,7 +263,7 @@ export default function IssueListItem({ issue }: { issue: Issue }) {
       )}
 
       <div className={styles.cardStatusContainer}>
-        <span aria-hidden="true" id={`${issue.issueId}-checkedLabel`}>Marquer comme {issue.status === "pending" ? "corrigé" : "à corriger"} : </span>
+        <span aria-hidden="true" id={`${issue.issueId}-checkedLabel`}>Recommandation corrigée </span>
         <button onClick={onStatusToggle} className={styles.cardStatus} aria-labelledby={`${issue.issueId}-checkedLabel`}>
           {issue.status === "pending" ? null : <CheckIcon />}
         </button>

@@ -1,6 +1,6 @@
 .listContainer {
     flex: 1;
-    overflow: auto;
+    width: 100%;
 }
 
 .cardsList {
@@ -123,6 +123,7 @@
 
 .actionMenu {
   position: absolute;
+  z-index: 1000;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -161,8 +162,7 @@
 }
 
 .issueListForm {
-    width: 550px;
-    height: fit-content;
-    position: sticky !important;
-    top: 20px;
+    flex: 1;
+    width: 100% !important;
+    max-width: none !important;
 }

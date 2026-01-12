@@ -2,7 +2,6 @@
 
 import { AuthenticatedLayout } from "@/src/components/layouts/AuthenticatedLayout";
 import Tab from "@/src/features/layout/components/Tabs/Tab";
-import TabBadge from "@/src/features/layout/components/Tabs/TabBadge";
 import TabContainer from "@/src/features/layout/components/Tabs/TabContainer";
 import TabsHeaders from "@/src/features/layout/components/Tabs/TabsHeader";
 import ProjectDetailHeader from "@/src/features/project/components/ProjectHeader";
@@ -90,7 +89,7 @@ export default function ProjectLayout({
           <AuditScreenTab selectedTab={selectedTab} projectUuid={params.uuid as string} />
           <Tab isActive={selectedTab === AuditTab.RECOMMENDATIONS} href={getProjectUrl.issues(params.uuid as string)}>
             {issuesCount > 0 && allIssuesFixed && <CheckIcon />}
-            {issuesCount == 0 || !allIssuesFixed && <ExclamationTriangleIcon />}
+            {(issuesCount === 0 || !allIssuesFixed) && <ExclamationTriangleIcon />}
             {issuesCount > 0 && "(" + issuesCount.toString() + ") "}
             Recommandations
           </Tab>

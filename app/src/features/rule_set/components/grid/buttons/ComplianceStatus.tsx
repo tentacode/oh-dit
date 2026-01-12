@@ -6,7 +6,6 @@ import styles from "../../../styles/audit_grid.module.css";
 import { clsx } from "clsx";
 import { ComplianceStatus as ComplianceStatusType } from "../../../types/RuleSetTypes";
 import { useCreateCompliance } from "@/src/features/compliance/mutations/useCreateCompliance";
-import { useIssuesFormStateStore } from "@/src/features/issue/store/issuesFormStateStore";
 import { useUpdateProjectMetrics } from "@/src/features/project/queries/useUpdateProjectMetrics";
 
 export function getComplianceButtonStatusId(
@@ -32,9 +31,10 @@ export default function ComplianceStatus({
   const overrideCompliance = useAuditStore((state) => state.overrideCompliance);
   const setActiveElement = useAuditStore((state) => state.setActiveElement);
 
-  const removeIssueFormState = useIssuesFormStateStore(
-    (state) => state.removeIssueFormState
-  );
+  const ruleSet = useAuditStore((state) => state.ruleSet);
+  const rule = ruleSet?.ruleCategories
+    .flatMap((category) => category.rules)
+    .find((r) => r.uuid === ruleUuid);
 
   const compliance = compliances.find(
     (compliance) =>
@@ -81,7 +81,6 @@ export default function ComplianceStatus({
 
     if (newStatus === "non_compliant") {
       onNonCompliantClick();
-      removeIssueFormState(ruleUuid, screenUuid);
     }
 
     switch (newStatus) {
@@ -142,10 +141,14 @@ export default function ComplianceStatus({
     }
   };
 
+  if (!rule) {
+    return null;
+  }
+
   return (
     <div className={styles.complianceStatus}>
       <button
-        aria-label="Conforme"
+        aria-label={`Conforme, Critère ${rule.prefix}`}
         id={getComplianceButtonStatusId("compliant", ruleUuid, screenUuid)}
         className={clsx([styles.squareButton, compliantClasses])}
         onClick={() => changeComplianceStatus("compliant")}
@@ -158,7 +161,7 @@ export default function ComplianceStatus({
         C
       </button>
       <button
-        aria-label="Non conforme"
+        aria-label={`Non conforme, Critère ${rule.prefix}`}
         id={getComplianceButtonStatusId("non_compliant", ruleUuid, screenUuid)}
         className={clsx([styles.squareButton, nonCompliantClasses])}
         onClick={() => changeComplianceStatus("non_compliant")}
@@ -171,7 +174,7 @@ export default function ComplianceStatus({
         NC
       </button>
       <button
-        aria-label="Non applicable"
+        aria-label={`Non applicable, Critère ${rule.prefix}`}
         id={getComplianceButtonStatusId("not_applicable", ruleUuid, screenUuid)}
         className={clsx([styles.squareButton, notApplicableClasses])}
         onClick={() => changeComplianceStatus("not_applicable")}

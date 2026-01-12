@@ -8,7 +8,7 @@ export default function SeverityInput({
   onChange: (value: "low" | "moderate" | "blocking") => void;
 }) {
   return (
-    <fieldset className={style.fieldset}>
+    <fieldset className={style.fieldset} style={{ maxWidth: "700px" }}>
       <legend>Impact pour l'utilisateur·ice</legend>
       <div>
         <label>

@@ -93,10 +93,15 @@ export default function CategoryComplianceStatus({
     updateProjectMetrics.mutateAsync(project.uuid);
   }
 
+  let ariaLabel = `Mettre "Non Applicable" sur tous les critères de la catégorie ${ruleCategory.prefix} ${ruleCategory.name}.`;
+  if (status !== NotApplicableStatus.ENABLED) {
+    ariaLabel = ` Possible uniquement si aucun critère n'est déjà marqué comme "Conforme" ou "Non Conforme".`;
+  }
+
   return (
     <div className={styles.complianceStatus}>
       <button
-        aria-label="Non applicable"
+        aria-label={ariaLabel}
         disabled={status !== NotApplicableStatus.ENABLED}
         className={clsx(
           styles.squareButton,
