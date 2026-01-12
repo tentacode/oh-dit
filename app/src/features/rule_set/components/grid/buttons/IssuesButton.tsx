@@ -21,6 +21,12 @@ export default function IssuesButton({
   onClick: () => void;
   onFocus: () => void;
 }) {
+
+  const ruleSet = useAuditStore((state) => state.ruleSet);
+  const rule = ruleSet?.ruleCategories
+    .flatMap((category) => category.rules)
+    .find((r) => r.uuid === ruleUuid);
+
   const allIssues = useAuditStore((state) => state.issues);
   const issues = allIssues.filter(
     (issue) => issue.ruleUuid === ruleUuid && issue.screenUuid === screenUuid
@@ -32,6 +38,18 @@ export default function IssuesButton({
 
   const allIssuesFixed = issues.length > 0 && pendingIssues.length === 0;
 
+  if (!rule) {
+    return null;
+  }
+
+  let ariaLabel = 'Recommandations, ';
+  if (allIssuesFixed) {
+    ariaLabel += `Toutes les recommandations sont corrigées, `;
+  } else if (badgeNumber > 0) {
+    ariaLabel += `${badgeNumber} recommandations à corriger, `;
+  }
+  ariaLabel = "Critère " + rule.prefix;
+
   return (
     <button
       id={getIssuesButtonId(ruleUuid, screenUuid)}
@@ -40,7 +58,7 @@ export default function IssuesButton({
         styles.ruleButton,
         isActive && styles.activeTab
       )}
-      aria-label='Recommandations'
+      aria-label={ariaLabel}
       onClick={onClick}
       onFocus={(e) => {
         e.stopPropagation();

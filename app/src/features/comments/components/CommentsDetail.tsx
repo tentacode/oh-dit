@@ -9,6 +9,8 @@ export default function CommentsDetail({
   ruleUuid: string;
   screenUuid: string;
 }) {
+  console.log("CommentsDetail render for ruleUuid:", ruleUuid, "screenUuid:", screenUuid);
+
   return (
     <div className={tabStyles.tabContainer}>
       <h4 className="h4">Discussion</h4>

@@ -62,17 +62,15 @@ export default function IssueForm({
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const getIssueFormStateById = useIssuesFormStateStore(
-    (state) => state.getIssueFormStateById
-  );
-
   const removeIssueFormState = useIssuesFormStateStore(
     (state) => state.removeIssueFormState
   );
-
-  const issueFormState = getIssueFormStateById(ruleUuid, screenUuid);
-
-  const formMode = issueFormState?.mode || "create";
+  
+  const issueFormState = useIssuesFormStateStore((state) =>
+    state.issuesFormState.find(
+      (ifs) => ifs.ruleUuid === ruleUuid && ifs.screenUuid === screenUuid
+    )
+  );
 
   const [severityValue, setSeverityValue] = useState<
     "low" | "moderate" | "blocking"
@@ -89,7 +87,7 @@ export default function IssueForm({
     }
   }, [issueFormState]);
 
-  if (!project) {
+  if (!issueFormState || !project) {
     return null;
   }
 
@@ -103,7 +101,7 @@ export default function IssueForm({
     const formData = new FormData(e.currentTarget);
 
     try {
-      if (formMode === "create" || formMode === "duplicate") {
+      if (issueFormState.mode === "create" || issueFormState.mode === "duplicate") {
         const issue = await createIssue.mutateAsync({
           severity: formData.get("severity") as Severity,
           text: formData.get("text") as string,
@@ -114,9 +112,17 @@ export default function IssueForm({
         });
 
         addIssueInStore(issue as Issue);
+
+        setTimeout(() => {
+          document.getElementById(`add-issue-button-${ruleUuid}-${screenUuid}`)?.focus();
+        }, 100);
       }
 
-      if (formMode === "edit" && issueFormState) {
+      if (issueFormState.mode === "edit" && issueFormState) {
+        if (issueFormState.issueUuid === null) {
+          throw new Error("Issue UUID is null for edit mode");
+        }
+
         const issue = await updateIssue.mutateAsync({
           issueUuid: issueFormState.issueUuid,
           severity: formData.get("severity") as Severity,
@@ -125,19 +131,30 @@ export default function IssueForm({
         });
 
         overrideIssueInStore(issue as Issue);
+
+        setTimeout(() => {
+          document.getElementById(`issue-action-menu-button-${issue.issueId}`)?.focus();
+        }, 100);
       }
 
-      if (formMode === "delete" && issueFormState) {
+      if (issueFormState.mode === "delete" && issueFormState) {
+        if (issueFormState.issueUuid === null) {
+          throw new Error("Issue UUID is null for delete mode");
+        }
+
         await deleteIssue.mutateAsync({
           issueUuid: issueFormState.issueUuid,
         });
 
         removeIssueInStore(issueFormState.issueUuid);
+
+        setTimeout(() => {
+          document.getElementById(`add-issue-button-${ruleUuid}-${screenUuid}`)?.focus();
+        }, 100);
       }
 
       removeIssueFormState(ruleUuid, screenUuid);
       setTextValue("");
-      textAreaRef?.current?.focus();
     } catch (apiError) {
       if (apiError instanceof ApiError) {
         setErrors(apiError.errors || []);
@@ -162,10 +179,25 @@ export default function IssueForm({
     setTextValue("");
     setSeverityValue("moderate");
     removeIssueFormState(ruleUuid, screenUuid);
-    textAreaRef?.current?.focus();
+
+    if (issueFormState?.mode === "edit"|| issueFormState?.mode === "duplicate"  || issueFormState?.mode === "delete") {
+      setTimeout(() => {
+        document.getElementById(`issue-action-menu-button-${issueFormState.issueId}`)?.focus();
+      }, 100);
+    }
+
+    if (issueFormState?.mode === "create" ) {
+      setTimeout(() => {
+        document.getElementById(`add-issue-button-${ruleUuid}-${screenUuid}`)?.focus();
+      }, 100);
+    }
   };
 
-  if (formMode === "delete") {
+  if (!project) {
+    return null;
+  }
+
+  if (issueFormState.mode === "delete") {
     return (
       <form
         noValidate={true}
@@ -173,9 +205,9 @@ export default function IssueForm({
         onSubmit={onSubmit}
       >
         <h4 className="h5">
-          Supprimer la recommandation #{issueFormState?.issueId}
+          Supprimer la recommandation {issueFormState?.issueId}
         </h4>
-        <p className={formStyles.warningText}>
+        <p id={`warning-text-${issueFormState?.issueId}`} className={formStyles.warningText}>
           <ExclamationTriangleIcon />
           Êtes-vous bien sûr·e de vouloir supprimer cette recommandation ? Cette
           opération est irréversible.
@@ -184,13 +216,15 @@ export default function IssueForm({
         <div
           style={{ display: "flex", gap: "10px", justifyContent: "flex-start" }}
         >
-          <CallToActionButton disabled={isLoading} type="submit">
+          <CallToActionButton 
+            ariaLabel={`Supprimer la recommandation ${issueFormState?.issueId}`}
+            ariaLabelledBy={`warning-text-${issueFormState?.issueId}`} id={`confirm-delete-issue-button-${issueFormState?.issueId}`} disabled={isLoading} type="submit">
             <TrashIcon />
             Supprimer
           </CallToActionButton>
 
           <CallToActionButton
-            disabled={isLoading}
+            ariaLabel={`Annuler la suppression de la recommandation ${issueFormState?.issueId}`}
             type="button"
             onClick={resetForm}
           >
@@ -209,16 +243,17 @@ export default function IssueForm({
       onSubmit={onSubmit}
     >
       <h4 className="h5">
-        {formMode === "create" && "Ajouter une recommandation"}
-        {formMode === "edit" &&
-          "Modifier la recommandation #" + issueFormState?.issueId}
-        {formMode === "duplicate" &&
-          "Dupliquer la recommandation #" + issueFormState?.issueId}
+        {issueFormState.mode === "create" && "Ajouter une recommandation"}
+        {issueFormState.mode === "edit" &&
+          "Modifier la recommandation " + issueFormState?.issueId}
+        {issueFormState.mode === "duplicate" &&
+          "Dupliquer la recommandation " + issueFormState?.issueId}
       </h4>
 
       <SeverityInput value={severityValue} onChange={setSeverityValue} />
-      <label htmlFor="text">Recommandation</label>
-      <p className={formStyles.helpText}>
+
+      <label htmlFor={`text-${ruleUuid}-${screenUuid}`}>Recommandation</label>
+      <p id={`help-text-${ruleUuid}-${screenUuid}`} className={formStyles.helpText}>
         <LightBulbIcon /> Vous pouvez utiliser le {" "}
         <a
           href="https://docs.framasoft.org/fr/grav/markdown.html"
@@ -239,7 +274,7 @@ export default function IssueForm({
         name="text"
         aria-invalid={hasFieldError("text", errors)}
         aria-describedby={
-          hasFieldError("text", errors) ? "text-error" : undefined
+          hasFieldError("text", errors) ? `text-error-${ruleUuid}-${screenUuid}` : `help-text-${ruleUuid}-${screenUuid}`
         }
         onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
           cleanErrors("text");
@@ -249,45 +284,44 @@ export default function IssueForm({
         rows={8}
       />
       {hasFieldError("text", errors) && (
-        <p id="text-error" className={formStyles.fieldError}>
+        <p id={`text-error-${ruleUuid}-${screenUuid}`} className={formStyles.fieldError}>
           {getErrorsForField("text", errors).map((error) => error.message)}
         </p>
-      )}
-
-      {formMode === "create" && (
-        <CallToActionButton disabled={isLoading}>
-          <PlusIcon />
-          Ajouter la recommandation
-        </CallToActionButton>
       )}
 
       <div
         style={{ display: "flex", gap: "10px", justifyContent: "flex-start" }}
       >
-        {formMode === "edit" && (
+        {issueFormState.mode === "create" && (
           <CallToActionButton disabled={isLoading}>
+            <PlusIcon />
+            Ajouter la recommandation
+          </CallToActionButton>
+        )}
+
+        {issueFormState.mode === "edit" && (
+          <CallToActionButton disabled={isLoading} ariaLabel="Modifier la recommandation">
             <PencilSquareIcon />
             Modifier
           </CallToActionButton>
         )}
 
-        {formMode === "duplicate" && (
-          <CallToActionButton disabled={isLoading}>
+        {issueFormState.mode === "duplicate" && (
+          <CallToActionButton disabled={isLoading} ariaLabel="Dupliquer la recommandation">
             <DocumentDuplicateIcon />
             Dupliquer
           </CallToActionButton>
         )}
 
-        {formMode !== "create" && (
-          <CallToActionButton
-            disabled={isLoading}
-            type="button"
-            onClick={resetForm}
-          >
-            <XMarkIcon />
-            Annuler
-          </CallToActionButton>
-        )}
+        <CallToActionButton
+          disabled={isLoading}
+          type="button"
+          onClick={resetForm}
+          ariaLabel={`Annuler la ${issueFormState.mode === "edit" ? "modification" : issueFormState.mode === "create" ? "création" : "duplication"} de la recommandation`}
+        >
+          <XMarkIcon />
+          Annuler
+        </CallToActionButton>
       </div>
     </form>
   );
