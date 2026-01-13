@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 export default function Logout() {
   useEffect(() => {
     // Deleting the auth token cookie
-    document.cookie = 'auth_token=; path=/; max-age=0; SameSite=Strict'
+    document.cookie = 'auth_token=; path=/; max-age=0; SameSite=None; Secure'
     window.localStorage.clear()
     window.location.href = '/login'  
   }, [])

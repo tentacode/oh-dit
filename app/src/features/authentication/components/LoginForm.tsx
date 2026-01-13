@@ -52,8 +52,8 @@ export default function LoginForm() {
       });
 
       // Stocker le token dans un cookie
-      document.cookie = `auth_token=${data.token}; path=/; max-age=864000; SameSite=Strict`;
-
+      document.cookie = `auth_token=${data.token}; path=/; max-age=864000; SameSite=None; Secure`;
+      
       // Rediriger vers la page demandée
       router.push(redirect);
     } catch (apiError) {
