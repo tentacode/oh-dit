@@ -4,7 +4,7 @@
     align-items: flex-start;
     justify-items: flex-start;
     max-width: 1200px;
-    margin-bottom: 50px;
+    margin-bottom: 70px;
 }
 
 .wipText {
@@ -40,7 +40,7 @@
     align-items: flex-start;
     padding: 20px;
     max-width: 400px;
-    padding-top: 40px;
+    padding-top: 70px;
 }
 
 .wipIllustrationContainer svg {

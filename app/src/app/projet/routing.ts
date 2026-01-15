@@ -18,6 +18,8 @@ export const getProjectUrl = {
     `/projet/${projectUuid}/recommandations` as const,
   deliverables: (projectUuid: string) =>
     `/projet/${projectUuid}/livrables` as const,
+  deliverablesSecuredLink: (projectUuid: string) =>
+    `/projet/${projectUuid}/livrables/lien-securise` as const,
   settings: (projectUuid: string) =>
     `/projet/${projectUuid}/parametres` as const,
 } as const;
