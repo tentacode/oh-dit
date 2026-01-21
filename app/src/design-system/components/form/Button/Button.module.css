@@ -1,0 +1,52 @@
+.button {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  border: 3px solid #010101;
+  color: #010101;
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  font-size: 1.25rem;
+  font-family: "Lexend Deca", sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.button svg {
+  height: 2rem;
+  width: 2rem;
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+}
+
+.button:hover {
+  border-color: #8579dc;
+}
+
+.button:focus {
+  outline: none;
+  border-color: #e2026a;
+}
+
+.button:focus-visible {
+  outline: 2px solid #8579dc;
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  border-color: #a9a9a9;
+  color: #a9a9a9;
+  cursor: not-allowed;
+}
+
+.buttonSmall {
+  font-size: 1rem;
+  padding: 0.375rem 0.75rem;
+}
+
+.buttonSmall svg {
+  height: 1.5rem;
+  width: 1.5rem;
+}
