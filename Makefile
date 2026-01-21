@@ -34,6 +34,12 @@ app.lint: ## Run ESLint in app container
 app.typescript: ## Run Typescript checks in app container
 	docker compose exec app npm run typescript
 
+app.storybook: ## Open Storybook (local)
+	cd app && npm run storybook
+
+app.storybook-test: ## Run Storybook tests with vitest (local)
+	cd app && npx vitest --run
+
 api.connect: ## Open api container shell
 	docker compose exec api zsh
 

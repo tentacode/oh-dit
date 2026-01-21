@@ -1,0 +1,35 @@
+.fieldContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.label {
+  font-family: "Lexend Deca", sans-serif;
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: #010101;
+}
+
+.requiredStar {
+  color: #ba0303;
+}
+
+.helpText {
+  font-size: 1rem;
+  font-style: italic;
+  color: #555555;
+  margin-top: -4px;
+}
+
+.errorText {
+  color: #ba0303;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.inputError {
+  border-color: #ba0303 !important;
+}
