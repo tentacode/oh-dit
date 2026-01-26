@@ -38,6 +38,10 @@
     margin-right: 5px;
 }
 
+.table tbody {
+    background-color: white;
+}
+
 .table tbody tr {
     border-top: 3px solid #FFF5F3;
 }

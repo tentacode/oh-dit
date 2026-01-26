@@ -70,6 +70,7 @@ final class GetProjectsControllerTest extends WebTestCase
                         'isRoot' => false,
                     ],
                 ],
+                'securedLinkToken' => null,
                 'ruleSet' => [
                     'uuid' => '@uuid@',
                     'name' => 'IWSQA',

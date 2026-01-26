@@ -1,0 +1,103 @@
+.input {
+    padding: 10px 15px;
+    border: 3px solid #010101;
+    border-radius: 10px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+ 
+.input:hover {
+    outline: 1px solid #8579DC;
+    outline-offset: 3px;
+    border-color: #8579DC;
+}
+
+.input:focus {
+    outline: 1px solid #E2026A;
+    outline-offset: 3px;
+    border-color: #E2026A;
+}
+
+.inputError {
+    border-color: #BA0303;
+    outline-color: #BA0303;
+}
+
+.passwordInputContainer {
+    position: relative;
+}
+
+.passwordInputContainer input {
+    padding-right: 60px;
+}
+
+.revealPassword {
+    padding: 0px;
+    background: white;
+    padding: 5px;
+    position: absolute;
+    aspect-ratio: 1 / 1;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    cursor: pointer;
+    border: 3px solid #010101;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.revealPassword:hover {
+    outline: 1px solid #8579DC;
+    outline-offset: 3px;
+    border-color: #8579DC;
+}
+
+.revealPassword:focus {
+    outline: 1px solid #E2026A;
+    outline-offset: 3px;
+    border-color: #E2026A;
+}
+
+.revealPassword svg path {
+    stroke-width: 2px;
+}
+
+.inputRequirements {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 20px;
+}
+
+.inputRequirements li {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.inputRequirements li svg {
+    width: 20px;
+    height: 20px;
+    margin-top: 4px;
+}
+
+.inputRequirements li svg path {
+    stroke-width: 3px;
+}
+
+.errorsList {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #BA0303;
+}

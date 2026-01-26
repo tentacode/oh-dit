@@ -38,6 +38,7 @@ final class GetProjectControllerTest extends WebTestCase
             'status' => 'in_progress',
             'progress' => 0,
             'complianceRate' => 0,
+            'securedLinkToken' => null,
             'screens' => [
                 [
                     'uuid' => '@uuid@',

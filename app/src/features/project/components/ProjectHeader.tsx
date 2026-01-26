@@ -1,14 +1,12 @@
 import {
-  CheckBadgeIcon,
-  CheckIcon,
-  ClockIcon,
-  HandThumbDownIcon,
-  HandThumbUpIcon,
   InformationCircleIcon,
   LinkIcon,
 } from "@heroicons/react/24/outline";
 import { useAuditStore } from "../../audit/store/auditStore";
 import styles from "../styles/project_header.module.css";
+import RuleSetBadgeCard from "./BadgeCards/RuleSetBadgeCard";
+import ProgressBadgeCard from "./BadgeCards/ProgressBadgeCard";
+import ComplianceRateBadgeCard from "./BadgeCards/ComplianceRateBadgeCard";
 
 export default function ProjectDetailHeader() {
   const project = useAuditStore((state) => state.project);
@@ -18,9 +16,6 @@ export default function ProjectDetailHeader() {
     return null;
   }
 
-  const progressPercent = `${project.progress || 0}%`;
-  const complianceRatePercent = `${project.complianceRate || 0}%`;
-
   return (
     <div className="horizontalGutter">
       <h1
@@ -29,61 +24,20 @@ export default function ProjectDetailHeader() {
       >
         Audit — {project.name}
       </h1>
+
       {project.url && (
         <p className={styles.siteUrl}>
           <LinkIcon />
           Adresse du projet : <a href={project.url}>{project.url}</a>
         </p>
       )}
+
       <div className={`${styles.statsContainer}`}>
-        <div>
-          <strong>Référentiel</strong>
-          <span>
-            {ruleSet.name} {ruleSet.version}
-          </span>
-        </div>
-        <div>
-          <strong>Progrès</strong>
-          <span>
-            {project.progress === 100 ? <CheckIcon /> : <ClockIcon />}
-            <strong>{progressPercent}</strong> -{" "}
-            {project.progress === 100 ? "Terminé" : "En cours"}
-          </span>
-          <div className={styles.progressBar}>
-            <div
-              className={styles.progressBarFill}
-              style={{ width: progressPercent }}
-            ></div>
-          </div>
-        </div>
-        <div>
-          <strong>Taux de conformité</strong>
-          {project.complianceRate < 50 && (
-            <span>
-              <HandThumbDownIcon />
-              <strong>{complianceRatePercent}</strong> - Non conforme
-            </span>
-          )}
-          {project.complianceRate !== 100 && project.complianceRate >= 50 && (
-            <span>
-              <HandThumbUpIcon />
-              <strong>{complianceRatePercent}</strong> - Partiellement conforme
-            </span>
-          )}
-          {project.complianceRate === 100 && (
-            <span>
-              <CheckBadgeIcon />
-              <strong>{complianceRatePercent}</strong> - Totalement conforme
-            </span>
-          )}
-          <div className={styles.progressBar}>
-            <div
-              className={styles.progressBarFill}
-              style={{ width: complianceRatePercent }}
-            ></div>
-          </div>
-        </div>
+        <RuleSetBadgeCard name={ruleSet.name} version={ruleSet.version} />
+        <ProgressBadgeCard progress={project.progress} />
+        <ComplianceRateBadgeCard complianceRate={project.complianceRate} />
       </div>
+
       {project.progress !== 100 && (
         <p className={styles.helpText}>
           <InformationCircleIcon />

@@ -37,11 +37,27 @@ final class CompliancesStory extends Story
 
         // Deux issues sur la règle 1.1 pour la page home
         $issueText = <<<MARKDOWN
+            # Contexte
+
             Les stormtroopers manque la cible à moins de 10 mètres, 8 fois sur 10.
 
             C'est **extrèmement problématique** pour la crédibilité de l'Empire Galactique.
 
-            Plusieurs stormtroopers m'ont confirmé que leurs blasters étaient mal calibrés. Il faudrait ajouter une correction au code du viseur :
+            | Élément     | Valeur      |
+            | ----------- | ----------- |
+            | Règle       | 1.1         |
+            | Projet      | Death Star  |
+            | Écran       | Home        |
+
+            # Solutions
+
+            ## Calibration des blasters
+
+            Plusieurs stormtroopers m'ont confirmé :
+
+            > Nos blasters étaient mal calibrés, chef.
+
+            Il faudrait ajouter une correction au code du viseur dans le fichier `src/target/blaster.js` :
 
             ```js
             function calibrateBlaster(blaster) {
@@ -50,6 +66,8 @@ final class CompliancesStory extends Story
                 }
             }
             ```
+
+            ## Reporting
 
             Il faudrait également ajouter une alerte dans le tableau de bord des stormtroopers pour les prévenir lorsque leur blaster nécessite une recalibration, voici une suggestion d'implémentation :
 
@@ -64,6 +82,19 @@ final class CompliancesStory extends Story
                 }
             }
             ```
+
+            ## Résumé
+
+            Actions à mener :
+
+            1. Ajouter une correction de 5 unités au viseur pour les blasters avec une précision inférieure à 90.
+            2. Implémenter une alerte dans le tableau de bord des stormtroopers
+
+            Merci de votre attention, que la Force soit avec vous !
+
+            ![](https://i.pinimg.com/736x/00/62/29/00622918e06e97ec42449f4439b75f26.jpg)
+
+            Signé Dark, votre humble seigneur Sith.
             MARKDOWN;
 
         IssueFactory::new()->create([

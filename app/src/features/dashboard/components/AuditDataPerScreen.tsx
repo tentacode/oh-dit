@@ -1,5 +1,4 @@
 import { getProjectUrl } from "@/src/app/projet/routing";
-import { useAuditStore } from "../../audit/store/auditStore";
 import tableStyles from "../../../components/table/styles/table.module.css";
 import typographyStyles from "../../../components/typography/styles/typography.module.css";
 import {
@@ -12,23 +11,35 @@ import {
   InformationCircleIcon,
 } from "@heroicons/react/24/outline";
 import CallToActionLink from "@/src/components/form/CallToActionLink";
-import { useAuditSettingsStore } from "../../audit/store/auditSettingsStore";
 
-export function AuditDataPerScreen() {
-  const project = useAuditStore((state) => state.project);
-  const issues = useAuditStore((state) => state.issues);
-
-  const setProjectSetting = useAuditSettingsStore(
-    (state) => state.setProjectSetting
-  );
-
-  if (!project) {
-    return null;
-  }
-
+export function AuditDataPerScreen({
+  project,
+  issues,
+  title,
+  onClickAuditLink,
+  withAuditLink = true,
+}: {
+  project: {
+    uuid?: string;
+    screens: {
+      uuid: string;
+      name: string;
+      progress: number;
+      complianceRate: number;
+    }[];
+  };
+  issues: {
+    uuid: string;
+    screenUuid: string;
+    status: "pending" | "fixed";
+  }[];
+  title?: string;
+  onClickAuditLink?: (screenUuid: string) => void;
+  withAuditLink?: boolean;
+}) {
   return (
     <>
-      <h2 className="h3 mb-5">Statistiques de l'audit par page</h2>
+      {title && <h2 className="h3 mb-5">{title}</h2>}
       <table className={`${tableStyles.table} mb-5`}>
         <caption className="sr-only">Statistiques de l'audit par page</caption>
         <thead>
@@ -40,7 +51,7 @@ export function AuditDataPerScreen() {
               Recommandations
               <span className={tableStyles.subText}>corrigées / totales</span>
             </th>
-            <th scope="col">Auditer la page</th>
+            {withAuditLink && <th scope="col">Auditer la page</th>}
           </tr>
         </thead>
         <tbody>
@@ -97,29 +108,45 @@ export function AuditDataPerScreen() {
                 )}
               </td>
               <td style={{ textAlign: "right" }}>
-                {issues.filter((issue) => issue.screenUuid === screen.uuid).length === 0 && '-'}
+                {issues.filter((issue) => issue.screenUuid === screen.uuid)
+                  .length === 0 && "-"}
 
-                {issues.filter((issue) => issue.screenUuid === screen.uuid).length > 0 && (
+                {issues.filter((issue) => issue.screenUuid === screen.uuid)
+                  .length > 0 && (
                   <>
-                    <strong>{issues.filter((issue) => issue.screenUuid === screen.uuid && issue.status === "fixed").length}</strong> / {issues.filter((issue) => issue.screenUuid === screen.uuid).length}
+                    <strong>
+                      {
+                        issues.filter(
+                          (issue) =>
+                            issue.screenUuid === screen.uuid &&
+                            issue.status === "fixed",
+                        ).length
+                      }
+                    </strong>{" "}
+                    /{" "}
+                    {
+                      issues.filter((issue) => issue.screenUuid === screen.uuid)
+                        .length
+                    }
                   </>
                 )}
               </td>
-              <td style={{ textAlign: "right" }}>
-                <CallToActionLink
-                  variant="small"
-                  href={getProjectUrl.auditScreen(project.uuid, screen.uuid)}
-                  onClick={() => {
-                    setProjectSetting({
-                      projectUuid: project.uuid,
-                      currentScreenUuid: screen.uuid,
-                    });
-                  }}
-                >
-                  <ClipboardDocumentCheckIcon />
-                  Auditer
-                </CallToActionLink>
-              </td>
+              {withAuditLink && project.uuid && (
+                <td style={{ textAlign: "right" }}>
+                  <CallToActionLink
+                    variant="small"
+                    href={getProjectUrl.auditScreen(project.uuid, screen.uuid)}
+                    onClick={
+                      onClickAuditLink
+                        ? () => onClickAuditLink(screen.uuid)
+                        : undefined
+                    }
+                  >
+                    <ClipboardDocumentCheckIcon />
+                    Auditer
+                  </CallToActionLink>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

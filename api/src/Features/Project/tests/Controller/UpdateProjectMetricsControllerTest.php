@@ -62,6 +62,7 @@ final class UpdateProjectMetricsControllerTest extends WebTestCase
             'status' => 'in_progress',
             'progress' => 5,
             'complianceRate' => 50,
+            'securedLinkToken' => null,
             'screens' => [
                 [
                     'uuid' => '33333333-0000-4000-8000-000000000000',

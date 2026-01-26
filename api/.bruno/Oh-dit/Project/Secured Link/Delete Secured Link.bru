@@ -1,0 +1,21 @@
+meta {
+  name: Delete Secured Link
+  type: http
+  seq: 2
+}
+
+delete {
+  url: {{BASE_URL}}/api/projects/22222222-0000-4000-8000-000000000001/secured-link
+  body: formUrlEncoded
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{AUTH_TOKEN}}
+  ~Content-Type: application/json
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

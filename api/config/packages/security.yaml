@@ -1,13 +1,14 @@
 security:
-    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         App\Features\Authentication\Entity\User: 'auto'
-    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+
     providers:
         app_user_provider:
             entity:
                 class: App\Features\Authentication\Entity\User
                 property: email
+        secured_link_provider:
+            id: App\Features\SecuredLinkReport\Security\SecuredLinkUserProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -25,19 +26,20 @@ security:
             login_throttling:
                 max_attempts: 10
                 interval: '15 minutes'
+
+        secured_link:
+            pattern: ^/api/secured-link
+            stateless: true
+            provider: secured_link_provider
+            custom_authenticators:
+                - App\Features\SecuredLinkReport\Security\SecuredLinkAuthenticator
+
         api:
             pattern:   ^/api
             stateless: true
             provider: app_user_provider
             jwt: ~
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/forgot_password, roles: PUBLIC_ACCESS }
@@ -45,4 +47,6 @@ security:
         - { path: ^/api/register, roles: PUBLIC_ACCESS }
         - { path: ^/api/healthcheck, roles: PUBLIC_ACCESS }
         - { path: ^/api/newsletter, roles: PUBLIC_ACCESS }
+        - { path: ^/api/secured-link/.+/login$, roles: PUBLIC_ACCESS }
+        - { path: ^/api/secured-link, roles: ROLE_SECURED_LINK_ACCESS }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

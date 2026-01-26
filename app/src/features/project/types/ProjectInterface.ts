@@ -22,5 +22,7 @@ export interface ProjectInterface {
         progress: number;
         complianceRate: number;
         isRoot: boolean;
+        rank: number;
     }[];
+     securedLinkToken?: string;
 }

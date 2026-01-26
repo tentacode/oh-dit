@@ -14,13 +14,13 @@ import { clsx } from "clsx";
 import RuleHelpButton, { getRuleHelpButtonId } from "./buttons/RuleHelpButton";
 import { useState } from "react";
 import RuleHelp from "../rule/RuleHelp";
-import IssuesDetail from "@/src/features/issue/components/rule_issues/IssuesDetail";
 import CommentsDetail from "@/src/features/comments/components/CommentsDetail";
 import {
   getDirectionFromKey,
   useKeyboardGridNavigation,
 } from "../../hooks/useKeyboardGridNavigation";
 import { useIssuesFormStateStore } from "@/src/features/issue/store/issuesFormStateStore";
+import IssuesDetail from "@/src/features/issue/components/rule_issues/IssuesDetail";
 
 enum ActiveTab {
   HELP = "help",
@@ -114,6 +114,7 @@ export default function RuleRow({
       severity: "moderate",
       text: "",
       status: "pending",
+      context: "rule_issues",
     });
 
     setTimeout(() => {
