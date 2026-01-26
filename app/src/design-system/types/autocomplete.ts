@@ -1,0 +1,1 @@
+export type PasswordAutocomplete = 'new-password' | 'current-password';

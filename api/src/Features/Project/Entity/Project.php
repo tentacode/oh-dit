@@ -70,6 +70,15 @@ class Project implements HasUuidInterface, SerializableInterface
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $complianceRateUpdatedAt = null;
 
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $securedLinkToken = null;
+
+    #[ORM\Column(type: Types::STRING, length: 180, nullable: true)]
+    private ?string $securedLinkPasswordHash = null;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?DateTimeImmutable $securedLinkUpdatedAt = null;
+
     /**
      * @var ArrayCollection<int, Screen>
      */
@@ -180,6 +189,35 @@ class Project implements HasUuidInterface, SerializableInterface
         $this->updatedAt = CarbonImmutable::now();
     }
 
+    public function getSecuredLinkToken(): ?string
+    {
+        return $this->securedLinkToken;
+    }
+
+    public function getSecuredLinkPasswordHash(): ?string
+    {
+        return $this->securedLinkPasswordHash;
+    }
+
+    public function getSecuredLinkUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->securedLinkUpdatedAt;
+    }
+
+    public function setSecuredLink(string $token, string $hashedPassword): void
+    {
+        $this->securedLinkToken = $token;
+        $this->securedLinkPasswordHash = $hashedPassword;
+        $this->securedLinkUpdatedAt = CarbonImmutable::now();
+    }
+
+    public function removeSecuredLink(): void
+    {
+        $this->securedLinkToken = null;
+        $this->securedLinkPasswordHash = null;
+        $this->securedLinkUpdatedAt = CarbonImmutable::now();
+    }
+
     public function getDefaultFields(): array
     {
         return [
@@ -205,6 +243,7 @@ class Project implements HasUuidInterface, SerializableInterface
                 'complianceRate',
                 'isRoot',
             ],
+            'securedLinkToken',
         ];
     }
 }

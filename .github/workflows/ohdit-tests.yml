@@ -132,7 +132,7 @@ jobs:
 
       - name: Npm audit app
         working-directory: ./app
-        run: npm audit
+        run: npm run audit
 
       # Slack notification on failure      
       - name: Slack Notification
@@ -181,7 +181,7 @@ jobs:
 
       - name: Npm audit www
         working-directory: ./www
-        run: npm audit
+        run: npm run audit
 
       # Slack notification on failure      
       - name: Slack Notification

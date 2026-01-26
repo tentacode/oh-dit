@@ -3,9 +3,7 @@
 import { useAuditStore } from "@/src/features/audit/store/auditStore";
 import IssuesListEmpty from "@/src/features/issue/components/project_issues/IssuesListEmpty";
 import tabStyles from "@/src/features/rule_set/styles/rule_tab.module.css";
-import listStyles from "@/src/features/issue/styles/issue_list.module.css";
-import IssuesList from "@/src/features/issue/components/project_issues/IssuesList";
-// import IssueForm from "@/src/features/issue/components/project_issues/IssueForm";
+import ProjectIssues from "@/src/features/issue/components/project_issues/ProjectIssues";
 import Filters from "@/src/components/filter/Filters";
 import FilterLinks from "@/src/components/filter/FilterLinks";
 import FilterLink from "@/src/components/filter/FilterLink";
@@ -84,12 +82,7 @@ export default function ProjectIssuesPage() {
           </FilterActions>
         </Filters>
         <div className={tabStyles.tabContainer}>
-          <div className={tabStyles.listAndForm}>
-            <div className={listStyles.listContainer}>
-              <IssuesList />
-            </div>
-            {/* <IssueForm /> */}
-          </div>
+          <ProjectIssues />  
         </div>
       </div>
 

@@ -1,0 +1,60 @@
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.textContainer p {
+    margin-bottom: 0 !important;
+}
+
+.textContainer hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+.orderdedList {
+    list-style: decimal;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 1.125rem;
+}
+
+.externalLink svg {
+    display: inline;
+    width: 24px;
+    height: 24px;
+    margin-left: 5px;
+    margin-top: -5px;
+    vertical-align: middle;
+}
+
+.info {
+    width: 100%;
+    font-weight: 400;
+    font-style: italic;
+    display: flex;
+    border-left: 5px solid #8579DC;
+    padding: 15px 15px;
+    color: #010101;
+    background-color: #FFF5F3;
+}
+
+.info svg {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    margin-top: 4px;
+    flex-shrink: 0;
+}
+
+.info svg path {
+    stroke-width: 2px;
+}
+
+.italic {
+    font-style: italic;
+}

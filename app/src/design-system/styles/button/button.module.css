@@ -1,0 +1,62 @@
+.button {
+    padding: 0.5rem 1rem;
+    color: #010101;
+    background: white;
+    border: 3px solid #010101;
+    border-radius: 100px;
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    width: fit-content;
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.smallButton {
+    padding: 0.25rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+ 
+.button:hover {
+    outline: 1px solid #8579DC;
+    outline-offset: 3px;
+    border-color: #8579DC;
+}
+
+.button:focus {
+    outline: 1px solid #E2026A;
+    outline-offset: 3px;
+    border-color: #E2026A;
+}
+
+.button svg {
+    width: 30px;
+    height: 30px;
+}
+
+.smallButton svg {
+    width: 22px;
+    height: 22px;
+}
+
+.button svg path {
+    stroke-width: 2px;
+}
+
+.disabled {
+    border-style: dashed;
+    border-color: #707070 !important;
+    outline-color: #707070 !important;
+    color: #707070;
+    cursor: not-allowed;
+}
+
+.success {
+    border-color: #56C07C;
+}
+
+.success svg path {
+    stroke: #56C07C;
+}

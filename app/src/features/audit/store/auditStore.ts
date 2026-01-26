@@ -5,6 +5,7 @@ export interface Screen {
   name: string;
   url?: string;
   progress: number;
+  rank: number;
   complianceRate: number;
 }
 
@@ -18,6 +19,7 @@ export interface Project {
   ruleSet: {
     uuid: string;
   };
+  securedLinkToken?: string;
 }
 
 export interface Compliance {

@@ -1,17 +1,20 @@
 .issueMarkdown {
     font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .issueMarkdown p {
-    font-size: 19px;
+    font-size: 1em;
+    margin: 0;
 }
 
 .issueMarkdown ul {
     list-style: disc;
-    font-size: 19px !important;
+    font-size: 1em !important;
+    margin: 0;
     margin-left: 20px;
-    margin-top: 10px;
-    margin-bottom: 20px;
 }
 
 .issueMarkdown ul li {
@@ -20,9 +23,9 @@
 
 .issueMarkdown ol {
     list-style: decimal;
-    font-size: 19px !important;
+    font-size: 1em !important;
+    margin: 0;
     margin-left: 20px;
-    margin-bottom: 20px;
 }
 
 .issueMarkdown ol li {
@@ -33,12 +36,17 @@
     border-left: 4px solid #FFEDD5;
     background-color: #FFF7ED;
     padding: 10px 20px;
-    margin: 20px 0;
-    margin-bottom: 20px;
+    margin: 0;
     border-radius: 10px;
 }
 
 .issueMarkdown blockquote p {
+    margin: 0;
+    font-size: 1em !important;
+}
+
+.issueMarkdown pre code {
+    font-size: 1em !important;
     margin: 0;
 }
 
@@ -67,8 +75,7 @@
 
 .h1, .h2, .h3, .h4, .h5, .h6 {
     display: block;
-    margin-top: 1em;
-    margin-bottom: 20px;
+    margin: 0;
     font-size: 19px;
     font-weight: bold;
     font-family: 'Lexend Deca', sans-serif;
@@ -79,19 +86,19 @@
 }
 
 .h2 {
-    font-size: 1.5em;
-}
-.h3 {
     font-size: 1.4em;
 }
-.h4 {
+.h3 {
     font-size: 1.3em;
 }
-.h5 {
+.h4 {
     font-size: 1.25em;
 }
+.h5 {
+    font-size: 1.1em;
+}
 .h6 {
-    font-size: 19px;
+    font-size: 1em;
 }
 
 .inlineCode {
@@ -99,7 +106,7 @@
     font-weight: 500;
     padding: 2px 4px;
     border-radius: 4px;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 .blockCode {

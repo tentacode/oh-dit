@@ -1,0 +1,96 @@
+.cardsGroupsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.cardsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.groupTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.cardsList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cardContainer {
+  position: relative;
+  background-color: white;
+  border-radius: 20px;
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 20px;
+  transition: max-height 1s ease;
+  font-size: 1rem;
+}
+
+.cardContainerCanExpand::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background: linear-gradient(transparent, white);
+  pointer-events: none;
+}
+
+.expandButton {
+    z-index: 1000;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.cardHeaderLeft {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  flex: 1;
+}
+
+.cardHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cardTitle svg {
+  width: 20px;
+  height: 20px;
+}
+
+.cardTitle svg path {
+  stroke-width: 1.5px;
+}

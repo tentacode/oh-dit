@@ -1,0 +1,25 @@
+meta {
+  name: Get Secured Report
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{BASE_URL}}/api/secured-link/{{SECURED_LINK_TOKEN}}
+  body: formUrlEncoded
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{SECURED_LINK_JWT_TOKEN}}
+  ~Content-Type: application/json
+}
+
+body:form-urlencoded {
+  : 
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

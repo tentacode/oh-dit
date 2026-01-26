@@ -20,10 +20,15 @@ up: ## Start all containers
 	docker compose up -d
 
 down: ## Stop all containers
-	docker compose down
+
+www.serve: ## Start astro sever
+	cd www && npm run dev -- --port=1337
 
 www.connect: ## Open www container shell
 	docker compose exec www zsh
+
+app.serve: ## Start app sever
+	cd app && npm run dev -- --port 1339
 
 app.connect: ## Open app container shell
 	docker compose exec app sh

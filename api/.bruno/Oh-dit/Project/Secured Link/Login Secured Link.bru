@@ -1,0 +1,27 @@
+meta {
+  name: Login Secured Link
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{BASE_URL}}/api/secured-link/{{SECURED_LINK_TOKEN}}/login
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "password": "C'est Super 0hdit!"
+  }
+}
+
+script:post-response {
+  const responseJson = res.getBody();
+  bru.setEnvVar("SECURED_LINK_JWT_TOKEN", responseJson.token);
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

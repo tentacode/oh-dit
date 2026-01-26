@@ -1,32 +1,32 @@
 name: ohdit
 
 services:
-  www:
-    build:
-      context: ./www
-      dockerfile: Dockerfile
-    ports:
-      - "1337:4321"
-    volumes:
-      - ./www:/app
-    environment:
-      - NODE_ENV=development
-      - WATCHPACK_POLLING=true
-      - CHOKIDAR_USEPOLLING=true
-    depends_on:
-      - api
+  # www:
+  #   build:
+  #     context: ./www
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "1337:4321"
+  #   volumes:
+  #     - ./www:/app
+  #   environment:
+  #     - NODE_ENV=development
+  #     - WATCHPACK_POLLING=true
+  #     - CHOKIDAR_USEPOLLING=true
+  #   depends_on:
+  #     - api
 
-  app:
-    build:
-      context: ./app
-      dockerfile: Dockerfile
-      target: dev
-    ports:
-      - "1339:1339"
-    volumes:
-      - ./app:/app
-    depends_on:
-      - api
+  # app:
+  #   build:
+  #     context: ./app
+  #     dockerfile: Dockerfile
+  #     target: dev
+  #   ports:
+  #     - "1339:1339"
+  #   volumes:
+  #     - ./app:/app
+  #   depends_on:
+  #     - api
 
   api:
     build:

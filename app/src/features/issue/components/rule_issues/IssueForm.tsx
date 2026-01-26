@@ -11,9 +11,12 @@ import {
   TrashIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+
 import formStyles from "@/src/components/form/styles/form.module.css";
 import listStyles from "../../styles/issue_list.module.css";
-import SeverityInput from "../SeverityInput";
+import typographyStyle from "@/src/components/typography/styles/typography.module.css";
+
+import SeverityInput from "../severity/SeverityInput";
 import { useEffect, useRef, useState } from "react";
 import { ApiError, ApiValidationError } from "@/src/lib/react-query/apiClient";
 import { useCreateIssue } from "../../mutations/useCreateIssue";
@@ -23,7 +26,6 @@ import { useIssuesFormStateStore } from "../../store/issuesFormStateStore";
 import { Severity } from "../../types/IssueInterface";
 import { useUpdateIssue } from "../../mutations/useUpdateIssue";
 import { useDeleteIssue } from "../../mutations/useDeleteIssue";
-import typographyStyle from "@/src/components/typography/styles/typography.module.css";
 
 function getErrorsForField(
   fieldName: string,
@@ -42,9 +44,11 @@ function hasFieldError(
 export default function IssueForm({
   ruleUuid,
   screenUuid,
+  formContext,
 }: {
   ruleUuid: string;
   screenUuid: string;
+  formContext: "project_issues" | "rule_issues";
 }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -68,7 +72,7 @@ export default function IssueForm({
   
   const issueFormState = useIssuesFormStateStore((state) =>
     state.issuesFormState.find(
-      (ifs) => ifs.ruleUuid === ruleUuid && ifs.screenUuid === screenUuid
+      (ifs) => ifs.ruleUuid === ruleUuid && ifs.screenUuid === screenUuid && ifs.context === formContext
     )
   );
 
@@ -153,7 +157,7 @@ export default function IssueForm({
         }, 100);
       }
 
-      removeIssueFormState(ruleUuid, screenUuid);
+      removeIssueFormState(ruleUuid, screenUuid, formContext);
       setTextValue("");
     } catch (apiError) {
       if (apiError instanceof ApiError) {
@@ -178,7 +182,7 @@ export default function IssueForm({
   const resetForm = () => {
     setTextValue("");
     setSeverityValue("moderate");
-    removeIssueFormState(ruleUuid, screenUuid);
+    removeIssueFormState(ruleUuid, screenUuid, formContext);
 
     if (issueFormState?.mode === "edit"|| issueFormState?.mode === "duplicate"  || issueFormState?.mode === "delete") {
       setTimeout(() => {
@@ -205,7 +209,7 @@ export default function IssueForm({
         onSubmit={onSubmit}
       >
         <h4 className="h5">
-          Supprimer la recommandation {issueFormState?.issueId}
+          Supprimer la recommandation #{issueFormState?.issueId}
         </h4>
         <p id={`warning-text-${issueFormState?.issueId}`} className={formStyles.warningText}>
           <ExclamationTriangleIcon />

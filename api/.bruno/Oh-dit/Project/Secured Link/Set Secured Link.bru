@@ -1,0 +1,30 @@
+meta {
+  name: Set Secured Link
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{BASE_URL}}/api/projects/22222222-0000-4000-8000-000000000001/secured-link
+  body: formUrlEncoded
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{AUTH_TOKEN}}
+  ~Content-Type: application/json
+}
+
+body:form-urlencoded {
+  password: C'est Super 0hdit!
+}
+
+script:post-response {
+  const responseJson = res.getBody();
+  bru.setEnvVar("SECURED_LINK_TOKEN", responseJson.securedLinkToken);
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

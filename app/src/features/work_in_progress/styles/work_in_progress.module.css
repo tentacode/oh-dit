@@ -12,15 +12,6 @@
     font-size: 18px;
 }
 
-
-.wipText svg {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
-    margin-top: -3px;
-}
-
 .wipText p, .wipText h2, .wipText ul {
     margin-bottom: 15px;
 }

@@ -1,0 +1,10 @@
+.label {
+    font-family: "Lexed Deca", sans-serif;
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: #010101;
+}
+
+.requiredStar {
+    color: #BA0303;
+}

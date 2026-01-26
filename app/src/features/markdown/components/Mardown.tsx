@@ -1,19 +1,20 @@
 import "highlight.js/styles/a11y-dark.css";
 import MarkdownToJsx from "markdown-to-jsx";
 import MarkdownHeadingTag from "./MarkdownHeadingTag";
-import markdownStyles from '@/src/features/markdown/styles/markdown.module.css';
 import MarkdownCode from "./MarkdownCode";
 
 export default function Markdown({
   children,
+  className,
   minimalHeadingLevel,
 }: {
   children: string;
+  className?: string;
   minimalHeadingLevel?: number;
 }) {
   return (
       <MarkdownToJsx
-        className={markdownStyles.issueMarkdown}
+        className={className || ""}
         options={{ overrides: { 
           code: MarkdownCode,
           h1: { component: MarkdownHeadingTag, props: { level: 1, minimalLevel: minimalHeadingLevel || 1 } },

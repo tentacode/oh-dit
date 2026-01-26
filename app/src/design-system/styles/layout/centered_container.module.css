@@ -1,0 +1,25 @@
+.centeredContainer {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    height: fit-content;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 15px;
+    padding: 60px 40px;
+    padding-bottom: 40px;
+    gap: 20px;
+}
+
+.logo {
+    width: 200px;
+}
+
+@media (max-width: 650px) {
+    .centeredContainer {
+        margin: 40px;
+    }
+}
