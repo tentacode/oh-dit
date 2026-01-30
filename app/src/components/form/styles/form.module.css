@@ -29,7 +29,7 @@
     color: #010101;
 }
 
-.form input {
+.form input[type="text"], .form input[type="email"], .form input[type="password"], .form input[type="number"] {
     padding: 10px 15px;
     border: 3px solid #010101;
     border-radius: 10px;
@@ -39,7 +39,7 @@
     margin-bottom: 20px;
 }
 
-.form input:focus {
+.form input[type="text"]:focus, .form input[type="email"]:focus, .form input[type="password"]:focus, .form input[type="number"]:focus {
     outline: none;
     border-color: #E2026A;
 }

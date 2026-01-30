@@ -55,6 +55,7 @@ reset: ## Reset database (env=dev|test)
 	docker compose exec api bin/console doctrine:migrations:migrate --no-interaction --env=$(env)
 	docker compose exec api bin/console foundry:load-fixtures all -n --env=$(env)
 	docker compose exec api bin/console rgaa:import --env=$(env)
+	docker compose exec api bin/console rgaa:create-25 --env=$(env)
 	docker compose exec api bin/console cache:pool:clear --all --env=$(env)
 
 tests: ## Run all tests
