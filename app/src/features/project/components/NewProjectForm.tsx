@@ -19,6 +19,8 @@ import {
 import { useTeamsStateStore } from "../../authentication/store/teamsStore";
 import ErrorBox from "../../error_handling/components/ErrorBox";
 import { getProjectUrl } from "@/src/app/projet/routing";
+import { useFetchRuleSets } from "../../rule_set/queries/useFetchRuleSets";
+import { RuleSet } from "../../rule_set/types/RuleSetTypes";
 
 function getErrorsForField(
   fieldName: string,
@@ -62,11 +64,27 @@ export default function NewProjectForm() {
 
   const teamUuid = useTeamsStateStore((state) => state.currentTeamUuid!);
 
+  const { data: ruleSets, isLoading: isRuleSetsLoading, error: ruleSetsError } = useFetchRuleSets();
+
   const createProject = useCreateProject(teamUuid);
 
   const router = useRouter();
 
   const formRef = useRef<HTMLFormElement>(null);
+
+  if (isRuleSetsLoading) {
+    return null;
+  }
+
+  if (ruleSetsError) {
+    return (
+      <ErrorBox message="Une erreur est survenue lors du chargement des référentiels d'audit." />
+    );
+  }
+
+  if (!teamUuid) {
+    return <ErrorBox message="Aucune équipe sélectionnée." />;
+  }
 
   if (!teamUuid) {
     return <ErrorBox message="Aucune équipe sélectionnée." />;
@@ -84,14 +102,17 @@ export default function NewProjectForm() {
     const name = formData.get("name") as string;
     const url = formData.get("url") as string;
     const screens = pages;
+    const ruleSetUuid = formData.get("ruleSets") as string;
 
     try {
       const newProject = await createProject.mutateAsync({
         teamUuid,
         name,
         url,
+        ruleSetUuid,
         screens,
       });
+
       router.push(getProjectUrl.dashboard(newProject.uuid));
     } catch (apiError) {
       if (apiError instanceof ApiError) {
@@ -282,19 +303,24 @@ export default function NewProjectForm() {
             </p>
           </legend>
           <ul>
-            <li>
-              <div className={styles.inputContainer}>
-                <input
-                  type="checkbox"
-                  id="ruleSet-rgaa"
-                  name="ruleSets"
-                  defaultValue="rgaa"
-                  disabled={true}
-                  checked={true}
-                />
-                <label htmlFor="ruleSet-rgaa">RGAA 4.1.2</label>
-              </div>
-            </li>
+            {ruleSets?.map((ruleSet: RuleSet) => (
+              <li key={ruleSet.uuid}>
+                <div className={styles.inputContainer} style={{ display: "flex",  alignItems: "flex-start", gap: "15px", flexDirection: "row" }}>
+                  <input
+                    type="radio"
+                    id={`ruleSet-${ruleSet.uuid}`}
+                    name="ruleSets"
+                    style={{ marginTop: "7px" }}
+                    value={ruleSet.uuid}
+                    defaultChecked={ruleSet.name === "RGAA"}
+                  />
+                  <label htmlFor={`ruleSet-${ruleSet.uuid}`}>
+                    {ruleSet.name} {ruleSet.version ? `- v${ruleSet.version}` : ""}<br />
+                    <em style={{maxWidth: '550px', display: 'inline-block'}}>{ruleSet.description}</em>
+                  </label>
+                </div>
+              </li>
+            ))}
           </ul>
         </fieldset>
 

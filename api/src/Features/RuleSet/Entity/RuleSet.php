@@ -21,6 +21,8 @@ class RuleSet implements HasUuidInterface, SerializableInterface
 {
     public const RGAA_NAME = 'RGAA';
 
+    public const RGAA_25_NAME = 'RGAA 25';
+
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
     #[Assert\Uuid(message: 'L\'UUID du standard doit être un UUID valide.')]

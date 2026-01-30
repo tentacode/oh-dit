@@ -14,6 +14,7 @@ export interface CreateProjectPayload {
   teamUuid: string;
   name: string;
   url: string;
+  ruleSetUuid: string;
   screens: CreateScreenPayload[];
 }
 

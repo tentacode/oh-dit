@@ -19,6 +19,9 @@ final class CreateProjectRequest
         #[Assert\NotBlank(message: 'Le nom du projet est obligatoire.')]
         public readonly ?string $name,
         public readonly string $url = '',
+        #[Assert\NotBlank(message: 'Le référentiel est obligatoire.')]
+        #[Assert\Uuid(message: 'Le référentiel doit être un UUID valide.')]
+        public readonly ?string $ruleSetUuid = null,
         #[Assert\Count(min: 1, minMessage: 'Au moins une page est requise.')]
         #[Assert\All(
             new Assert\Collection(

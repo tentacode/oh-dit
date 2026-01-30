@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Features\Project\tests\Controller;
 
 use App\Features\Authentication\Fixture\Story\TeamUsersStory;
+use App\Features\RuleSet\Fixture\Story\RuleSetsStory;
 use App\Infrastructure\PHPUnit\ApiRequest;
 use App\Infrastructure\PHPUnit\LoginRequest;
 use App\Infrastructure\PHPUnit\ResponseAssertions;
@@ -29,6 +30,7 @@ final class CreateProjectControllerTest extends WebTestCase
                 'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'name' => 'Mon nouveau projet',
                 'url' => 'https://www.monprojet.empire',
+                'ruleSetUuid' => RuleSetsStory::RULE_SET_EMPIRE_UUID,
                 'screens' => [[
                     'name' => 'Page 1',
                     'url' => '/page-1',
@@ -84,9 +86,9 @@ final class CreateProjectControllerTest extends WebTestCase
                 ],
             ],
             'ruleSet' => [
-                'uuid' => '@uuid@',
-                'name' => 'RGAA',
-                'version' => '4.1.2',
+                'uuid' => RuleSetsStory::RULE_SET_EMPIRE_UUID,
+                'name' => 'IWSQA',
+                'version' => '1.3.3.7',
             ],
         ], $response, Response::HTTP_CREATED);
     }
@@ -124,6 +126,7 @@ final class CreateProjectControllerTest extends WebTestCase
                 'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'name' => 'Mon nouveau projet',
                 'url' => 'https://www.monprojet.empire',
+                'ruleSetUuid' => RuleSetsStory::RULE_SET_EMPIRE_UUID,
                 'screens' => [[
                     'name' => 'Page 1',
                     'url' => '/page-1',
@@ -172,6 +175,7 @@ final class CreateProjectControllerTest extends WebTestCase
                 'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'project' => 'Ratatouille remake',
                 'url' => 'https://www.ratatouille.remake',
+                'ruleSetUuid' => RuleSetsStory::RULE_SET_EMPIRE_UUID,
                 'screens' => [
                     [
                         'name' => 'Page 1',
@@ -203,6 +207,7 @@ final class CreateProjectControllerTest extends WebTestCase
                 'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'name' => '',
                 'url' => 'https://www.ratatouille.remake',
+                'ruleSetUuid' => RuleSetsStory::RULE_SET_EMPIRE_UUID,
                 'screens' => [
                     [
                         'name' => 'Page 1',
@@ -234,6 +239,7 @@ final class CreateProjectControllerTest extends WebTestCase
                 'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'name' => 'New Project',
                 'url' => 'https://www.new.project',
+                'ruleSetUuid' => RuleSetsStory::RULE_SET_EMPIRE_UUID,
                 'screens' => [],
             ],
             [
@@ -254,6 +260,7 @@ final class CreateProjectControllerTest extends WebTestCase
                 'teamUuid' => TeamUsersStory::TEAM_THE_EMPIRE_UUID,
                 'name' => 'New Project',
                 'url' => 'https://www.new.project',
+                'ruleSetUuid' => RuleSetsStory::RULE_SET_EMPIRE_UUID,
                 'screens' => [
                     [
                         'name' => 'Page 1',

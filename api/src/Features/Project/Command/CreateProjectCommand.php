@@ -34,7 +34,7 @@ final class CreateProjectCommand
         }
 
         $ruleSet = $this->entityManager->getRepository(RuleSet::class)
-            ->findOneByName(RuleSet::RGAA_NAME);
+            ->find($createProjectRequest->ruleSetUuid);
 
         Assert::isInstanceOf($ruleSet, RuleSet::class, 'Default RuleSet "RGAA" not found in the database.');
 
