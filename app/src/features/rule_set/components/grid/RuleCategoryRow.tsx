@@ -9,6 +9,7 @@ import {
 import { useAuditSettingsStore } from "@/src/features/audit/store/auditSettingsStore";
 
 interface RuleCategoryProps {
+  projectUuid: string;
   ruleCategory: {
     uuid: string;
     name: string;
@@ -18,9 +19,14 @@ interface RuleCategoryProps {
   screenUuid: string;
 }
 
-export default function RuleCategoryRow({ ruleCategory, screenUuid }: RuleCategoryProps) {
+export default function RuleCategoryRow({ projectUuid, ruleCategory, screenUuid }: RuleCategoryProps) {
   const isCollapsed = useAuditSettingsStore(
-    (state) => state.isRuleCategoryCollapsed(ruleCategory.uuid)
+    (state) => state.collapsedRuleCategories.some(
+      (c) =>
+        c.projectUuid === projectUuid &&
+        c.screenUuid === screenUuid &&
+        c.categoryUuid === ruleCategory.uuid
+    )
   );
 
   const toggleCollapse = useAuditSettingsStore(
@@ -35,7 +41,7 @@ export default function RuleCategoryRow({ ruleCategory, screenUuid }: RuleCatego
           aria-expanded={isCollapsed ? "false" : "true"}
           aria-controls={`category-rules-${ruleCategory.uuid}`}
           className={styles.accordionButton}
-          onClick={() => toggleCollapse(ruleCategory.uuid)}
+          onClick={() => toggleCollapse(projectUuid, screenUuid, ruleCategory.uuid)}
         >
           {isCollapsed ? <ChevronDownIcon /> : <ChevronUpIcon />}
           <h2>

@@ -73,6 +73,7 @@ export default function AuditGrid({ screenUuid }: { screenUuid: string }) {
             {ruleSet.ruleCategories.map((ruleCategory) => {
               return (
                 <RuleCategoryRow
+                  projectUuid={project.uuid}
                   screenUuid={screenUuid}
                   ruleCategory={ruleCategory}
                   key={ruleCategory.uuid}
