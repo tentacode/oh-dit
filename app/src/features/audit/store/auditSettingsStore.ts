@@ -6,14 +6,19 @@ interface ProjectSettings {
   currentScreenUuid: string | null;
 }
 
+export interface CollapsedRuleCategory {
+  projectUuid: string;
+  screenUuid: string;
+  categoryUuid: string;
+}
+
 interface AuditSettings {
   projectsSettings: ProjectSettings[];
-  collapsedRuleCategories: Record<string, boolean>; // uuid -> isCollapsed
+  collapsedRuleCategories: CollapsedRuleCategory[];
 }
 
 interface AuditSettingsStore extends AuditSettings {
-  toggleRuleCategoryCollapse: (ruleCategoryUuid: string) => void;
-  isRuleCategoryCollapsed: (ruleCategoryUuid: string) => boolean;
+  toggleRuleCategoryCollapse: (projectUuid: string, screenUuid: string, ruleCategoryUuid: string) => void;
   setProjectSetting: (settings: ProjectSettings) => void;
   getProjectSetting: (projectUuid: string) => ProjectSettings;
   reset: () => void;
@@ -21,7 +26,7 @@ interface AuditSettingsStore extends AuditSettings {
 
 const initialState: AuditSettings = {
   projectsSettings: [],
-  collapsedRuleCategories: {},
+  collapsedRuleCategories: [],
 };
 
 export const useAuditSettingsStore = create<AuditSettingsStore>()(
@@ -30,13 +35,36 @@ export const useAuditSettingsStore = create<AuditSettingsStore>()(
       ...initialState,
 
       // actions
-      toggleRuleCategoryCollapse: (ruleCategoryUuid) => {
-        set((state) => ({
-          collapsedRuleCategories: {
-            ...state.collapsedRuleCategories,
-            [ruleCategoryUuid]: !state.collapsedRuleCategories[ruleCategoryUuid],
-          },
-        }));
+      toggleRuleCategoryCollapse: (projectUuid, screenUuid, ruleCategoryUuid) => {
+        set((state) => {
+          const isCurrentlyCollapsed = state.collapsedRuleCategories.some(
+            (c) =>
+              c.projectUuid === projectUuid &&
+              c.screenUuid === screenUuid &&
+              c.categoryUuid === ruleCategoryUuid
+          );
+
+          let updatedCollapsedCategories: CollapsedRuleCategory[];
+          if (isCurrentlyCollapsed) {
+            updatedCollapsedCategories = state.collapsedRuleCategories.filter(
+              (c) =>
+                !(
+                  c.projectUuid === projectUuid &&
+                  c.screenUuid === screenUuid &&
+                  c.categoryUuid === ruleCategoryUuid
+                )
+            );
+          } else {
+            updatedCollapsedCategories = [
+              ...state.collapsedRuleCategories,
+              { projectUuid, screenUuid, categoryUuid: ruleCategoryUuid },
+            ];
+          }
+
+          return {
+            collapsedRuleCategories: updatedCollapsedCategories,
+          };
+        });
       },
 
       setProjectSetting: (settings) => {
@@ -69,15 +97,20 @@ export const useAuditSettingsStore = create<AuditSettingsStore>()(
         return { projectUuid: projectUuid, currentScreenUuid: null };
       },
 
-      reset: () => set(initialState),
-
-      // selectors
-      isRuleCategoryCollapsed: (ruleCategoryUuid) => {
-        return get().collapsedRuleCategories[ruleCategoryUuid] ?? false; // Par défaut: non-collapsed
-      },
+      reset: () => set(initialState)
     }),
     {
       name: "ohdit-audit-settings",
+      version: 1,
+      migrate: (persistedState: unknown, version: number) => {
+        const state = persistedState as AuditSettings;
+
+        if (version === 0) {
+          state.collapsedRuleCategories = [];
+        }
+        
+        return state;
+      },
     }
   )
 );

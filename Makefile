@@ -70,13 +70,13 @@ reset: ## Reset database (env=dev|test)
 	docker compose exec api bin/console cache:pool:clear --all --env=$(env)
 
 tests: ## Run all tests
-	docker compose exec www eslint . --fix && \
+	cd www && npm run lint . --fix && \
 	echo "$(GREEN)www eslint passed!$(NC)" && \
-	docker compose exec www npx prettier --write src && \
+	npx prettier --write src && \
 	echo "$(GREEN)www prettier passed!$(NC)" && \
-	docker compose exec app npm run lint-fix && \
+	cd ../app && npm run lint-fix && \
 	echo "$(GREEN)app eslint passed!$(NC)" && \
-	docker compose exec api bin/ecs --fix && \
+	cd .. && docker compose exec api bin/ecs --fix && \
 	echo "$(GREEN)ecs passed!$(NC)" && \
 	docker compose exec api bin/rector process src && \
 	echo "$(GREEN)rector passed!$(NC)" && \
@@ -84,8 +84,9 @@ tests: ## Run all tests
 	echo "$(GREEN)phpstan passed!$(NC)" && \
 	docker compose exec api bin/phpunit --testdox --fail-on-warning --fail-on-risky --fail-on-incomplete --fail-on-skipped && \
 	echo "$(GREEN)phpunit passed!$(NC)" && \
-	docker compose exec app npm run typescript && \
-	echo "$(GREEN)app typescript passed!$(NC)"
+	cd app && npm run typescript && \
+	echo "$(GREEN)app typescript passed!$(NC)" \
+	&& say -v 'good news' 'Okay'
 
 destroy-docker: ## Remove all containers and volumes
 	@echo "$(YELLOW)Removing all containers and volumes...$(NC)"

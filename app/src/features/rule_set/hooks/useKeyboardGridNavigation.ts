@@ -4,11 +4,12 @@ import {
   RuleSet,
   useAuditStore,
 } from "../../audit/store/auditStore";
-import { useAuditSettingsStore } from "../../audit/store/auditSettingsStore";
+import { CollapsedRuleCategory, useAuditSettingsStore } from "../../audit/store/auditSettingsStore";
 import { getRuleHelpButtonId } from "../components/grid/buttons/RuleHelpButton";
 import { getCommentsButtonId } from "../components/grid/buttons/CommentsButton";
 import { getIssuesButtonId } from "../components/grid/buttons/IssuesButton";
 import { getComplianceButtonStatusId } from "../components/grid/buttons/ComplianceStatus";
+import { useShallow } from "zustand/shallow";
 
 type Direction = "up" | "down" | "left" | "right";
 
@@ -27,11 +28,16 @@ export function getDirectionFromKey(key: string): Direction {
   }
 }
 
-export function useKeyboardGridNavigation() {
+export function useKeyboardGridNavigation({projectUuid, screenUuid}: {projectUuid: string, screenUuid: string}) {
   const activeElement = useAuditStore((state) => state.activeElement);
   const ruleSet = useAuditStore((state) => state.ruleSet);
+
   const collapsedRuleCategorieUuids = useAuditSettingsStore(
-    (state) => state.collapsedRuleCategories
+    useShallow((state) =>
+      state.collapsedRuleCategories.filter(
+        (c) => c.projectUuid === projectUuid && c.screenUuid === screenUuid
+      )
+    )
   );
 
   const navigateToRuleOrCategory = useCallback<
@@ -89,7 +95,7 @@ export function useKeyboardGridNavigation() {
 function getAboveFocusedElementId(
   activeElement: ActiveElement,
   ruleSet: RuleSet | null,
-  collapsedRuleCategorieUuids: Record<string, boolean>
+  collapsedRuleCategorieUuids: CollapsedRuleCategory[]
 ): string | null {
   if (!ruleSet) {
     throw new Error("RuleSet cannot be null");
@@ -149,10 +155,12 @@ function getAboveFocusedElementId(
 function getAboveRuleUuid(
   currentRuleUuid: string,
   ruleSet: RuleSet,
-  collapsedRuleCategorieUuids: Record<string, boolean>
+  collapsedRuleCategorieUuids: CollapsedRuleCategory[]
 ): string | null {
   const ruleCategories = ruleSet.ruleCategories.filter(
-    (category) => !collapsedRuleCategorieUuids[category.uuid]
+    (category) => !collapsedRuleCategorieUuids.some(
+      (c) => c.categoryUuid === category.uuid
+    )
   );
   let previousRuleUuid: string | null = null;
 
@@ -172,7 +180,7 @@ function getAboveRuleUuid(
 function getBelowFocusedElementId(
   activeElement: ActiveElement,
   ruleSet: RuleSet | null,
-  collapsedRuleCategorieUuids: Record<string, boolean>
+  collapsedRuleCategorieUuids: CollapsedRuleCategory[]
 ): string | null {
   if (!ruleSet) {
     throw new Error("RuleSet cannot be null");
@@ -232,10 +240,12 @@ function getBelowFocusedElementId(
 function getBelowRuleUuid(
   currentRuleUuid: string,
   ruleSet: RuleSet,
-  collapsedRuleCategorieUuids: Record<string, boolean>
+  collapsedRuleCategorieUuids: CollapsedRuleCategory[]
 ): string | null {
   const ruleCategories = ruleSet.ruleCategories.filter(
-    (category) => !collapsedRuleCategorieUuids[category.uuid]
+    (category) => !collapsedRuleCategorieUuids.some(
+      (c) => c.categoryUuid === category.uuid
+    )
   );
 
   let previousRuleUuid: string | null = null;

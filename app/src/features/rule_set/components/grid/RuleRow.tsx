@@ -48,7 +48,9 @@ export default function RuleRow({
 
   const [activeTab, setActiveTab] = useState<ActiveTab | null>(null);
 
-  const { navigateToRuleOrCategory } = useKeyboardGridNavigation();
+  const { navigateToRuleOrCategory } = useKeyboardGridNavigation(
+    {projectUuid: project?.uuid || "", screenUuid}
+  );
 
   if (!project || !screenUuid) {
     return null;
