@@ -26,6 +26,19 @@ export default function CategoryComplianceStatus({
   const createCompliance = useCreateCompliance();
   const updateProjectMetrics = useUpdateProjectMetrics();
 
+  const toggleCollapse = useAuditSettingsStore(
+    (state) => state.toggleRuleCategoryCollapse
+  );
+
+  const categoryCollapsed = useAuditSettingsStore(
+    (state) => state.collapsedRuleCategories.some(
+      (c) =>
+        c.projectUuid === project?.uuid &&
+        c.screenUuid === getProjectSetting(project?.uuid || "").currentScreenUuid &&
+        c.categoryUuid === ruleCategoryUuid
+    )
+  );
+
   if (!ruleSet || !compliances || !project) {
     return null;
   }
@@ -74,7 +87,11 @@ export default function CategoryComplianceStatus({
 
   const setAllCompliancesToNotApplicable = () => {
     if (status !== NotApplicableStatus.ENABLED) {
-      return;
+      return;  
+    }
+
+    if (!categoryCollapsed) {
+      toggleCollapse(project.uuid, screenUuid, ruleCategory.uuid);
     }
 
     rulesInCategory.forEach(async (rule) => {
