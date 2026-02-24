@@ -21,6 +21,6 @@ final class CreateComplianceRequest
     public string $screenUuid;
 
     #[Assert\NotBlank(message: 'Le statut est obligatoire.')]
-    #[Assert\Choice(choices: ['compliant', 'non_compliant', 'not_applicable'], message: 'Le statut doit être "compliant", "non_compliant" ou "not_applicable".')]
+    #[Assert\Choice(choices: ['none', 'compliant', 'non_compliant', 'not_applicable'], message: 'Le statut doit être "none", "compliant", "non_compliant" ou "not_applicable".')]
     public string $status;
 }

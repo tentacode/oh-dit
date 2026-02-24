@@ -1,4 +1,4 @@
-export type ComplianceStatus = 'compliant' | 'non_compliant' | 'not_applicable';
+export type ComplianceStatus = 'none' | 'compliant' | 'non_compliant' | 'not_applicable';
 
 export interface ComplianceInterface {
     uuid: string;

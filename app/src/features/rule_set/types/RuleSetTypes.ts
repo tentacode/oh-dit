@@ -22,4 +22,4 @@ export interface Rule {
     complianceStatus: ComplianceStatus;
 }
 
-export type ComplianceStatus = 'compliant' | 'non_compliant' | 'not_applicable';
+export type ComplianceStatus = 'none' | 'compliant' | 'non_compliant' | 'not_applicable';

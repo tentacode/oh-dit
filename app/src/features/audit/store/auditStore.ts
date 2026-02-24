@@ -26,7 +26,7 @@ export interface Compliance {
   ruleUuid: string;
   projectUuid: string;
   screenUuid: string;
-  status: "compliant" | "non_compliant" | "not_applicable";
+  status: "none" | "compliant" | "non_compliant" | "not_applicable";
 }
 
 export interface Issue {

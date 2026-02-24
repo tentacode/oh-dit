@@ -64,8 +64,13 @@ export default function ComplianceStatus({
     }
   }
 
-  const changeComplianceStatus = async (newStatus: ComplianceStatusType) => {
+  const changeComplianceStatus = async (clickedStatus: ComplianceStatusType) => {
     if (!projectUuid) return;
+
+    let newStatus = clickedStatus;
+    if (newStatus === compliance?.status) {
+      newStatus = "none";
+    }
 
     setActiveElement({ ruleUuid: ruleUuid, screenUuid: screenUuid });
 
@@ -83,7 +88,7 @@ export default function ComplianceStatus({
       onNonCompliantClick();
     }
 
-    switch (newStatus) {
+    switch (clickedStatus) {
       case "compliant":
         setActiveElement({
           ruleUuid: ruleUuid,
