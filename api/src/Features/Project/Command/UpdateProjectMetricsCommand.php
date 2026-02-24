@@ -101,7 +101,7 @@ final class UpdateProjectMetricsCommand
                     NULLIF(COUNT(*) FILTER (WHERE status IN ('compliant', 'non_compliant')), 0)
                 AS compliance_rate
             FROM project_screen s
-            LEFT JOIN distinct_compliance c ON c.screen_uuid = s.uuid
+            LEFT JOIN distinct_compliance c ON c.screen_uuid = s.uuid AND c.status <> 'none'
             WHERE s.project_uuid = :projectUuid
             GROUP BY s.uuid;
             SQL;
