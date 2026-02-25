@@ -2,8 +2,9 @@ import { useAuditStore } from "@/src/features/audit/store/auditStore";
 import RuleCategoryRow from "./RuleCategoryRow";
 
 import styles from "../../styles/audit_grid.module.css";
+import typographyStyle from "@/src/design-system/styles/typography.module.css";
 import PageSelect from "@/src/features/project/components/PageSelect";
-import { CheckIcon, ClockIcon, LinkIcon } from "@heroicons/react/24/outline";
+import { ArrowTopRightOnSquareIcon, CheckIcon, ClockIcon, LinkIcon } from "@heroicons/react/24/outline";
 import { useAuditSettingsStore } from "@/src/features/audit/store/auditSettingsStore";
 
 export default function AuditGrid({ screenUuid }: { screenUuid: string }) {
@@ -32,8 +33,14 @@ export default function AuditGrid({ screenUuid }: { screenUuid: string }) {
 
   let screenUrl = currentScreen.url;
   if (screenUrl && !screenUrl.startsWith("http") && project.url) {
-    screenUrl = new URL(screenUrl, project.url).toString()
+    try {
+      screenUrl = new URL(screenUrl, project.url).toString();
+    } catch (e) {
+      // if URL construction fails, we can just keep the original screenUrl which might be a relative path or an invalid URL.
+    }
   }
+
+  const displayPageLink = screenUrl && screenUrl.startsWith("http");
 
   return (
     <>
@@ -46,7 +53,11 @@ export default function AuditGrid({ screenUuid }: { screenUuid: string }) {
               <p className={styles.settingDetail}>
                 <LinkIcon />
                 <span>
-                  Adresse de la page : <a href={screenUrl}>{screenUrl}</a>
+                  Adresse de la page :{" "}
+                  {displayPageLink ? (<a aria-label={`${screenUrl}, nouvelle fenêtre`} className={typographyStyle.externalLink} href={screenUrl}>
+                    {screenUrl}
+                    <ArrowTopRightOnSquareIcon />
+                    </a>) : (screenUrl)}
                 </span>
               </p>
             )}

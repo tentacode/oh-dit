@@ -1,9 +1,7 @@
-import {
-  InformationCircleIcon,
-  LinkIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowTopRightOnSquareIcon, InformationCircleIcon, LinkIcon } from "@heroicons/react/24/outline";
 import { useAuditStore } from "../../audit/store/auditStore";
 import styles from "../styles/project_header.module.css";
+import typographyStyle from "@/src/design-system/styles/typography.module.css";
 import RuleSetBadgeCard from "./BadgeCards/RuleSetBadgeCard";
 import ProgressBadgeCard from "./BadgeCards/ProgressBadgeCard";
 import ComplianceRateBadgeCard from "./BadgeCards/ComplianceRateBadgeCard";
@@ -16,6 +14,11 @@ export default function ProjectDetailHeader() {
     return null;
   }
 
+  let projectUrl = project.url;
+  if (projectUrl && !/^https?:\/\//i.test(projectUrl)) {
+    projectUrl = `https://${projectUrl}`;
+  }
+
   return (
     <div className="horizontalGutter">
       <h1
@@ -25,10 +28,14 @@ export default function ProjectDetailHeader() {
         Audit — {project.name}
       </h1>
 
-      {project.url && (
+      {projectUrl && (
         <p className={styles.siteUrl}>
           <LinkIcon />
-          Adresse du projet : <a href={project.url}>{project.url}</a>
+          Adresse du projet :{" "}
+          <a aria-label={`${projectUrl}, nouvelle fenêtre`} className={typographyStyle.externalLink} href={projectUrl}>
+            {projectUrl}
+            <ArrowTopRightOnSquareIcon />
+          </a>
         </p>
       )}
 
