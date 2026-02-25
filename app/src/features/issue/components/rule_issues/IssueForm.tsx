@@ -14,7 +14,7 @@ import {
 
 import formStyles from "@/src/components/form/styles/form.module.css";
 import listStyles from "../../styles/issue_list.module.css";
-import typographyStyle from "@/src/components/typography/styles/typography.module.css";
+import typographyStyle from "@/src/design-system/styles/typography.module.css";
 
 import SeverityInput from "../severity/SeverityInput";
 import { useEffect, useRef, useState } from "react";

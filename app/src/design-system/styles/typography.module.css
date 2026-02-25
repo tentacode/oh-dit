@@ -25,8 +25,8 @@
 
 .externalLink svg {
     display: inline;
-    width: 24px;
-    height: 24px;
+    width: 1.1em;
+    height: 1.1em;
     margin-left: 5px;
     margin-top: -5px;
     vertical-align: middle;
@@ -53,6 +53,21 @@
 
 .info svg path {
     stroke-width: 2px;
+}
+
+.indicative {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    display: flex;
+}
+
+.indicative svg {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    margin-top: 4px;
+    flex-shrink: 0;
 }
 
 .italic {

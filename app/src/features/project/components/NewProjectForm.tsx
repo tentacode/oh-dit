@@ -1,5 +1,7 @@
 import CallToActionButton from "@/src/components/form/CallToActionButon";
 import styles from "../../../components/form/styles/form.module.css";
+import typographyStyle from "@/src/design-system/styles/typography.module.css";
+
 import {
   DocumentPlusIcon,
   TrashIcon,
@@ -8,6 +10,7 @@ import {
   ArrowDownIcon,
   PlusIcon,
   XMarkIcon,
+  ArrowTopRightOnSquareIcon,
 } from "@heroicons/react/24/outline";
 import { FormEvent, useRef, useState } from "react";
 import { ApiError, ApiValidationError } from "@/src/lib/react-query/apiClient";
@@ -24,14 +27,14 @@ import { RuleSet } from "../../rule_set/types/RuleSetTypes";
 
 function getErrorsForField(
   fieldName: string,
-  errors: ApiValidationError[]
+  errors: ApiValidationError[],
 ): ApiValidationError[] {
   return errors.filter((error) => error.propertyPath === fieldName);
 }
 
 function hasFieldError(
   fieldName: string,
-  errors: ApiValidationError[]
+  errors: ApiValidationError[],
 ): boolean {
   return getErrorsForField(fieldName, errors).length > 0;
 }
@@ -64,7 +67,11 @@ export default function NewProjectForm() {
 
   const teamUuid = useTeamsStateStore((state) => state.currentTeamUuid!);
 
-  const { data: ruleSets, isLoading: isRuleSetsLoading, error: ruleSetsError } = useFetchRuleSets();
+  const {
+    data: ruleSets,
+    isLoading: isRuleSetsLoading,
+    error: ruleSetsError,
+  } = useFetchRuleSets();
 
   const createProject = useCreateProject(teamUuid);
 
@@ -118,9 +125,9 @@ export default function NewProjectForm() {
       if (apiError instanceof ApiError) {
         setErrors(apiError.errors || []);
 
-        document.getElementById(
-          apiError.errors?.[0]?.propertyPath || ""
-        )?.focus();
+        document
+          .getElementById(apiError.errors?.[0]?.propertyPath || "")
+          ?.focus();
       }
     } finally {
       setIsLoading(false);
@@ -131,7 +138,7 @@ export default function NewProjectForm() {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    
+
     const pageName = formData.get("page-name") as string;
     const pageUrl = formData.get("page-url") as string;
 
@@ -154,7 +161,7 @@ export default function NewProjectForm() {
       const newPages = pages.map((page) =>
         page.rank === editPageRank
           ? { ...page, name: pageName, url: pageUrl }
-          : page
+          : page,
       );
       setPages(newPages);
       setEditPageRank(null);
@@ -220,7 +227,7 @@ export default function NewProjectForm() {
     setEditPageRank(rank);
 
     document.getElementById("page-name")?.focus();
-  }
+  };
 
   const removePage = (rank: number) => {
     const newPages = pages
@@ -305,7 +312,15 @@ export default function NewProjectForm() {
           <ul>
             {ruleSets?.map((ruleSet: RuleSet) => (
               <li key={ruleSet.uuid}>
-                <div className={styles.inputContainer} style={{ display: "flex",  alignItems: "flex-start", gap: "15px", flexDirection: "row" }}>
+                <div
+                  className={styles.inputContainer}
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "15px",
+                    flexDirection: "row",
+                  }}
+                >
                   <input
                     type="radio"
                     id={`ruleSet-${ruleSet.uuid}`}
@@ -315,8 +330,12 @@ export default function NewProjectForm() {
                     defaultChecked={ruleSet.name === "RGAA"}
                   />
                   <label htmlFor={`ruleSet-${ruleSet.uuid}`}>
-                    {ruleSet.name} {ruleSet.version ? `- v${ruleSet.version}` : ""}<br />
-                    <em style={{maxWidth: '550px', display: 'inline-block'}}>{ruleSet.description}</em>
+                    {ruleSet.name}{" "}
+                    {ruleSet.version ? `- v${ruleSet.version}` : ""}
+                    <br />
+                    <em style={{ maxWidth: "550px", display: "inline-block" }}>
+                      {ruleSet.description}
+                    </em>
                   </label>
                 </div>
               </li>
@@ -333,8 +352,13 @@ export default function NewProjectForm() {
             :
             <p className={styles.fieldsetInfo}>
               Au moins une page est requise. Les pages sont pré-remplies avec{" "}
-              <a href="https://accessibilite.numerique.gouv.fr/obligations/evaluation-conformite/">
+              <a
+                aria-label="l'échantillon de pages par défaut nécessaires à un audit RGAA, nouvelle fenêtre"
+                className={typographyStyle.externalLink}
+                href="https://accessibilite.numerique.gouv.fr/obligations/evaluation-conformite/"
+              >
                 l'échantillon de pages par défaut nécessaires à un audit RGAA
+                <ArrowTopRightOnSquareIcon />
               </a>
               , vous pourrez aussi les modifier plus tard.
             </p>
@@ -444,7 +468,7 @@ export default function NewProjectForm() {
                       className={styles.fieldError}
                     >
                       {getErrorsForField(`screens[${index}]`, errors).map(
-                        (error) => error.message
+                        (error) => error.message,
                       )}
                     </p>
                   )}
@@ -472,7 +496,7 @@ export default function NewProjectForm() {
         <input
           aria-required={true}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            cleanErrors("page-name")
+            cleanErrors("page-name");
             setPageName(e.target.value);
           }}
           id="page-name"
@@ -490,7 +514,7 @@ export default function NewProjectForm() {
         {hasFieldError("page-name", errors) && (
           <p id="page-name-error" className={styles.fieldError}>
             {getErrorsForField("page-name", errors).map(
-              (error) => error.message
+              (error) => error.message,
             )}
           </p>
         )}
@@ -515,52 +539,55 @@ export default function NewProjectForm() {
         {hasFieldError("page-url", errors) && (
           <p id="page-url-error" className={styles.fieldError}>
             {getErrorsForField("page-url", errors).map(
-              (error) => error.message
+              (error) => error.message,
             )}
           </p>
         )}
 
         <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
-        <CallToActionButton
-          type="submit"
-          className={`${styles.fieldsetButton}`}
-        >
-          {editPageRank === null && (
-            <>
-              <DocumentPlusIcon />
-              Ajouter une page
-            </>
-          )}
-          {editPageRank !== null && (
-            <>
-              <PencilSquareIcon />
-              Modifier la page
-            </>
-          )}
-        </CallToActionButton>
-
-        {editPageRank !== null && (
           <CallToActionButton
-            type="button"
+            type="submit"
             className={`${styles.fieldsetButton}`}
-            onClick={() => {
-              setPageName("");
-              setPageUrl("");
-              setEditPageRank(null);
-
-              document.getElementById("page-name")?.focus();
-            }}
           >
-            <XMarkIcon />
-            Annuler
+            {editPageRank === null && (
+              <>
+                <DocumentPlusIcon />
+                Ajouter une page
+              </>
+            )}
+            {editPageRank !== null && (
+              <>
+                <PencilSquareIcon />
+                Modifier la page
+              </>
+            )}
           </CallToActionButton>
-        )}
+
+          {editPageRank !== null && (
+            <CallToActionButton
+              type="button"
+              className={`${styles.fieldsetButton}`}
+              onClick={() => {
+                setPageName("");
+                setPageUrl("");
+                setEditPageRank(null);
+
+                document.getElementById("page-name")?.focus();
+              }}
+            >
+              <XMarkIcon />
+              Annuler
+            </CallToActionButton>
+          )}
         </div>
       </form>
 
       <hr style={{ margin: "20px 0" }} />
 
-      <CallToActionButton disabled={isLoading} onClick={() => formRef.current?.requestSubmit()}>
+      <CallToActionButton
+        disabled={isLoading}
+        onClick={() => formRef.current?.requestSubmit()}
+      >
         <PlusIcon />
         Ajouter l'audit
       </CallToActionButton>
