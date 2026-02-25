@@ -1,6 +1,7 @@
 import { getProjectUrl } from "@/src/app/projet/routing";
 import tableStyles from "../../../components/table/styles/table.module.css";
-import typographyStyles from "../../../components/typography/styles/typography.module.css";
+import typographyStyle from "@/src/design-system/styles/typography.module.css";
+
 import {
   CheckBadgeIcon,
   CheckIcon,
@@ -151,7 +152,7 @@ export function AuditDataPerScreen({
           ))}
         </tbody>
       </table>
-      <p className={typographyStyles.info}>
+      <p className={typographyStyle.indicative}>
         <InformationCircleIcon width={18} />
         <span>
           Les taux de conformités par page sont donnés à titre indicatif. Seul

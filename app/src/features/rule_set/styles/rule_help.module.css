@@ -21,6 +21,10 @@
     gap: 8px;
 }
 
+.markdownContainer ul p {
+    margin: 0;
+} 
+
 .markdownContainer h4 {
     font-size: 1.3em;
     font-weight: 500;
