@@ -5,11 +5,11 @@ import IssuesListEmpty from "@/src/features/issue/components/project_issues/Issu
 import tabStyles from "@/src/features/rule_set/styles/rule_tab.module.css";
 import ProjectIssues from "@/src/features/issue/components/project_issues/ProjectIssues";
 import Filters from "@/src/components/filter/Filters";
-import FilterLinks from "@/src/components/filter/FilterLinks";
 import FilterLink from "@/src/components/filter/FilterLink";
-import FilterActions from "@/src/components/filter/FilterActions";
-import FilterAction from "@/src/components/filter/FilterAction";
+import FiltersGroup from "@/src/components/filter/FiltersGroup";
+import FilterSelect from "@/src/components/filter/FilterSelect";
 import {
+  CalendarDaysIcon,
   CheckIcon,
   DocumentIcon,
   ExclamationTriangleIcon,
@@ -20,19 +20,20 @@ import { issuesFiltersParsers } from "@/src/features/issue/types/IssuesFilters";
 import { useQueryStates } from "nuqs";
 import WorkInProgress from "@/src/features/work_in_progress/components/WorkInProgress";
 import Link from "next/link";
+import FiltersList from "@/src/components/filter/FiltersList";
 
 export default function ProjectIssuesPage() {
   const issues = useAuditStore((state) => state.issues);
 
   const allIssuesCount = issues.length;
   const openIssuesCount = issues.filter(
-    (issue) => issue.status === "pending"
+    (issue) => issue.status === "pending",
   ).length;
   const fixedIssuesCount = issues.filter(
-    (issue) => issue.status === "fixed"
+    (issue) => issue.status === "fixed",
   ).length;
 
-  const [filters] = useQueryStates(issuesFiltersParsers);
+  const [filters, setFilters] = useQueryStates(issuesFiltersParsers);
 
   if (issues.length === 0) {
     return <IssuesListEmpty />;
@@ -44,45 +45,95 @@ export default function ProjectIssuesPage() {
         <title>Recommandations - Ohdit</title>
         <h2 className="h2">Recommandations</h2>
         <Filters>
-          <FilterLinks>
-            <FilterLink
-              isActive={filters.status === "all"}
-              filters={{ status: "all" }}
+          <FiltersList>
+            <li>
+              <FilterLink
+                isActive={filters.status === "all"}
+                filters={{ status: "all" }}
+              >
+                <ListBulletIcon />
+                Toutes ({allIssuesCount})
+              </FilterLink>
+            </li>
+            <li>
+              <FilterLink
+                isActive={filters.status === "pending"}
+                filters={{ status: "pending" }}
+              >
+                <ExclamationTriangleIcon />
+                Ouvertes ({openIssuesCount})
+              </FilterLink>
+            </li>
+            <li>
+              <FilterLink
+                isActive={filters.status === "fixed"}
+                filters={{ status: "fixed" }}
+              >
+                <CheckIcon />
+                Corrigées ({fixedIssuesCount})
+              </FilterLink>
+            </li>
+          </FiltersList>
+          <FiltersGroup>
+            {/* <FilterSelect>Page</FilterSelect>
+          <FilterSelect>Critère</FilterSelect>
+          <FilterSelect>Impact</FilterSelect> */}
+            <FilterSelect
+              id="group-by"
+              listHeader="Grouper par :"
+              selectedValue="Page"
+              onChange={(newValue) => {
+                if (newValue === "Page") {
+                  setFilters({ ...filters, group: "screen" });
+                } else {
+                  setFilters({ ...filters, group: "rule" });
+                }
+              }}
+              values={["Page", "Critère"]}
             >
-              <ListBulletIcon />
-              Toutes ({allIssuesCount})
-            </FilterLink>
-            <FilterLink
-              isActive={filters.status === "pending"}
-              filters={{ status: "pending" }}
+              {filters.group === "screen" && (
+                <>
+                  <DocumentIcon />
+                  Groupé par : Page
+                </>
+              )}
+              {filters.group === "rule" && (
+                <>
+                  <ListBulletIcon />
+                  Groupé par : Critère
+                </>
+              )}
+            </FilterSelect>
+            <FilterSelect
+              id="sort-by"
+              listHeader="Trier par :"
+              selectedValue="Impact"
+              values={["Impact", "Date"]}
+              onChange={(newValue) => {
+                if (newValue === "Impact") {
+                  setFilters({ ...filters, sort: "severity" });
+                } else {
+                  setFilters({ ...filters, sort: "date" });
+                }
+              }}
             >
-              <ExclamationTriangleIcon />
-              Ouvertes ({openIssuesCount})
-            </FilterLink>
-            <FilterLink
-              isActive={filters.status === "fixed"}
-              filters={{ status: "fixed" }}
-            >
-              <CheckIcon />
-              Corrigées ({fixedIssuesCount})
-            </FilterLink>
-          </FilterLinks>
-          <FilterActions>
-            {/* <FilterAction>Page</FilterAction>
-          <FilterAction>Critère</FilterAction>
-          <FilterAction>Impact</FilterAction> */}
-            <FilterAction>
-              <DocumentIcon />
-              Groupé par : Page
-            </FilterAction>
-            <FilterAction>
-              <FireIcon />
-              Trié par : Impact
-            </FilterAction>
-          </FilterActions>
+              {filters.sort === "severity" && (
+                <>
+                  <FireIcon />
+                  Trié par : Impact
+                </>
+              )}
+              {filters.sort === "date" && (
+                <>
+                  <CalendarDaysIcon />
+                  Trié par : Date
+                </>
+              )}
+            </FilterSelect>
+          </FiltersGroup>
         </Filters>
         <div className={tabStyles.tabContainer}>
-          <ProjectIssues />  
+          <ProjectIssues />
         </div>
       </div>
 
@@ -96,8 +147,6 @@ export default function ProjectIssuesPage() {
             recomandations, par exemple :
           </p>
           <ul>
-            <li>Modifier la recommandation depuis cette page.</li>
-            <li>Changer le groupe et le tri.</li>
             <li>Pouvoir discuter sur les recommandations.</li>
           </ul>
           <p>

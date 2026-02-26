@@ -11,34 +11,7 @@
 .gridContainer {
   width: 100%;
   font-size: 1.2em;
-  padding: 20px;
-}
-
-.gridSettingsContainer {
-  margin-bottom: 20px;
-  background: white;
-  color: #010101;  
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-bottom: 20px;
-  font-weight: 600;
-}
-
-.settingDetail {
-  display: flex;
-  font-size: 16px;
-  font-weight: 400;
-  margin-top: 6px;
-  margin-bottom: 0;
-}
-
-.settingDetail svg {
-  margin-top: 3px;
-  width: 18px;
-  height: 18px;
-  vertical-align: middle;
-  margin-right: 6px;
-  color: #010101;
+  /* padding: 20px; */
 }
 
 .gridContainer h2, .gridContainer h3 {

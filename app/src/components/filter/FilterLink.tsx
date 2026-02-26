@@ -31,15 +31,13 @@ export default function FilterLink({
   };
 
   return (
-    <li>
-      <Link
-        className={clsx(styles.filterLink, isActive && styles.filterLinkActive)}
-        prefetch={false}
-        href={finalHref}
-        onClick={handleClick}
-      >
-        {children}
-      </Link>
-    </li>
+    <Link
+      className={clsx(styles.filterLink, isActive && styles.filterLinkActive)}
+      prefetch={false}
+      href={finalHref}
+      onClick={handleClick}
+    >
+      {children}
+    </Link>
   );
 }

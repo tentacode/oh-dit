@@ -53,16 +53,28 @@ export default function ProjectIssues() {
     // ajouter le numéro de la page
     if (filters.group === "screen") {
       const screen = project?.screens.find((s) => s.uuid === groupKey);
-      // return screen ? `P${screen.rank.toString().padStart(2, "0")} ${screen.name}` : 'Inconnu';
-      return screen ? `${screen.name}` : "Inconnu";
+      return screen ? `P${screen.rank.toString().padStart(2, "0")} - ${screen.name}` : 'Inconnu';
     } else if (filters.group === "rule") {
       const rule = ruleSet?.ruleCategories
         .find((c) => c.rules.find((r) => r.uuid === groupKey))
         ?.rules.find((r) => r.uuid === groupKey);
-      return rule ? rule.shortDescription : "Inconnu";
+      return rule ? `${rule.prefix} - ${rule.shortDescription}` : "Inconnu";
     } else if (filters.group === "severity") {
       return groupKey.charAt(0).toUpperCase() + groupKey.slice(1);
     }
+
+    return "Inconnu";
+  }
+
+  function getCardTitle(issue: Issue): string {
+    if (filters.group === "screen") {
+      const rule = getRule(issue.ruleUuid);
+      return rule ? `${rule.prefix} - ${rule.shortDescription}` : "Inconnu";
+    } else if (filters.group === "rule") {
+      const screen = project?.screens.find((s) => s.uuid === issue.screenUuid);
+      return screen ? `P${screen.rank.toString().padStart(2, "0")} - ${screen.name}` : 'Inconnu';
+    }
+    
     return "Inconnu";
   }
 
@@ -93,14 +105,11 @@ export default function ProjectIssues() {
 
           <CardsList>
             {issuesInGroup?.sort(sortIssueGroups).map((issue) => {
-              const rule = getRule(issue.ruleUuid);
-              const cardTitle = `${rule?.prefix} - ${rule?.shortDescription}`;
-
               return (
                 <IssueCard
                   key={issue.uuid}
                   issue={issue}
-                  cardTitle={cardTitle}
+                  cardTitle={getCardTitle(issue)}
                   formContext="project_issues"
                 />
               );

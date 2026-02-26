@@ -29,6 +29,7 @@ export default function ProjectDashboardPage() {
     <>
       <title>Résumé de l'audit - Ohdit</title>
       <div className="horizontalGutter mt-8">
+        <h2 className="h2 mb-4">Résumé</h2>
         <AuditDataPerScreen
           project={project}
           issues={issues}
