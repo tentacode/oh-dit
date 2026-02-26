@@ -39,6 +39,11 @@ export default function ProjectIssuesPage() {
     return <IssuesListEmpty />;
   }
 
+  let sorts = ["Impact", "Date", "Critère"];
+  if (filters.group === "rule") {
+    sorts = ["Impact", "Date", "Page"];
+  }
+
   return (
     <>
       <div className="horizontalGutter mt-8">
@@ -75,18 +80,23 @@ export default function ProjectIssuesPage() {
             </li>
           </FiltersList>
           <FiltersGroup>
-            {/* <FilterSelect>Page</FilterSelect>
-          <FilterSelect>Critère</FilterSelect>
-          <FilterSelect>Impact</FilterSelect> */}
             <FilterSelect
               id="group-by"
               listHeader="Grouper par :"
               selectedValue="Page"
               onChange={(newValue) => {
                 if (newValue === "Page") {
-                  setFilters({ ...filters, group: "screen" });
+                  setFilters({
+                    ...filters,
+                    group: "screen",
+                    sort: filters.sort === "screen" ? "severity" : filters.sort,
+                  });
                 } else {
-                  setFilters({ ...filters, group: "rule" });
+                  setFilters({
+                    ...filters,
+                    group: "rule",
+                    sort: filters.sort === "rule" ? "severity" : filters.sort,
+                  });
                 }
               }}
               values={["Page", "Critère"]}
@@ -108,12 +118,21 @@ export default function ProjectIssuesPage() {
               id="sort-by"
               listHeader="Trier par :"
               selectedValue="Impact"
-              values={["Impact", "Date"]}
+              values={sorts}
               onChange={(newValue) => {
-                if (newValue === "Impact") {
-                  setFilters({ ...filters, sort: "severity" });
-                } else {
-                  setFilters({ ...filters, sort: "date" });
+                switch (newValue) {
+                  case "Impact":
+                    setFilters({ ...filters, sort: "severity" });
+                    break;
+                  case "Date":
+                    setFilters({ ...filters, sort: "date" });
+                    break;
+                  case "Critère":
+                    setFilters({ ...filters, sort: "rule" });
+                    break;
+                  case "Page":
+                    setFilters({ ...filters, sort: "screen" });
+                    break;
                 }
               }}
             >
@@ -127,6 +146,18 @@ export default function ProjectIssuesPage() {
                 <>
                   <CalendarDaysIcon />
                   Trié par : Date
+                </>
+              )}
+              {filters.sort === "rule" && (
+                <>
+                  <ListBulletIcon />
+                  Trié par : Critère
+                </>
+              )}
+              {filters.sort === "screen" && (
+                <>
+                  <DocumentIcon />
+                  Trié par : Page
                 </>
               )}
             </FilterSelect>
