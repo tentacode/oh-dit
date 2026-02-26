@@ -29,6 +29,13 @@ export default function ProjectIssues() {
     filteredIssues = filteredIssues.filter((issue) => issue.status === "fixed");
   }
 
+  const getRule = (ruleUuid: string): Rule | undefined => {
+    const rule = ruleSet?.ruleCategories
+      .flatMap((category) => category.rules)
+      .find((r) => r.uuid === ruleUuid);
+    return rule;
+  };
+
   const groupedIssues = Object.groupBy(filteredIssues, (issue) => {
     if (filters.group === "screen") {
       return issue.screenUuid;
@@ -41,19 +48,40 @@ export default function ProjectIssues() {
   });
 
   function sortIssueGroups(a: Issue, b: Issue): number {
-    if (filters.sort === "severity") {
-      const severityOrder = { blocking: 0, moderate: 1, low: 2 };
-      return severityOrder[a.severity] - severityOrder[b.severity];
+    switch (filters.sort) {
+      case "severity":
+        const severityOrder = { blocking: 0, moderate: 1, low: 2 };
+        return severityOrder[a.severity] - severityOrder[b.severity];
+      case "date":
+        return (
+          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+        );
+      case "rule":
+        const ruleA = getRule(a.ruleUuid);
+        const ruleB = getRule(b.ruleUuid);
+        if (ruleA && ruleB) {
+          return ruleA.prefix.localeCompare(ruleB.prefix);
+        }
+        return 0;
+      case "screen":
+        const screenA = project?.screens.find((s) => s.uuid === a.screenUuid);
+        const screenB = project?.screens.find((s) => s.uuid === b.screenUuid);
+        if (screenA && screenB) {
+          return screenA.rank - screenB.rank;
+        }
+        return 0;
+      default:
+        return b.issueId - a.issueId;
     }
-
-    return b.issueId - a.issueId;
   }
 
   function getGroupName(groupKey: string): string {
     // ajouter le numéro de la page
     if (filters.group === "screen") {
       const screen = project?.screens.find((s) => s.uuid === groupKey);
-      return screen ? `P${screen.rank.toString().padStart(2, "0")} - ${screen.name}` : 'Inconnu';
+      return screen
+        ? `P${screen.rank.toString().padStart(2, "0")} - ${screen.name}`
+        : "Inconnu";
     } else if (filters.group === "rule") {
       const rule = ruleSet?.ruleCategories
         .find((c) => c.rules.find((r) => r.uuid === groupKey))
@@ -72,9 +100,11 @@ export default function ProjectIssues() {
       return rule ? `${rule.prefix} - ${rule.shortDescription}` : "Inconnu";
     } else if (filters.group === "rule") {
       const screen = project?.screens.find((s) => s.uuid === issue.screenUuid);
-      return screen ? `P${screen.rank.toString().padStart(2, "0")} - ${screen.name}` : 'Inconnu';
+      return screen
+        ? `P${screen.rank.toString().padStart(2, "0")} - ${screen.name}`
+        : "Inconnu";
     }
-    
+
     return "Inconnu";
   }
 
@@ -89,13 +119,6 @@ export default function ProjectIssues() {
       </p>
     );
   }
-
-  const getRule = (ruleUuid: string): Rule | undefined => {
-    const rule = ruleSet?.ruleCategories
-      .flatMap((category) => category.rules)
-      .find((r) => r.uuid === ruleUuid);
-    return rule;
-  };
 
   return (
     <CardsGroups>
