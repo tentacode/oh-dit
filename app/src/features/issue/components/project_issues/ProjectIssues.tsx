@@ -47,8 +47,53 @@ export default function ProjectIssues() {
     return "unknown";
   });
 
-  function sortIssueGroups(a: Issue, b: Issue): number {
-    switch (filters.sort) {
+  const sortedGroupEntries = Object.entries(groupedIssues).sort(([groupKeyA], [groupKeyB]) => {
+  if (filters.group === "screen") {
+    const screenA = project?.screens.find((s) => s.uuid === groupKeyA);
+    const screenB = project?.screens.find((s) => s.uuid === groupKeyB);
+    if (screenA && screenB) return screenA.rank - screenB.rank;
+  } else if (filters.group === "rule") {
+    const ruleA = getRule(groupKeyA);
+    const ruleB = getRule(groupKeyB);
+    if (ruleA && ruleB) return compareVersionPrefix(ruleA.prefix, ruleB.prefix);
+  } else if (filters.group === "severity") {
+    const severityOrder = { blocking: 0, moderate: 1, low: 2 };
+    return severityOrder[groupKeyA as keyof typeof severityOrder] - severityOrder[groupKeyB as keyof typeof severityOrder];
+  }
+  return 0;
+});
+
+  function compareVersionPrefix(a: string, b: string): number {
+    const partsA = a.split(".").map(Number);
+    const partsB = b.split(".").map(Number);
+    const len = Math.max(partsA.length, partsB.length);
+    for (let i = 0; i < len; i++) {
+      const numA = partsA[i] ?? 0;
+      const numB = partsB[i] ?? 0;
+      if (numA !== numB) return numA - numB;
+    }
+    return 0;
+  }
+
+  function sortIssueGroups(
+    a: Issue,
+    b: Issue,
+    secondarySort?: typeof filters.sort,
+  ): number {
+    const primaryResult = compareBySort(a, b, filters.sort);
+    if (primaryResult !== 0) return primaryResult;
+    if (secondarySort && secondarySort !== filters.sort) {
+      return compareBySort(a, b, secondarySort);
+    }
+    return 0;
+  }
+
+  function compareBySort(
+    a: Issue,
+    b: Issue,
+    sort: typeof filters.sort,
+  ): number {
+    switch (sort) {
       case "severity":
         const severityOrder = { blocking: 0, moderate: 1, low: 2 };
         return severityOrder[a.severity] - severityOrder[b.severity];
@@ -60,7 +105,7 @@ export default function ProjectIssues() {
         const ruleA = getRule(a.ruleUuid);
         const ruleB = getRule(b.ruleUuid);
         if (ruleA && ruleB) {
-          return ruleA.prefix.localeCompare(ruleB.prefix);
+          return compareVersionPrefix(ruleA.prefix, ruleB.prefix);
         }
         return 0;
       case "screen":
@@ -122,7 +167,7 @@ export default function ProjectIssues() {
 
   return (
     <CardsGroups>
-      {Object.entries(groupedIssues).map(([group, issuesInGroup]) => (
+      {sortedGroupEntries.map(([group, issuesInGroup]) => (
         <CardsGroup key={group}>
           <h3 className={cardStyles.groupTitle}>{getGroupName(group)}</h3>
 

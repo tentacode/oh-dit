@@ -79,6 +79,7 @@ main {
 .horizontalGutter {
   padding-left: 70px;
   padding-right: 70px;
+  max-width: 1400px;
 }
 
 main.tabLayout {
