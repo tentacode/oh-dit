@@ -1,0 +1,28 @@
+meta {
+  name: Patch project
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{BASE_URL}}/api/projects/22222222-0000-4000-8000-000000000001
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "name": "Projet perdu",
+    "url": "https://perdu.com"
+  }
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

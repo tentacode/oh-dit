@@ -38,7 +38,7 @@ final class CreateProjectController extends ApiController
             // The issue should be handled by Sentry
             captureException($e);
             // Should return 404 to not leak information
-            throw new NotFoundHttpException('Team not found.');
+            throw new NotFoundHttpException('Resource not found.');
         }
     }
 }

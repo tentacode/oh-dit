@@ -20,8 +20,10 @@ export const getProjectUrl = {
     `/projet/${projectUuid}/livrables` as const,
   deliverablesSecuredLink: (projectUuid: string) =>
     `/projet/${projectUuid}/livrables/lien-securise` as const,
-  settings: (projectUuid: string) =>
-    `/projet/${projectUuid}/parametres` as const,
+  settingsProject: (projectUuid: string) =>
+    `/projet/${projectUuid}/parametres/projet` as const,
+  settingsScreens: (projectUuid: string) =>
+    `/projet/${projectUuid}/parametres/pages` as const,
 } as const;
 
 export const isProjectRoute = {

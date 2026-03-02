@@ -96,7 +96,7 @@ export default function ProjectLayout({
           <Tab isActive={selectedTab === AuditTab.DELIVERABLES} href={getProjectUrl.deliverables(params.uuid as string)}>
             <DocumentCheckIcon /> Livrables
           </Tab>
-          <Tab isActive={selectedTab === AuditTab.SETTINGS} href={getProjectUrl.settings(params.uuid as string)}>
+          <Tab isActive={selectedTab === AuditTab.SETTINGS} href={getProjectUrl.settingsProject(params.uuid as string)}>
             <Cog6ToothIcon /> Paramètres
           </Tab>
         </TabsHeaders>

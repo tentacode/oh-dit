@@ -22,6 +22,7 @@ export const AuthenticatedLayout = ({
     display: "flex",
     flexDirection: "column",
     width: "100%",
+    minHeight: "100vh",
   } as const;
 
   return (

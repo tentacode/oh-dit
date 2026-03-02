@@ -140,9 +140,21 @@ class Project implements HasUuidInterface, SerializableInterface
         return $this->name;
     }
 
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+        $this->updatedAt = CarbonImmutable::now();
+    }
+
     public function getUrl(): string
     {
         return $this->url;
+    }
+
+    public function setUrl(string $url): void
+    {
+        $this->url = $url;
+        $this->updatedAt = CarbonImmutable::now();
     }
 
     public function getCreatedAt(): DateTimeImmutable
