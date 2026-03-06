@@ -61,3 +61,7 @@ yarn-error.log*
 # RGAA resources
 /api/var/data/rgaa-git/*
 !/api/var/data/rgaa-git/RGAA
+/api/var/data/raam-git/*
+!/api/var/data/raam-git/fr
+/api/var/data/rapdf-git/*
+!/api/var/data/rapdf-git/fr

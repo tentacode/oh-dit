@@ -2,11 +2,11 @@ import labelStyles from "@/src/design-system/styles/form/label.module.css";
 
 export default function Label({
   htmlFor,
-  required,
+  required = false,
   children,
 }: {
   htmlFor: string;
-  required: boolean;
+  required?: boolean;
   children: string;
 }) {
   return (

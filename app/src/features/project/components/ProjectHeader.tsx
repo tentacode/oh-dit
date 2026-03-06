@@ -45,11 +45,25 @@ export default function ProjectDetailHeader() {
         <ComplianceRateBadgeCard complianceRate={project.complianceRate} />
       </div>
 
-      {project.progress !== 100 && (
+      {ruleSet.name === 'RGAA' && project.progress !== 100 && (
         <p className={styles.helpText}>
           <InformationCircleIcon />
           Le taux de conformité est donné à titre indicatif. Il n'est pas
           valable tant que l'audit n'est pas terminé.
+        </p>
+      )}
+
+      {ruleSet.name === 'RGAA 25' && (
+        <p className={styles.helpText}>
+          <InformationCircleIcon />
+          Le taux de conformité du RGAA 25 critères est donné à titre indicatif. Il n'a pas de valeur légale.
+        </p>
+      )}
+
+      {['RAAM', 'RAPDF'].includes(ruleSet.name) && (
+        <p className={styles.helpText}>
+          <InformationCircleIcon />
+          Le taux de conformité du {ruleSet.name} est donné à titre indicatif. Il n'a pas de valeur légale.
         </p>
       )}
     </div>

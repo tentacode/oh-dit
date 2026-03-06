@@ -10,11 +10,12 @@ use App\Features\Project\Entity\Screen;
 use App\Features\RuleSet\Entity\Rule;
 use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
 use App\Infrastructure\Doctrine\Entity\SerializableInterface;
+use Carbon\CarbonImmutable;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
-use Safe\DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -63,7 +64,7 @@ class Compliance implements HasUuidInterface, SerializableInterface
         ?DateTimeImmutable $createdAt = null,
     ) {
         $this->uuid = Uuid::v4();
-        $this->createdAt = $createdAt ?? new DateTimeImmutable();
+        $this->createdAt = $createdAt ?? CarbonImmutable::now();
         $this->user = $user;
         $this->rule = $rule;
         $this->project = $project;

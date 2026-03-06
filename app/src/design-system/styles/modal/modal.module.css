@@ -1,0 +1,39 @@
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 400px;
+    min-height: 200px;
+    border-radius: 20px;
+    padding: 20px;
+    border: none;
+    outline: 3px solid #E2026A;
+    outline-offset: 3px;
+}
+
+.modal::backdrop {
+  background: rgb(0 0 0 / 0.5);
+}
+
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  height: 30px;
+  width: 30px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 5px;
+}
+
+.closeButton:hover {
+  border-color: #E2026A;
+}
+
+.closeButton:focus {
+  outline: 2px solid #E2026A;
+  outline-offset: 2px;
+}

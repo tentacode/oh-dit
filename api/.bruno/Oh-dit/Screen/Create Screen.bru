@@ -1,0 +1,30 @@
+meta {
+  name: Create Screen
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{BASE_URL}}/api/screens
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "projectUuid": "22222222-0000-4000-8000-000000000001",
+    "name": "Boite à questions",
+    "url": "/boite-a-questions",
+    "rank": 4
+  }
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

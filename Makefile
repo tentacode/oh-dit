@@ -67,6 +67,8 @@ reset: ## Reset database (env=dev|test)
 	docker compose exec api bin/console foundry:load-fixtures all -n --env=$(env)
 	docker compose exec api bin/console rgaa:import --env=$(env)
 	docker compose exec api bin/console rgaa:create-25 --env=$(env)
+	docker compose exec api bin/console raam:import --env=$(env)
+	docker compose exec api bin/console rapdf:import --env=$(env)
 	docker compose exec api bin/console cache:pool:clear --all --env=$(env)
 
 tests: ## Run all tests
@@ -101,3 +103,9 @@ deploy: ## Deploy main to server
 
 update-rgaa: ## Update RGAA from git repository
 	ansible-playbook infrastructure/ansible/update-rgaa.yml
+
+update-raam: ## Update RAAM from git repository
+	ansible-playbook infrastructure/ansible/update-raam.yml
+
+update-rapdf: ## Update RAPDF from git repository
+	ansible-playbook infrastructure/ansible/update-rapdf.yml

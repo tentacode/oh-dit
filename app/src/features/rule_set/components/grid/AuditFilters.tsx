@@ -46,6 +46,7 @@ export default function AuditFilters() {
       screenUrl = new URL(screenUrl, project.url).toString();
     } catch (e) {
       // if URL construction fails, we can just keep the original screenUrl which might be a relative path or an invalid URL.
+      console.error("Failed to construct screen URL:", e);
     }
   }
 

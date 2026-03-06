@@ -53,7 +53,7 @@ export default function IssueCard({
   }
 
   return (
-    <li aria-label={`Recommandation numéro ${issue.issueId}`}>
+    <div aria-label={`Recommandation numéro ${issue.issueId}`}>
       <Card label={`Recommandation numéro ${issue.issueId}`}>
         <IssueCardHeader issue={issue as IssueCardIssue} formContext={formContext} />
 
@@ -66,6 +66,6 @@ export default function IssueCard({
           {issue.text}
         </Markdown>
       </Card>
-    </li>
+    </div>
   );
 }

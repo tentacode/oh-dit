@@ -60,15 +60,6 @@ final class CreateProjectControllerTest extends WebTestCase
             'screens' => [
                 [
                     'uuid' => '@uuid@',
-                    'name' => 'Éléments transverses',
-                    'url' => '',
-                    'rank' => 0,
-                    'progress' => 0,
-                    'complianceRate' => 0,
-                    'isRoot' => true,
-                ],
-                [
-                    'uuid' => '@uuid@',
                     'name' => 'Page 1',
                     'url' => '/page-1',
                     'rank' => 1,
@@ -145,6 +136,38 @@ final class CreateProjectControllerTest extends WebTestCase
             'code' => 401,
             'message' => 'Invalid JWT Token',
         ], $response, Response::HTTP_UNAUTHORIZED);
+    }
+
+    public function test_i_cant_add_a_project_on_a_team_i_dont_belong_to(): void
+    {
+        $response = $this->request(
+            uri: '/api/projects',
+            method: Request::METHOD_POST,
+            payload: [
+                'teamUuid' => TeamUsersStory::TEAM_THE_REBELLION_UUID,
+                'name' => 'Mon nouveau projet',
+                'url' => 'https://www.monprojet.empire',
+                'ruleSetUuid' => RuleSetsStory::RULE_SET_EMPIRE_UUID,
+                'screens' => [[
+                    'name' => 'Page 1',
+                    'url' => '/page-1',
+                    'rank' => 1,
+                ], [
+                    'name' => 'Page 2',
+                    'url' => '/page-2',
+                    'rank' => 2,
+                ]],
+            ],
+            authenticationToken: $this->getAuthenticationToken(
+                email: 'darth_vader@empire.com',
+                password: 'vader_64',
+            ),
+        );
+
+        $this->assertJsonResponseMatches([
+            'code' => 'not_found',
+            'message' => 'Resource not found.',
+        ], $response, Response::HTTP_NOT_FOUND);
     }
 
     /**

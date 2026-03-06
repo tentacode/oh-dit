@@ -163,5 +163,5 @@ export const useAuditStore = create<AuditStore>((set, get) => ({
   },
   reset: () => set(initialState),
 
-  // selectors
+  // selectors (leave emtpy, error prone)
 }));

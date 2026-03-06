@@ -26,20 +26,7 @@ import { useIssuesFormStateStore } from "../../store/issuesFormStateStore";
 import { Severity } from "../../types/IssueInterface";
 import { useUpdateIssue } from "../../mutations/useUpdateIssue";
 import { useDeleteIssue } from "../../mutations/useDeleteIssue";
-
-function getErrorsForField(
-  fieldName: string,
-  errors: ApiValidationError[]
-): ApiValidationError[] {
-  return errors.filter((error) => error.propertyPath === fieldName);
-}
-
-function hasFieldError(
-  fieldName: string,
-  errors: ApiValidationError[]
-): boolean {
-  return getErrorsForField(fieldName, errors).length > 0;
-}
+import { getErrorsForField, hasFieldError } from "@/src/design-system/utils/form/formErrors";
 
 export default function IssueForm({
   ruleUuid,

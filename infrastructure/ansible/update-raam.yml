@@ -1,0 +1,29 @@
+---
+- name: Update RAAM data in resources directory
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+    repo_url: "git@github.com:accessibility-luxembourg/ReferentielAccessibiliteMobile.git"
+    import_directory: "{{ playbook_dir }}/../../api/var/data"
+
+  tasks:
+    - name: Ensure resources directory exists
+      ansible.builtin.file:
+        path: "{{ import_directory }}"
+        state: directory
+        mode: '0755'
+
+    - name: Clone or update RAAM repository
+      ansible.builtin.git:
+        repo: "{{ repo_url }}"
+        dest: "{{ import_directory }}/raam-git"
+        version: main
+        force: yes
+        accept_hostkey: yes
+
+    - name: Remove .git directory from cloned repository
+      ansible.builtin.file:
+        path: "{{ import_directory }}/raam-git/.git"
+        state: absent

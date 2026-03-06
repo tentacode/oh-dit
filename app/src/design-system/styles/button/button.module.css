@@ -60,3 +60,33 @@
 .success svg path {
     stroke: #56C07C;
 }
+
+.smallRoundButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-color: transparent !important;
+    padding: 0 !important;
+}
+
+.smallRoundButton svg {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.smallRoundButton:hover svg, .smallRoundButton:focus svg {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 25px !important;
+    width: 25px !important;
+}
+
+.smallRoundButton:hover {
+    border-color: #8579DC !important;
+}
+
+.smallRoundButton:focus {
+    border-color: #E2026A !important;
+}

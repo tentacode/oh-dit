@@ -21,6 +21,10 @@ class RuleSet implements HasUuidInterface, SerializableInterface
 {
     public const RGAA_NAME = 'RGAA';
 
+    public const RAPDF_NAME = 'RAPDF';
+
+    public const RAAM_NAME = 'RAAM';
+
     public const RGAA_25_NAME = 'RGAA 25';
 
     #[ORM\Id]

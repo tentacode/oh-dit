@@ -15,6 +15,7 @@ import CallToActionLink from "@/src/components/form/CallToActionLink";
 
 export function AuditDataPerScreen({
   project,
+  ruleSetName,
   issues,
   title,
   onClickAuditLink,
@@ -29,6 +30,7 @@ export function AuditDataPerScreen({
       complianceRate: number;
     }[];
   };
+  ruleSetName: string;
   issues: {
     uuid: string;
     screenUuid: string;
@@ -38,6 +40,7 @@ export function AuditDataPerScreen({
   onClickAuditLink?: (screenUuid: string) => void;
   withAuditLink?: boolean;
 }) {
+
   return (
     <>
       {title && <h2 className="h3 mb-5">{title}</h2>}
@@ -152,14 +155,25 @@ export function AuditDataPerScreen({
           ))}
         </tbody>
       </table>
-      <p className={typographyStyle.indicative}>
-        <InformationCircleIcon width={18} />
-        <span>
-          Les taux de conformités par page sont donnés à titre indicatif. Seul
-          le taux de conformité global de l'audit a une valeur pour l'audit
-          RGAA.
-        </span>
-      </p>
+      
+      {ruleSetName === "RGAA" && (
+        <p className={typographyStyle.indicative}>
+          <InformationCircleIcon width={18} />
+          <span>
+            Les taux de conformités par page sont donnés à titre indicatif. Seul
+            le taux de conformité du projet terminé a une valeur pour l'audit RGAA.
+          </span>
+        </p>
+      )}
+      
+      {ruleSetName !== "RGAA" && (
+        <p className={typographyStyle.indicative}>
+          <InformationCircleIcon width={18} />
+          <span>
+            Les taux de conformités par page sont donnés à titre indicatif.
+          </span>
+        </p>
+      )}
     </>
   );
 }

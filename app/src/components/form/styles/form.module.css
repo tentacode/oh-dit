@@ -148,6 +148,7 @@ fieldset .fieldError {
 
 .fieldsetListIndex {
     width: 20px;
+    align-self: flex-start;
 }
 
 .fieldsetButton {

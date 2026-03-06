@@ -9,20 +9,7 @@ import { ApiError, ApiValidationError } from "@/src/lib/react-query/apiClient";
 import { useSearchParams } from "next/navigation";
 import { useForgotPassword } from "../mutations/useForgotPassword";
 import ForgotPasswordSuccessIllustration from "./ForgotPasswordSuccessIllustration";
-
-function getErrorsForField(
-  fieldName: string,
-  errors: ApiValidationError[]
-): ApiValidationError[] {
-  return errors.filter((error) => error.propertyPath === fieldName);
-}
-
-function hasFieldError(
-  fieldName: string,
-  errors: ApiValidationError[]
-): boolean {
-  return getErrorsForField(fieldName, errors).length > 0;
-}
+import { getErrorsForField, hasFieldError } from "@/src/design-system/utils/form/formErrors";
 
 export default function ForgotPasswordForm() {
   const searchParams = useSearchParams();

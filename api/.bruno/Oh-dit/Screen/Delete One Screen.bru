@@ -1,0 +1,21 @@
+meta {
+  name: Delete One Screen
+  type: http
+  seq: 2
+}
+
+delete {
+  url: {{BASE_URL}}/api/screens/33333333-0000-4000-8000-000000000002
+  body: formUrlEncoded
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{AUTH_TOKEN}}
+  ~Content-Type: application/json
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

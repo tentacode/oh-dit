@@ -11,14 +11,7 @@ import { useLoginSecuredLink } from "../../mutations/useLoginSecuredLink";
 import { ApiError, ApiValidationError } from "@/src/lib/react-query/apiClient";
 import { setSecuredLinkJwt } from "../../lib/securedLinkAuth";
 import OhditLogo from "@/src/features/layout/components/OhditLogo";
-
-// @TODO refacto
-function getErrorsForField(
-  fieldName: string,
-  errors: ApiValidationError[],
-): ApiValidationError[] {
-  return errors.filter((error) => error.propertyPath === fieldName);
-}
+import { getErrorsForField } from "@/src/design-system/utils/form/formErrors";
 
 export default function SecuredReportPasswordForm({
   linkToken,

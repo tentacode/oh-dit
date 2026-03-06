@@ -26,6 +26,7 @@
     "highlight.js": "^11.11.1",
     "markdown-to-jsx": "^9.3.3",
     "next": "16.2.0",
+    "next-intl": "^4.8.3",
     "nuqs": "^2.8.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",

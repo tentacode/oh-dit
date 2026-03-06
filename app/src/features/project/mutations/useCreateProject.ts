@@ -8,6 +8,7 @@ export interface CreateScreenPayload {
   name: string;
   url: string;
   rank: number;
+  uuid?: string;
 }
 
 export interface CreateProjectPayload {
