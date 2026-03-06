@@ -49,18 +49,6 @@ final class CreateProjectCommand
 
         $this->entityManager->persist($project);
 
-        $rootScreen = new Screen(
-            project: $project,
-            name: Screen::ROOT_SCREEN_NAME,
-            url: '',
-            rank: 0,
-            isRoot: true
-        );
-        ($this->validateOrThrow)($rootScreen);
-
-        $this->entityManager->persist($rootScreen);
-        $project->addScreen($rootScreen);
-
         foreach ($createProjectRequest->screens as $screenData) {
             $screen = new Screen(
                 project: $project,

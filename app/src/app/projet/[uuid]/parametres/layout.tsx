@@ -15,6 +15,8 @@ import { getProjectUrl } from "../../routing";
 import { use } from "react";
 import SidebarLink from "@/src/design-system/components/sidebar/SidebarLink";
 import { usePathname } from "next/navigation";
+import { useAuditStore } from "@/src/features/audit/store/auditStore";
+import { useTranslations } from "next-intl";
 
 export default function ProjectSettingsLayout({
   params,
@@ -23,9 +25,14 @@ export default function ProjectSettingsLayout({
   params: Promise<{ uuid: string }>;
   children: React.ReactNode;
 }) {
+  const ruleSet = useAuditStore((state) => state.ruleSet);
+
+
   const projectUuid = use(params).uuid;
 
   const pathname = usePathname();
+
+  const t = useTranslations();
 
   const isPageActive = (page: "project" | "screens") => {
     return (
@@ -35,6 +42,20 @@ export default function ProjectSettingsLayout({
         page === "screens")
     );
   };
+
+  if (!ruleSet) {
+    return null;
+  }
+
+  let ruleSetType: "web" | "mobile" | "document" = "web";
+  
+  if (ruleSet.name === "RAAM") {
+    ruleSetType = "mobile";
+  }
+  
+  if (ruleSet.name === "RAPDF") {
+    ruleSetType = "document";
+  }
 
   return (
     <PageWithSidebar>
@@ -46,17 +67,13 @@ export default function ProjectSettingsLayout({
           <Cog6ToothIcon />
           Projet
         </SidebarLink>
-        {/* <SidebarLink
+        <SidebarLink
           active={isPageActive("screens")}
           href={getProjectUrl.settingsScreens(projectUuid)}
         >
           <DocumentIcon />
-          Pages
-        </SidebarLink> */}
-        <SidebarItem badge="bientôt">
-          <DocumentIcon />
-          Pages
-        </SidebarItem>
+          {t(`ruleSet.${ruleSetType}.screens`)}
+        </SidebarLink>
         <SidebarItem badge="bientôt">
           <PuzzlePieceIcon />
           Intégrations

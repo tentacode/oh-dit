@@ -8,20 +8,7 @@ import CallToActionButton from "@/src/components/form/CallToActionButon";
 import { ApiError, ApiValidationError } from "@/src/lib/react-query/apiClient";
 import { useLogin } from "../mutations/useLogin";
 import { useRouter, useSearchParams } from "next/navigation";
-
-function getErrorsForField(
-  fieldName: string,
-  errors: ApiValidationError[]
-): ApiValidationError[] {
-  return errors.filter((error) => error.propertyPath === fieldName);
-}
-
-function hasFieldError(
-  fieldName: string,
-  errors: ApiValidationError[]
-): boolean {
-  return getErrorsForField(fieldName, errors).length > 0;
-}
+import { getErrorsForField, hasFieldError } from "@/src/design-system/utils/form/formErrors";
 
 export default function LoginForm() {
   const router = useRouter();

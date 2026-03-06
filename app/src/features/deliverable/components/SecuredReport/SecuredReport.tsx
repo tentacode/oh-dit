@@ -94,7 +94,7 @@ export default function SecuredReport({
             />
           </div>
 
-          {report.project.status === "in_progress" && (
+          {report.project.ruleSet.name === "RGAA" && report.project.status === "in_progress" && (
             <p className={reportStyles.warning}>
               <ExclamationTriangleIcon />
               <span>
@@ -110,6 +110,16 @@ export default function SecuredReport({
             </p>
           )}
 
+          {report.project.ruleSet.name !== "RGAA" && (
+            <p className={reportStyles.warning}>
+              <ExclamationTriangleIcon />
+              <span>
+                <strong>Important :</strong> Le projet utilise le "{report.project.ruleSet.name}". Les scores de conformité sont donnés à
+                titre indicatif.
+              </span>
+            </p>
+          )}
+
           <p className={typographyStyles.italic}>
             Le rapport a été modifié pour la dernière fois le {reportDateString}.
           </p>
@@ -120,6 +130,7 @@ export default function SecuredReport({
 
           <AuditDataPerScreen
             project={report.project}
+            ruleSetName={report.project.ruleSet.name}
             issues={report.issues}
             withAuditLink={false}
           />

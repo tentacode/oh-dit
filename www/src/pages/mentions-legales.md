@@ -53,9 +53,19 @@ Les présentes mentions légales sont régies par le droit français. Tout litig
 ## Sources, crédits et remerciements
 
 - RGAA (Référentiel Général d'Amélioration de l'Accessibilité)
-  Utilisé pour générer la documentation des critères d'accessibilité.
+  Utilisé pour générer le référentiel et la documentation des critères d'accessibilité.
   Source : https://github.com/DISIC/accessibilite.numerique.gouv.fr
   Licence : MIT – © DINUM
+
+- RAAM (Référentiel d'Évaluation de l'Accessibilité des Applications Mobiles)
+  Utilisé pour générer le référentiel et la documentation des critères d'accessibilité.
+  Source : https://github.com/accessibility-luxembourg/ReferentielAccessibiliteMobile
+  Licence : CC-BY 3.0 LU – [https://accessibilite.public.lu/fr/](https://accessibilite.public.lu/fr/)
+
+- RAPDF (Référentiel d'évaluation de l'accessibilité des documents au format PDF)
+  Utilisé pour générer le référentiel et la documentation des critères d'accessibilité.
+  Source : https://github.com/accessibility-luxembourg/ReferentielAccessibilitePDF
+  Licence : CC-BY 3.0 LU – [https://accessibilite.public.lu/fr/](https://accessibilite.public.lu/fr/)
 
 Nous n'aurions pas pu créer Ohdit sans ces outils open-source :
 

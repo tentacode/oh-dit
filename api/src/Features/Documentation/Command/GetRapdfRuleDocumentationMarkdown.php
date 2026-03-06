@@ -1,0 +1,280 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Features\Documentation\Command;
+
+use function Safe\file_get_contents;
+use function Safe\json_decode;
+use function Safe\preg_match;
+use function Safe\preg_replace;
+use function Sentry\captureMessage;
+use App\Features\Documentation\Query\GetRuleDocumentationCommandInterface;
+use App\Features\RuleSet\Entity\Rule;
+use Doctrine\ORM\EntityManagerInterface;
+use League\CommonMark\CommonMarkConverter;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Webmozart\Assert\Assert;
+
+final class GetRapdfRuleDocumentationMarkdown implements GetRuleDocumentationCommandInterface
+{
+    /**
+     * @var array<string, mixed>
+     */
+    private array $rulesData;
+
+    public function __construct(
+        private string $projectDirectory,
+        private EntityManagerInterface $entityManager,
+        private CommonMarkConverter $markdownConverter = new CommonMarkConverter(),
+    ) {
+        $rgaaDataFolder = $this->projectDirectory . '/var/data/rapdf-git/fr/json/';
+
+        $rulesData = json_decode(
+            file_get_contents($rgaaDataFolder . 'criteres.json'),
+            true,
+        );
+        Assert::isArray($rulesData);
+        /** @var array<string, mixed> $rulesData */
+        $this->rulesData = $rulesData;
+    }
+
+    public function __invoke(string $ruleUuid): string
+    {
+        $rule = $this->entityManager->getRepository(Rule::class)->findOneByUuid($ruleUuid);
+        if (! $rule instanceof Rule) {
+            throw new NotFoundHttpException('Rule not found.');
+        }
+
+        $ruleData = $this->getRuleData($rule);
+
+        $testsMarkdown = $this->getTestsMarkdown($rule, $ruleData);
+        $linkListMarkdown = $this->getLinkListMarkdown($rule, $ruleData);
+
+        return <<<MARKDOWN
+            {$testsMarkdown}
+
+
+            {$linkListMarkdown}
+            MARKDOWN;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function getRuleData(Rule $rule): array
+    {
+        $prefix = $rule->getPrefix();
+        Assert::notNull($prefix);
+
+        $prefixParts = explode('.', $prefix);
+        Assert::minCount($prefixParts, 2);
+        $ruleCategoryIndex = $prefixParts[0];
+        $ruleIndex = $prefixParts[1];
+
+        $topics = $this->rulesData['topics'] ?? [];
+        Assert::isArray($topics);
+
+        /** @var array<int, array{number: int|string, criteria: array<int, array{criterium: array<string, mixed>}>}> $topics */
+        $rulesCategory = array_filter(
+            $topics,
+            static fn (array $categoryData): bool => (string) $categoryData['number'] === $ruleCategoryIndex,
+        );
+
+        $ruleCategory = array_shift($rulesCategory);
+        Assert::isArray($ruleCategory, 'Rule category data not found.');
+
+        $criteria = $ruleCategory['criteria'];
+
+        $ruleDatas = array_filter(
+            $criteria,
+            // @phpstan-ignore-next-line
+            static fn (array $data): bool => (string) $data['criterium']['number'] === $ruleIndex,
+        );
+
+        $ruleData = array_shift($ruleDatas);
+        Assert::isArray($ruleData, 'Rule data not found.');
+
+        $criterium = $ruleData['criterium'];
+
+        /** @var array<string, mixed> $criterium */
+        return $criterium;
+    }
+
+    /**
+     * @param array<string, mixed> $ruleData
+     */
+    private function getTestsMarkdown(Rule $rule, array $ruleData): string
+    {
+        $testsMarkdowns = [];
+        $tests = $ruleData['tests'] ?? [];
+
+        if (! is_array($tests)) {
+            return '';
+        }
+
+        foreach ($tests as $testIndex => $testItems) {
+            if (! is_array($testItems)) {
+                continue;
+            }
+
+            $firstTest = array_shift($testItems);
+            if (! is_string($firstTest)) {
+                continue;
+            }
+
+            $firstTestString = $this->removeMarkdown($firstTest);
+
+            $testMarkdown = <<<MARKDOWN
+                <div class="ruleDocumentationTest">
+                ##### {$rule->getPrefix()}.{$testIndex} {$firstTestString}
+
+
+                MARKDOWN;
+
+            foreach ($testItems as $testItem) {
+                if (is_string($testItem)) {
+                    $testMarkdown .= sprintf("- %s\n", $this->removeMarkdown($testItem));
+                }
+            }
+
+            $testMarkdown .= '</div>';
+            $testsMarkdowns[] = $testMarkdown;
+        }
+
+        if ($testsMarkdowns === []) {
+            return '';
+        }
+
+        $testsMarkdown = implode("\n\n", $testsMarkdowns);
+
+        return <<<MARKDOWN
+            #### Tests associés
+
+            {$testsMarkdown}
+            MARKDOWN;
+    }
+
+    /**
+     * @param array<string, mixed> $ruleData
+     */
+    private function getLinkListMarkdown(Rule $rule, array $ruleData): string
+    {
+        /** @var list<string> $links */
+        $links = [];
+
+        [$categoryPrefix, $rulePrefix] = explode('.', $rule->getPrefix() ?? '');
+
+        $links[] = sprintf(
+            '- [RAPDF 1.1 - Critère %s](https://accessibilite.public.lu/fr/rapdf1.1/referentiel-technique.html#crit-%s-%s)',
+            $rule->getPrefix(),
+            $categoryPrefix,
+            $rulePrefix,
+        );
+
+        $references = $ruleData['references'] ?? [];
+        if (! is_array($references)) {
+            return implode("\n", $links);
+        }
+
+        $wcagList = $references['wcag'] ?? [];
+        if (is_array($wcagList)) {
+            foreach ($wcagList as $wcagReference) {
+                if (! is_string($wcagReference)) {
+                    continue;
+                }
+
+                $matchResult = preg_match('/^[0-9.]+ (.*) \(A+\)$/', $wcagReference, $matches);
+                if ($matchResult === 0) {
+                    continue;
+                }
+
+                $wcagSlug = strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', trim($matches[1])));
+
+                $links[] = sprintf(
+                    '- [WCAG - %s](https://www.w3.org/Translations/WCAG21-fr/#%s)',
+                    $wcagReference,
+                    $wcagSlug,
+                );
+            }
+        }
+
+        $techniques = $references['techniques'] ?? [];
+        if (is_array($techniques)) {
+            foreach ($techniques as $technique) {
+                if (! is_string($technique)) {
+                    continue;
+                }
+
+                $matchResult = preg_match('/^([A-Z]+)\d+$/', $technique, $matches);
+                if ($matchResult === 0) {
+                    continue;
+                }
+
+                $folder = match ($matches[1]) {
+                    'H' => 'html',
+                    'G' => 'general',
+                    'C' => 'css',
+                    'ARIA' => 'aria',
+                    'PDF' => 'pdf',
+                    default => null,
+                };
+
+                if ($folder === null) {
+                    captureMessage(sprintf('Unknown technique type "%s" for technique "%s".', $matches[1], $technique));
+                    continue;
+                }
+
+                $links[] = sprintf(
+                    '- [WCAG Technique - %s](https://www.w3.org/WAI/WCAG22/Techniques/%s/%s)',
+                    $technique,
+                    $folder,
+                    $technique,
+                );
+            }
+        }
+
+        $norms = $references['norm'] ?? [];
+        if (is_array($norms)) {
+            foreach ($norms as $norm) {
+                if (! is_string($norm)) {
+                    continue;
+                }
+
+                $links[] = sprintf(
+                    '- [EN 301 549 - %s](https://accessibilite.numerique.gouv.fr/doc/fr_301549v020102p.pdf)',
+                    $norm,
+                );
+            }
+        }
+
+        $pdfuas = $references['pdfua'] ?? [];
+        if (is_array($pdfuas)) {
+            foreach ($pdfuas as $pdfua) {
+                if (! is_string($pdfua)) {
+                    continue;
+                }
+
+                $links[] = sprintf(
+                    '- [PDF/UA-2 - %s](https://pdfa.org/iso-14289-2-pdfua-2/)',
+                    $pdfua,
+                );
+            }
+        }
+
+        $linksMarkdown = implode("\n", $links);
+
+        return <<<MARKDOWN
+            #### Liens utiles
+
+            {$linksMarkdown}
+            MARKDOWN;
+    }
+
+    private function removeMarkdown(string $markdown): string
+    {
+        $html = $this->markdownConverter->convert($markdown)->getContent();
+
+        return strip_tags($html);
+    }
+}

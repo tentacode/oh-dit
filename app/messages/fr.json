@@ -1,0 +1,28 @@
+{
+  "ruleSet": {
+    "web": {
+      "addAScreen": "Ajouter une page",
+      "addTheScreen": "Ajouter la page",
+      "editTheScreen": "Modifier la page",
+      "deleteTheScreen": "Supprimer la page",
+      "ofTheScreen": "de la page",
+      "screens": "Pages"
+    },
+    "mobile": {
+      "addAScreen": "Ajouter un écran",
+      "addTheScreen": "Ajouter l'écran",
+      "editTheScreen": "Modifier l'écran",
+      "deleteTheScreen": "Supprimer l'écran",
+      "ofTheScreen": "de l'écran",
+      "screens": "Écrans"
+    },
+    "document": {
+      "addAScreen": "Ajouter un document",
+      "addTheScreen": "Ajouter le document",
+      "editTheScreen": "Modifier le document",
+      "deleteTheScreen": "Supprimer le document",
+      "ofTheScreen": "du document",
+      "screens": "Documents"
+    }
+  }
+}

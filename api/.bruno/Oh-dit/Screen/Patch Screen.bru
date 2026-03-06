@@ -1,0 +1,29 @@
+meta {
+  name: Patch Screen
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{BASE_URL}}/api/screens/33333333-0000-4000-8000-000000000002
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "name": "Page secrète",
+    "url": "https://perdu.com/secret-page",
+    "rank": 1337
+  }
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

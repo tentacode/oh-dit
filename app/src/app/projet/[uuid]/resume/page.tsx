@@ -8,13 +8,14 @@ import Link from "next/link";
 
 export default function ProjectDashboardPage() {
   const project = useAuditStore((state) => state.project);
+  const ruleSet = useAuditStore((state) => state.ruleSet);
   const issues = useAuditStore((state) => state.issues);
 
   const setProjectSetting = useAuditSettingsStore(
     (state) => state.setProjectSetting,
   );
 
-  if (!project) {
+  if (!project || !ruleSet) {
     return null;
   }
 
@@ -32,6 +33,7 @@ export default function ProjectDashboardPage() {
         <h2 className="h2 mb-4">Résumé</h2>
         <AuditDataPerScreen
           project={project}
+          ruleSetName={ruleSet.name}
           issues={issues}
           title="Statistiques de l'audit par page"
           onClickAuditLink={onClickAuditLink}

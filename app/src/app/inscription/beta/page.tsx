@@ -17,20 +17,7 @@ import {
 import { ApiError, ApiValidationError } from "@/src/lib/react-query/apiClient";
 import { useRegisterBetaUser } from "@/src/features/authentication/mutations/useRegisterBetaUser";
 import CallToActionButton from "@/src/components/form/CallToActionButon";
-
-function getErrorsForField(
-  fieldName: string,
-  errors: ApiValidationError[]
-): ApiValidationError[] {
-  return errors.filter((error) => error.propertyPath === fieldName);
-}
-
-function hasFieldError(
-  fieldName: string,
-  errors: ApiValidationError[]
-): boolean {
-  return getErrorsForField(fieldName, errors).length > 0;
-}
+import { getErrorsForField, hasFieldError } from "@/src/design-system/utils/form/formErrors";
 
 function BetaRegisterForm() {
   const router = useRouter();

@@ -8,13 +8,15 @@ use function Safe\file_get_contents;
 use function Safe\json_decode;
 use function Safe\preg_match;
 use function Safe\preg_replace;
+use function Sentry\captureMessage;
+use App\Features\Documentation\Query\GetRuleDocumentationCommandInterface;
 use App\Features\RuleSet\Entity\Rule;
 use Doctrine\ORM\EntityManagerInterface;
 use League\CommonMark\CommonMarkConverter;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Webmozart\Assert\Assert;
 
-final class GetRuleDocumentationMarkdown
+final class GetRaamRuleDocumentationMarkdown implements GetRuleDocumentationCommandInterface
 {
     /**
      * @var array<string, mixed>
@@ -26,7 +28,7 @@ final class GetRuleDocumentationMarkdown
         private EntityManagerInterface $entityManager,
         private CommonMarkConverter $markdownConverter = new CommonMarkConverter(),
     ) {
-        $rgaaDataFolder = $this->projectDirectory . '/var/data/rgaa-git/RGAA/';
+        $rgaaDataFolder = $this->projectDirectory . '/var/data/raam-git/fr/json/';
 
         $rulesData = json_decode(
             file_get_contents($rgaaDataFolder . 'criteres.json'),
@@ -160,11 +162,13 @@ final class GetRuleDocumentationMarkdown
     {
         /** @var list<string> $links */
         $links = [];
-        $rulePrefix = $rule->getPrefix();
+
+        [$categoryPrefix, $rulePrefix] = explode('.', $rule->getPrefix() ?? '');
 
         $links[] = sprintf(
-            '- [Texte officiel RGAA 4.1.2 - Critère %s](https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#%s)',
-            $rulePrefix,
+            '- [RAAM 1.1 - Critère %s](https://accessibilite.public.lu/fr/raam1.1/referentiel-technique.html#crit-%s-%s)',
+            $rule->getPrefix(),
+            $categoryPrefix,
             $rulePrefix,
         );
 
@@ -173,64 +177,88 @@ final class GetRuleDocumentationMarkdown
             return implode("\n", $links);
         }
 
-        foreach ($references as $reference) {
-            if (! is_array($reference)) {
-                continue;
-            }
-
-            $wcagList = $reference['wcag'] ?? [];
-            if (is_array($wcagList)) {
-                foreach ($wcagList as $wcagReference) {
-                    if (! is_string($wcagReference)) {
-                        continue;
-                    }
-
-                    $matchResult = preg_match('/^[0-9.]+ (.*) \(A+\)$/', $wcagReference, $matches);
-                    if ($matchResult === 0) {
-                        continue;
-                    }
-
-                    $wcagSlug = strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', trim($matches[1])));
-
-                    $links[] = sprintf(
-                        '- [WCAG %s](https://www.w3.org/WAI/WCAG22/Understanding/%s.html)',
-                        $wcagReference,
-                        $wcagSlug,
-                    );
+        $wcagList = $references['wcag'] ?? [];
+        if (is_array($wcagList)) {
+            foreach ($wcagList as $wcagReference) {
+                if (! is_string($wcagReference)) {
+                    continue;
                 }
-            }
 
-            $techniques = $reference['techniques'] ?? [];
-            if (is_array($techniques)) {
-                foreach ($techniques as $technique) {
-                    if (! is_string($technique)) {
-                        continue;
-                    }
-
-                    $matchResult = preg_match('/^([A-Z]+)\d+$/', $technique, $matches);
-                    if ($matchResult === 0) {
-                        continue;
-                    }
-
-                    $folder = match ($matches[1]) {
-                        'H' => 'html',
-                        'G' => 'general',
-                        'C' => 'css',
-                        'ARIA' => 'aria',
-                        default => null,
-                    };
-
-                    if ($folder === null) {
-                        continue;
-                    }
-
-                    $links[] = sprintf(
-                        '- [WCAG Technique %s](https://www.w3.org/WAI/WCAG22/Techniques/%s/%s)',
-                        $technique,
-                        $folder,
-                        $technique,
-                    );
+                $matchResult = preg_match('/^[0-9.]+ (.*) \(A+\)$/', $wcagReference, $matches);
+                if ($matchResult === 0) {
+                    continue;
                 }
+
+                $wcagSlug = strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', trim($matches[1])));
+
+                $links[] = sprintf(
+                    '- [WCAG - %s](https://www.w3.org/Translations/WCAG21-fr/#%s)',
+                    $wcagReference,
+                    $wcagSlug,
+                );
+            }
+        }
+
+        $techniques = $references['techniques'] ?? [];
+        if (is_array($techniques)) {
+            foreach ($techniques as $technique) {
+                if (! is_string($technique)) {
+                    continue;
+                }
+
+                $matchResult = preg_match('/^([A-Z]+)\d+$/', $technique, $matches);
+                if ($matchResult === 0) {
+                    continue;
+                }
+
+                $folder = match ($matches[1]) {
+                    'H' => 'html',
+                    'G' => 'general',
+                    'C' => 'css',
+                    'ARIA' => 'aria',
+                    'PDF' => 'pdf',
+                    default => null,
+                };
+
+                if ($folder === null) {
+                    captureMessage(sprintf('Unknown technique type "%s" for technique "%s".', $matches[1], $technique));
+                    continue;
+                }
+
+                $links[] = sprintf(
+                    '- [WCAG Technique - %s](https://www.w3.org/WAI/WCAG22/Techniques/%s/%s)',
+                    $technique,
+                    $folder,
+                    $technique,
+                );
+            }
+        }
+
+        $norms = $references['norm'] ?? [];
+        if (is_array($norms)) {
+            foreach ($norms as $norm) {
+                if (! is_string($norm)) {
+                    continue;
+                }
+
+                $links[] = sprintf(
+                    '- [EN 301 549 - %s](https://accessibilite.numerique.gouv.fr/doc/fr_301549v020102p.pdf)',
+                    $norm,
+                );
+            }
+        }
+
+        $pdfuas = $references['pdfua'] ?? [];
+        if (is_array($pdfuas)) {
+            foreach ($pdfuas as $pdfua) {
+                if (! is_string($pdfua)) {
+                    continue;
+                }
+
+                $links[] = sprintf(
+                    '- [PDF/UA-2 - %s](https://pdfa.org/iso-14289-2-pdfua-2/)',
+                    $pdfua,
+                );
             }
         }
 

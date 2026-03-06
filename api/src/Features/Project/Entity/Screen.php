@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace App\Features\Project\Entity;
 
+use App\Features\Compliance\Entity\Compliance;
+use App\Features\Issue\Entity\Issue;
 use App\Infrastructure\Doctrine\Entity\HasUuidInterface;
+use App\Infrastructure\Doctrine\Entity\SerializableInterface;
 use Carbon\CarbonImmutable;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -16,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'project_screen')]
-class Screen implements HasUuidInterface
+class Screen implements HasUuidInterface, SerializableInterface
 {
     public const string ROOT_SCREEN_NAME = 'Éléments transverses';
 
@@ -33,6 +38,7 @@ class Screen implements HasUuidInterface
     private string $url;
 
     #[ORM\Column(type: Types::INTEGER)]
+    #[Assert\PositiveOrZero(message: 'Le rang de la page doit être au moins 0.')]
     private int $rank;
 
     #[ORM\Column(type: Types::INTEGER)]
@@ -54,6 +60,18 @@ class Screen implements HasUuidInterface
     #[JoinColumn(name: 'project_uuid', referencedColumnName: 'uuid')]
     private Project $project;
 
+    /**
+     * @var Collection<int, Compliance>
+     */
+    #[ORM\OneToMany(targetEntity: Compliance::class, mappedBy: 'screen')]
+    private $compliances;
+
+    /**
+     * @var Collection<int, Issue>
+     */
+    #[ORM\OneToMany(targetEntity: Issue::class, mappedBy: 'screen')]
+    private $issues;
+
     public function __construct(
         Project $project,
         string $name,
@@ -70,6 +88,8 @@ class Screen implements HasUuidInterface
         $this->isRoot = $isRoot;
         $this->createdAt = CarbonImmutable::now();
         $this->updatedAt = CarbonImmutable::now();
+        $this->issues = new ArrayCollection();
+        $this->compliances = new ArrayCollection();
     }
 
     public function getUuid(): Uuid
@@ -87,14 +107,32 @@ class Screen implements HasUuidInterface
         return $this->name;
     }
 
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+        $this->updatedAt = CarbonImmutable::now();
+    }
+
     public function getUrl(): string
     {
         return $this->url;
     }
 
+    public function setUrl(string $url): void
+    {
+        $this->url = $url;
+        $this->updatedAt = CarbonImmutable::now();
+    }
+
     public function getRank(): int
     {
         return $this->rank;
+    }
+
+    public function setRank(int $rank): void
+    {
+        $this->rank = $rank;
+        $this->updatedAt = CarbonImmutable::now();
     }
 
     public function getProgress(): int
@@ -127,5 +165,38 @@ class Screen implements HasUuidInterface
     public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    public function getComplianceCount(): int
+    {
+        return $this->compliances->count();
+    }
+
+    public function getIssueCount(): int
+    {
+        return $this->issues->count();
+    }
+
+    public function getProjectUuid(): string
+    {
+        return $this->project->getUuid()->toRfc4122();
+    }
+
+    public function getDefaultFields(): array
+    {
+        return [
+            'uuid',
+            'projectUuid',
+            'name',
+            'url',
+            'rank',
+            'progress',
+            'complianceRate',
+            'isRoot',
+            'createdAt',
+            'updatedAt',
+            'complianceCount',
+            'issueCount',
+        ];
     }
 }

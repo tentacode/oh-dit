@@ -15,7 +15,7 @@
         "doctrine/orm": "^3.6.0",
         "erusev/parsedown": "^1.7.4",
         "getbrevo/brevo-php": "^2.0.14",
-        "league/commonmark": "^2.8",
+        "league/commonmark": "^2.8.2",
         "lexik/jwt-authentication-bundle": "^3.2",
         "nelmio/cors-bundle": "^2.6",
         "nesbot/carbon": "^3.11",
