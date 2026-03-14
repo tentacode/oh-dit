@@ -1,13 +1,14 @@
 .issueMarkdown {
     font-size: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    display: block;
+}
+
+.issueMarkdown > * + * {
+  margin-top: 15px;
 }
 
 .issueMarkdown p {
     font-size: 1em;
-    margin: 0;
 }
 
 .issueMarkdown ul {
@@ -24,7 +25,6 @@
 .issueMarkdown ol {
     list-style: decimal;
     font-size: 1em !important;
-    margin: 0;
     margin-left: 20px;
 }
 
@@ -36,25 +36,21 @@
     border-left: 4px solid #FFEDD5;
     background-color: #FFF7ED;
     padding: 10px 20px;
-    margin: 0;
     border-radius: 10px;
 }
 
 .issueMarkdown blockquote p {
-    margin: 0;
     font-size: 1em !important;
 }
 
 .issueMarkdown pre code {
     font-size: 1em !important;
-    margin: 0;
 }
 
 .issueMarkdown img {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
-    margin: 10px 0;
 }
 
 .issueMarkdown table {
@@ -75,10 +71,10 @@
 
 .h1, .h2, .h3, .h4, .h5, .h6 {
     display: block;
-    margin: 0;
     font-size: 19px;
     font-weight: bold;
     font-family: 'Lexend Deca', sans-serif;
+    margin-bottom: 5px;
 }
 
 .h1 {
@@ -102,6 +98,7 @@
 }
 
 .inlineCode {
+    display: inline !important;
     background-color: #FFF5F3;
     font-weight: 500;
     padding: 2px 4px;
