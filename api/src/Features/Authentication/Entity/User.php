@@ -43,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, HasUuid
     #[Assert\Length(min: 8)]
     private string $password;
 
-    #[ORM\Column(length: 255, unique: true)]
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private string $username;
 
