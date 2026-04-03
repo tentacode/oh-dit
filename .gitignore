@@ -65,3 +65,5 @@ yarn-error.log*
 !/api/var/data/raam-git/fr
 /api/var/data/rapdf-git/*
 !/api/var/data/rapdf-git/fr
+/api/var/data/raweb-git/*
+!/api/var/data/raweb-git/fr

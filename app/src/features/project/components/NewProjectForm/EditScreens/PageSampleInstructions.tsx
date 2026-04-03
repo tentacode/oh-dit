@@ -22,6 +22,22 @@ export default function PageSampleInstructions({
     );
   }
 
+  if (ruleSetName === "RAWeb") {
+    return (
+      <>
+        Au moins une page est requise. Vous pouvez vous inspirer de{" "}
+        <a
+          aria-label="l'échantillon de pages par défaut nécessaires à un audit RAWeb, nouvelle fenêtre"
+          className={typographyStyle.externalLink}
+          href="https://accessibilite.public.lu/fr/raweb1.1/methodo-test.html#Échantillon"
+        >
+          l'échantillon de pages par défaut nécessaires à un audit RAWeb
+          <ArrowTopRightOnSquareIcon />
+        </a>.
+      </>
+    );
+  }
+
   if (ruleSetName === "RAAM") {
     return (
       <>

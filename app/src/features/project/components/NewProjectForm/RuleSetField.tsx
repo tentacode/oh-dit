@@ -117,6 +117,14 @@ export default function RuleSetField({
 
   ruleSetsRadioDetails.push(
     toRuleSetRadioDetails(
+      getRuleSetByName(ruleSets, "RAWeb")!,
+      <ComputerDesktopIcon />,
+      "Le RAWeb (Référentiel d'évaluation de l'Accessibilité Web) est édité par le Luxembourg et est plus exhaustif que le RGAA, avec des critères supplémentaires.",
+    ),
+  );
+
+  ruleSetsRadioDetails.push(
+    toRuleSetRadioDetails(
       getRuleSetByName(ruleSets, "RAAM")!,
       <DeviceTabletIcon />,
       "Le RAAM (Référentiel d'évaluation de l'Accessibilité des Applications Mobiles), édité par le Luxembourg et basé sur la norme EN 301 549.",
