@@ -23,6 +23,23 @@ export default function DefaultPageSampleInstructions({
     );
   }
 
+  if (ruleSetName === "RAWeb") {
+    return (
+      <>
+        Au moins une page est requise. Les pages sont pré-remplies avec{" "}
+        <a
+          aria-label="l'échantillon de pages par défaut nécessaires à un audit RAWeb, nouvelle fenêtre"
+          className={typographyStyle.externalLink}
+          href="https://accessibilite.public.lu/fr/raweb1.1/methodo-test.html#Échantillon"
+        >
+          l'échantillon de pages par défaut nécessaires à un audit RAWeb
+          <ArrowTopRightOnSquareIcon />
+        </a>
+        , vous pourrez aussi les modifier plus tard.
+      </>
+    );
+  }
+
   if (ruleSetName === "RAAM") {
     return (
       <>

@@ -68,6 +68,7 @@ reset: ## Reset database (env=dev|test)
 	docker compose exec api bin/console rgaa:import --env=$(env)
 	docker compose exec api bin/console rgaa:create-25 --env=$(env)
 	docker compose exec api bin/console raam:import --env=$(env)
+	docker compose exec api bin/console raweb:import --env=$(env)
 	docker compose exec api bin/console rapdf:import --env=$(env)
 	docker compose exec api bin/console cache:pool:clear --all --env=$(env)
 
@@ -109,3 +110,6 @@ update-raam: ## Update RAAM from git repository
 
 update-rapdf: ## Update RAPDF from git repository
 	ansible-playbook infrastructure/ansible/update-rapdf.yml
+
+update-raweb: ## Update RAWEB from git repository
+	ansible-playbook infrastructure/ansible/update-raweb.yml

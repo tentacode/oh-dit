@@ -22,6 +22,7 @@ final class GetWhichDocumentationCommandQuery
         #[AutowireLocator([
             DocumentationCommand\GetRgaaRuleDocumentationMarkdown::class,
             DocumentationCommand\GetRaamRuleDocumentationMarkdown::class,
+            DocumentationCommand\GetRawebRuleDocumentationMarkdown::class,
             DocumentationCommand\GetRapdfRuleDocumentationMarkdown::class,
             DocumentationCommand\GetDefaultRuleDocumentationMarkdown::class,
         ])]
@@ -42,6 +43,7 @@ final class GetWhichDocumentationCommandQuery
             RuleSet::RGAA_NAME, RuleSet::RGAA_25_NAME => $this->locator->get(DocumentationCommand\GetRgaaRuleDocumentationMarkdown::class),
             RuleSet::RAAM_NAME => $this->locator->get(DocumentationCommand\GetRaamRuleDocumentationMarkdown::class),
             RuleSet::RAPDF_NAME => $this->locator->get(DocumentationCommand\GetRapdfRuleDocumentationMarkdown::class),
+            RuleSet::RAWEB_NAME => $this->locator->get(DocumentationCommand\GetRawebRuleDocumentationMarkdown::class),
             default => $this->locator->get(DocumentationCommand\GetDefaultRuleDocumentationMarkdown::class),
         };
     }

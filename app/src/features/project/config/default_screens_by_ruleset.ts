@@ -23,6 +23,24 @@ export function getDefaultScreensByRuleSet(
     ];
   }
 
+  if (ruleSetName === "RAWeb") {
+    return [
+      { name: "Accueil", url: "/", rank: 1 },
+      { name: "Mentions légales", url: "/mentions-legales", rank: 2 },
+      { name: "Authentification", url: "/login", rank: 3 },
+      { name: "Contact", url: "/contact", rank: 4 },
+      {
+        name: "Déclaration d'accessibilité",
+        url: "/declaration-accessibilite",
+        rank: 5,
+      },
+      { name: "Aide", url: "/aide", rank: 6 },
+      { name: "Documentation", url: "/documentation", rank: 7 },
+      { name: "Documentation du service d'assistance", url: "/assistance/documentation", rank: 8 },
+      { name: "Plan du site", url: "/plan-du-site", rank: 9 },
+    ];
+  }
+
   if (ruleSetName === "RAPDF") {
     return [{ name: "Document", url: "", rank: 1 }];
   }
