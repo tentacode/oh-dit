@@ -46,8 +46,10 @@ const getRuleSetByName = (
 };
 
 export default function RuleSetField({
+  ruleSetUuid = null,
   onChange,
 }: {
+  ruleSetUuid?: string | null;
   onChange: ({
     newRuleSetUuid,
     newRuleSetName,
@@ -63,7 +65,7 @@ export default function RuleSetField({
   } = useFetchRuleSets();
 
   useEffect(() => {
-    if (!ruleSets || ruleSets.length === 0) {
+    if (!ruleSets || ruleSets.length === 0 || ruleSetUuid) {
       return;
     }
 
@@ -75,7 +77,7 @@ export default function RuleSetField({
         newRuleSetName: defaultRuleSet.name,
       });
     }
-  }, [ruleSets, onChange]);
+  }, [ruleSets, ruleSetUuid, onChange]);
 
   if (isRuleSetsLoading) {
     return <p>Chargement des référentiels...</p>;

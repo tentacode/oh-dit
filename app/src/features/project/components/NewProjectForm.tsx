@@ -87,7 +87,8 @@ export default function NewProjectForm() {
           sont obligatoires.
         </p>
 
-        <RuleSetField 
+        <RuleSetField
+          ruleSetUuid={ruleSetUuidValue} 
           onChange={onChangeRuleSet}
         />
 
