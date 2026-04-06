@@ -1,0 +1,26 @@
+meta {
+  name: Send Confirmation Link
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{BASE_URL}}/api/register/send-confirmation-link
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "salut@tentacode.dev"
+  }
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}
