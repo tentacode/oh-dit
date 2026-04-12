@@ -1,4 +1,4 @@
-.PHONY: help
+.PHONY: help e2e
 
 # Colors
 CYAN = \033[0;36m
@@ -71,6 +71,12 @@ reset: ## Reset database (env=dev|test)
 	docker compose exec api bin/console raweb:import --env=$(env)
 	docker compose exec api bin/console rapdf:import --env=$(env)
 	docker compose exec api bin/console cache:pool:clear --all --env=$(env)
+
+e2e: ## Run end-to-end tests with Playwright
+	cd e2e && npx playwright test --reporter=list
+
+e2e.ui: ## Run end-to-end tests with Playwright in the UI
+	cd e2e && npx playwright test --ui
 
 tests: ## Run all tests
 	cd www && npm run lint . --fix && \
