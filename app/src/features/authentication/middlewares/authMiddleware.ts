@@ -13,7 +13,11 @@ export function authMiddleware(request: NextRequest) {
   const token = request.cookies.get("auth_token")?.value;
   const { pathname } = request.nextUrl;
 
-  if (PUBLIC_ROUTES.includes(pathname)) {
+  if (
+    PUBLIC_ROUTES.some(
+      (route) => pathname === route || pathname.startsWith(route + "/"),
+    )
+  ) {
     if (token) {
       return NextResponse.redirect(new URL("/", request.url));
     }
