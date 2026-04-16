@@ -18,7 +18,7 @@ export function authMiddleware(request: NextRequest) {
       (route) => pathname === route || pathname.startsWith(route + "/"),
     )
   ) {
-    if (token) {
+    if (token && (!pathname.startsWith("/rapport-securise"))) {
       return NextResponse.redirect(new URL("/", request.url));
     }
     return NextResponse.next();
