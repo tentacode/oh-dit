@@ -6,6 +6,8 @@ export default function Input({
   ref,
   name,
   value,
+  type = "text",
+  autocomplete,
   onChange,
   required,
   errors = [],
@@ -13,6 +15,8 @@ export default function Input({
   ref?: React.Ref<HTMLInputElement>;
   name: string;
   value: string;
+  type?: 'text' | 'email';
+  autocomplete?: 'email' | 'username' | 'current-password' | 'new-password';
   onChange?: (newValue: string) => void;
   required: boolean;
   errors?: ApiValidationError[];
@@ -26,12 +30,13 @@ export default function Input({
         id={name}
         name={name}
         value={value}
+        autoComplete={autocomplete}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           if (typeof onChange === "function") {
             onChange(e.target.value);
           }
         }}
-        type="text"
+        type={type}
         className={clsx(inputStyles.input, hasErrors && inputStyles.inputError)}
         required={required}
         aria-invalid={hasErrors}

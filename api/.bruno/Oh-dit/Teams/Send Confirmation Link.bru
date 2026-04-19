@@ -1,0 +1,26 @@
+meta {
+  name: Send Confirmation Link
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BASE_URL}}/api/teams/11111111-0000-4000-8000-000000000001/invite-user
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "tarkin@example.com"
+  }
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}

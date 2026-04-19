@@ -4,11 +4,18 @@ import styles from "../styles/login_form.module.css";
 import formStyles from "@/src/components/form/styles/form.module.css";
 import { FaceFrownIcon, LockOpenIcon } from "@heroicons/react/24/outline";
 import { FormEvent, useState } from "react";
-import CallToActionButton from "@/src/components/form/CallToActionButon";
 import { ApiError, ApiValidationError } from "@/src/lib/react-query/apiClient";
 import { useLogin } from "../mutations/useLogin";
 import { useRouter, useSearchParams } from "next/navigation";
-import { getErrorsForField, hasFieldError } from "@/src/design-system/utils/form/formErrors";
+import {
+  getErrorsForField,
+} from "@/src/design-system/utils/form/formErrors";
+import Form from "@/src/design-system/components/form/Form";
+import FormRow from "@/src/design-system/components/form/FormRow";
+import Label from "@/src/design-system/components/form/Label";
+import Input from "@/src/design-system/components/form/input/Input";
+import Button from "@/src/design-system/components/button/Button";
+import PasswordInput from "@/src/design-system/components/form/input/PasswordInput";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -40,7 +47,7 @@ export default function LoginForm() {
 
       // Stocker le token dans un cookie
       document.cookie = `auth_token=${data.token}; path=/; max-age=864000; SameSite=None; Secure`;
-      
+
       // Rediriger vers la page demandée
       router.push(redirect);
     } catch (apiError) {
@@ -101,67 +108,43 @@ export default function LoginForm() {
       </div>
       <h1 className={"h2"}>Connectez-vous à la bêta</h1>
       <p className={formStyles.helpText}>
-        La bêta d'Ohdit est sur invitation uniquement. Si vous voulez en
-        faire partie, n'hésitez pas à nous envoyer votre demande sur <a href="mailto:beta@ohdit.com">beta@ohdit.com</a>.
+        Si vous n'avez pas encore de compte, vous pouvez{" "}
+        <Link prefetch={false} href={`/inscription`}>vous inscrire à la bêta</Link>.
+        Ohdit reste gratuit pendant toute la durée de la bêta.
       </p>
-      <form
-        noValidate
-        className={`${formStyles.form} ${styles.loginForm}`}
+      <Form
+        // className={`${formStyles.form} ${styles.loginForm}`}
         onSubmit={onSubmit}
       >
-        <div className={formStyles.inputGroup}>
-          <label htmlFor="email">Email</label>
-          <input
+        <FormRow>
+          <Label htmlFor="email">Email</Label>
+          <Input
             type="email"
-            id="email"
             name="email"
             value={email}
-            autoComplete="email"
-            onChange={(e) => {
-              setEmail(e.target.value);
+            autocomplete="email"
+            onChange={(newEmail) => {
+              setEmail(newEmail);
               cleanErrors("email");
             }}
-            aria-invalid={hasFieldError("email", errors)}
-            aria-required="true"
-            aria-describedby="email-errors"
-            className={
-              hasFieldError("email", errors) ? formStyles.inputError : ""
-            }
+            required={true}
+            errors={getErrorsForField("email", errors)}
           />
-          {hasFieldError("email", errors) && (
-            <p id="email-errors" className={formStyles.fieldError}>
-              {getErrorsForField("email", errors).map((error) => (
-                <span key={error.message}>{error.message}</span>
-              ))}
-            </p>
-          )}
-        </div>
-        <div className={formStyles.inputGroup}>
-          <label htmlFor="password">Mot de passe</label>
-          <input
-            type="password"
-            id="password"
+        </FormRow>
+        <FormRow>
+          <Label htmlFor="password">Mot de passe</Label>
+          <PasswordInput
             name="password"
             value={password}
-            autoComplete="current-password"
-            onChange={(e) => {
-              setPassword(e.target.value);
+            autocomplete="current-password"
+            onChange={(newPassword) => {
+              setPassword(newPassword);
               cleanErrors("password");
             }}
-            aria-invalid={hasFieldError("password", errors)}
-            aria-required="true"
-            aria-describedby="password-errors"
-            className={
-              hasFieldError("password", errors) ? formStyles.inputError : ""
-            }
+            required={true}
+            errors={getErrorsForField("password", errors)}
+            withRequirements={false}
           />
-          {hasFieldError("password", errors) && (
-            <p id="password-errors" className={formStyles.fieldError}>
-              {getErrorsForField("password", errors).map((error) => (
-                <span key={error.message}>{error.message}</span>
-              ))}
-            </p>
-          )}
           <Link
             href={`/mot-de-passe-oublie?email=${encodeURIComponent(email)}`}
             className={styles.forgotPasswordLink}
@@ -169,14 +152,15 @@ export default function LoginForm() {
             <FaceFrownIcon />
             J'ai oublié mon mot de passe
           </Link>
-        </div>
+        </FormRow>
         <div className={styles.loginButtonContainer}>
-          <CallToActionButton>
+          <Button type="submit" disabled={isSubmitting}>
             <LockOpenIcon />
             Se connecter
-          </CallToActionButton>
+          </Button>
+          <Link prefetch={false} href={`/inscription`}>Créer un compte</Link>
         </div>
-      </form>
+      </Form>
     </div>
   );
 }

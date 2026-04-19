@@ -40,8 +40,12 @@ export default function PasswordInput({
   const numberError = !/[0-9]/.test(value);
   const specialCharError = !/[\W]/.test(value);
 
-  const hasErrors =
+  let hasErrors =
     lengthError || uppercaseError || numberError || specialCharError || errors.length > 0;
+
+  if (!withRequirements) {
+    hasErrors = errors.length > 0;
+  }
 
   return (
     <>
