@@ -11,6 +11,8 @@ export default function DefaultPageSampleInstructions({
       <>
         Au moins une page est requise. Les pages sont pré-remplies avec{" "}
         <a
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label="l'échantillon de pages par défaut nécessaires à un audit RGAA, nouvelle fenêtre"
           className={typographyStyle.externalLink}
           href="https://accessibilite.numerique.gouv.fr/obligations/evaluation-conformite/"
@@ -28,6 +30,8 @@ export default function DefaultPageSampleInstructions({
       <>
         Au moins une page est requise. Les pages sont pré-remplies avec{" "}
         <a
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label="l'échantillon de pages par défaut nécessaires à un audit RAWeb, nouvelle fenêtre"
           className={typographyStyle.externalLink}
           href="https://accessibilite.public.lu/fr/raweb1.1/methodo-test.html#Échantillon"
@@ -45,6 +49,8 @@ export default function DefaultPageSampleInstructions({
       <>
         Au moins un écran est requis. Les écrans sont pré-remplis avec{" "}
         <a
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label="l'échantillon d'écrans par défaut nécessaires à un audit RAAM, nouvelle fenêtre"
           className={typographyStyle.externalLink}
           href="https://accessibilite.public.lu/fr/raam1.1/methodologie.html#echantillon"

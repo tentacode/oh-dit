@@ -1,4 +1,8 @@
-import { ArrowTopRightOnSquareIcon, InformationCircleIcon, LinkIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowTopRightOnSquareIcon,
+  InformationCircleIcon,
+  LinkIcon,
+} from "@heroicons/react/24/outline";
 import { useAuditStore } from "../../audit/store/auditStore";
 import styles from "../styles/project_header.module.css";
 import typographyStyle from "@/src/design-system/styles/typography.module.css";
@@ -32,7 +36,13 @@ export default function ProjectDetailHeader() {
         <p className={styles.siteUrl}>
           <LinkIcon />
           Adresse du projet :{" "}
-          <a aria-label={`${projectUrl}, nouvelle fenêtre`} className={typographyStyle.externalLink} href={projectUrl}>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${projectUrl}, nouvelle fenêtre`}
+            className={typographyStyle.externalLink}
+            href={projectUrl}
+          >
             {projectUrl}
             <ArrowTopRightOnSquareIcon />
           </a>
@@ -45,7 +55,7 @@ export default function ProjectDetailHeader() {
         <ComplianceRateBadgeCard complianceRate={project.complianceRate} />
       </div>
 
-      {ruleSet.name === 'RGAA' && project.progress !== 100 && (
+      {ruleSet.name === "RGAA" && project.progress !== 100 && (
         <p className={styles.helpText}>
           <InformationCircleIcon />
           Le taux de conformité est donné à titre indicatif. Il n'est pas
@@ -53,17 +63,19 @@ export default function ProjectDetailHeader() {
         </p>
       )}
 
-      {ruleSet.name === 'RGAA 25' && (
+      {ruleSet.name === "RGAA 25" && (
         <p className={styles.helpText}>
           <InformationCircleIcon />
-          Le taux de conformité du RGAA 25 critères est donné à titre indicatif. Il n'a pas de valeur légale.
+          Le taux de conformité du RGAA 25 critères est donné à titre indicatif.
+          Il n'a pas de valeur légale.
         </p>
       )}
 
-      {['RAAM', 'RAPDF'].includes(ruleSet.name) && (
+      {["RAAM", "RAPDF"].includes(ruleSet.name) && (
         <p className={styles.helpText}>
           <InformationCircleIcon />
-          Le taux de conformité du {ruleSet.name} est donné à titre indicatif. Il n'a pas de valeur légale.
+          Le taux de conformité du {ruleSet.name} est donné à titre indicatif.
+          Il n'a pas de valeur légale.
         </p>
       )}
     </div>
