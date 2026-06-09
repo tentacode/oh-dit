@@ -33,7 +33,7 @@ final class CreateScreenCommand
         $screen = new Screen(
             project: $project,
             name: $createScreenRequest->name ?? '',
-            url: $createScreenRequest->url ?? '',
+            url: $createScreenRequest->url,
             rank: $createScreenRequest->rank ?? -1, // The rank is required, -1 will trigger a validation error if it's not provided.
             isRoot: false
         );
