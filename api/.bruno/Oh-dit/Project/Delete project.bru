@@ -1,0 +1,21 @@
+meta {
+  name: Delete project
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{BASE_URL}}/api/projects/22222222-0000-4000-8000-000000000001
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{AUTH_TOKEN}}
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}
