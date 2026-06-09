@@ -42,7 +42,7 @@ final class CreateProjectCommand
             team: $team,
             ruleSet: $ruleSet,
             name: $createProjectRequest->name ?? '',
-            url: $createProjectRequest->url ?? '',
+            url: $createProjectRequest->url,
         );
 
         ($this->validateOrThrow)($project);
