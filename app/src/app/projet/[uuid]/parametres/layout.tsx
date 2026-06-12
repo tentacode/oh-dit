@@ -34,12 +34,14 @@ export default function ProjectSettingsLayout({
 
   const t = useTranslations();
 
-  const isPageActive = (page: "project" | "screens") => {
+  const isPageActive = (page: "project" | "screens" | "delete") => {
     return (
       (pathname === getProjectUrl.settingsProject(projectUuid) &&
         page === "project") ||
       (pathname === getProjectUrl.settingsScreens(projectUuid) &&
-        page === "screens")
+        page === "screens") ||
+      (pathname === getProjectUrl.settingsDelete(projectUuid) &&
+        page === "delete")
     );
   };
 
@@ -82,10 +84,13 @@ export default function ProjectSettingsLayout({
           <ArchiveBoxIcon />
           Archiver
         </SidebarItem>
-        <SidebarItem badge="bientôt">
+        <SidebarLink
+          active={isPageActive("delete")}
+          href={getProjectUrl.settingsDelete(projectUuid)}
+        >
           <TrashIcon />
           Supprimer
-        </SidebarItem>
+        </SidebarLink>
       </SidebarMenu>
       <AsideContent>{children}</AsideContent>
     </PageWithSidebar>

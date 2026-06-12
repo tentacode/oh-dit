@@ -24,6 +24,8 @@ export const getProjectUrl = {
     `/projet/${projectUuid}/parametres/projet` as const,
   settingsScreens: (projectUuid: string) =>
     `/projet/${projectUuid}/parametres/pages` as const,
+  settingsDelete: (projectUuid: string) =>
+    `/projet/${projectUuid}/parametres/supprimer` as const,
 } as const;
 
 export const isProjectRoute = {
