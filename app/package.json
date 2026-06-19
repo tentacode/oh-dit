@@ -42,7 +42,7 @@
     "@storybook/addon-docs": "^10.1.11",
     "@storybook/addon-onboarding": "^10.1.11",
     "@storybook/addon-vitest": "^10.1.11",
-    "@storybook/nextjs-vite": "^10.1.11",
+    "@storybook/nextjs-vite": "^10.4.6",
     "@tailwindcss/postcss": "^4.1.14",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -57,7 +57,7 @@
     "storybook": "^10.1.11",
     "tailwindcss": "^4.1.14",
     "typescript": "^5",
-    "vite": "^7.3.1",
+    "vite": "^8.0.16",
     "vitest": "^4.1.8"
   }
 }
